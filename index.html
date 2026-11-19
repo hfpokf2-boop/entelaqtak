@@ -332,9 +332,11 @@ $('authSignOut').addEventListener('click',async()=>{
  currentUser=null;updateAccountUI();setAuthMessage('تم تسجيل الخروج. مشاريعك السحابية ما زالت محفوظة.');
 });
 async function callAI(tool,payload){
- if(!sbClient)throw new Error('خدمة الذكاء الاصطناعي غير متاحة حاليًا.');
- const {data,error}=await sbClient.functions.invoke('ai-assistant',{body:{tool,payload}});
- if(error)throw new Error('خدمة الذكاء الاصطناعي غير جاهزة. تأكد من نشر وظيفة ai-assistant وإضافة مفتاح API إلى أسرار الخادم.');
+ const config=window.ENTELAQTAK_CONFIG||{};
+ if(!config.url||!config.publishableKey)throw new Error('إعدادات خدمة الذكاء الاصطناعي غير مكتملة.');
+ const response=await fetch(config.url+'/functions/v1/ai-assistant',{method:'POST',headers:{'Content-Type':'application/json','apikey':config.publishableKey},body:JSON.stringify({tool,payload})});
+ let data={};try{data=await response.json();}catch(e){}
+ if(!response.ok)throw new Error(data?.error||'تعذر الاتصال بخدمة الذكاء الاصطناعي ('+response.status+').');
  if(data?.error)throw new Error(data.error);
  if(typeof data?.text!=='string'||!data.text.trim())throw new Error('لم يصل محتوى من المساعد الذكي.');
  return data.text;
