@@ -30,12 +30,12 @@ jobs:
           import re
           from pathlib import Path
           html = Path("index.html").read_text(encoding="utf-8")
-          scripts = re.findall(r"<script>([\\s\\S]*?)</script>", html)
+          scripts = re.findall(r"<script>(.*?)</script>", html, re.S)
           if not scripts:
               raise SystemExit("No inline application script found")
           app = scripts[-1]
           Path("/tmp/entelaqtak-app.js").write_text(app, encoding="utf-8")
-          ids = set(re.findall(r'\\bid="([^"]+)"', html))
+          ids = set(re.findall(r'id="([^"]+)"', html))
           refs = set(re.findall(r"\\$\\(['\\\"]([^'\\\"]+)['\\\"]\\)", app))
           missing = sorted(refs - ids)
           if missing:
