@@ -170,7 +170,7 @@ window.ENTELAQTAK_CONFIG = {
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const defaults={ideas:[],packs:[],posts:[],metrics:[],challenge:{}};
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null;
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkLoading=false;
 let state={...defaults};
 try{const raw=JSON.parse(localStorage.getItem('entelaqtak-v1')||'{}');state={...defaults,...raw};['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});if(!state.challenge||typeof state.challenge!=='object')state.challenge={};}catch(e){}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -229,9 +229,18 @@ async function loadCloudWorkspace(){
  finally{cloudLoading=false;}
 }
 function connectAuth(){
- if(!window.supabase?.createClient)return;
  const config=window.ENTELAQTAK_CONFIG||{};
- if(!config.url||!config.publishableKey)return;
+ if(!config.url||!config.publishableKey){setAuthMessage('إعدادات ربط قاعدة البيانات غير مكتملة.');return;}
+ if(!window.supabase?.createClient){
+  if(authSdkLoading)return;
+  authSdkLoading=true;
+  const fallback=document.createElement('script');
+  fallback.src='https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js';
+  fallback.onload=()=>{authSdkLoading=false;if(window.supabase?.createClient)connectAuth();else setAuthMessage('تعذر تحميل خدمة تسجيل الحساب. حدّث الصفحة وحاول مرة أخرى.',true);};
+  fallback.onerror=()=>{authSdkLoading=false;setAuthMessage('تعذر تحميل خدمة تسجيل الحساب. تحقق من اتصال الإنترنت ثم حدّث الصفحة.',true);};
+  document.head.appendChild(fallback);
+  return;
+ }
  sbClient=window.supabase.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
  sbClient.auth.onAuthStateChange((event,session)=>{currentUser=session?.user||null;updateAccountUI();if(currentUser&&event!=='SIGNED_OUT')setTimeout(()=>loadCloudWorkspace(),0);});
  sbClient.auth.getSession().then(({data,error})=>{if(error){console.error(error);return;}currentUser=data.session?.user||null;updateAccountUI();if(currentUser)loadCloudWorkspace();});
