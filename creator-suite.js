@@ -64,7 +64,7 @@ const pageGuides={
  brain:{title:'عقل المحتوى الذكي',purpose:'يجمع ملفك وأعمالك المسجلة ويقدم توصيات عملية تساعدك تختار الخطوة القادمة، من غير وعود بمشاهدات أو نجاح مضمون.',steps:['اكتب مجالك والجمهور والهدف والمنصات في «ملف صانع المحتوى».','اضغط «حفظ الملف» قبل التحليل.','اضغط «حلّل مساحة عملي» للحصول على توصيات مبنية على بياناتك المحلية.','استخدم «إنشاء خطة شهر» لإضافة 8 مواعيد مبدئية للتقويم، ثم راجعها وعدّلها.'],example:'لو مجالك تعليم التقنية وجمهورك مبتدئون وهدفك الاستمرارية، اكتب التفاصيل ثم حلّل مساحة العمل للحصول على مهام تناسب وضعك الحالي.',tip:'الملخص لا يسحب أرقام المنصات تلقائيًا؛ يعتمد على السجلات التي أضفتها. طلب الصياغة الذكية قد يحتاج إعداد خدمة الذكاء الاصطناعي على الخادم.'},
  trends:{title:'رادار الموضوعات',purpose:'يجهز لك روابط بحث خارجية في Google Trends وYouTube وTikTok والويب حتى تستكشف ما يتداوله الجمهور بنفسك.',steps:['اكتب الموضوع الذي تريد البحث عنه.','حدد البلد وزاوية البحث مثل أسئلة الجمهور أو المقارنات.','اضغط «جهّز مصادر البحث» وافتح الروابط التي تظهر.','قارن النتائج، وسجل الملاحظات والروابط وتاريخ البحث ثم احفظها.'],example:'ابحث عن «وجبات اقتصادية للطلاب» في مصر وبزاوية «أسئلة الجمهور»، ثم راجع النتائج من أكثر من مصدر.',tip:'الرادار لا يعرض ترندات مباشرة داخل الموقع؛ الروابط أدوات بحث خارجية. لا تصف موضوعًا بأنه ترند إلا بعد مراجعة التاريخ والمنطقة والمصدر.'},
  video:{title:'مصنع الفيديوهات',purpose:'يحوّل موضوع الفيديو ونقاطه إلى ترتيب مشاهد وخطة تصوير وملاحظات مونتاج وقائمة مراجعة.',steps:['اكتب موضوع الفيديو وحدد المدة المستهدفة.','الصق السكريبت أو أهم النقاط إن كانت جاهزة.','اضغط «إنشاء خطة المشاهد» لاقتراح افتتاحية ومحاور وتطبيق وخاتمة.','عدّل الخطة، ثم انسخها أو حمّلها واستخدمها أثناء التصوير.'],example:'موضوع: طريقة تصوير فيديو بالهاتف، المدة: 3–5 دقائق، أضف نقاط الإضاءة والصوت وزوايا التصوير.',tip:'الخطة قالب إنتاج قابل للتعديل؛ راجع ترتيب المشاهد وفق إمكانياتك والمكان والمعدات المتاحة.'},
- brand:{title:'هوية المحتوى',purpose:'يحفظ أسلوب علامتك ونبرة صوتها والكلمات التي تفضلها أو تريد تجنبها، حتى تحافظ على شكل ثابت للمحتوى.',steps:['اكتب اسم القناة أو العلامة.','اختار نبرة الصوت المناسبة.','صف العبارات والأسلوب اللي تحبه، واكتب المبالغات أو الأساليب اللي تريد تجنبها.','اضغط «حفظ الهوية»، ثم «استخدم الهوية في كاتب السكريبت» لإضافة القواعد إلى ملاحظات السكريبت.'],example:'نبرة بسيطة وودودة، جمل قصيرة، أمثلة من الحياة اليومية، وتجنب الوعود المبالغ فيها.',tip:'حفظ الهوية لا يغير كل النصوص القديمة تلقائيًا؛ استخدم زر التطبيق لإضافة تعليمات الهوية إلى السكريبت عند الحاجة.'},
+ voice:{title:'استوديو الصوت',purpose:'يحوّل السكريبت المكتوب إلى تعليق صوتي MP3 عبر خدمة ElevenLabs، مع إمكانية اختيار صوت وضبط أسلوب الأداء والسرعة.',steps:['سجّل الدخول بحساب الموقع أو أنشئ حسابًا بالبريد الإلكتروني.','الصق النص أو استخدم نص كاتب السكريبت أو حزمة المحتوى.','حمّل الأصوات المتاحة من حساب ElevenLabs، ثم اختر صوتًا أو أدخل Voice ID لصوت تملك حق استخدامه.','اضبط الثبات والتشابه والتعبير والسرعة، ثم اضغط «حوّل النص إلى صوت».','استمع للنتيجة، ثم اضغط «تحميل الصوت MP3» لاستخدامه في المونتاج.'],example:'اكتب مقدمة فيديو قصيرة باللهجة التي تريدها، اختر صوتًا عربيًا مناسبًا، واجعل السرعة 1.0× ثم أنشئ معاينة واستمع إليها قبل اعتمادها.',tip:'التوليد يستهلك رصيد حساب ElevenLabs. جودة اللهجة تختلف باختلاف الصوت. لا تستخدم صوت شخص أو هويته إلا بإذن صريح منه؛ هذه النسخة لا تتضمن استنساخ الأصوات.'}, brand:{title:'هوية المحتوى',purpose:'يحفظ أسلوب علامتك ونبرة صوتها والكلمات التي تفضلها أو تريد تجنبها، حتى تحافظ على شكل ثابت للمحتوى.',steps:['اكتب اسم القناة أو العلامة.','اختار نبرة الصوت المناسبة.','صف العبارات والأسلوب اللي تحبه، واكتب المبالغات أو الأساليب اللي تريد تجنبها.','اضغط «حفظ الهوية»، ثم «استخدم الهوية في كاتب السكريبت» لإضافة القواعد إلى ملاحظات السكريبت.'],example:'نبرة بسيطة وودودة، جمل قصيرة، أمثلة من الحياة اليومية، وتجنب الوعود المبالغ فيها.',tip:'حفظ الهوية لا يغير كل النصوص القديمة تلقائيًا؛ استخدم زر التطبيق لإضافة تعليمات الهوية إلى السكريبت عند الحاجة.'},
  lab:{title:'مختبر العناوين',purpose:'يسجل نسختين من عنوان المحتوى ويتيح لك تدوين أيهما كان الأفضل بعد مقارنة نتائج حقيقية.',steps:['اكتب موضوع المحتوى والعنوان A والعنوان B.','اضغط «حفظ تجربة العنوان».','بعد تجربة النسختين ومراجعة النتائج، اضغط «A أفضل» أو «B أفضل».','راجع سجل التجارب واحذف التجربة إذا لم تعد تحتاجها.'],example:'A: «تعلم المونتاج للمبتدئين»، B: «أول فيديو مونتاج ليك في 15 دقيقة». اختبرهما على محتوى متقارب وبشروط عادلة.',tip:'الموقع لا يوزع العناوين تلقائيًا ولا يجري اختبار A/B على المنصة؛ أنت تسجل النتيجة يدويًا.'},
  academy:{title:'أكاديمية انطلاقتك',purpose:'مسار تدريبي من 12 خطوة قصيرة يعلمك تخطيط المحتوى وإنتاجه ومراجعته والاستفادة من النتائج.',steps:['ابدأ من أول مهمة واقرأ المطلوب.','نفّذ المهمة على مشروع حقيقي قدر الإمكان.','علّم على المهمة بعد إكمالها لمشاهدة تقدمك.','ارجع للمسار وكمّله بالتدريج بدل محاولة إنجاز كل شيء مرة واحدة.'],example:'ابدأ بتحديد الجمهور، ثم اكتب وعد قناتك، واجمع أسئلة الجمهور، وبعدها جهّز أعمدة المحتوى.',tip:'الأكاديمية للتعلم والتنظيم وليست شهادة أو ضمانًا لزيادة المتابعين.'},
  settings:{title:'الإعدادات والبيانات',purpose:'من هنا تراجع حالة خدمة الذكاء الاصطناعي وتدير نسخة احتياطية من أعمالك أو تمسح البيانات المحلية.',steps:['استخدم «تصدير جميع البيانات JSON» لحفظ نسخة احتياطية على جهازك.','لنقل بياناتك إلى جهاز أو متصفح آخر، افتح الموقع هناك واضغط «استيراد نسخة JSON» واختر الملف.','لا تستورد نسخة إلا إذا كنت تقصد استبدال بياناتك الحالية، واحتفظ بنسخة منها أولًا.','استخدم «مسح جميع البيانات المحلية» فقط بعد التأكد؛ الحذف نهائي على هذا المتصفح.'],example:'قبل تغيير الهاتف أو المتصفح، صدّر ملف JSON. بعد فتح الموقع على الجهاز الجديد، استورد الملف لاستعادة الأفكار والحزم والتقويم والإحصاءات والتقدم.',tip:'لا تضع مفتاح API داخل الصفحة أو المستودع. تفعيل المساعد يعتمد على إعدادات الخادم؛ ورسالة الحالة لا تعني أن كل طلب تم اختباره.'}
@@ -90,6 +90,105 @@ if(guideHost){
  ).join('');
 }
 for(const b of all('[data-guide-go]', $('view-guide')))b.addEventListener('click',()=>app.go(b.dataset.guideGo));
+
+
+const voiceUi={voices:[],audioUrl:'',previewUrl:''};
+function setVoiceStatus(message,isError=false){const el=$('voiceGenerateStatus');el.textContent=message;el.style.color=isError?'#ffabb6':'var(--muted)';}
+function refreshVoiceCharacterCount(){$('voiceCharCount').textContent=$('voiceText').value.length;}
+async function refreshVoiceAuth(){
+ try{
+  const session=await app.getVoiceSession();
+  $('voiceAuthPanel').hidden=!!session;$('voiceStudioPanel').hidden=!session;
+  if(session)$('voiceAuthStatus').textContent='تم تسجيل الدخول. يمكنك استخدام استوديو الصوت.';
+ }catch(e){
+  $('voiceAuthPanel').hidden=false;$('voiceStudioPanel').hidden=true;
+  $('voiceAuthStatus').textContent=e.message||'تعذر التحقق من جلسة الحساب.';
+ }
+}
+for(const [input,output,suffix] of [['voiceStability','voiceStabilityValue','%'],['voiceSimilarity','voiceSimilarityValue','%'],['voiceStyle','voiceStyleValue','%'],['voiceSpeed','voiceSpeedValue','×']]){
+ $(input).addEventListener('input',()=>$(output).textContent=(input==='voiceSpeed'?(Number($(input).value)/100).toFixed(1):$(input).value)+suffix);
+}
+$('voiceText').addEventListener('input',refreshVoiceCharacterCount);
+$('voiceLogin').addEventListener('click',async()=>{
+ const button=$('voiceLogin');button.disabled=true;
+ try{
+  const email=$('voiceEmail').value.trim(),password=$('voicePassword').value;
+  if(!email||!password)throw new Error('اكتب البريد الإلكتروني وكلمة المرور.');
+  await app.voiceSignIn(email,password);await refreshVoiceAuth();
+  $('voiceAuthStatus').textContent='تم تسجيل الدخول بنجاح.';
+ }catch(e){$('voiceAuthStatus').textContent=e.message||'تعذر تسجيل الدخول.';}
+ finally{button.disabled=false;}
+});
+$('voiceSignup').addEventListener('click',async()=>{
+ const button=$('voiceSignup');button.disabled=true;
+ try{
+  const email=$('voiceEmail').value.trim(),password=$('voicePassword').value;
+  if(!email||!password)throw new Error('اكتب البريد الإلكتروني وكلمة المرور.');
+  if(password.length<8)throw new Error('استخدم كلمة مرور من 8 أحرف على الأقل.');
+  const data=await app.voiceSignUp(email,password);
+  if(data.session){await refreshVoiceAuth();$('voiceAuthStatus').textContent='تم إنشاء الحساب وتسجيل الدخول.';}
+  else $('voiceAuthStatus').textContent='تم إنشاء الحساب. افتح رسالة تأكيد البريد، ثم ارجع وسجّل الدخول.';
+ }catch(e){$('voiceAuthStatus').textContent=e.message||'تعذر إنشاء الحساب.';}
+ finally{button.disabled=false;}
+});
+$('voiceSignOut').addEventListener('click',async()=>{
+ try{await app.voiceSignOut();await refreshVoiceAuth();setVoiceStatus('سجّلت الخروج من استوديو الصوت.');}
+ catch(e){setVoiceStatus(e.message||'تعذر تسجيل الخروج.',true);}
+});
+$('voiceLoadVoices').addEventListener('click',async()=>{
+ const button=$('voiceLoadVoices');button.disabled=true;button.textContent='جارٍ تحميل الأصوات...';
+ try{
+  const data=await app.callVoiceFunction({action:'voices'});
+  voiceUi.voices=Array.isArray(data.voices)?data.voices:[];
+  const select=$('voiceSelect');select.innerHTML='';
+  if(!voiceUi.voices.length){select.append(new Option('لم يتم العثور على أصوات في الحساب',''));throw new Error('لم يرجع حساب ElevenLabs أي أصوات. أضف صوتًا إلى My Voices أو أدخل Voice ID يدويًا.');}
+  select.append(new Option('اختار صوتًا...',''));
+  voiceUi.voices.forEach(v=>{
+   const labels=v.labels||{},lang=labels.language||labels.accent||'';
+   select.add(new Option(v.name+(lang?' — '+lang:''),v.voice_id));
+  });
+  setVoiceStatus('تم تحميل '+voiceUi.voices.length+' صوتًا من حسابك.');
+ }catch(e){setVoiceStatus(e.message||'تعذر تحميل قائمة الأصوات.',true);}
+ finally{button.disabled=false;button.textContent='تحميل الأصوات من ElevenLabs';}
+});
+$('voiceSelect').addEventListener('change',()=>{
+ const v=voiceUi.voices.find(x=>x.voice_id===$('voiceSelect').value),audio=$('voicePreview');
+ audio.pause();audio.removeAttribute('src');
+ if(v?.preview_url){audio.src=v.preview_url;audio.hidden=false;audio.load();}
+ else audio.hidden=true;
+ $('voiceId').value=v?.voice_id||'';
+});
+$('voiceUseScript').addEventListener('click',()=>{
+ const text=$('scriptOutput')?.value||'';
+ if(!text.trim())return setVoiceStatus('اكتب أو أنشئ سكريبت في صفحة كاتب السكريبت أولًا.',true);
+ $('voiceText').value=text;refreshVoiceCharacterCount();app.toast('تم نقل السكريبت إلى استوديو الصوت.');
+});
+$('voiceUseStudio').addEventListener('click',()=>{
+ const text=$('studioScript')?.value||'';
+ if(!text.trim())return setVoiceStatus('أنشئ حزمة محتوى أولًا أو اكتب السكريبت داخل الاستوديو.',true);
+ $('voiceText').value=text;refreshVoiceCharacterCount();app.toast('تم نقل سكريبت الحزمة إلى استوديو الصوت.');
+});
+$('voiceClearText').addEventListener('click',()=>{$('voiceText').value='';refreshVoiceCharacterCount();});
+$('voiceGenerate').addEventListener('click',async()=>{
+ const button=$('voiceGenerate'),text=$('voiceText').value.trim(),voiceId=$('voiceId').value.trim();
+ if(!text)return setVoiceStatus('اكتب النص الذي تريد تحويله أولًا.',true);
+ if(text.length>5000)return setVoiceStatus('النص أطول من 5000 حرف. قسّمه إلى أجزاء أصغر.',true);
+ if(!voiceId)return setVoiceStatus('اختر صوتًا أو أدخل Voice ID صالحًا.',true);
+ button.disabled=true;button.textContent='جارٍ إنشاء الصوت...';setVoiceStatus('يتم تحويل النص إلى صوت. قد تستغرق العملية بعض الوقت...');
+ try{
+  const blob=await app.callVoiceFunction({action:'generate',text,voice_id:voiceId,voice_settings:{
+   stability:Number($('voiceStability').value)/100,similarity_boost:Number($('voiceSimilarity').value)/100,
+   style:Number($('voiceStyle').value)/100,speed:Number($('voiceSpeed').value)/100,use_speaker_boost:true
+  }});
+  if(voiceUi.audioUrl)URL.revokeObjectURL(voiceUi.audioUrl);
+  voiceUi.audioUrl=URL.createObjectURL(blob);
+  const audio=$('voiceAudio');audio.src=voiceUi.audioUrl;audio.hidden=false;audio.load();
+  const download=$('voiceDownload');download.href=voiceUi.audioUrl;download.hidden=false;
+  $('voiceOutputEmpty').hidden=true;setVoiceStatus('الصوت جاهز! استمع إليه ثم نزّله بصيغة MP3.');
+ }catch(e){setVoiceStatus(e.message||'تعذر إنشاء الصوت. راجع إعدادات ElevenLabs وحاول مرة أخرى.',true);}
+ finally{button.disabled=false;button.textContent='حوّل النص إلى صوت';}
+});
+refreshVoiceCharacterCount();refreshVoiceAuth();
 
 const renderBrain=()=>{const p=state.profile;['brainNiche','brainAudience','brainGoal','brainPlatforms'].forEach((id,i)=>$(id).value=[p.niche,p.audience,p.goal,p.platforms][i]||'');$('brainIdeasCount').textContent=state.ideas.length;$('brainPacksCount').textContent=state.packs.length;$('brainPostsCount').textContent=state.posts.length;$('brainViewsCount').textContent=state.metrics.reduce((n,x)=>n+(Number(x.views)||0),0).toLocaleString('en-US');};
 $('saveBrain').addEventListener('click',()=>{state.profile={niche:$('brainNiche').value.trim(),audience:$('brainAudience').value.trim(),goal:$('brainGoal').value,platforms:$('brainPlatforms').value.trim()};app.save();app.toast('تم حفظ ملف صانع المحتوى.');renderBrain();});
