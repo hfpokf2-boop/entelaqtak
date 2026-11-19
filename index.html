@@ -76,7 +76,20 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 @media(max-width:600px){.challenge-hero{padding:16px}.challenge-ring{width:78px;height:78px;flex-basis:78px}.challenge-toolbar{align-items:flex-start;flex-direction:column}.challenge-filters{width:100%}.challenge-filters button{flex:1}.challenge-next{align-items:flex-start;flex-direction:column}.challenge-next button{width:100%}.challenge-footer{align-items:flex-start;flex-direction:column}}
 
 </style>
-</head>
+<style>
+#view-settings .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px}
+#view-settings label{display:block;margin:13px 0 5px;color:var(--muted);font-size:13px}
+#view-settings input,#view-settings select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);min-height:44px}
+#view-settings .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
+#view-settings button{border:1px solid var(--line);border-radius:10px;padding:10px 15px;color:var(--text);background:var(--panel2)}
+#view-settings button.primary{background:var(--accent);color:#111}
+#view-settings button.danger{background:#7f2638;border-color:#a43d52;margin-top:10px}
+#view-settings .note{font-size:12px;color:var(--muted);padding:10px 0}
+#view-settings .muted{color:var(--muted);font-size:13px}
+#view-settings .divider{height:1px;background:var(--line);margin:20px 0}
+#view-settings .status-line{margin-top:12px;padding:10px;border-radius:10px;background:var(--panel2);font-size:13px}
+@media(max-width:760px){#view-settings .grid2{display:block}}
+</style></head>
 <body>
 <div class="app">
 <aside class="sidebar">
@@ -93,6 +106,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
     <button data-view="calendar"><i>▦</i>تقويم النشر</button>
     <button data-view="analytics"><i>▥</i>متابعة الأداء</button>
     <button data-view="challenge"><i>♜</i>تحدي 30 يوم</button>
+    <button data-view="settings"><i>⚙</i>الإعدادات والبيانات</button>
   </nav>
   <div class="navlabel">ملفاتك</div>
   <nav class="nav"><button id="exportBtn"><i>⇩</i>تصدير نسخة احتياطية</button><button id="importBtn"><i>⇧</i>استيراد نسخة احتياطية</button><input id="importFile" type="file" accept="application/json" hidden></nav>
@@ -196,6 +210,35 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
  <div class="challenge-footer"><span>💡 الاستمرارية أهم من السرعة. نفّذ التحدي على إيقاعك.</span><button type="button" class="text-btn" id="challengeReset">إعادة ضبط التحدي</button></div>
 </section>
 
+
+<section class="view" id="view-settings">
+ <div class="head"><div><span class="eyebrow">تحكم في طريقة عمل الأدوات</span><h1>الإعدادات والبيانات ⚙</h1><p>بدّل بين القوالب المحلية ومزود ذكاء اصطناعي خارجي، واحتفظ بنسخة احتياطية من أعمالك.</p></div></div>
+ <div class="grid2">
+  <div class="card">
+   <h2>إعداد الذكاء الاصطناعي</h2>
+   <p class="muted">الوضع المحلي يعمل دون اتصال بمزود خارجي. وضع API يرسل مدخلات الأداة إلى المزود الذي تختاره.</p>
+   <label>وضع التشغيل</label><select id="aiMode"><option value="local">محلي / تجريبي</option><option value="api">ذكاء اصطناعي حقيقي عبر API</option></select>
+   <label>المزود</label><select id="aiProvider"><option value="openai">OpenAI متوافق مع Chat Completions</option><option value="gemini">Google Gemini</option><option value="custom">مزود مخصص متوافق مع OpenAI</option></select>
+   <label>نقطة النهاية (اتركها فارغة لاستخدام الافتراضي)</label><input id="aiEndpoint" type="url" placeholder="https://api.openai.com/v1/chat/completions">
+   <label>اسم النموذج</label><input id="aiModel" type="text" placeholder="gpt-4o-mini">
+   <label>مفتاح API</label><input id="aiKey" type="password" autocomplete="off" placeholder="أدخل المفتاح هنا">
+   <label>مهلة الاتصال بالمللي ثانية</label><input id="aiTimeout" type="number" min="5000" max="120000" step="1000">
+   <div class="actions"><button class="primary" id="saveAISettings" type="button">حفظ الإعدادات</button><button class="secondary" id="testAISettings" type="button">اختبار الاتصال</button></div>
+   <p class="note">تحذير أمني: هذا الموقع ثابت على GitHub Pages؛ مفتاح API يُحفظ في هذا المتصفح ويمكن كشفه من أدوات المطور. لا تستخدم مفتاحًا حساسًا أو مشتركًا. للاستخدام العام الآمن، استخدم وسيطًا خلفيًا يحمي المفتاح. بعض المزودين يمنعون طلبات المتصفح عبر CORS.</p>
+   <div id="aiSettingsStatus" class="status-line" role="status">الوضع المحلي جاهز.</div>
+  </div>
+  <div class="card">
+   <h2>النسخ الاحتياطي وإدارة البيانات</h2>
+   <p class="muted">بيانات الموقع محفوظة محليًا على هذا الجهاز والمتصفح. انقل نسخة JSON يدويًا عند تغيير الجهاز أو المتصفح.</p>
+   <div class="actions"><button class="primary" id="settingsExport" type="button">تصدير جميع البيانات JSON</button><button class="secondary" id="settingsImport" type="button">استيراد نسخة JSON</button><input id="settingsImportFile" type="file" accept="application/json,.json" hidden></div>
+   <div class="divider"></div>
+   <p>إصدار بنية البيانات: <b id="schemaVersionLabel">2</b></p>
+   <p>عدد الأفكار: <b id="dataIdeas">0</b> · الحزم: <b id="dataPacks">0</b> · المنشورات: <b id="dataPosts">0</b> · سجلات الأداء: <b id="dataMetrics">0</b></p>
+   <button class="danger" id="clearAllData" type="button">مسح جميع البيانات المحلية</button>
+   <p class="note">قبل المسح، صدّر نسخة احتياطية. المسح لا يمكن التراجع عنه بعد تأكيده.</p>
+  </div>
+ </div>
+</section>
 <footer class="footer"><span>© <span id="year"></span> انطلاقتك — مساحة تساعدك تبدأ وتستمر.</span><span>نسخة واجهة ثابتة · بياناتك محفوظة محليًا على هذا المتصفح</span></footer>
 </main>
 </div>
@@ -210,13 +253,26 @@ window.ENTELAQTAK_CONFIG = {
 <script>
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
-const defaults={ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false}};
+const DATA_VERSION=2;
+const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},settings:{aiMode:"local",provider:"openai",endpoint:"",model:"gpt-4o-mini",apiKey:"",timeout:45000}};
 let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null;
-let state={...defaults};
-try{const raw=JSON.parse(localStorage.getItem('entelaqtak-v1')||'{}');state={...defaults,...raw};['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});if(!state.challenge||typeof state.challenge!=='object')state.challenge={};if(!state.focus||typeof state.focus!=='object')state.focus={text:'',done:false};}catch(e){}
+function normalizeState(input){
+ const src=input&&typeof input==='object'?input:{};
+ const out={...defaults,...src,schemaVersion:DATA_VERSION};
+ for(const key of ['ideas','packs','posts','metrics'])out[key]=Array.isArray(src[key])?src[key]:[];
+ out.challenge=src.challenge&&typeof src.challenge==='object'&&!Array.isArray(src.challenge)?src.challenge:{};
+ out.focus=src.focus&&typeof src.focus==='object'?{text:String(src.focus.text||''),done:!!src.focus.done}:{...defaults.focus};
+ out.settings={...defaults.settings,...(src.settings&&typeof src.settings==='object'?src.settings:{})};
+ if(!['local','api'].includes(out.settings.aiMode))out.settings.aiMode='local';
+ if(!['openai','gemini','custom'].includes(out.settings.provider))out.settings.provider='openai';
+ out.settings.timeout=Math.min(120000,Math.max(5000,Number(out.settings.timeout)||45000));
+ return out;
+}
+let state=normalizeState({});
+try{const raw=JSON.parse(localStorage.getItem('entelaqtak-v1')||'{}');state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){try{localStorage.removeItem('entelaqtak-v1');}catch(_e){}}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
-const save=()=>{try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('مساحة التخزين ممتلئة؛ صدّر نسخة احتياطية.');}};
+const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}};
 
 function setAuthMessage(message,isError=false){toast(message);}
 function authErrorMessage(error){
@@ -331,15 +387,44 @@ async function connectAuth(){
   setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر الاتصال بخدمة الحساب حاليًا؛ تحقق من الإنترنت ثم أعد المحاولة.',true);
  }
 }
+function localDraft(tool,payload){
+ const p=payload||{},topic=p.topic||p.niche||p.seed||p.source||'موضوعك';
+ const title='فكرة محتوى: '+topic;
+ if(tool==='ideas')return 'وضع محلي تجريبي — اقتراحات أولية تحتاج مراجعة:\n\n1. '+title+' من زاوية سؤال شائع لدى الجمهور.\n2. أخطاء يقع فيها المبتدئون عند التعامل مع '+topic+'.\n3. دليل عملي من 3 خطوات حول '+topic+'.\n4. مقارنة بين طريقتين شائعتين في '+topic+'.\n5. قصة تجربة أو حالة واقعية موثقة مرتبطة بـ '+topic+'.\n\nخصص الأمثلة وتحقق من الحقائق قبل النشر.';
+ if(tool==='titles')return 'وضع محلي تجريبي — عناوين مقترحة:\n1. '+topic+': 5 نقاط تحتاج تعرفها\n2. قبل ما تبدأ في '+topic+' شاهد هذا الدليل\n3. أخطاء شائعة في '+topic+' وكيف تتجنبها\n\nفكرة الصورة: عنوان قصير واضح مع عنصر بصري واحد يعبر عن الموضوع. تجنب الوعود المبالغ فيها.';
+ if(tool==='seo')return 'مسودة وصف مبدئية عن '+topic+'، تشرح الفائدة المتوقعة وتلخص النقاط الأساسية بوضوح.\n\nكلمات مفتاحية مقترحة: '+topic+', دليل '+topic+', نصائح '+topic+'\n\nراجع الكلمات وحجم البحث يدويًا قبل الاعتماد عليها.';
+ if(tool==='repurpose')return 'صياغة تجريبية لمنصة '+(p.platform||'مختلفة')+':\n\n'+String(p.source||'أضف النص الأصلي أولًا').slice(0,900)+'\n\nأعد تحرير النص ليلائم المنصة والنبرة المطلوبة، ولا تنشره قبل المراجعة.';
+ return 'مسودة محلية تجريبية عن '+topic+'\n\nالمقدمة والخطاف: ابدأ بسؤال واضح يلامس مشكلة الجمهور.\n\nالمحاور:\n1. وضّح المشكلة والسياق.\n2. قدم خطوات أو أمثلة عملية يمكن التحقق منها.\n3. لخّص أهم نتيجة أو درس.\n\nالخاتمة: اطلب من الجمهور تجربة خطوة واحدة أو مشاركة سؤال.\n\nهذه مسودة قالبية وليست مخرجات نموذج ذكاء اصطناعي.';
+}
 async function callAI(tool,payload){
- const config=window.ENTELAQTAK_CONFIG||{};
- if(!config.url||!config.publishableKey)throw new Error('إعدادات خدمة الذكاء الاصطناعي غير مكتملة.');
- const response=await fetch(config.url+'/functions/v1/ai-assistant',{method:'POST',headers:{'Content-Type':'application/json','apikey':config.publishableKey},body:JSON.stringify({tool,payload})});
- let data={};try{data=await response.json();}catch(e){}
- if(!response.ok)throw new Error(data?.error||'تعذر الاتصال بخدمة الذكاء الاصطناعي ('+response.status+').');
- if(data?.error)throw new Error(data.error);
- if(typeof data?.text!=='string'||!data.text.trim())throw new Error('لم يصل محتوى من المساعد الذكي.');
- return data.text;
+ const cfg=state.settings||defaults.settings;
+ if(cfg.aiMode!=='api')return localDraft(tool,payload);
+ if(!cfg.apiKey?.trim())throw new Error('أدخل مفتاح API من إعدادات الذكاء الاصطناعي أولًا.');
+ const provider=cfg.provider||'openai';
+ const endpoint=(cfg.endpoint||'').trim()||(provider==='gemini'?'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent':'https://api.openai.com/v1/chat/completions');
+ const model=cfg.model?.trim()||(provider==='gemini'?'gemini-2.0-flash':'gpt-4o-mini');
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),cfg.timeout||45000);
+ const prompt='أنت مساعد لصانع محتوى عربي. أعد مسودة مفيدة ومنظمة باللغة العربية، ولا تخترع حقائق أو أرقامًا. وضّح ما يحتاج تحققًا.\nالأداة: '+tool+'\nالمدخلات: '+JSON.stringify(payload);
+ try{
+  let response,data={},textOut='';
+  if(provider==='gemini'){
+   const url=new URL(endpoint);url.searchParams.set('key',cfg.apiKey.trim());
+   response=await fetch(url.toString(),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7}}),signal:controller.signal});
+   data=await response.json().catch(()=>({}));
+   textOut=data?.candidates?.[0]?.content?.parts?.map(x=>x.text||'').join('\n')||'';
+  }else{
+   response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.apiKey.trim()},body:JSON.stringify({model,messages:[{role:'user',content:prompt}],temperature:0.7}),signal:controller.signal});
+   data=await response.json().catch(()=>({}));
+   textOut=data?.choices?.[0]?.message?.content||data?.output_text||'';
+  }
+  if(!response.ok)throw new Error(data?.error?.message||data?.error||'فشل طلب API برمز '+response.status+'. راجع المفتاح ونقطة النهاية وإعدادات CORS.');
+  if(!textOut.trim())throw new Error('استجاب المزود دون نص قابل للعرض.');
+  return textOut.trim();
+ }catch(error){
+  if(error.name==='AbortError')throw new Error('انتهت مهلة الاتصال. جرّب زيادة المهلة أو تحقق من الشبكة.');
+  if(/Failed to fetch|NetworkError|Load failed/i.test(error.message||''))throw new Error('تعذر الاتصال بالشبكة أو أن المزود منع طلب المتصفح عبر CORS. تحقق من نقطة النهاية.');
+  throw error;
+ }finally{clearTimeout(timer);}
 }
 function bindAIButton(id,tool,payloadFactory,onResult){
  $(id).addEventListener('click',async()=>{
@@ -353,11 +438,11 @@ function bindAIButton(id,tool,payloadFactory,onResult){
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('تم النسخ.');}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('تم النسخ.');}};
 const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
-const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','ideas','studio','repurpose','script','titles','seo','calendar','analytics','challenge']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
+const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','ideas','studio','repurpose','script','titles','seo','calendar','analytics','challenge','settings']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم',settings:'الإعدادات والبيانات'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
 
 all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
-const toolRoutes=[['الرئيسية','home'],['أفكار المحتوى','ideas'],['استوديو المحتوى','studio'],['إعادة تدوير المحتوى','repurpose'],['كاتب السكريبت','script'],['العناوين والصورة','titles'],['مساعد SEO','seo'],['تقويم النشر','calendar'],['متابعة الأداء','analytics'],['تحدي 30 يوم','challenge']];
+const toolRoutes=[['الرئيسية','home'],['أفكار المحتوى','ideas'],['استوديو المحتوى','studio'],['إعادة تدوير المحتوى','repurpose'],['كاتب السكريبت','script'],['العناوين والصورة','titles'],['مساعد SEO','seo'],['تقويم النشر','calendar'],['متابعة الأداء','analytics'],['تحدي 30 يوم','challenge'],['الإعدادات','settings']];
 const toolSearch=$('toolSearch');
 function jumpToTool(){const q=toolSearch.value.trim().toLocaleLowerCase('ar');if(!q)return;const match=toolRoutes.find(([name])=>name.toLocaleLowerCase('ar')===q)||toolRoutes.find(([name])=>name.toLocaleLowerCase('ar').includes(q)||q.includes(name.toLocaleLowerCase('ar')));if(match){go(match[1]);toolSearch.value='';toolSearch.blur();}else toast('مش لاقي أداة بالاسم ده. جرّب اسم أداة من القائمة.');}
 toolSearch.addEventListener('change',jumpToTool);
@@ -473,9 +558,9 @@ function renderChallenge(){
 }
 all('[data-challenge-filter]').forEach(b=>b.addEventListener('click',()=>{challengeFilter=b.dataset.challengeFilter;renderChallenge();}));
 $('challengeReset').addEventListener('click',()=>{if(!confirm('متأكد إنك عايز تصفّر تقدم تحدي الـ30 يوم؟'))return;state.challenge={};save();renderChallenge();renderHome();toast('بدأنا التحدي من جديد. كل التوفيق!');});
-$('exportBtn').addEventListener('click',()=>download('entelaqtak-backup.json',JSON.stringify({app:'انطلاقتك',exportedAt:new Date().toISOString(),...state},null,2),'application/json'));
+$('exportBtn').addEventListener('click',exportAllData);
 $('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d||typeof d!=='object')throw 0;if(!confirm('استيراد النسخة سيستبدل بياناتك الحالية على هذا الجهاز. متابعة؟'))return;state={...defaults,...d};['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});if(!state.challenge||typeof state.challenge!=='object')state.challenge={};save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح.');}finally{e.target.value='';}});
+$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{if(f.size>5*1024*1024)throw new Error('حجم الملف كبير.');const parsed=JSON.parse(await f.text()),d=parsed.data||parsed;if(!d||typeof d!=='object'||Array.isArray(d))throw new Error('صيغة غير صحيحة');for(const k of ['ideas','packs','posts','metrics'])if(d[k]!==undefined&&!Array.isArray(d[k]))throw new Error('بنية البيانات غير صحيحة');if(!confirm('سيتم استبدال البيانات الحالية. متابعة؟'))return;state=normalizeState({...d,settings:{...state.settings,...(d.settings||{}),apiKey:state.settings.apiKey||''}});save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح: '+err.message);}finally{e.target.value='';}});
 bindAIButton('generateIdeasAI','ideas',()=>({niche:$('ideaNiche').value,platform:$('ideaPlatform').value,type:$('ideaType').value,audience:$('ideaAudience').value,seed:$('ideaSeed').value}),text=>{$('ideasResult').className='result';$('ideasResult').textContent=text;state.ideas.push({id:Date.now(),title:'أفكار الذكاء الاصطناعي',detail:text,niche:$('ideaNiche').value,platform:$('ideaPlatform').value});save();renderHome();});
 bindAIButton('makeScriptAI','script',()=>({topic:$('scriptTopic').value,duration:$('scriptDuration').value,style:$('scriptStyle').value,audience:$('scriptAudience').value,points:$('scriptPoints').value}),text=>{$('scriptOutput').value=text;});
 bindAIButton('studioAI','content_pack',()=>({topic:$('studioTopic').value,niche:$('studioNiche').value,platform:$('studioPlatform').value,audience:$('studioAudience').value,tone:$('studioTone').value,duration:$('studioDuration').value,angle:$('studioAngle').value,notes:$('studioNotes').value}),text=>{$('studioScript').value=text;});
@@ -483,8 +568,51 @@ bindAIButton('makeTitlesAI','titles',()=>({topic:$('titleTopic').value,benefit:$
 bindAIButton('makeSeoAI','seo',()=>({topic:$('seoTopic').value,niche:$('seoNiche').value,keywords:$('seoKeywords').value,platform:$('seoPlatform').value}),text=>{$('seoDescription').value=text;});
 bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').value,platform:$('repurposePlatform').value,tone:$('repurposeTone').value,audience:$('repurposeAudience').value}),text=>{$('repurposeOutput').value=text;});
 
-function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();}
-$('year').textContent=new Date().getFullYear();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
+
+function renderSettings(){
+ const c=state.settings||defaults.settings;
+ $('aiMode').value=c.aiMode;$('aiProvider').value=c.provider;$('aiEndpoint').value=c.endpoint||'';
+ $('aiModel').value=c.model||'';$('aiKey').value=c.apiKey||'';$('aiTimeout').value=c.timeout||45000;
+ $('schemaVersionLabel').textContent=DATA_VERSION;$('dataIdeas').textContent=state.ideas.length;$('dataPacks').textContent=state.packs.length;$('dataPosts').textContent=state.posts.length;$('dataMetrics').textContent=state.metrics.length;
+ $('aiSettingsStatus').textContent=c.aiMode==='api'?'وضع API مفعّل — سيتم استخدام المزود المحدد عند التوليد.':'الوضع المحلي التجريبي مفعّل — لا يتم إرسال طلبات خارجية.';
+}
+function exportAllData(){
+ const copyState=normalizeState(state);copyState.settings={...copyState.settings,apiKey:''};
+ download('entelaqtak-backup-v'+DATA_VERSION+'.json',JSON.stringify({app:'انطلاقتك',schemaVersion:DATA_VERSION,exportedAt:new Date().toISOString(),data:copyState},null,2),'application/json');
+ toast('تم تصدير بياناتك. تم استبعاد مفتاح API للحماية.');
+}
+$('saveAISettings').addEventListener('click',()=>{
+ state.settings={...state.settings,aiMode:$('aiMode').value,provider:$('aiProvider').value,endpoint:$('aiEndpoint').value.trim(),model:$('aiModel').value.trim(),apiKey:$('aiKey').value.trim(),timeout:Number($('aiTimeout').value)||45000};
+ if(state.settings.endpoint){try{const u=new URL(state.settings.endpoint);if(!['https:','http:'].includes(u.protocol))throw 0;}catch(e){toast('نقطة النهاية غير صالحة.');return;}}
+ save();renderSettings();toast('تم حفظ إعدادات الذكاء الاصطناعي على هذا الجهاز.');
+});
+$('testAISettings').addEventListener('click',async()=>{
+ const b=$('testAISettings'),old=b.textContent;b.disabled=true;b.textContent='جارٍ الاختبار...';
+ try{const result=await callAI('test',{topic:'اختبار اتصال'});$('aiSettingsStatus').textContent=state.settings.aiMode==='local'?'الوضع المحلي يعمل. للتحقق من API الحقيقي، اختر وضع API واحفظ مفتاحًا صالحًا.':'نجح الاتصال واستلمنا استجابة من المزود.';if(state.settings.aiMode==='local')toast('الوضع المحلي يعمل؛ لم يتم إرسال طلب API.');else toast('تم اختبار الاتصال بنجاح.');}
+ catch(e){$('aiSettingsStatus').textContent='فشل الاختبار: '+e.message;toast(e.message);}
+ finally{b.disabled=false;b.textContent=old;}
+});
+$('settingsExport').addEventListener('click',exportAllData);
+$('settingsImport').addEventListener('click',()=>$('settingsImportFile').click());
+$('settingsImportFile').addEventListener('change',async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ try{
+  if(file.size>5*1024*1024)throw new Error('حجم الملف أكبر من 5 ميجابايت.');
+  const parsed=JSON.parse(await file.text()),incoming=parsed.data||parsed;
+  if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw new Error('صيغة الملف غير صحيحة.');
+  for(const key of ['ideas','packs','posts','metrics'])if(incoming[key]!==undefined&&!Array.isArray(incoming[key]))throw new Error('بنية حقل '+key+' غير صحيحة.');
+  if(!confirm('سيتم استبدال بياناتك الحالية بالنسخة المستوردة. هل أنشأت نسخة من بياناتك الحالية؟ متابعة؟'))return;
+  const preservedSettings={...state.settings,...(incoming.settings||{}),apiKey:state.settings.apiKey||''};
+  state=normalizeState({...incoming,settings:preservedSettings});save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
+ }catch(err){toast('تعذر الاستيراد: '+err.message);}
+ finally{e.target.value='';}
+});
+$('clearAllData').addEventListener('click',()=>{
+ if(!confirm('تحذير: سيتم حذف جميع الأفكار والحزم والمنشورات والإحصاءات والتقدم والإعدادات المحلية نهائيًا. هل أنت متأكد؟'))return;
+ state=normalizeState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
+});
+function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiMode'))renderSettings();}
+$('year').textContent=new Date().getFullYear();if($('aiMode'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
 })();
 </script>
 </body></html>
