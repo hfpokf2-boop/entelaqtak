@@ -224,7 +224,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
    <label>مفتاح API</label><input id="aiKey" type="password" autocomplete="off" placeholder="أدخل المفتاح هنا">
    <label>مهلة الاتصال بالمللي ثانية</label><input id="aiTimeout" type="number" min="5000" max="120000" step="1000">
    <div class="actions"><button class="primary" id="saveAISettings" type="button">حفظ الإعدادات</button><button class="secondary" id="testAISettings" type="button">اختبار الاتصال</button></div>
-   <p class="note">تحذير أمني: هذا الموقع ثابت على GitHub Pages؛ مفتاح API يُحفظ في هذا المتصفح ويمكن كشفه من أدوات المطور. لا تستخدم مفتاحًا حساسًا أو مشتركًا. للاستخدام العام الآمن، استخدم وسيطًا خلفيًا يحمي المفتاح. بعض المزودين يمنعون طلبات المتصفح عبر CORS.</p>
+   <p class="note">تنبيه أمني: مفتاح API يبقى في ذاكرة الصفحة فقط ولا يُحفظ في localStorage أو النسخ الاحتياطية، لكنه يظل قابلًا للرؤية من أدوات المطور وأثناء استخدام المتصفح. لا تستخدم مفتاحًا مشتركًا أو ذا صلاحيات واسعة. لحماية حقيقية عند نشر الموقع للعموم، اربط الخدمة بوسيط خلفي يحفظ المفتاح كسرّ. يلزم HTTPS ونطاق المزود الرسمي؛ وقد تمنع بعض الخدمات طلبات المتصفح عبر CORS.</p>
    <div id="aiSettingsStatus" class="status-line" role="status">الوضع المحلي جاهز.</div>
   </div>
   <div class="card">
@@ -254,22 +254,22 @@ window.ENTELAQTAK_CONFIG = {
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const DATA_VERSION=2;
-const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},settings:{aiMode:"local",provider:"openai",endpoint:"",model:"gpt-4o-mini",apiKey:"",timeout:45000}};
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null;
+const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},settings:{aiMode:"local",provider:"openai",endpoint:"",model:"gpt-4o-mini",timeout:45000}};
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null,sessionApiKey="";
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
  for(const key of ['ideas','packs','posts','metrics'])out[key]=Array.isArray(src[key])?src[key]:[];
  out.challenge=src.challenge&&typeof src.challenge==='object'&&!Array.isArray(src.challenge)?src.challenge:{};
  out.focus=src.focus&&typeof src.focus==='object'?{text:String(src.focus.text||''),done:!!src.focus.done}:{...defaults.focus};
- out.settings={...defaults.settings,...(src.settings&&typeof src.settings==='object'?src.settings:{})};
+ out.settings={...defaults.settings,...(src.settings&&typeof src.settings==='object'?src.settings:{})};delete out.settings.apiKey;
  if(!['local','api'].includes(out.settings.aiMode))out.settings.aiMode='local';
  if(!['openai','gemini','custom'].includes(out.settings.provider))out.settings.provider='openai';
  out.settings.timeout=Math.min(120000,Math.max(5000,Number(out.settings.timeout)||45000));
  return out;
 }
 let state=normalizeState({});
-try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
+try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);sessionApiKey=typeof raw?.settings?.apiKey==='string'?raw.settings.apiKey:'';state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
 const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}};
@@ -399,7 +399,7 @@ function localDraft(tool,payload){
 async function callAI(tool,payload){
  const cfg=state.settings||defaults.settings;
  if(cfg.aiMode!=='api')return localDraft(tool,payload);
- if(!cfg.apiKey?.trim())throw new Error('أدخل مفتاح API من إعدادات الذكاء الاصطناعي أولًا.');
+ if(!sessionApiKey.trim())throw new Error('أدخل مفتاح API من إعدادات الذكاء الاصطناعي أولًا.');
  const provider=cfg.provider||'openai';
  const endpoint=(cfg.endpoint||'').trim()||(provider==='gemini'?'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent':'https://api.openai.com/v1/chat/completions');
  const model=cfg.model?.trim()||(provider==='gemini'?'gemini-2.0-flash':'gpt-4o-mini');
@@ -408,12 +408,11 @@ async function callAI(tool,payload){
  try{
   let response,data={},textOut='';
   if(provider==='gemini'){
-   const url=new URL(endpoint);url.searchParams.set('key',cfg.apiKey.trim());
-   response=await fetch(url.toString(),{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7}}),signal:controller.signal});
+   response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':sessionApiKey.trim()},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7}}),signal:controller.signal});
    data=await response.json().catch(()=>({}));
    textOut=data?.candidates?.[0]?.content?.parts?.map(x=>x.text||'').join('\n')||'';
   }else{
-   response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+cfg.apiKey.trim()},body:JSON.stringify({model,messages:[{role:'user',content:prompt}],temperature:0.7}),signal:controller.signal});
+   response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+sessionApiKey.trim()},body:JSON.stringify({model,messages:[{role:'user',content:prompt}],temperature:0.7}),signal:controller.signal});
    data=await response.json().catch(()=>({}));
    textOut=data?.choices?.[0]?.message?.content||data?.output_text||'';
   }
@@ -572,7 +571,7 @@ bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').val
 function renderSettings(){
  const c=state.settings||defaults.settings;
  $('aiMode').value=c.aiMode;$('aiProvider').value=c.provider;$('aiEndpoint').value=c.endpoint||'';
- $('aiModel').value=c.model||'';$('aiKey').value=c.apiKey||'';$('aiTimeout').value=c.timeout||45000;
+ $('aiModel').value=c.model||'';$('aiKey').value=sessionApiKey;$('aiTimeout').value=c.timeout||45000;
  $('schemaVersionLabel').textContent=DATA_VERSION;$('dataIdeas').textContent=state.ideas.length;$('dataPacks').textContent=state.packs.length;$('dataPosts').textContent=state.posts.length;$('dataMetrics').textContent=state.metrics.length;
  $('aiSettingsStatus').textContent=c.aiMode==='api'?'وضع API مفعّل — سيتم استخدام المزود المحدد عند التوليد.':'الوضع المحلي التجريبي مفعّل — لا يتم إرسال طلبات خارجية.';
 }
@@ -582,8 +581,9 @@ function exportAllData(){
  toast('تم تصدير بياناتك. تم استبعاد مفتاح API للحماية.');
 }
 $('saveAISettings').addEventListener('click',()=>{
- state.settings={...state.settings,aiMode:$('aiMode').value,provider:$('aiProvider').value,endpoint:$('aiEndpoint').value.trim(),model:$('aiModel').value.trim(),apiKey:$('aiKey').value.trim(),timeout:Number($('aiTimeout').value)||45000};
- if(state.settings.endpoint){try{const u=new URL(state.settings.endpoint);if(!['https:','http:'].includes(u.protocol))throw 0;}catch(e){toast('نقطة النهاية غير صالحة.');return;}}
+ sessionApiKey=$('aiKey').value.trim();
+ state.settings={...state.settings,aiMode:$('aiMode').value,provider:$('aiProvider').value,endpoint:$('aiEndpoint').value.trim(),model:$('aiModel').value.trim(),timeout:Number($('aiTimeout').value)||45000};
+ if(state.settings.endpoint){try{const u=new URL(state.settings.endpoint);const expected=state.settings.provider==='gemini'?'generativelanguage.googleapis.com':state.settings.provider==='openai'?'api.openai.com':null;if(u.protocol!=='https:'||u.username||u.password||(expected&&u.hostname!==expected))throw 0;}catch(e){toast('نقطة النهاية غير آمنة أو لا تطابق مزود الخدمة. استخدم HTTPS ونطاق المزود الصحيح.');return;}}
  save();renderSettings();toast('تم حفظ إعدادات الذكاء الاصطناعي على هذا الجهاز.');
 });
 $('testAISettings').addEventListener('click',async()=>{
@@ -602,14 +602,14 @@ $('settingsImportFile').addEventListener('change',async e=>{
   if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw new Error('صيغة الملف غير صحيحة.');
   for(const key of ['ideas','packs','posts','metrics'])if(incoming[key]!==undefined&&!Array.isArray(incoming[key]))throw new Error('بنية حقل '+key+' غير صحيحة.');
   if(!confirm('سيتم استبدال بياناتك الحالية بالنسخة المستوردة. هل أنشأت نسخة من بياناتك الحالية؟ متابعة؟'))return;
-  const preservedSettings={...state.settings,...(incoming.settings||{}),apiKey:state.settings.apiKey||''};
+  const preservedSettings={...state.settings,...(incoming.settings||{})};delete preservedSettings.apiKey;
   state=normalizeState({...incoming,settings:preservedSettings});save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
  }catch(err){toast('تعذر الاستيراد: '+err.message);}
  finally{e.target.value='';}
 });
 $('clearAllData').addEventListener('click',()=>{
  if(!confirm('تحذير: سيتم حذف جميع الأفكار والحزم والمنشورات والإحصاءات والتقدم والإعدادات المحلية نهائيًا. هل أنت متأكد؟'))return;
- state=normalizeState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
+ state=normalizeState({});sessionApiKey='';$('aiKey').value='';save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
 });
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiMode'))renderSettings();}
 $('year').textContent=new Date().getFullYear();if($('aiMode'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
