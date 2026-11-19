@@ -592,7 +592,7 @@ $('saveAISettings').addEventListener('click',()=>{
 });
 $('testAISettings').addEventListener('click',async()=>{
  const b=$('testAISettings'),old=b.textContent;b.disabled=true;b.textContent='جارٍ الاختبار...';
- try{const result=await callAI('test',{topic:'اختبار اتصال'});$('aiSettingsStatus').textContent=state.settings.aiMode==='local'?'الوضع المحلي يعمل. للتحقق من API الحقيقي، اختر وضع API واحفظ مفتاحًا صالحًا.':'نجح الاتصال واستلمنا استجابة من المزود.';if(state.settings.aiMode==='local')toast('الوضع المحلي يعمل؛ لم يتم إرسال طلب API.');else toast('تم اختبار الاتصال بنجاح.');}
+ try{sessionApiKey=$('aiKey').value.trim();const result=await callAI('test',{topic:'اختبار اتصال'});$('aiSettingsStatus').textContent=state.settings.aiMode==='local'?'الوضع المحلي يعمل. للتحقق من API الحقيقي، اختر وضع API واحفظ مفتاحًا صالحًا.':'نجح الاتصال واستلمنا استجابة من المزود.';if(state.settings.aiMode==='local')toast('الوضع المحلي يعمل؛ لم يتم إرسال طلب API.');else toast('تم اختبار الاتصال بنجاح.');}
  catch(e){$('aiSettingsStatus').textContent='فشل الاختبار: '+e.message;toast(e.message);}
  finally{b.disabled=false;b.textContent=old;}
 });
