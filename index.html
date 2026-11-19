@@ -219,10 +219,10 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
  <div class="head"><div><span class="eyebrow">تحكم في طريقة عمل الأدوات</span><h1>الإعدادات والبيانات ⚙</h1><p>استخدم أدوات المحتوى المحلية واحتفظ بنسخة احتياطية من أعمالك.</p></div></div>
  <div class="grid2">
   <div class="card">
-   <h2>مساعد المحتوى المحلي</h2>
-   <p class="muted">أدوات انطلاقتك تعمل مباشرة دون مفاتيح API أو ربط حسابات خارجية. المخرجات قوالب ومسودات قابلة للتعديل والمراجعة.</p>
+   <h2>مساعد المحتوى الذكي</h2>
+   <p class="muted">توليد أفكار وسكريبتات وعناوين وتحسين المحتوى عبر خدمة AI آمنة على الخادم، دون إدخال مفتاح داخل الموقع.</p>
    <div class="note">لا تحتاج لإدخال أي مفتاح أو بيانات اتصال. بياناتك وأعمالك تظل محفوظة محليًا على جهازك.</div>
-   <div id="aiSettingsStatus" class="status-line" role="status">المساعد المحلي جاهز.</div>
+   <div id="aiSettingsStatus" class="status-line" role="status">المساعد الذكي متصل بالخادم.</div>
   </div>
 <div class="card">
    <h2>النسخ الاحتياطي وإدارة البيانات</h2>
@@ -296,7 +296,7 @@ function updateAccountUI(){
  $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
  $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
  $('accountSync').textContent=currentUser?'متصل':'محلي';
- $('accountAI').textContent='المساعد المحلي جاهز';
+ $('accountAI').textContent='مساعد ذكي عبر الخادم';
  $('syncState').textContent=currentUser?'مزامنة الحساب مفعّلة':'محلي على هذا الجهاز';
  $('connectionBadge').innerHTML='<span class="dot"></span>'+(currentUser?'متصل بحسابك':'مساحة العمل');
  $('authSignOut').hidden=!currentUser;
