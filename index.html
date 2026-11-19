@@ -165,12 +165,12 @@ window.ENTELAQTAK_CONFIG = {
   publishableKey: "sb_publishable_C2IK6I_dArVgsJayOHajVw_bM2zLK2i"
 };
 </script>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0/dist/umd/supabase.js"></script>
+<!-- Supabase loads asynchronously so a CDN delay cannot block the app. -->
 <script>
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const defaults={ideas:[],packs:[],posts:[],metrics:[],challenge:{}};
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkLoading=false;
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null;
 let state={...defaults};
 try{const raw=JSON.parse(localStorage.getItem('entelaqtak-v1')||'{}');state={...defaults,...raw};['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});if(!state.challenge||typeof state.challenge!=='object')state.challenge={};}catch(e){}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
@@ -228,23 +228,46 @@ async function loadCloudWorkspace(){
  }catch(e){console.error('Cloud workspace load failed',e);setAuthMessage('تعذر تحميل المشاريع. تأكد من تطبيق إعدادات قاعدة البيانات، ثم حاول مرة أخرى.',true);}
  finally{cloudLoading=false;}
 }
-function connectAuth(){
+async function loadSupabaseSdk(){
+ if(window.supabase?.createClient)return window.supabase;
+ if(authSdkPromise)return authSdkPromise;
+ authSdkPromise=(async()=>{
+  const sources=['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0','https://unpkg.com/@supabase/supabase-js@2.95.0'];
+  let lastError;
+  for(const src of sources){
+   try{
+    await new Promise((resolve,reject)=>{
+     const script=document.createElement('script');
+     const timer=setTimeout(()=>{script.remove();reject(new Error('انتهت مهلة تحميل مكتبة الاتصال.'));},10000);
+     script.src=src;script.async=true;
+     script.onload=()=>{clearTimeout(timer);if(window.supabase?.createClient)resolve();else reject(new Error('مكتبة الاتصال لم تتهيأ بعد التحميل.'));};
+     script.onerror=()=>{clearTimeout(timer);script.remove();reject(new Error('تعذر الوصول إلى مصدر مكتبة الاتصال.'));};
+     document.head.appendChild(script);
+    });
+    return window.supabase;
+   }catch(error){lastError=error;}
+  }
+  throw lastError||new Error('تعذر تحميل مكتبة الاتصال.');
+ })();
+ try{return await authSdkPromise;}finally{authSdkPromise=null;}
+}
+async function connectAuth(){
  const config=window.ENTELAQTAK_CONFIG||{};
  if(!config.url||!config.publishableKey){setAuthMessage('إعدادات ربط قاعدة البيانات غير مكتملة.');return;}
- if(!window.supabase?.createClient){
-  if(authSdkLoading)return;
-  authSdkLoading=true;
-  const fallback=document.createElement('script');
-  fallback.src='https://unpkg.com/@supabase/supabase-js@2.95.0/dist/umd/supabase.js';
-  fallback.onload=()=>{authSdkLoading=false;if(window.supabase?.createClient)connectAuth();else setAuthMessage('تعذر تحميل خدمة تسجيل الحساب. حدّث الصفحة وحاول مرة أخرى.',true);};
-  fallback.onerror=()=>{authSdkLoading=false;setAuthMessage('تعذر تحميل خدمة تسجيل الحساب. تحقق من اتصال الإنترنت ثم حدّث الصفحة.',true);};
-  document.head.appendChild(fallback);
-  return;
+ try{
+  const sdk=await loadSupabaseSdk();
+  sbClient=sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  sbClient.auth.onAuthStateChange((event,session)=>{currentUser=session?.user||null;updateAccountUI();if(currentUser&&event!=='SIGNED_OUT')setTimeout(()=>loadCloudWorkspace(),0);});
+  const {data,error}=await sbClient.auth.getSession();
+  if(error)throw error;
+  currentUser=data.session?.user||null;updateAccountUI();
+  if(currentUser)await loadCloudWorkspace();
+  else setAuthMessage('خدمات الحساب جاهزة. سجّل الدخول لمزامنة مشاريعك واستخدام أدوات الذكاء الاصطناعي.');
+ }catch(error){
+  console.error('Supabase initialization failed',error);
+  updateAccountUI();
+  setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر الاتصال بخدمة الحساب حاليًا؛ تحقق من الإنترنت ثم أعد المحاولة.',true);
  }
- sbClient=window.supabase.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
- sbClient.auth.onAuthStateChange((event,session)=>{currentUser=session?.user||null;updateAccountUI();if(currentUser&&event!=='SIGNED_OUT')setTimeout(()=>loadCloudWorkspace(),0);});
- sbClient.auth.getSession().then(({data,error})=>{if(error){console.error(error);return;}currentUser=data.session?.user||null;updateAccountUI();if(currentUser)loadCloudWorkspace();});
- updateAccountUI();
 }
 $('authSignUp').addEventListener('click',async()=>{
  if(!sbClient)return setAuthMessage('تسجيل الحسابات لم يتم تفعيله بعد. سيتم ربط قاعدة البيانات بعد تجهيز مشروع Supabase.',true);
