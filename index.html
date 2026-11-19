@@ -206,11 +206,15 @@ async function loadCloudWorkspace(){
  if(!sbClient||!currentUser)return;
  cloudLoading=true;
  try{
+  const storedOwner=localStorage.getItem('entelaqtak-workspace-owner');
+  const localForThisUser=(!storedOwner||storedOwner===currentUser.id)?state:{...defaults};
   const {data,error}=await sbClient.from('user_workspaces').select('data').eq('user_id',currentUser.id).maybeSingle();
   if(error)throw error;
-  if(data?.data&&typeof data.data==='object'&&!Array.isArray(data.data))state=mergeWorkspace(state,data.data);
+  if(data?.data&&typeof data.data==='object'&&!Array.isArray(data.data))state=mergeWorkspace(localForThisUser,data.data);
+  else state=localForThisUser;
   ['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});
   if(!state.challenge||typeof state.challenge!=='object')state.challenge={};
+  localStorage.setItem('entelaqtak-workspace-owner',currentUser.id);
   localStorage.setItem('entelaqtak-v1',JSON.stringify(state));renderAll();
   const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:currentUser.id,data:state,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   if(saveError)throw saveError;
