@@ -169,12 +169,176 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 @media(max-width:520px){.start-path-actions{align-items:flex-start}.start-guide-button{font-size:9px}}
 
 
+
+/* Creator Workspace — premium command-center refresh */
+:root{
+ --workspace-violet:#9b8cff;
+ --workspace-mint:#62e0c5;
+ --workspace-glass:rgba(19,28,48,.88);
+ --workspace-border:rgba(153,171,214,.17);
+}
+.app{grid-template-columns:276px minmax(0,1fr)}
+.sidebar{
+ padding:23px 16px;
+ background:
+  radial-gradient(260px 240px at 100% 0%,rgba(139,124,246,.13),transparent 72%),
+  linear-gradient(180deg,#141d33f7 0%,#0d1528f7 100%);
+ border-left:1px solid rgba(151,166,207,.2);
+ box-shadow:16px 0 48px rgba(2,7,20,.16);
+}
+.brand{padding:0 8px 20px}
+.brandmark{
+ width:47px;height:47px;border-radius:16px;
+ background:linear-gradient(145deg,#b6aaff 0%,#8878f5 48%,#51d7c3 100%);
+ color:#10182a;font-weight:900;
+ box-shadow:0 8px 26px rgba(116,103,230,.36),inset 0 1px 0 rgba(255,255,255,.55);
+}
+.brand strong{letter-spacing:.1px}
+.workspace-card{
+ position:relative;isolation:isolate;overflow:hidden;
+ margin:0 2px 17px;padding:15px 14px 12px;
+ border:1px solid rgba(164,151,255,.37);border-radius:19px;
+ background:
+  radial-gradient(180px 120px at 4% 0%,rgba(98,224,197,.19),transparent 78%),
+  radial-gradient(180px 140px at 100% 100%,rgba(139,124,246,.25),transparent 78%),
+  linear-gradient(145deg,#27264c 0%,#1a2540 58%,#142c3d 100%);
+ box-shadow:0 15px 34px rgba(3,8,22,.27),inset 0 1px 0 rgba(255,255,255,.08);
+}
+.workspace-card:after{
+ content:"";position:absolute;z-index:-1;left:-30px;bottom:-80px;
+ width:170px;height:170px;border:1px solid rgba(255,255,255,.08);
+ border-radius:50%;box-shadow:0 0 0 18px rgba(255,255,255,.018),0 0 0 38px rgba(255,255,255,.014);
+}
+.workspace-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.workspace-mark{
+ display:grid;place-items:center;width:37px;height:37px;border-radius:12px;
+ color:#131a2b;font-size:21px;font-weight:bold;
+ background:linear-gradient(140deg,#d0c8ff,#8b7cf6 60%,#70e5d0);
+ box-shadow:0 7px 18px rgba(123,109,235,.3);
+}
+.workspace-live{
+ display:inline-flex;align-items:center;gap:6px;padding:5px 8px;
+ border:1px solid rgba(113,231,201,.2);border-radius:99px;
+ background:rgba(10,24,34,.24);color:#b4f2e3;font-size:9px;
+}
+.workspace-live i{width:6px;height:6px;border-radius:50%;background:#67e3bd;box-shadow:0 0 9px #67e3bd;display:inline-block}
+.workspace-card>strong{display:block;margin-top:11px;color:#fff;font-size:17px;letter-spacing:.1px}
+.workspace-card>p{margin:3px 0 12px;color:#bdc9dc;font-size:10px;line-height:1.8;max-width:230px}
+.workspace-start{
+ display:flex;align-items:center;justify-content:center;gap:7px;width:100%;
+ padding:9px 10px;border:1px solid rgba(255,255,255,.15);border-radius:11px;
+ background:linear-gradient(100deg,#a99cff,#70ddcb);color:#141b2c;
+ font-size:10px;font-weight:900;box-shadow:0 7px 17px rgba(105,202,191,.14);
+ transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;
+}
+.workspace-start span{font-size:16px;line-height:1}
+.workspace-start:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 10px 22px rgba(105,202,191,.22)}
+.workspace-card-meta{
+ display:flex;justify-content:space-between;gap:8px;margin-top:11px;padding-top:9px;
+ border-top:1px solid rgba(255,255,255,.1);color:#8798b7;
+ font-size:7px;letter-spacing:.8px;font-weight:800;
+}
+.navlabel{padding:10px 12px 7px;color:#8293b2;font-size:9px;letter-spacing:.7px;font-weight:900}
+.nav .nav-group-label{
+ margin-top:10px;padding:12px 12px 7px;border-top:1px solid rgba(149,164,204,.15);
+ color:#8999b8;font-size:9px;letter-spacing:.45px;
+}
+.nav{gap:6px}
+.nav button{
+ min-height:45px;padding:9px 11px;border:1px solid transparent;
+ border-radius:13px;color:#b7c3d8;font-size:11px;font-weight:600;
+}
+.nav button i{
+ display:grid;place-items:center;flex:0 0 29px;width:29px;height:29px;
+ border:1px solid rgba(166,181,220,.1);border-radius:9px;
+ background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
+ color:#b7b0ff;font-size:16px;
+}
+.nav button:hover{
+ background:linear-gradient(100deg,rgba(139,124,246,.14),rgba(85,214,194,.045));
+ border-color:rgba(139,124,246,.23);color:#fff;transform:translateX(-2px);
+}
+.nav button.active{
+ background:linear-gradient(100deg,rgba(139,124,246,.24),rgba(85,214,194,.09));
+ border-color:rgba(157,144,255,.46);
+ box-shadow:inset -3px 0 0 var(--workspace-mint),0 7px 20px rgba(3,8,22,.16);
+ color:#fff;
+}
+.nav button.active i{
+ border-color:rgba(164,151,255,.32);
+ background:linear-gradient(145deg,rgba(173,159,255,.25),rgba(85,214,194,.13));
+ color:#d8d2ff;
+}
+.side-note{
+ border-color:rgba(153,171,214,.18);
+ background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
+ box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
+}
+.main{padding-top:22px}
+.top{
+ position:sticky;top:10px;z-index:18;
+ margin-bottom:24px;padding:12px 15px;
+ border:1px solid var(--workspace-border);border-radius:17px;
+ background:rgba(14,22,40,.84);backdrop-filter:blur(18px);
+ box-shadow:0 12px 34px rgba(2,7,20,.2),inset 0 1px 0 rgba(255,255,255,.045);
+}
+.crumb{display:flex;align-items:center;gap:7px;color:#8798b7;font-size:9px}
+.crumb:before{content:"";display:inline-block;width:6px;height:6px;border-radius:2px;background:linear-gradient(135deg,var(--workspace-violet),var(--workspace-mint));box-shadow:0 0 10px rgba(98,224,197,.42)}
+.toptitle{font-size:20px;letter-spacing:.1px}
+.tool-search{border-color:rgba(153,171,214,.2);background:rgba(5,12,25,.48);height:39px}
+.tool-search:focus-within{border-color:rgba(98,224,197,.55);box-shadow:0 0 0 3px rgba(98,224,197,.1)}
+.topactions .pill,.enhance-pill{
+ border-color:rgba(153,171,214,.2);background:rgba(255,255,255,.045);
+}
+.hero{gap:13px}
+.hero-main{
+ border-color:rgba(155,140,255,.38);
+ box-shadow:0 20px 48px rgba(3,8,22,.2),inset 0 1px 0 rgba(255,255,255,.06);
+ background:
+  radial-gradient(300px 230px at 4% 100%,rgba(85,214,194,.16),transparent 74%),
+  radial-gradient(360px 260px at 100% 0%,rgba(139,124,246,.18),transparent 75%),
+  linear-gradient(125deg,#27264a 0%,#19253e 58%,#142b3a 100%);
+}
+.hero-main h1 span{background:linear-gradient(100deg,#c9c0ff,#83e5d2);background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero-side{border-color:rgba(98,224,197,.2);box-shadow:0 15px 32px rgba(3,8,22,.14)}
+.stat{background:linear-gradient(145deg,rgba(34,46,75,.93),rgba(19,28,49,.97));border-color:rgba(153,171,214,.16)}
+.stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(3,8,22,.2)}
+.quick button{background:linear-gradient(145deg,#1c2945,#141e34);border-color:rgba(153,171,214,.18)}
+.quick button em{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,rgba(139,124,246,.2),rgba(85,214,194,.1));border:1px solid rgba(153,171,214,.15)}
+@media(max-width:1050px){
+ .app{grid-template-columns:238px minmax(0,1fr)}
+ .workspace-card{padding:13px 12px 11px}
+}
+@media(max-width:760px){
+ .app{display:block}
+ .sidebar{padding:6px 8px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -12px 32px rgba(2,7,20,.2)}
+ .workspace-card{display:none}
+ .top{position:relative;top:auto;padding:10px 11px;margin-bottom:17px;border-radius:14px}
+ .toptitle{font-size:17px}
+ .main{padding-top:14px}
+ .nav button i{border:0;background:transparent}
+}
+@media(prefers-reduced-motion:reduce){
+ .workspace-start,.nav button,.stat{transition:none}
+ .workspace-start:hover,.nav button:hover,.stat:hover{transform:none}
+}
+
 </style></head>
 <body>
 <div class="app">
 <aside class="sidebar">
   <div class="brand"><div class="brandmark">ن</div><div><strong>انطلاقتك</strong><small>استوديو صُنّاع المحتوى</small></div></div>
-  <div class="navlabel">مساحة العمل</div>
+  <section class="workspace-card" aria-label="مساحة العمل">
+    <div class="workspace-card-top">
+      <span class="workspace-mark" aria-hidden="true">✦</span>
+      <span class="workspace-live"><i></i> مساحة إبداعك</span>
+    </div>
+    <strong>مساحة العمل</strong>
+    <p>مركزك لإدارة الأفكار وصناعة المحتوى والنشر في مكان واحد.</p>
+    <button class="workspace-start" type="button" data-go="studio"><span aria-hidden="true">＋</span> ابدأ مشروع محتوى</button>
+    <div class="workspace-card-meta"><span>CREATOR WORKSPACE</span><span>01 / STUDIO</span></div>
+  </section>
+  <div class="navlabel">الإنتاج اليومي</div>
   <nav class="nav" id="nav">
     <button class="active" data-view="home"><i>⌂</i>الرئيسية</button>
     <button data-view="ideas"><i>✧</i>أفكار المحتوى</button>
@@ -185,10 +349,10 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
     <button data-view="titles"><i>▣</i>العناوين والصورة</button>
     <button data-view="seo"><i>⌕</i>مساعد SEO</button>
     <button data-view="calendar"><i>▦</i>تقويم النشر</button>
-    <div class="navlabel nav-group-label">التخطيط والمتابعة</div>
+    <div class="navlabel nav-group-label">التخطيط وقياس الأداء</div>
     <button data-view="analytics"><i>▥</i>متابعة الأداء</button>
     <button data-view="challenge"><i>♜</i>تحدي 30 يوم</button>
-    <div class="navlabel nav-group-label">أدوات ذكية وتطوير</div>
+    <div class="navlabel nav-group-label">الإدارة والتطوير</div>
     <button data-view="settings"><i>⚙</i>الإعدادات والبيانات</button>
   </nav>
   <div class="navlabel">ملفاتك</div>
