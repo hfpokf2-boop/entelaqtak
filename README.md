@@ -37,3 +37,8 @@
 - لا تضع مفتاح ElevenLabs في الواجهة أو GitHub. أضفه من Supabase Dashboard > Edge Functions > Secrets.
 - يتطلب المفتاح صلاحية قراءة الأصوات وتوليد الكلام. قد تستهلك كل عملية توليد رصيدًا من خطة ElevenLabs.
 - الإصدار الأول لا يتضمن استنساخ الأصوات أو رفع عينات صوتية.
+### إعداد مفتاح ElevenLabs
+1. أنشئ مفتاح API من إعدادات ElevenLabs مع صلاحية قراءة الأصوات وتحويل النص إلى كلام.
+2. افتح [أسرار Supabase للمشروع](https://supabase.com/dashboard/project/dbetanrnhdabuachxdhc/functions/secrets).
+3. أضف `ELEVENLABS_API_KEY` في خانة Key والصق المفتاح في Value ثم احفظ.
+4. أعد فتح استوديو الصوت وسجّل الدخول، ثم حمّل الأصوات وجرّب نصًا قصيرًا.
