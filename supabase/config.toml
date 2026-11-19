@@ -1,3 +1,6 @@
 # Keep JWT verification enabled for user-facing AI requests.
 [functions.ai-assistant]
 verify_jwt = false
+
+[functions.elevenlabs-speech]
+verify_jwt = true
