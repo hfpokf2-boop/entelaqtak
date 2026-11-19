@@ -101,13 +101,17 @@
  <div class="head"><div><span class="eyebrow">ملفاتك معاك على كل جهاز</span><h1>حسابك ومساحة العمل ☁️</h1><p>أنشئ حسابًا واحتفظ بأفكارك وحزمك وتقويمك في مساحة خاصة بك.</p></div></div>
  <div class="two">
   <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>حساب انطلاقتك</h3><span id="authState">غير مسجل</span></div>
-   <p class="sub">استخدم بريدك الإلكتروني وكلمة مرور لتسجيل حسابك أو الدخول إلى مساحة العمل.</p>
-   <div class="field"><label for="authName">الاسم (للحساب الجديد)</label><input id="authName" autocomplete="name" placeholder="اسمك أو اسم القناة"></div>
+   <p class="sub">سجّل دخولك بسهولة باستخدام كود تحقق يُرسل إلى بريدك الإلكتروني، أو استخدم كلمة المرور.</p>
+   <div class="field"><label for="authName">الاسم (للحساب الجديد - اختياري)</label><input id="authName" autocomplete="name" placeholder="اسمك أو اسم القناة"></div>
    <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com"></div>
-   <div class="field"><label for="authPassword">كلمة المرور</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="8 أحرف على الأقل"></div>
-   <div class="actions"><button class="btn" id="authSignIn">تسجيل الدخول</button><button class="btn alt" id="authSignUp">إنشاء حساب</button><button class="btn ghost" id="authSignOut" hidden>تسجيل الخروج</button></div>
-   <div style="display:flex;align-items:center;gap:10px;margin:13px 0;color:var(--muted);font-size:12px"><span style="height:1px;background:var(--line);flex:1"></span>أو</div>
-   <button class="btn alt" id="authGoogle" type="button" style="width:100%;background:#fff;color:#222;border:1px solid #ddd">🌐 المتابعة باستخدام Google (Gmail)</button>
+   <div class="field"><label for="authPassword">كلمة المرور (اختياري)</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="للدخول بالطريقة المعتادة"></div>
+   <div class="actions"><button class="btn" id="authSignIn">دخول بكلمة المرور</button><button class="btn alt" id="authSignUp">إنشاء حساب بكلمة مرور</button><button class="btn ghost" id="authSignOut" hidden>تسجيل الخروج</button></div>
+   <div style="display:flex;align-items:center;gap:10px;margin:13px 0;color:var(--muted);font-size:12px"><span style="height:1px;background:var(--line);flex:1"></span>تسجيل بدون كلمة مرور</div>
+   <button class="btn" id="authSendOtp" type="button" style="width:100%">📩 ابعتلي كود على البريد</button>
+   <div id="authOtpBox" hidden style="margin-top:12px">
+    <div class="field"><label for="authOtp">كود التحقق المكوّن من 6 أرقام</label><input id="authOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456"></div>
+    <button class="btn alt" id="authVerifyOtp" type="button" style="width:100%">تأكيد الكود وتسجيل الدخول</button>
+   </div>
    <button class="btn alt" id="authForgotPassword" type="button" style="margin-top:10px;width:100%">🔑 نسيت كلمة المرور؟ اضغط هنا لإرسال رابط إعادة التعيين</button>
    <div id="authRecoveryBox" hidden style="margin-top:12px">
     <p class="sub">اكتب كلمة مرور جديدة بعد فتح رابط الاستعادة الذي وصلك على البريد.</p>
@@ -311,11 +315,27 @@ $('authSignUp').addEventListener('click',()=>withAuthButton('authSignUp',async()
  else setAuthMessage('تم إنشاء الحساب. افتح أحدث رسالة تأكيد وصلتك، ثم ارجع وسجّل الدخول.');
  updateAccountUI();
 }));
-$('authGoogle').addEventListener('click',()=>withAuthButton('authGoogle',async()=>{
-  if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
-  const {error}=await sbClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:APP_URL}});
-  if(error)throw error;
- }));
+$('authSendOtp').addEventListener('click',()=>withAuthButton('authSendOtp',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
+ const email=$('authEmail').value.trim(),name=$('authName').value.trim();
+ if(!email||!/^\\S+@\\S+\\.\\S+$/.test(email))throw new Error('اكتب بريدًا إلكترونيًا صحيحًا أولًا.');
+ const {error}=await sbClient.auth.signInWithOtp({email,options:{shouldCreateUser:true,data:name?{display_name:name}:{}}});
+ if(error)throw error;
+ $('authOtpBox').hidden=false;
+ setAuthMessage('بعتنالك كود تحقق على بريدك. اكتب الكود المكوّن من 6 أرقام هنا، وراجع Spam لو مش ظاهر.');
+}));
+$('authVerifyOtp').addEventListener('click',()=>withAuthButton('authVerifyOtp',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
+ const email=$('authEmail').value.trim(),token=$('authOtp').value.trim();
+ if(!email)throw new Error('اكتب بريدك الإلكتروني أولًا.');
+ if(!/^\\d{6}$/.test(token))throw new Error('اكتب كود التحقق المكوّن من 6 أرقام.');
+ const {data,error}=await sbClient.auth.verifyOtp({email,token,type:'email'});
+ if(error)throw error;
+ $('authOtp').value='';
+ $('authOtpBox').hidden=true;
+ currentUser=data.user;updateAccountUI();await loadCloudWorkspace();
+ setAuthMessage('تم تأكيد الكود وتسجيل الدخول بنجاح.');
+}));
  $('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
  const email=$('authEmail').value.trim(),password=$('authPassword').value;
