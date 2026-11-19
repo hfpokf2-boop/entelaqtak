@@ -293,7 +293,6 @@ const go=id=>{all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
 all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 all('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copy);copy(el.value!==undefined?el.value:el.textContent);}));
-$('themeInfo').addEventListener('click',()=>toast('انطلاقتك — كل الأدوات في مكان واحد.'));
 function renderHome(){
  $('statIdeas').textContent=state.ideas.length;$('statPacks').textContent=state.packs.length;$('statPosts').textContent=state.posts.length;$('statViews').textContent=state.metrics.reduce((s,x)=>s+(+x.views||0),0).toLocaleString('en-US');
  const done=Object.values(state.challenge).filter(Boolean).length,pct=Math.round(done/30*100);$('homeChallengeBar').style.width=pct+'%';$('homeChallengeText').textContent=done+' من 30 مهمة';$('homeChallengePct').textContent=pct+'%';$('homeChallengeTitle').textContent=done?'استمر — أنت بتتقدم!':'ابدأ بأول خطوة';
