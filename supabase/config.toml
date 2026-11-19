@@ -1,0 +1,3 @@
+# Keep JWT verification enabled for user-facing AI requests.
+[functions.ai-assistant]
+verify_jwt = true
