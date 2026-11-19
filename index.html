@@ -19,6 +19,44 @@
 @media(max-width:1050px){.app{grid-template-columns:215px minmax(0,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:760px){.app{display:block}.sidebar{position:fixed;right:0;left:0;bottom:0;top:auto;height:auto;padding:7px 7px calc(7px + env(safe-area-inset-bottom));border-left:0;border-top:1px solid var(--line);background:#0c1b16f5;backdrop-filter:blur(18px)}.nav{display:flex;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain}.nav::-webkit-scrollbar{display:none}.nav button{flex:0 0 64px;white-space:nowrap;scroll-snap-align:center}.sidebar{overflow:visible}.brand,.navlabel,.side-note{display:none}.nav{display:flex;justify-content:space-around;gap:2px}.nav button{justify-content:center;flex-direction:column;gap:1px;padding:5px 3px;border-radius:9px;font-size:8px;min-width:0}.nav i{font-size:17px}.main{padding:17px 13px 100px}.top{margin-bottom:18px}.toptitle{font-size:17px}.pill{font-size:9px}.hero{grid-template-columns:1fr}.hero-main{min-height:220px;padding:21px}.hero-side{min-height:170px}.quick{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.head h1{font-size:22px}.grid2{grid-template-columns:1fr}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:20px}.calendaritem{grid-template-columns:48px minmax(0,1fr) auto;gap:7px}.metricgrid{grid-template-columns:repeat(3,1fr)}.footer{margin-bottom:10px}}
 @media(max-width:390px){.nav button{font-size:7px}.nav i{font-size:15px}.stats{grid-template-columns:repeat(2,1fr)}.metricgrid{grid-template-columns:1fr 1fr}.topactions .pill{display:none}}
+
+/* Product polish: consistent interaction states and mobile workspace */
+:root{color-scheme:dark;--shadow:0 20px 55px #05091488}
+::selection{background:#8b7cf655;color:#fff}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
+button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:none!important}
+.sidebar{background:linear-gradient(180deg,#151e34f5,#10182bf5);border-left-color:#34415f}
+.nav button{min-height:42px}
+.nav button.active{background:linear-gradient(105deg,#8b7cf633,#55d6c20e);border-color:#8b7cf677;box-shadow:inset -3px 0 0 var(--accent)}
+.hero-main{background:radial-gradient(420px 220px at 8% 100%,#55d6c21b,transparent 70%),linear-gradient(120deg,#8b7cf633,#18243b 62%,#172239)}
+.hero-side,.panel,.stat,.quick button{transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
+.panel:hover,.hero-side:hover,.stat:hover{border-color:#59698d}
+.quick button:hover{box-shadow:0 12px 28px #05091455}
+.focuspanel{background:radial-gradient(360px 150px at 0 100%,#55d6c21b,transparent 75%),linear-gradient(120deg,#28234b,#17243d);border-color:#8b7cf655}
+.focusrow input:focus{border-color:var(--accent2);box-shadow:0 0 0 3px #55d6c21c;outline:none}
+.field input:focus,.field select:focus,.field textarea:focus,.control:focus{border-color:var(--accent2);box-shadow:0 0 0 3px #55d6c21c}
+.result{border-color:#435276;background:linear-gradient(145deg,#10192d,#0e1629)}
+.toast{max-width:min(92vw,480px);text-align:center;line-height:1.7}
+@media(max-width:760px){
+ .sidebar{background:#0d1427f7;border-top:1px solid #394766;padding:6px 8px calc(7px + env(safe-area-inset-bottom))}
+ .sidebar>nav.nav:not(#nav){display:none}
+ #nav{display:flex;justify-content:flex-start;gap:5px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:0 2px}
+ #nav::-webkit-scrollbar{display:none}
+ #nav button{flex:0 0 72px;min-width:72px;min-height:55px;white-space:nowrap;scroll-snap-align:center;padding:5px 4px;font-size:9px;border:1px solid transparent}
+ #nav button.active{background:#8b7cf626;border-color:#8b7cf655;box-shadow:inset 0 2px 0 var(--accent)}
+ #nav button i{font-size:18px}
+ .main{padding-bottom:112px}
+ .focuspanel{padding:13px}
+ .topactions .pill{display:inline-flex}
+}
+@media(max-width:390px){
+ #nav button{flex-basis:67px;min-width:67px;font-size:8px}
+ .topactions .pill{display:none}
+}
+@media(prefers-reduced-motion:reduce){
+ *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 </head>
 <body>
