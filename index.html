@@ -106,6 +106,12 @@
    <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com"></div>
    <div class="field"><label for="authPassword">كلمة المرور</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="8 أحرف على الأقل"></div>
    <div class="actions"><button class="btn" id="authSignIn">تسجيل الدخول</button><button class="btn alt" id="authSignUp">إنشاء حساب</button><button class="btn ghost" id="authSignOut" hidden>تسجيل الخروج</button></div>
+   <button class="mini" id="authForgotPassword" type="button" style="margin-top:9px">نسيت كلمة المرور؟ إرسال رابط استعادة</button>
+   <div id="authRecoveryBox" hidden style="margin-top:12px">
+    <p class="sub">اكتب كلمة مرور جديدة بعد فتح رابط الاستعادة الذي وصلك على البريد.</p>
+    <div class="field"><label for="authNewPassword">كلمة المرور الجديدة</label><input id="authNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="8 أحرف على الأقل"></div>
+    <button class="btn" id="authUpdatePassword" type="button">حفظ كلمة المرور الجديدة</button>
+   </div>
    <p id="authMessage" class="sub" aria-live="polite" style="margin-top:12px"></p>
   </div>
   <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>حالة مساحة العمل</h3><span id="syncState">محلي على هذا الجهاز</span></div>
@@ -178,6 +184,23 @@ const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clear
 const save=()=>{try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('مساحة التخزين ممتلئة؛ صدّر نسخة احتياطية.');}if(!cloudLoading)scheduleCloudSave();};
 
 function setAuthMessage(message,isError=false){$('authMessage').textContent=message;$('authMessage').style.color=isError?'#ff9ba8':'#9db5a9';}
+function authErrorMessage(error){
+ const code=error?.code||error?.error_code||'';
+ const message=String(error?.message||'');
+ if(code==='invalid_credentials'||/invalid login credentials/i.test(message))return 'البريد الإلكتروني أو كلمة المرور غير صحيحة. تأكد من نفس البريد الذي أنشأت به الحساب، أو استخدم «نسيت كلمة المرور؟».';
+ if(code==='email_not_confirmed'||/email not confirmed/i.test(message))return 'الحساب موجود، لكن تأكيد البريد لم يكتمل. افتح أحدث رسالة تأكيد فقط.';
+ if(/rate.?limit/i.test(message))return 'تم طلب رسائل كثيرة خلال وقت قصير. انتظر قليلًا قبل طلب رسالة أخرى.';
+ if(/otp_expired|one-time token not found|invalid or has expired/i.test(message))return 'رابط البريد قديم أو انتهت صلاحيته. اطلب رابطًا جديدًا واستخدم أحدث رسالة فقط.';
+ return message||'حدث خطأ أثناء تنفيذ الطلب. حاول مرة أخرى.';
+}
+async function withAuthButton(id,task){
+ const button=$(id),old=button.textContent;
+ if(button.disabled)return;
+ button.disabled=true;
+ try{await task();}
+ catch(error){console.error('Authentication action failed',error);setAuthMessage(authErrorMessage(error),true);}
+ finally{button.disabled=false;button.textContent=old;}
+}
 function updateAccountUI(){
  $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
  $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
@@ -257,7 +280,11 @@ async function connectAuth(){
  try{
   const sdk=await loadSupabaseSdk();
   sbClient=sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  sbClient.auth.onAuthStateChange((event,session)=>{currentUser=session?.user||null;updateAccountUI();if(currentUser&&event!=='SIGNED_OUT')setTimeout(()=>loadCloudWorkspace(),0);});
+  sbClient.auth.onAuthStateChange((event,session)=>{
+   currentUser=session?.user||null;updateAccountUI();
+   if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('account');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
+   if(currentUser&&event!=='SIGNED_OUT')setTimeout(()=>loadCloudWorkspace(),0);
+  });
   const {data,error}=await sbClient.auth.getSession();
   if(error)throw error;
   currentUser=data.session?.user||null;updateAccountUI();
@@ -269,27 +296,46 @@ async function connectAuth(){
   setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر الاتصال بخدمة الحساب حاليًا؛ تحقق من الإنترنت ثم أعد المحاولة.',true);
  }
 }
-$('authSignUp').addEventListener('click',async()=>{
- if(!sbClient)return setAuthMessage('تسجيل الحسابات لم يتم تفعيله بعد. سيتم ربط قاعدة البيانات بعد تجهيز مشروع Supabase.',true);
+$('authSignUp').addEventListener('click',()=>withAuthButton('authSignUp',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
  const email=$('authEmail').value.trim(),password=$('authPassword').value,name=$('authName').value.trim();
- if(!email||password.length<8)return setAuthMessage('أدخل بريدًا صحيحًا وكلمة مرور من 8 أحرف على الأقل.',true);
- const {data,error}=await sbClient.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:location.href}});
- if(error)return setAuthMessage(error.message,true);
+ if(!email||password.length<8)throw new Error('أدخل بريدًا صحيحًا وكلمة مرور من 8 أحرف على الأقل.');
+ const {data,error}=await sbClient.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:location.origin+location.pathname}});
+ if(error)throw error;
+ $('authPassword').value='';
  if(data.session){currentUser=data.user;await loadCloudWorkspace();}
- else setAuthMessage('تم إنشاء الحساب. افتح رسالة البريد لتأكيده، ثم ارجع وسجّل الدخول.');
+ else setAuthMessage('تم إنشاء الحساب. افتح أحدث رسالة تأكيد وصلتك، ثم ارجع وسجّل الدخول.');
  updateAccountUI();
-});
-$('authSignIn').addEventListener('click',async()=>{
- if(!sbClient)return setAuthMessage('تسجيل الدخول لم يتم تفعيله بعد. سيتم ربط قاعدة البيانات بعد تجهيز مشروع Supabase.',true);
+}));
+$('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
  const email=$('authEmail').value.trim(),password=$('authPassword').value;
- if(!email||!password)return setAuthMessage('أدخل البريد الإلكتروني وكلمة المرور.',true);
+ if(!email||!password)throw new Error('أدخل البريد الإلكتروني وكلمة المرور.');
  const {data,error}=await sbClient.auth.signInWithPassword({email,password});
- if(error)return setAuthMessage(error.message,true);
+ if(error)throw error;
+ $('authPassword').value='';
  currentUser=data.user;updateAccountUI();await loadCloudWorkspace();
-});
+}));
+$('authForgotPassword').addEventListener('click',()=>withAuthButton('authForgotPassword',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا.');
+ const email=$('authEmail').value.trim();
+ if(!email)throw new Error('اكتب بريدك الإلكتروني أولًا في خانة البريد.');
+ const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+ if(error)throw error;
+ setAuthMessage('لو البريد مرتبط بحساب، هتوصلك رسالة استعادة. افتح أحدث رسالة فقط، وراجع مجلد Spam أيضًا.');
+}));
+$('authUpdatePassword').addEventListener('click',()=>withAuthButton('authUpdatePassword',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا.');
+ const password=$('authNewPassword').value;
+ if(password.length<8)throw new Error('كلمة المرور الجديدة لازم تكون 8 أحرف على الأقل.');
+ const {error}=await sbClient.auth.updateUser({password});
+ if(error)throw error;
+ $('authNewPassword').value='';$('authRecoveryBox').hidden=true;
+ setAuthMessage('تم تغيير كلمة المرور بنجاح. استخدم كلمة المرور الجديدة في المرات القادمة.');
+}));
 $('authSignOut').addEventListener('click',async()=>{
  if(!sbClient)return;
- const {error}=await sbClient.auth.signOut();if(error)return setAuthMessage(error.message,true);
+ const {error}=await sbClient.auth.signOut();if(error)return setAuthMessage(authErrorMessage(error),true);
  currentUser=null;updateAccountUI();setAuthMessage('تم تسجيل الخروج. مشاريعك السحابية ما زالت محفوظة.');
 });
 async function callAI(tool,payload){
