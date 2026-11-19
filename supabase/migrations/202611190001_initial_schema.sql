@@ -77,7 +77,7 @@ create or replace function public.handle_new_entelaqtak_user()
 returns trigger
 language plpgsql
 security definer
-set search_path = public
+set search_path = ''
 as $$
 begin
   insert into public.profiles (id, display_name)
@@ -96,6 +96,10 @@ drop trigger if exists on_auth_user_created_entelaqtak on auth.users;
 create trigger on_auth_user_created_entelaqtak
   after insert on auth.users
   for each row execute procedure public.handle_new_entelaqtak_user();
+
+revoke all on table public.profiles, public.user_workspaces, public.ai_usage from anon, authenticated;
+
+revoke all on function public.handle_new_entelaqtak_user() from public;
 
 grant select, update on public.profiles to authenticated;
 grant select, insert, update, delete on public.user_workspaces to authenticated;
