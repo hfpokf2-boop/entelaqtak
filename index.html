@@ -318,7 +318,7 @@ $('authSignUp').addEventListener('click',()=>withAuthButton('authSignUp',async()
 $('authSendOtp').addEventListener('click',()=>withAuthButton('authSendOtp',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
  const email=$('authEmail').value.trim(),name=$('authName').value.trim();
- if(!email||!/^\\S+@\\S+\\.\\S+$/.test(email))throw new Error('اكتب بريدًا إلكترونيًا صحيحًا أولًا.');
+ if(!email||!/^\S+@\S+\.\S+$/.test(email))throw new Error('اكتب بريدًا إلكترونيًا صحيحًا أولًا.');
  const {error}=await sbClient.auth.signInWithOtp({email,options:{shouldCreateUser:true,data:name?{display_name:name}:{}}});
  if(error)throw error;
  $('authOtpBox').hidden=false;
@@ -328,7 +328,7 @@ $('authVerifyOtp').addEventListener('click',()=>withAuthButton('authVerifyOtp',a
  if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
  const email=$('authEmail').value.trim(),token=$('authOtp').value.trim();
  if(!email)throw new Error('اكتب بريدك الإلكتروني أولًا.');
- if(!/^\\d{6}$/.test(token))throw new Error('اكتب كود التحقق المكوّن من 6 أرقام.');
+ if(!/^\d{6}$/.test(token))throw new Error('اكتب كود التحقق المكوّن من 6 أرقام.');
  const {data,error}=await sbClient.auth.verifyOtp({email,token,type:'email'});
  if(error)throw error;
  $('authOtp').value='';
