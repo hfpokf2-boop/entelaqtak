@@ -43,6 +43,7 @@ function copyText(t){if(!t.trim())return app.toast('لا يوجد نص لنسخ�
 function downloadText(name,t){if(!t.trim())return app.toast('لا يوجد محتوى للتحميل.');const u=URL.createObjectURL(new Blob([t],{type:'text/plain;charset=utf-8'})),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000);}
 const originalGo=app.go;
 app.go=id=>{originalGo(id);if(id==='brain')renderBrain();if(id==='brand')renderBrand();if(id==='lab')renderExperiments();if(id==='academy')renderAcademy();};
+links.forEach(([id])=>{const b=nav.querySelector('[data-view="'+id+'"]');if(b)b.addEventListener('click',()=>app.go(id));});
 app.addViews&&links.forEach(x=>app.addViews.add(x[0]));
 renderBrain();renderBrand();renderExperiments();renderAcademy();app.save();
 })();
