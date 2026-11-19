@@ -155,6 +155,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
   <button class="btn" id="generateStudio">أنشئ حزمة المحتوى ✦</button></div>
   <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>مكتبة الحزم المحفوظة</h3><span id="studioSavedCount">0 حزمة</span></div><p class="sub">احفظ الحزم المهمة وارجع لها وقت ما تحتاج.</p><div class="savedlist" id="studioHistory"><div class="empty">احفظ أول حزمة لتظهر هنا.</div></div><div class="note">المحتوى مسودة قابلة للتحرير. راجع الحقائق وأضف تجربتك ومصادرك قبل النشر.</div></div></div>
  <div class="panel" id="studioOutput" style="margin-top:15px"><div class="sectionrow" style="margin-top:0"><h3>نتيجة حزمة المحتوى</h3><span id="studioStatus">بانتظار فكرتك</span></div><div class="grid2"><div><div class="eyebrow">الفكرة والخطاف</div><div class="result empty" id="studioHook">سيظهر الخطاف هنا.</div><div class="eyebrow" style="margin-top:12px">عناوين مقترحة</div><div id="studioTitles" class="result empty">سيظهر المحتوى هنا.</div><div class="eyebrow" style="margin-top:12px">الكلمات والهاشتاجات</div><div id="studioKeywords" class="result empty">سيظهر المحتوى هنا.</div></div><div><div class="eyebrow">السكريبت — قابل للتعديل</div><textarea id="studioScript" class="control" style="min-height:260px" placeholder="سيظهر السكريبت هنا بعد إنشاء الحزمة."></textarea><div class="eyebrow" style="margin-top:12px">وصف المنشور — قابل للتعديل</div><textarea id="studioDescription" class="control" style="min-height:110px" placeholder="سيظهر الوصف هنا."></textarea></div></div><div class="two" style="margin-top:12px"><div><div class="eyebrow">تصوّر الصورة المصغّرة</div><div class="result empty" id="studioThumbnail">سيظهر التصور هنا.</div></div><div><div class="eyebrow">قائمة اللقطات</div><div class="result empty" id="studioShots">ستظهر قائمة التصوير هنا.</div></div></div><div class="actions" style="margin-top:12px"><button class="btn small" id="saveStudio">حفظ الحزمة</button><button class="btn small alt" id="studioAI">حسّن الحزمة بالذكاء الاصطناعي</button><button class="btn small alt" id="copyStudioAll">نسخ الحزمة</button><button class="btn small alt" id="downloadStudio">تحميل TXT</button><button class="btn small ghost" id="studioToCalendar">إرسال عنوان للتقويم</button></div></div>
+<div class="panel" style="margin-top:15px"><div class="sectionrow"><h3>قائمة المراجعة قبل النشر</h3><span id="prePublishProgress">0 من 6</span></div><p class="sub">علّم على كل نقطة بعد مراجعتها. الاختيارات محفوظة على جهازك.</p><div class="grid2" id="prePublishChecklist"><label><input type="checkbox" data-precheck="hook"> الخطاف واضح ويشد الانتباه</label><label><input type="checkbox" data-precheck="facts"> راجعت صحة المعلومات والمصادر</label><label><input type="checkbox" data-precheck="audio"> الصوت والإضاءة بجودة مناسبة</label><label><input type="checkbox" data-precheck="thumb"> الصورة المصغّرة واضحة ومقروءة</label><label><input type="checkbox" data-precheck="seo"> العنوان والوصف والكلمات المفتاحية جاهزة</label><label><input type="checkbox" data-precheck="cta"> توجد دعوة واضحة للتفاعل</label></div><button class="btn small alt" id="resetPrePublish" type="button" style="margin-top:12px">إعادة تعيين القائمة</button></div>
 </section>
 
 <section class="view" id="view-repurpose">
@@ -170,6 +171,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 <section class="view" id="view-script">
  <div class="head"><div><span class="eyebrow">رتّب كلامك قبل التسجيل</span><h1>كاتب السكريبت ✍️</h1><p>حوّل الموضوع إلى هيكل فيديو واضح مع مقدمة ومحاور وخاتمة.</p></div></div>
  <div class="two"><div class="panel"><h3>بيانات الفيديو</h3><p class="sub">اكتب الموضوع وحدد المدة والجمهور.</p><div class="field"><label for="scriptTopic">موضوع الفيديو</label><input id="scriptTopic" placeholder="عن إيه هتتكلم؟"></div><div class="grid2"><div class="field"><label for="scriptDuration">المدة</label><select id="scriptDuration"><option>5–8 دقائق</option><option>8–12 دقيقة</option><option>15–20 دقيقة</option><option>30–60 ثانية</option><option>60–90 ثانية</option></select></div><div class="field"><label for="scriptStyle">الأسلوب</label><select id="scriptStyle"><option>بسيط وودود</option><option>حماسي</option><option>تعليمي</option><option>قصصي</option><option>كوميدي</option></select></div></div><div class="field"><label for="scriptAudience">الجمهور</label><input id="scriptAudience" placeholder="مثال: المبتدئين"></div><div class="field"><label for="scriptPoints">نقاط لازم تذكرها</label><textarea id="scriptPoints" placeholder="نقطة أولى، نقطة ثانية..."></textarea></div><button class="btn" id="makeScript">اكتب مسودة السكريبت</button><button class="btn alt" id="makeScriptAI" style="margin-top:8px">اكتب بالذكاء الاصطناعي ✨</button></div><div class="panel"><h3>مسودة السكريبت</h3><p class="sub">راجع النص وأضف أمثلة من تجربتك.</p><textarea id="scriptOutput" style="min-height:420px" placeholder="السكريبت هيظهر هنا..."></textarea><div class="resultactions"><button class="btn small alt" data-copy="scriptOutput">نسخ النص</button><button class="btn small alt" id="downloadScript">تحميل TXT</button></div></div></div>
+<div class="panel" style="margin-top:15px"><div class="sectionrow"><h3>مكتبتي من قوالب السكريبت</h3><span id="scriptTemplatesCount">0 قالب</span></div><p class="sub">احفظ السكريبتات المفيدة كقوالب وارجع لها وقت ما تحتاج.</p><div class="grid2"><div class="field"><label for="scriptTemplateName">اسم القالب</label><input id="scriptTemplateName" placeholder="مثال: قالب فيديو تعليمي"></div><button class="btn alt" id="saveScriptTemplate" type="button">حفظ السكريبت الحالي كقالب</button></div><div class="savedlist" id="scriptTemplatesList"><div class="empty">لسه مفيش قوالب محفوظة.</div></div></div>
 </section>
 
 <section class="view" id="view-titles">
@@ -254,13 +256,15 @@ window.ENTELAQTAK_CONFIG = {
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const DATA_VERSION=3;
-const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},settings:{aiMode:"local",provider:"openai",endpoint:"",model:"gpt-4o-mini",timeout:45000}};
+const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local",provider:"openai",endpoint:"",model:"gpt-4o-mini",timeout:45000}};
 let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null,sessionApiKey="";
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
  const records=key=>Array.isArray(src[key])?src[key].filter(x=>x&&typeof x==='object'&&!Array.isArray(x)).map((x,i)=>({...x,id:String(x.id??('legacy-'+key+'-'+i)).slice(0,80)})):[];
  out.ideas=records('ideas').map(x=>({...x,title:String(x.title||''),niche:String(x.niche||''),platform:String(x.platform||''),audience:String(x.audience||''),angle:String(x.angle||'')}));
+ out.scriptTemplates=records('scriptTemplates').map(x=>({...x,name:String(x.name||'قالب بدون اسم').slice(0,80),content:String(x.content||'').slice(0,20000)})).filter(x=>x.content);
+ out.prePublishChecks=Object.fromEntries(['hook','facts','audio','thumb','seo','cta'].map(k=>[k,!!src.prePublishChecks?.[k]]));
  out.packs=records('packs').map(x=>({...x,topic:String(x.topic||''),platform:String(x.platform||''),niche:String(x.niche||''),audience:String(x.audience||''),createdAt:String(x.createdAt||''),hook:String(x.hook||''),titles:Array.isArray(x.titles)?x.titles.map(String):[],script:String(x.script||''),description:String(x.description||''),keywords:String(x.keywords||''),thumbnail:String(x.thumbnail||''),shots:String(x.shots||'')}));
  out.posts=records('posts').map(x=>({...x,title:String(x.title||''),platform:String(x.platform||''),date:/^\d{4}-\d{2}-\d{2}$/.test(String(x.date||''))?String(x.date):'',status:['planned','progress','done'].includes(x.status)?x.status:'planned'})).filter(x=>x.date);
  out.metrics=records('metrics').map(x=>({...x,title:String(x.title||''),date:/^\d{4}-\d{2}-\d{2}$/.test(String(x.date||''))?String(x.date):'',views:Math.max(0,Number(x.views)||0),likes:Math.max(0,Number(x.likes)||0),comments:Math.max(0,Number(x.comments)||0),shares:Math.max(0,Number(x.shares)||0)})).filter(x=>x.date);
@@ -453,6 +457,7 @@ toolSearch.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault()
 document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();toolSearch.focus();toolSearch.select();}});
 
 all('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copy);copy(el.value!==undefined?el.value:el.textContent);}));
+renderScriptTemplates();renderPrePublishChecks();
 function renderHome(){
  $('statIdeas').textContent=state.ideas.length;$('statPacks').textContent=state.packs.length;$('statPosts').textContent=state.posts.length;$('statViews').textContent=state.metrics.reduce((s,x)=>s+(+x.views||0),0).toLocaleString('en-US');
  const done=Object.values(state.challenge).filter(Boolean).length,pct=Math.round(done/30*100);$('homeChallengeBar').style.width=pct+'%';$('homeChallengeText').textContent=done+' من 30 مهمة';$('homeChallengePct').textContent=pct+'%';$('homeChallengeTitle').textContent=done?'استمر — أنت بتتقدم!':'ابدأ بأول خطوة';
@@ -526,6 +531,33 @@ $('makeRepurpose').addEventListener('click',()=>{
 });
 $('downloadRepurpose').addEventListener('click',()=>{if(!$('repurposeOutput').value.trim())return toast('حوّل المحتوى أولًا.');download('entelaqtak-repurposed-content.txt',$('repurposeOutput').value);});
 $('makeScript').addEventListener('click',()=>{const topic=$('scriptTopic').value.trim();if(!topic){toast('اكتب موضوع الفيديو أولًا.');return;}$('scriptOutput').value=createScript(topic,$('scriptDuration').value,$('scriptStyle').value,$('scriptAudience').value.trim()||'المهتمون بالموضوع',$('scriptPoints').value.trim());state.lastScript=$('scriptOutput').value;save();toast('المسودة جاهزة للتعديل.');});
+function renderScriptTemplates(){
+ const list=$('scriptTemplatesList');if(!list)return;
+ $('scriptTemplatesCount').textContent=state.scriptTemplates.length+' قالب';
+ list.innerHTML=state.scriptTemplates.length?state.scriptTemplates.map(t=>'<div class="saveditem"><div><b>'+safe(t.name)+'</b><p>'+safe(t.content.slice(0,110))+'</p></div><div class="actions"><button class="mini" data-use-script-template="'+safe(t.id)+'">استخدام</button><button class="mini" data-delete-script-template="'+safe(t.id)+'">حذف</button></div></div>').join(''):'<div class="empty">لسه مفيش قوالب محفوظة.</div>';
+}
+$('saveScriptTemplate').addEventListener('click',()=>{
+ const content=$('scriptOutput').value.trim(),name=$('scriptTemplateName').value.trim();
+ if(!content)return toast('اكتب أو ولّد سكريبت الأول.');
+ if(!name)return toast('اكتب اسمًا للقالب.');
+ state.scriptTemplates.unshift({id:'tpl-'+Date.now(),name,content,createdAt:new Date().toISOString()});
+ state.scriptTemplates=state.scriptTemplates.slice(0,50);save();renderScriptTemplates();$('scriptTemplateName').value='';toast('اتحفظ القالب في مكتبتك.');
+});
+$('scriptTemplatesList').addEventListener('click',e=>{
+ const use=e.target.closest('[data-use-script-template]'),del=e.target.closest('[data-delete-script-template]');
+ if(use){const t=state.scriptTemplates.find(x=>x.id===use.dataset.useScriptTemplate);if(t){$('scriptOutput').value=t.content;state.lastScript=t.content;save();toast('تم تحميل القالب في محرر السكريبت.');}}
+ if(del){state.scriptTemplates=state.scriptTemplates.filter(x=>x.id!==del.dataset.deleteScriptTemplate);save();renderScriptTemplates();toast('تم حذف القالب.');}
+});
+function renderPrePublishChecks(){
+ const checks=state.prePublishChecks||{};document.querySelectorAll('[data-precheck]').forEach(el=>el.checked=!!checks[el.dataset.precheck]);
+ const done=['hook','facts','audio','thumb','seo','cta'].filter(k=>checks[k]).length;
+ $('prePublishProgress').textContent=done+' من 6';
+}
+document.querySelectorAll('[data-precheck]').forEach(el=>el.addEventListener('change',()=>{
+ state.prePublishChecks={...state.prePublishChecks,[el.dataset.precheck]:el.checked};save();renderPrePublishChecks();
+}));
+$('resetPrePublish').addEventListener('click',()=>{state.prePublishChecks={};save();renderPrePublishChecks();toast('تم إعادة تعيين قائمة المراجعة.');});
+
 $('downloadScript').addEventListener('click',()=>{if(!$('scriptOutput').value.trim())return toast('اكتب السكريبت أولًا.');download('entelaqtak-script.txt',$('scriptOutput').value);});
 $('makeTitles').addEventListener('click',()=>{const t=$('titleTopic').value.trim();if(!t)return toast('اكتب موضوع الفيديو أولًا.');const b=$('titleBenefit').value.trim()||'بطريقة عملية',a=$('titleAudience').value.trim()||'المهتمين بالموضوع';const arr=['دليلك العملي إلى '+t,'5 نقاط مهمة لازم تعرفها عن '+t,t+': '+b,'أخطاء شائعة في '+t+' وكيف تتجنبها','هل '+t+' مناسب لـ'+a+'؟','ابدأ '+t+' صح — خطوات واضحة'];$('titlesResult').className='result';$('titlesResult').textContent=arr.map((x,i)=>(i+1)+'. '+x).join('\n');$('thumbResult').className='result';$('thumbResult').textContent='التكوين المقترح:\n• عنصر بصري رئيسي واحد يعبر عن '+t+'.\n• نص قصير من 2 إلى 4 كلمات مثل: «ابدأ صح» أو «خلّي بالك».\n• خلفية بسيطة وتباين واضح.\n• تعبير أو لقطة حقيقية من الفيديو.\n• تجنب الحشو والوعود المضللة.';});
 $('makeSeo').addEventListener('click',()=>{const t=$('seoTopic').value.trim();if(!t)return toast('اكتب موضوع المحتوى أولًا.');const n=$('seoNiche').value.trim(),k=$('seoKeywords').value.split(/[،,\n]/).map(x=>x.trim()).filter(Boolean),terms=[t,n,...k].filter((x,i,a)=>x&&a.indexOf(x)===i).slice(0,12);$('seoDescription').value='في المحتوى ده هنتكلم عن '+t+' بشكل واضح ومناسب للمهتمين بـ'+(n||t)+'.\n\nهنتناول الفكرة الأساسية وأهم النقاط العملية، مع أمثلة تساعدك تفهم الموضوع وتحدد الخطوة المناسبة ليك.\n\nشاركنا سؤالك أو تجربتك في التعليقات، وتابعنا للمزيد من المحتوى.\n\nأضف روابطك ومصادرك وتفاصيل تجربتك قبل النشر.';$('seoTags').className='result';$('seoTags').textContent='عبارات مقترحة:\n'+terms.join('، ')+'\n\nهاشتاجات مقترحة:\n'+terms.slice(0,5).map(x=>'#'+x.replace(/\s+/g,'_')).join(' ')+' #صناعة_المحتوى';});
