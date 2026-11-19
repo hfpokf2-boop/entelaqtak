@@ -509,11 +509,19 @@ async function callAI(tool,payload){
  const config=window.ENTELAQTAK_CONFIG||{};
  if(!config.url||!config.publishableKey)throw new Error('إعداد الاتصال بالخادم غير مكتمل.');
  const baseUrl=config.url.endsWith('/')?config.url.slice(0,-1):config.url;
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),90000);
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),65000);
  try{
+  const headers={'Content-Type':'application/json','apikey':config.publishableKey};
+  // Pass the signed-in user's access token when available; anonymous use remains supported.
+  if(sbClient&&currentUser){
+   try{
+    const {data:sessionData,error:sessionError}=await sbClient.auth.getSession();
+    if(!sessionError&&sessionData?.session?.access_token)headers.Authorization='Bearer '+sessionData.session.access_token;
+   }catch(sessionError){console.warn('AI request will continue without account context.',sessionError);}
+  }
   const response=await fetch(baseUrl+'/functions/v1/ai-assistant',{
    method:'POST',
-   headers:{'Content-Type':'application/json','apikey':config.publishableKey},
+   headers,
    body:JSON.stringify({tool,payload}),
    signal:controller.signal
   });
