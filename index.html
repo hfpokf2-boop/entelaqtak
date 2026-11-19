@@ -154,7 +154,7 @@ const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
 const save=()=>{try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('مساحة التخزين ممتلئة؛ صدّر نسخة احتياطية.');}};
 
-function setAuthMessage(message,isError=false){$('authMessage').textContent=message;$('authMessage').style.color=isError?'#ff9ba8':'#9db5a9';}
+function setAuthMessage(message,isError=false){toast(message);}
 function authErrorMessage(error){
  const code=error?.code||error?.error_code||'';
  const message=String(error?.message||'');
@@ -343,7 +343,7 @@ function bindAIButton(id,tool,payloadFactory,onResult){
  $(id).addEventListener('click',async()=>{
   const button=$(id),old=button.textContent;button.disabled=true;button.textContent='جاري التوليد...';
   try{const text=await callAI(tool,payloadFactory());onResult(text);toast('تم توليد المحتوى بالذكاء الاصطناعي.');}
-  catch(e){setAuthMessage(e.message||'تعذر استخدام المساعد الذكي.',true);go('account');}
+  catch(e){toast(e.message||'تعذر استخدام المساعد الذكي.');console.error('AI request failed',e);}
   finally{button.disabled=false;button.textContent=old;}
  });
 }
@@ -457,7 +457,7 @@ bindAIButton('makeSeoAI','seo',()=>({topic:$('seoTopic').value,niche:$('seoNiche
 bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').value,platform:$('repurposePlatform').value,tone:$('repurposeTone').value,audience:$('repurposeAudience').value}),text=>{$('repurposeOutput').value=text;});
 
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();}
-$('year').textContent=new Date().getFullYear();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();connectAuth();
+$('year').textContent=new Date().getFullYear();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();
 })();
 </script>
 </body></html>
