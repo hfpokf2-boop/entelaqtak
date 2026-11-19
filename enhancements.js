@@ -11,6 +11,10 @@ const nav=$('nav');
 const enhancementStyle=document.createElement('style');
 enhancementStyle.textContent=".enhance-pill{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);border-radius:99px;padding:7px 10px;background:#ffffff08;color:var(--muted);font-size:10px;white-space:nowrap}.enhance-pill.offline{color:#ffd38a;border-color:#9b713b;background:#9b713b18}.enhance-pill.online{color:#8ce0bd;border-color:#3b8a6d;background:#3b8a6d18}.enhance-pill[hidden]{display:none}.enhance-card{background:var(--panel);border:1px solid var(--line);border-radius:17px;padding:17px;margin-top:14px;min-width:0}.enhance-card h3{font-size:14px;margin:0 0 6px}.enhance-muted{font-size:10px;color:var(--muted);line-height:1.8;margin:0 0 12px}.enhance-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.enhance-actions button,.enhance-actions a{border:1px solid var(--line);border-radius:9px;padding:8px 11px;background:#ffffff09;color:var(--text);font:inherit;font-size:10px;text-decoration:none}.enhance-actions button.primary{background:var(--accent);color:#111;border-color:transparent;font-weight:700}.enhance-actions button:disabled{opacity:.45;cursor:not-allowed}.snapshot-list{display:grid;gap:8px}.snapshot-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px;border:1px solid var(--line);border-radius:11px;background:#ffffff05}.snapshot-row strong{display:block;font-size:11px}.snapshot-row small{display:block;color:var(--muted);font-size:9px;margin-top:3px}.snapshot-row .enhance-actions{margin:0}.snapshot-row .enhance-actions button{padding:6px 8px}.health-list{display:grid;gap:7px}.health-row{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 10px;border:1px solid var(--line);border-radius:9px;font-size:10px}.health-row span:last-child{color:var(--muted);text-align:left}.thumbnail-layout{display:grid;grid-template-columns:minmax(250px,.8fr) minmax(0,1.2fr);gap:14px}.thumbnail-preview{min-width:0;padding:10px;border:1px solid var(--line);border-radius:14px;background:#0a1222;align-self:start}.thumbnail-preview canvas{display:block;width:100%;height:auto;border-radius:8px;background:#121a2b}.thumbnail-meta{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:9px;margin-top:8px}.thumbnail-help{font-size:10px;color:var(--muted);line-height:1.8}.analytics-enhanced canvas{display:block;width:100%;height:250px}.analytics-top-posts{display:grid;gap:7px;margin-top:12px}.analytics-top-post{display:flex;justify-content:space-between;gap:10px;padding:9px;border:1px solid var(--line);border-radius:9px;font-size:10px}.analytics-top-post span:last-child{color:var(--accent2);white-space:nowrap}.seo-search-preview{max-width:720px;padding:15px;border-radius:12px;background:#fff;color:#202124;direction:rtl;text-align:right}.seo-search-preview strong{display:block;color:#1a0dab;font-size:18px;font-weight:500;line-height:1.5}.seo-search-preview small{display:block;color:#5f6368;font-size:11px;direction:ltr;text-align:left;overflow-wrap:anywhere}.seo-search-preview p{color:#4d5156;font-size:12px;line-height:1.7;margin:6px 0 0}@media(max-width:760px){.thumbnail-layout{grid-template-columns:1fr}.snapshot-row{align-items:flex-start;flex-direction:column}.snapshot-row .enhance-actions{width:100%}.snapshot-row .enhance-actions button{flex:1}.enhance-pill{font-size:9px}}";
 document.head.appendChild(enhancementStyle);
+const thumbProStyle=document.createElement('style');
+thumbProStyle.textContent="/* Thumbnail studio PRO */\n.thumb-studio{display:grid;gap:13px;min-width:0}\n.thumb-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:5px 0 3px}\n.thumb-heading h1{font-size:clamp(22px,3vw,31px);margin:5px 0 2px;letter-spacing:-.4px}\n.thumb-heading h1 span{font-size:10px;vertical-align:middle;letter-spacing:1px;padding:5px 8px;border:1px solid #8b7cf666;border-radius:99px;color:#c9c1ff;background:#8b7cf61a}\n.thumb-heading p{font-size:11px;color:var(--muted);margin:0}\n.thumb-heading-meta{display:flex;align-items:center;gap:8px;white-space:nowrap;color:#a9b6cc;font-size:9px;padding:8px 10px;border:1px solid var(--line);border-radius:99px;background:#ffffff06}\n.thumb-heading-meta b{color:#e6eaff;font-variant-numeric:tabular-nums}\n.thumb-live-dot{width:7px;height:7px;border-radius:50%;background:#65d6a5;box-shadow:0 0 9px #65d6a5}\n.thumb-workbar{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 13px;border:1px solid rgba(153,171,214,.18);border-radius:15px;background:linear-gradient(110deg,#1b2742,#151f35);box-shadow:0 9px 26px #03081744}\n.thumb-workbar-left{display:flex;align-items:center;gap:10px;min-width:0}\n.thumb-workbar-icon{display:grid;place-items:center;width:36px;height:36px;border-radius:11px;background:linear-gradient(145deg,#9b8cff,#5adbc5);color:#12192a;font-size:20px}\n.thumb-workbar-left strong,.thumb-workbar-left small{display:block}\n.thumb-workbar-left strong{font-size:11px}\n.thumb-workbar-left small{font-size:9px;color:var(--muted)}\n.thumb-workbar-actions{display:flex;align-items:center;gap:6px;flex-wrap:wrap}\n.thumb-workbar-actions button,.thumb-export-actions button,.thumb-inspector-actions button{border:1px solid var(--line);border-radius:9px;padding:7px 10px;color:var(--text);background:#ffffff08;font:inherit;font-size:9px;cursor:pointer;transition:.15s}\n.thumb-workbar-actions button:hover,.thumb-export-actions button:hover,.thumb-inspector-actions button:hover{border-color:#8b7cf6a6;background:#8b7cf61b}\n.thumb-workbar-actions button:disabled{opacity:.3;cursor:not-allowed}\n.thumb-workbar-actions #thumbSaveProject,.thumb-export-actions button:first-child,.thumb-inspector-actions button:first-child{background:linear-gradient(110deg,#a99cff,#66dfc8);border-color:transparent;color:#111a2b;font-weight:900}\n.thumb-workspace{display:grid;grid-template-columns:minmax(280px,350px) minmax(0,1fr);gap:13px;align-items:start}\n.thumb-inspector{min-width:0;max-height:calc(100vh - 180px);overflow:auto;padding:13px;border:1px solid rgba(153,171,214,.18);border-radius:17px;background:linear-gradient(160deg,#1b2742,#111a2e);scrollbar-width:thin;scrollbar-color:#475878 transparent}\n.thumb-inspector-head{display:flex;justify-content:space-between;align-items:center;margin:0 2px 12px}\n.thumb-inspector-head strong{font-size:12px}\n.thumb-inspector-head span{font-size:8px;letter-spacing:1px;color:#7f91b2}\n.thumb-presets{padding:0 0 12px;border-bottom:1px solid rgba(153,171,214,.14)}\n.thumb-section-title{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:0 1px 9px}\n.thumb-section-title b{font-size:10px}\n.thumb-section-title small{font-size:8px;color:var(--muted)}\n.thumb-template-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}\n.thumb-template-grid button{min-width:0;display:grid;gap:4px;text-align:right;padding:7px;border:1px solid rgba(153,171,214,.15);border-radius:10px;background:#0f192d;color:#dbe4f2;cursor:pointer}\n.thumb-template-grid button:hover{border-color:#8b7cf6a6;transform:translateY(-1px)}\n.thumb-template-grid b{font-size:9px}\n.thumb-template-grid small{font-size:8px;color:#91a0ba}\n.thumb-template-swatch{height:32px;border-radius:6px;position:relative;overflow:hidden;background:#202b46}\n.thumb-template-swatch:after{content:\"\";position:absolute;inset:13px 7px 5px 7px;border-radius:2px;background:#fff;box-shadow:0 -6px 0 -2px rgba(255,255,255,.65)}\n.thumb-template-swatch.creator{background:linear-gradient(120deg,#33264e,#f5b942)}\n.thumb-template-swatch.tutorial{background:linear-gradient(120deg,#053e52,#39d6bd)}\n.thumb-template-swatch.gaming{background:linear-gradient(120deg,#240e32,#ff4f9a)}\n.thumb-template-swatch.podcast{background:linear-gradient(120deg,#102c3b,#69a9ff)}\n.thumb-template-swatch.minimal{background:linear-gradient(120deg,#dbe7ec,#9db8b5)}\n.thumb-template-swatch.news{background:linear-gradient(120deg,#4a1f35,#ff654f)}\n.thumb-accordion{border-bottom:1px solid rgba(153,171,214,.14);padding:0 0 2px}\n.thumb-accordion summary{display:flex;align-items:center;gap:8px;list-style:none;cursor:pointer;padding:12px 2px;font-size:10px;font-weight:800;color:#e8edfa}\n.thumb-accordion summary::-webkit-details-marker{display:none}\n.thumb-accordion summary>span{display:grid;place-items:center;width:22px;height:22px;border-radius:7px;background:#8b7cf626;color:#c7bdff;font-size:9px}\n.thumb-accordion summary small{margin-right:auto;color:#7185a7;font-size:7px;letter-spacing:.8px}\n.thumb-accordion summary:after{content:\"＋\";color:#8d9bb4;font-size:13px}\n.thumb-accordion[open] summary:after{content:\"−\"}\n.thumb-controls{padding:0 1px 11px}\n.thumb-controls .field{margin-bottom:9px;gap:4px}\n.thumb-controls .field label,.thumb-controls label{font-size:9px;color:#c3cde0}\n.thumb-controls .field input:not([type=color]):not([type=file]),.thumb-controls .field select,.thumb-controls .field textarea{padding:8px 9px;font-size:10px;border-radius:8px;background:#0d172a;border-color:#34435f}\n.thumb-controls .field textarea{min-height:54px}\n.thumb-controls input[type=color]{width:100%;height:35px;padding:3px;border:1px solid #354563;border-radius:8px;background:#0d172a}\n.thumb-control-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px}\n.thumb-range-row{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:7px 0 2px}\n.thumb-range-row label{font-size:9px;color:#c3cde0}\n.thumb-range-row output{font-size:9px;color:#8ee2d1;font-variant-numeric:tabular-nums}\n.thumb-range{width:100%;accent-color:#8b7cf6;height:16px;cursor:pointer}\n.thumb-upload{display:grid;place-items:center;gap:4px;padding:13px 9px;margin-bottom:10px;border:1px dashed #64749a;border-radius:11px;background:linear-gradient(120deg,#8b7cf614,#55d6c20c);cursor:pointer;text-align:center}\n.thumb-upload>span{display:grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#8b7cf633;color:#d0c8ff;font-size:19px}\n.thumb-upload b{font-size:10px;color:#edf1fb}\n.thumb-upload small{font-size:8px;color:#8f9eb7}\n.thumb-upload input{width:100%;max-width:215px;font-size:8px;color:#aab7cc}\n.thumb-secondary-btn{width:100%;padding:8px 7px;border:1px solid var(--line);border-radius:8px;background:#ffffff08;color:#dce5f2;font-size:9px}\n.thumb-text-btn{border:0;background:transparent;color:#ff9da9;font-size:9px;padding:5px 0;cursor:pointer}\n.thumbnail-help{font-size:9px;color:#8798b3;line-height:1.8;margin:6px 0}\n.thumb-inspector-actions{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding-top:12px}\n.thumb-stage{min-width:0;padding:13px;border:1px solid rgba(153,171,214,.18);border-radius:17px;background:linear-gradient(160deg,#1b2742,#10182b);box-shadow:0 14px 35px #03081744}\n.thumb-stage-top,.thumb-stage-bottom{display:flex;align-items:center;justify-content:space-between;gap:10px}\n.thumb-stage-top{margin:1px 1px 12px}\n.thumb-stage-top strong,.thumb-stage-top small{display:block}\n.thumb-stage-top strong{font-size:11px}\n.thumb-stage-top small{font-size:9px;color:var(--muted);margin-top:2px}\n.thumb-status{padding:5px 8px;border:1px solid #55d6c233;border-radius:99px;color:#85e2cb;background:#55d6c20c;font-size:8px;white-space:nowrap}\n.thumb-canvas-wrap{position:relative;overflow:hidden;border:1px solid #50617e;border-radius:11px;background:repeating-conic-gradient(#1a2640 0% 25%,#111b30 0% 50%) 50%/24px 24px;box-shadow:0 18px 40px #02061166;touch-action:pan-y}\n.thumb-canvas-wrap canvas{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:contain;cursor:grab}\n.thumb-canvas-wrap.dragging canvas{cursor:grabbing}\n.thumb-canvas-wrap.file-over{outline:3px solid #65d6c5;outline-offset:3px}\n.thumb-canvas-hint{position:absolute;left:12px;bottom:11px;padding:6px 9px;border:1px solid #ffffff22;border-radius:7px;background:#081221a8;color:#d5e0f1;font-size:8px;pointer-events:none}\n.thumb-stage-bottom{padding:11px 2px;border-bottom:1px solid rgba(153,171,214,.14)}\n.thumb-stage-bottom div{display:grid;gap:2px}\n.thumb-stage-bottom b{font-size:9px;color:#e9effa}\n.thumb-stage-bottom span{font-size:8px;color:#8999b5}\n.thumb-export-panel{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:12px 2px 1px}\n.thumb-export-panel strong,.thumb-export-panel small{display:block}\n.thumb-export-panel strong{font-size:10px}\n.thumb-export-panel small{font-size:8px;color:var(--muted);margin-top:3px}\n.thumb-export-actions{display:flex;gap:7px}\n.thumb-studio-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#7f91ad;font-size:8px;padding:0 3px}\n.thumb-studio-foot span:first-child{color:#93cfc4}\n@media(max-width:1050px){.thumb-workspace{grid-template-columns:minmax(260px,310px) minmax(0,1fr)}.thumb-inspector{max-height:none}}\n@media(max-width:760px){\n .thumb-heading{align-items:flex-start;flex-direction:column}\n .thumb-heading-meta{align-self:flex-start}\n .thumb-workbar{align-items:flex-start;flex-direction:column}\n .thumb-workbar-actions{width:100%}\n .thumb-workbar-actions button{flex:1}\n .thumb-workspace{grid-template-columns:1fr}\n .thumb-inspector{order:2;max-height:none}\n .thumb-stage{order:1;padding:9px}\n .thumb-template-grid{grid-template-columns:repeat(3,minmax(0,1fr))}\n .thumb-export-panel{align-items:flex-start;flex-direction:column}\n .thumb-export-actions{width:100%}\n .thumb-export-actions button{flex:1}\n .thumb-studio-foot{font-size:7px}\n}\n@media(max-width:430px){.thumb-control-grid{grid-template-columns:1fr 1fr}.thumb-template-grid button{padding:6px}.thumb-template-grid small{font-size:7px}.thumb-inspector-actions{grid-template-columns:1fr}.thumb-workbar-actions button{font-size:8px;padding:7px 6px}}\n";
+document.head.appendChild(thumbProStyle);
+
 
 // Network state and install prompt
 const topActions=document.querySelector('.topactions');
@@ -229,7 +233,7 @@ if(typeof app.save==='function'){
  };
 }
 
-// Add a practical thumbnail designer. It creates the image on this device; no upload is made.
+// Pro thumbnail studio: editable text layers, photo crop controls, presets, history and exports.
 app.addViews&&app.addViews.add('thumbnail');
 if(nav&&!nav.querySelector('[data-view="thumbnail"]')){
  const button=document.createElement('button');
@@ -243,116 +247,325 @@ if(nav&&!nav.querySelector('[data-view="thumbnail"]')){
 const thumbnailSection=document.createElement('section');
 thumbnailSection.className='view';
 thumbnailSection.id='view-thumbnail';
-thumbnailSection.innerHTML='<div class="head"><div><span class="eyebrow">تصميم محلي — بدون رفع ملفاتك</span><h1>مصمم الصور المصغرة ▧</h1><p>أنشئ صورة 1280×720 قابلة للتعديل والتحميل. ارفع صورة من جهازك اختياريًا أو استخدم الخلفيات الجاهزة.</p></div></div><div class="thumbnail-layout"><div class="panel"><div class="field"><label for="thumbTitle">العنوان الرئيسي</label><textarea id="thumbTitle" maxlength="110" placeholder="اكتب عنوانًا قصيرًا وواضحًا"></textarea></div><div class="field"><label for="thumbSubtitle">عبارة مساعدة (اختياري)</label><input id="thumbSubtitle" maxlength="70" placeholder="مثال: للمبتدئين خطوة بخطوة"></div><div class="grid2"><div class="field"><label for="thumbAccent">لون الإبراز</label><select id="thumbAccent"><option value="#8b7cf6">بنفسجي</option><option value="#16b99a">أخضر فيروزي</option><option value="#f2a94b">برتقالي</option><option value="#e65b72">وردي</option><option value="#4a9de8">أزرق</option></select></div><div class="field"><label for="thumbLayout">توزيع التصميم</label><select id="thumbLayout"><option value="bold">عنوان كبير</option><option value="card">بطاقة جانبية</option><option value="minimal">بسيط</option></select></div></div><div class="field"><label for="thumbImage">إضافة صورة من جهازك (اختياري)</label><input id="thumbImage" type="file" accept="image/*"><p class="thumbnail-help">الصورة تظل داخل المتصفح ولا يتم رفعها إلى خادم. الحد الأقصى 8 ميجابايت.</p></div><div class="enhance-actions"><button type="button" class="primary" id="drawThumbnail">تحديث التصميم</button><button type="button" id="downloadThumbnail">تحميل PNG</button><button type="button" id="clearThumbnailImage">إزالة الصورة</button><button type="button" id="thumbFromTitles">استخدام أول عنوان من مولّد العناوين</button></div></div><div class="thumbnail-preview"><canvas id="thumbnailCanvas" width="1280" height="720" role="img" aria-label="معاينة صورة مصغرة بحجم 1280 في 720"></canvas><div class="thumbnail-meta"><span>1280 × 720 px</span><span>PNG · جاهز ليوتيوب</span></div></div></div><div class="note">هذه أداة تصميم بقوالب محلية وليست مولّد صور بالذكاء الاصطناعي. راجع حقوق الصور التي تستخدمها قبل النشر.</div>';
+thumbnailSection.innerHTML='<div class="thumb-studio"><div class="thumb-heading"><div><span class="eyebrow">ENTELAQTAK CREATIVE LAB · 01</span><h1>مصمم الصور المصغّرة <span>PRO</span></h1><p>استوديو تصميم كامل لصورة توقف التمرير — عدّل كل طبقة وشاهد النتيجة فورًا.</p></div><div class="thumb-heading-meta"><span class="thumb-live-dot"></span>معاينة مباشرة <b>1280 × 720</b></div></div><div class="thumb-workbar"><div class="thumb-workbar-left"><span class="thumb-workbar-icon">▧</span><div><strong>مشروع صورة مصغّرة</strong><small>كل التعديلات محلية على جهازك</small></div></div><div class="thumb-workbar-actions"><button type="button" id="thumbUndo" title="تراجع">↶</button><button type="button" id="thumbRedo" title="إعادة">↷</button><button type="button" id="thumbSaveProject">حفظ المشروع</button><button type="button" id="thumbExportProject">تصدير الإعدادات</button></div></div><div class="thumb-workspace"><aside class="thumb-inspector"><div class="thumb-inspector-head"><strong>لوحة التصميم</strong><span>EDIT PANEL</span></div><div class="thumb-presets"><div class="thumb-section-title"><b>ابدأ بقالب احترافي</b><small>اختار ستايل وعدّله براحتك</small></div><div class="thumb-template-grid"><button type="button" data-thumb-template="creator"><i class="thumb-template-swatch creator"></i><b>صانع محتوى</b><small>واضح وجريء</small></button><button type="button" data-thumb-template="tutorial"><i class="thumb-template-swatch tutorial"></i><b>شرح وتعليم</b><small>منظم ومشرق</small></button><button type="button" data-thumb-template="gaming"><i class="thumb-template-swatch gaming"></i><b>ألعاب</b><small>طاقة وتباين</small></button><button type="button" data-thumb-template="podcast"><i class="thumb-template-swatch podcast"></i><b>بودكاست</b><small>هادئ واحترافي</small></button><button type="button" data-thumb-template="minimal"><i class="thumb-template-swatch minimal"></i><b>Minimal</b><small>بسيط وأنيق</small></button><button type="button" data-thumb-template="news"><i class="thumb-template-swatch news"></i><b>أخبار وترند</b><small>عنوان ملفت</small></button></div></div><details class="thumb-accordion" open><summary><span>01</span> النص والطبقات <small>TEXT LAYERS</small></summary><div class="thumb-controls"><div class="field"><label for="thumbTitle">العنوان الرئيسي</label><textarea id="thumbTitle" maxlength="110" rows="2" placeholder="مثال: السر اللي محدش قالك عليه"></textarea></div><div class="field"><label for="thumbSubtitle">سطر توضيحي</label><input id="thumbSubtitle" maxlength="75" placeholder="مثال: دليل عملي للمبتدئين"></div><div class="field"><label for="thumbBadge">شارة صغيرة</label><input id="thumbBadge" maxlength="25" placeholder="مثال: جديد · خطوة بخطوة"></div><div class="field"><label for="thumbBrand">اسم القناة / العلامة</label><input id="thumbBrand" maxlength="28" value="ENTELAQTAK"></div><div class="thumb-control-grid"><div class="field"><label for="thumbFont">نوع الخط</label><select id="thumbFont"><option value="Tahoma">Tahoma عربي</option><option value="Arial">Arial</option><option value="Georgia">Georgia</option><option value="Impact">Impact</option></select></div><div class="field"><label for="thumbAlign">محاذاة العنوان</label><select id="thumbAlign"><option value="right">يمين</option><option value="center">منتصف</option><option value="left">يسار</option></select></div></div><div class="thumb-range-row"><label for="thumbFontSize">حجم العنوان</label><output id="thumbFontSizeValue">88</output></div><input class="thumb-range" id="thumbFontSize" type="range" min="48" max="124" value="88"><div class="thumb-control-grid"><div class="field"><label for="thumbTextColor">لون العنوان</label><input id="thumbTextColor" type="color" value="#ffffff"></div><div class="field"><label for="thumbOutlineColor">لون الحدود</label><input id="thumbOutlineColor" type="color" value="#10182c"></div></div><div class="thumb-range-row"><label for="thumbOutline">سُمك حدود النص</label><output id="thumbOutlineValue">4</output></div><input class="thumb-range" id="thumbOutline" type="range" min="0" max="14" value="4"><div class="thumb-range-row"><label for="thumbTitleY">موضع العنوان رأسيًا</label><output id="thumbTitleYValue">370</output></div><input class="thumb-range" id="thumbTitleY" type="range" min="190" max="560" value="370"><div class="thumb-control-grid"><div class="field"><label for="thumbBadgeColor">لون الشارة</label><input id="thumbBadgeColor" type="color" value="#8b7cf6"></div><div class="field"><label for="thumbSticker">عنصر تعبيري</label><select id="thumbSticker"><option value="">بدون</option><option value="🔥">🔥 نار</option><option value="🎯">🎯 هدف</option><option value="💡">💡 فكرة</option><option value="🚀">🚀 انطلاق</option><option value="👑">👑 تاج</option><option value="⚡">⚡ طاقة</option><option value="🎬">🎬 فيديو</option></select></div></div></div></details><details class="thumb-accordion" open><summary><span>02</span> الصورة الرئيسية <small>IMAGE & CROP</small></summary><div class="thumb-controls"><label class="thumb-upload" for="thumbImage"><span>＋</span><b>ارفع صورتك هنا</b><small>JPG · PNG · WEBP — حتى 12MB</small><input id="thumbImage" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label><div class="thumb-control-grid"><div class="field"><label for="thumbFit">طريقة الملاءمة</label><select id="thumbFit"><option value="cover">ملء الإطار</option><option value="contain">إظهار الصورة كاملة</option></select></div><div class="field"><label for="thumbImageReset">إدارة الصورة</label><button type="button" class="thumb-secondary-btn" id="thumbImageReset">إعادة ضبط القص</button></div></div><div class="thumb-range-row"><label for="thumbZoom">تكبير الصورة</label><output id="thumbZoomValue">100%</output></div><input class="thumb-range" id="thumbZoom" type="range" min="50" max="250" value="100"><div class="thumb-range-row"><label for="thumbImageX">تحريك أفقي</label><output id="thumbImageXValue">0</output></div><input class="thumb-range" id="thumbImageX" type="range" min="-640" max="640" value="0"><div class="thumb-range-row"><label for="thumbImageY">تحريك رأسي</label><output id="thumbImageYValue">0</output></div><input class="thumb-range" id="thumbImageY" type="range" min="-360" max="360" value="0"><div class="thumb-range-row"><label for="thumbBrightness">سطوع الصورة</label><output id="thumbBrightnessValue">100%</output></div><input class="thumb-range" id="thumbBrightness" type="range" min="50" max="150" value="100"><p class="thumbnail-help">تقدر تسحب الصورة مباشرة داخل المعاينة لتحريكها، أو تستخدم أشرطة التحكم للضبط الدقيق.</p><button type="button" id="clearThumbnailImage" class="thumb-text-btn">إزالة الصورة</button></div></details><details class="thumb-accordion" open><summary><span>03</span> الخلفية والألوان <small>ART DIRECTION</small></summary><div class="thumb-controls"><div class="thumb-control-grid"><div class="field"><label for="thumbBgStyle">ستايل الخلفية</label><select id="thumbBgStyle"><option value="midnight">Midnight</option><option value="ocean">Ocean</option><option value="sunset">Sunset</option><option value="forest">Forest</option><option value="paper">Light Studio</option></select></div><div class="field"><label for="thumbDecor">الزخارف</label><select id="thumbDecor"><option value="glow">توهج ضوئي</option><option value="rays">أشعة</option><option value="grid">شبكة</option><option value="slashes">خطوط مائلة</option><option value="none">بدون زخارف</option></select></div></div><div class="thumb-control-grid"><div class="field"><label for="thumbAccent">اللون الأساسي</label><input id="thumbAccent" type="color" value="#8b7cf6"></div><div class="field"><label for="thumbOverlay">تعتيم الصورة</label><input id="thumbOverlay" type="range" min="0" max="85" value="34" class="thumb-range"></div></div><p class="thumbnail-help">اسحب الصورة أو غيّر الألوان والخلفية، وستتحدث المعاينة تلقائيًا.</p></div></details><div class="thumb-inspector-actions"><button type="button" id="drawThumbnail">تحديث المعاينة</button><button type="button" id="thumbFromTitles">جلب عنوان من مولّد العناوين</button></div></aside><div class="thumb-stage"><div class="thumb-stage-top"><div><strong>منطقة المعاينة</strong><small>اسحب الصورة لتغيير مكانها · النتيجة النهائية 16:9</small></div><span id="thumbStatus" class="thumb-status">جاهز للتصميم</span></div><div class="thumb-canvas-wrap" id="thumbCanvasWrap"><canvas id="thumbnailCanvas" width="1280" height="720" role="img" aria-label="معاينة صورة مصغرة بمقاس 1280 في 720"></canvas><div class="thumb-canvas-hint" id="thumbCanvasHint">ارفع صورة لتبدأ — أو اختر قالبًا جاهزًا</div></div><div class="thumb-stage-bottom"><div><b>1280 × 720</b><span>16:9 · YouTube Thumbnail</span></div><div><b id="thumbFileEstimate">PNG عالي الجودة</b><span>جاهز للتصدير</span></div></div><div class="thumb-export-panel"><div><strong>تصدير التصميم</strong><small>حمّل الصورة النهائية بجودة عالية</small></div><div class="thumb-export-actions"><button type="button" id="downloadThumbnail">تحميل PNG</button><button type="button" id="downloadThumbnailJpg">تحميل JPG</button></div></div></div></div><div class="thumb-studio-foot"><span>✦ الصورة تُنشأ داخل متصفحك ولا يتم رفعها إلى خادم.</span><span>استخدم صورًا تملك حق استخدامها.</span></div></div>';
 if(footer)footer.insertAdjacentElement('beforebegin',thumbnailSection);
 const thumbCanvas=$('thumbnailCanvas');
 const thumbCtx=thumbCanvas&&thumbCanvas.getContext('2d');
-let thumbImage=null,thumbObjectUrl=null;
+const thumbProjectKey='entelaqtak-thumbnail-project-v2';
+let thumbImage=null,thumbObjectUrl=null,thumbHistory=[],thumbHistoryIndex=-1,thumbHistoryTimer=null,thumbDrag=null;
+const thumbControlIds=['thumbTitle','thumbSubtitle','thumbBadge','thumbBrand','thumbFont','thumbAlign','thumbFontSize','thumbTextColor','thumbOutlineColor','thumbOutline','thumbTitleY','thumbBadgeColor','thumbSticker','thumbFit','thumbZoom','thumbImageX','thumbImageY','thumbBrightness','thumbBgStyle','thumbDecor','thumbAccent','thumbOverlay'];
+function thumbState(){
+ const state={};
+ thumbControlIds.forEach(id=>{const el=$(id);if(el)state[id]=el.value;});
+ return state;
+}
+function applyThumbState(state){
+ if(!state||typeof state!=='object')return;
+ thumbControlIds.forEach(id=>{const el=$(id);if(el&&state[id]!==undefined)el.value=state[id];});
+ updateThumbOutputs();
+ drawThumbnail();
+}
+function updateThumbOutputs(){
+ const pairs={thumbFontSize:'',thumbOutline:'',thumbTitleY:'',thumbZoom:'%',thumbImageX:'',thumbImageY:'',thumbBrightness:'%'};
+ Object.keys(pairs).forEach(id=>{
+  const output=$(id+'Value'),el=$(id);
+  if(output&&el)output.textContent=String(el.value)+pairs[id];
+ });
+}
+function updateThumbHistoryButtons(){
+ const undo=$('thumbUndo'),redo=$('thumbRedo');
+ if(undo)undo.disabled=thumbHistoryIndex<=0;
+ if(redo)redo.disabled=thumbHistoryIndex<0||thumbHistoryIndex>=thumbHistory.length-1;
+}
+function pushThumbHistory(){
+ const state=thumbState(),serialized=JSON.stringify(state);
+ if(thumbHistoryIndex>=0&&JSON.stringify(thumbHistory[thumbHistoryIndex])===serialized)return;
+ thumbHistory=thumbHistory.slice(0,thumbHistoryIndex+1);
+ thumbHistory.push(state);
+ if(thumbHistory.length>35)thumbHistory.shift();
+ thumbHistoryIndex=thumbHistory.length-1;
+ updateThumbHistoryButtons();
+}
+function scheduleThumbHistory(){
+ clearTimeout(thumbHistoryTimer);
+ thumbHistoryTimer=setTimeout(pushThumbHistory,450);
+}
+function thumbRoundedRect(ctx,x,y,w,h,r){
+ const radius=Math.min(r,w/2,h/2);
+ ctx.beginPath();
+ if(typeof ctx.roundRect==='function'){ctx.roundRect(x,y,w,h,radius);return;}
+ ctx.moveTo(x+radius,y);ctx.arcTo(x+w,y,x+w,y+h,radius);ctx.arcTo(x+w,y+h,x,y+h,radius);ctx.arcTo(x,y+h,x,y,radius);ctx.arcTo(x,y,x+w,y,radius);ctx.closePath();
+}
 function wrapCanvasText(context,text,maxWidth,maxLines){
- const words=String(text||'').trim().split(/\s+/).filter(Boolean);
- const lines=[];let line='';
+ const words=String(text||'').trim().split(/\s+/).filter(Boolean),lines=[];
+ let line='';
  words.forEach(word=>{
   const next=line?line+' '+word:word;
   if(context.measureText(next).width>maxWidth&&line){lines.push(line);line=word;}else line=next;
  });
  if(line)lines.push(line);
  if(lines.length>maxLines){
-  const shortened=lines.slice(0,maxLines);
-  shortened[maxLines-1]=shortened[maxLines-1].replace(/[،,؛;:.\s]+$/,'')+'…';
-  return shortened;
+  const result=lines.slice(0,maxLines);
+  result[maxLines-1]=result[maxLines-1].replace(/[،,؛;:.\s]+$/,'')+'…';
+  return result;
  }
  return lines;
+}
+function drawThumbBackground(ctx,w,h,accent){
+ const palettes={
+  midnight:['#11172a','#27264b','#101c32'],
+  ocean:['#062b40','#12627a','#10192e'],
+  sunset:['#4a1f35','#a64c42','#1a1831'],
+  forest:['#0d342e','#276b55','#101e2d'],
+  paper:['#dbe7ec','#f5f0e5','#bac8d2']
+ };
+ const colors=palettes[$('thumbBgStyle').value]||palettes.midnight;
+ const gradient=ctx.createLinearGradient(0,0,w,h);
+ gradient.addColorStop(0,colors[0]);gradient.addColorStop(.52,colors[1]);gradient.addColorStop(1,colors[2]);
+ ctx.fillStyle=gradient;ctx.fillRect(0,0,w,h);
+ if(!thumbImage){
+  const radial=ctx.createRadialGradient(w*.18,h*.88,8,w*.18,h*.88,w*.68);
+  radial.addColorStop(0,accent+'88');radial.addColorStop(1,accent+'00');
+  ctx.fillStyle=radial;ctx.fillRect(0,0,w,h);
+ }
+}
+function drawThumbDecor(ctx,w,h,accent){
+ const type=$('thumbDecor').value;
+ ctx.save();
+ if(type==='glow'){
+  const glow=ctx.createRadialGradient(w*.82,h*.12,8,w*.82,h*.12,w*.48);
+  glow.addColorStop(0,accent+'66');glow.addColorStop(1,accent+'00');
+  ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
+  ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=2;
+  [85,120,155].forEach(rad=>{ctx.beginPath();ctx.arc(w*.84,h*.12,rad,0,Math.PI*2);ctx.stroke();});
+ }else if(type==='rays'){
+  ctx.strokeStyle='rgba(255,255,255,.10)';ctx.lineWidth=18;
+  for(let i=-500;i<w+500;i+=125){ctx.beginPath();ctx.moveTo(i,0);ctx.lineTo(i-360,h);ctx.stroke();}
+ }else if(type==='grid'){
+  ctx.strokeStyle='rgba(255,255,255,.09)';ctx.lineWidth=2;
+  for(let x=0;x<=w;x+=64){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,h);ctx.stroke();}
+  for(let y=0;y<=h;y+=64){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(w,y);ctx.stroke();}
+ }else if(type==='slashes'){
+  ctx.fillStyle=accent+'38';
+  for(let i=0;i<5;i++){ctx.beginPath();ctx.moveTo(w*.72+i*78,0);ctx.lineTo(w*.88+i*78,0);ctx.lineTo(w*.5+i*78,h);ctx.lineTo(w*.34+i*78,h);ctx.closePath();ctx.fill();}
+ }
+ ctx.restore();
+}
+function drawThumbImage(ctx,w,h){
+ if(!thumbImage)return;
+ const fit=$('thumbFit').value,zoom=Number($('thumbZoom').value)/100;
+ const base=fit==='contain'?Math.min(w/thumbImage.width,h/thumbImage.height):Math.max(w/thumbImage.width,h/thumbImage.height);
+ const scale=base*zoom,dw=thumbImage.width*scale,dh=thumbImage.height*scale;
+ const dx=(w-dw)/2+Number($('thumbImageX').value),dy=(h-dh)/2+Number($('thumbImageY').value);
+ ctx.save();
+ ctx.filter='brightness('+Number($('thumbBrightness').value)+'%)';
+ ctx.drawImage(thumbImage,dx,dy,dw,dh);
+ ctx.restore();
+}
+function drawThumbText(ctx,w,h){
+ const font=$('thumbFont').value||'Tahoma';
+ const align=$('thumbAlign').value||'right';
+ const x=align==='right'?w-88:align==='left'?88:w/2;
+ const maxWidth=w-180;
+ const title=$('thumbTitle').value.trim()||'عنوان الفيديو هنا';
+ let size=Number($('thumbFontSize').value)||88;
+ const color=$('thumbTextColor').value||'#ffffff';
+ const outlineColor=$('thumbOutlineColor').value||'#10182c';
+ const outline=Number($('thumbOutline').value)||0;
+ let lines=[];
+ ctx.save();ctx.direction='rtl';ctx.textAlign=align;ctx.lineJoin='round';
+ while(size>42){
+  ctx.font='900 '+size+'px '+font+', Tahoma, Arial, sans-serif';
+  lines=wrapCanvasText(ctx,title,maxWidth,3);
+  if(lines.every(line=>ctx.measureText(line).width<=maxWidth))break;
+  size-=2;
+ }
+ ctx.font='900 '+size+'px '+font+', Tahoma, Arial, sans-serif';
+ const lineHeight=size*1.16;
+ const startY=Number($('thumbTitleY').value)||370;
+ const outlineW=outline;
+ ctx.shadowColor='rgba(0,0,0,.52)';ctx.shadowBlur=18;ctx.shadowOffsetX=4;ctx.shadowOffsetY=6;
+ lines.forEach((line,index)=>{
+  const y=startY+index*lineHeight;
+  if(outlineW>0){ctx.lineWidth=outlineW*2;ctx.strokeStyle=outlineColor;ctx.strokeText(line,x,y,maxWidth);}
+  ctx.fillStyle=color;ctx.fillText(line,x,y,maxWidth);
+ });
+ ctx.shadowColor='transparent';ctx.shadowBlur=0;ctx.shadowOffsetX=0;ctx.shadowOffsetY=0;
+ const subtitle=$('thumbSubtitle').value.trim();
+ if(subtitle){
+  const subY=Math.min(h-112,startY+lines.length*lineHeight+35);
+  ctx.font='700 31px '+font+', Tahoma, Arial, sans-serif';ctx.fillStyle=$('thumbAccent').value;
+  ctx.fillText(subtitle,x,subY,maxWidth);
+ }
+ ctx.restore();
+}
+function drawThumbBadge(ctx,w){
+ const text=$('thumbBadge').value.trim();
+ if(!text)return;
+ ctx.save();ctx.direction='rtl';ctx.font='bold 25px Tahoma, Arial, sans-serif';
+ const padX=24,padY=13,textWidth=ctx.measureText(text).width;
+ const boxW=textWidth+padX*2,boxH=54,x=w-82-boxW,y=54;
+ thumbRoundedRect(ctx,x,y,boxW,boxH,16);
+ ctx.fillStyle=$('thumbBadgeColor').value||$('thumbAccent').value;ctx.fill();
+ ctx.fillStyle='#10182c';ctx.textAlign='center';ctx.textBaseline='middle';
+ ctx.fillText(text,x+boxW/2,y+boxH/2+1);
+ ctx.restore();
 }
 function drawThumbnail(){
  if(!thumbCtx)return;
  const ctx=thumbCtx,w=thumbCanvas.width,h=thumbCanvas.height;
  const accent=$('thumbAccent').value||'#8b7cf6';
- const layout=$('thumbLayout').value;
  ctx.clearRect(0,0,w,h);
- const gradient=ctx.createLinearGradient(0,0,w,h);
- gradient.addColorStop(0,'#25304d');gradient.addColorStop(.55,'#10182c');gradient.addColorStop(1,'#101f2d');
- ctx.fillStyle=gradient;ctx.fillRect(0,0,w,h);
- if(thumbImage){
-  const scale=Math.max(w/thumbImage.width,h/thumbImage.height);
-  const dw=thumbImage.width*scale,dh=thumbImage.height*scale;
-  ctx.save();ctx.globalAlpha=.32;ctx.drawImage(thumbImage,(w-dw)/2,(h-dh)/2,dw,dh);ctx.restore();
+ drawThumbBackground(ctx,w,h,accent);
+ drawThumbImage(ctx,w,h);
+ const overlay=Number($('thumbOverlay').value)/100;
+ if(overlay>0){
+  const shade=ctx.createLinearGradient(0,0,w,h);
+  shade.addColorStop(0,'rgba(4,8,20,'+(overlay*.35)+')');
+  shade.addColorStop(.58,'rgba(4,8,20,'+(overlay*.82)+')');
+  shade.addColorStop(1,'rgba(4,8,20,'+Math.min(.92,overlay+0.12)+')');
+  ctx.fillStyle=shade;ctx.fillRect(0,0,w,h);
  }
- const glow=ctx.createRadialGradient(160,640,10,160,640,600);
- glow.addColorStop(0,accent+'66');glow.addColorStop(1,accent+'00');
- ctx.fillStyle=glow;ctx.fillRect(0,0,w,h);
- ctx.fillStyle='rgba(3,8,20,.48)';ctx.fillRect(0,0,w,h);
- ctx.fillStyle=accent;
- ctx.beginPath();ctx.moveTo(0,0);ctx.lineTo(30,0);ctx.lineTo(0,720);ctx.closePath();ctx.fill();
- ctx.globalAlpha=.12;ctx.strokeStyle='#fff';ctx.lineWidth=3;
- for(let x=50;x<1280;x+=70){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,720);ctx.stroke();}
- ctx.globalAlpha=1;
- ctx.fillStyle='rgba(255,255,255,.12)';
- ctx.beginPath();ctx.arc(1090,120,150,0,Math.PI*2);ctx.fill();
- ctx.fillStyle=accent;ctx.beginPath();ctx.arc(1130,600,240,0,Math.PI*2);ctx.fill();ctx.globalAlpha=.16;ctx.fillRect(0,0,w,h);ctx.globalAlpha=1;
- const right=1140;
- ctx.direction='rtl';ctx.textAlign='right';
- ctx.fillStyle='#f5f6ff';ctx.font='bold 30px Tahoma, Arial, sans-serif';
- ctx.fillText('انطلاقتك  •  صناعة محتوى',right,116);
- const title=$('thumbTitle').value.trim()||'عنوان الفيديو هنا';
- const titleSize=layout==='minimal'?64:layout==='card'?72:88;
- ctx.font='bold '+titleSize+'px Tahoma, Arial, sans-serif';
- const titleLines=wrapCanvasText(ctx,title,920,3);
- const startY=layout==='minimal'?305:layout==='card'?300:320;
- if(layout==='card'){
-  ctx.fillStyle='rgba(12,19,37,.72)';
-  ctx.beginPath();ctx.roundRect(150,170,1040,390,28);ctx.fill();
-  ctx.fillStyle=accent;ctx.fillRect(150,170,13,390);
+ drawThumbDecor(ctx,w,h,accent);
+ if($('thumbBgStyle').value==='paper'){
+  ctx.fillStyle='rgba(255,255,255,.08)';ctx.fillRect(0,0,w,h);
  }
- titleLines.forEach((line,index)=>{
-  ctx.fillStyle='rgba(0,0,0,.34)';ctx.fillText(line,right+5,startY+index*(titleSize*1.2)+5);
-  ctx.fillStyle='#ffffff';ctx.fillText(line,right,startY+index*(titleSize*1.2));
- });
- const subtitle=$('thumbSubtitle').value.trim();
- if(subtitle){
-  ctx.font='bold 31px Tahoma, Arial, sans-serif';
-  ctx.fillStyle=accent;
-  ctx.fillText(subtitle,right,615);
+ drawThumbBadge(ctx,w);
+ const sticker=$('thumbSticker').value;
+ if(sticker){
+  ctx.save();ctx.font='100px Tahoma, Arial, sans-serif';ctx.textAlign='center';ctx.textBaseline='middle';
+  ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=18;ctx.fillText(sticker,150,190);ctx.restore();
  }
- ctx.textAlign='left';ctx.direction='ltr';ctx.font='bold 20px Arial, sans-serif';
- ctx.fillStyle='rgba(255,255,255,.78)';ctx.fillText('ENTELAQTAK',70,665);
+ drawThumbText(ctx,w,h);
+ const brand=$('thumbBrand').value.trim();
+ if(brand){
+  ctx.save();ctx.direction='ltr';ctx.textAlign='left';ctx.font='bold 22px Arial, sans-serif';
+  ctx.fillStyle='rgba(255,255,255,.82)';ctx.shadowColor='rgba(0,0,0,.4)';ctx.shadowBlur=7;
+  ctx.fillText(brand,68,h-42);ctx.restore();
+ }
+ const hint=$('thumbCanvasHint');
+ if(hint)hint.style.display=thumbImage?'none':'block';
+ updateThumbOutputs();
+ const status=$('thumbStatus');
+ if(status)status.textContent='المعاينة محدثة';
+}
+function readThumbImage(file){
+ if(!file)return;
+ if(!/^image\/(png|jpeg|webp|gif)$/.test(file.type)){notify('اختر صورة PNG أو JPG أو WEBP صالحة.');return;}
+ if(file.size>12*1024*1024){notify('حجم الصورة يجب ألا يتجاوز 12 ميجابايت.');return;}
+ const url=URL.createObjectURL(file),image=new Image();
+ image.onload=()=>{
+  if(thumbObjectUrl)URL.revokeObjectURL(thumbObjectUrl);
+  thumbObjectUrl=url;thumbImage=image;
+  $('thumbImageX').value='0';$('thumbImageY').value='0';$('thumbZoom').value='100';
+  drawThumbnail();pushThumbHistory();notify('تمت إضافة الصورة. اسحبها داخل المعاينة لضبط موضعها.');
+ };
+ image.onerror=()=>{URL.revokeObjectURL(url);notify('تعذر فتح الصورة المحددة.');};
+ image.src=url;
+}
+function saveThumbProject(){
+ try{
+  localStorage.setItem(thumbProjectKey,JSON.stringify({version:2,savedAt:new Date().toISOString(),state:thumbState()}));
+  notify('تم حفظ إعدادات التصميم على هذا الجهاز.');
+ }catch(error){notify('تعذر الحفظ المحلي. صدّر إعدادات التصميم كملف JSON.');}
+}
+function exportThumbProject(){
+ const data={app:'انطلاقتك',type:'thumbnail-project',version:2,savedAt:new Date().toISOString(),state:thumbState()};
+ downloadFile('entelaqtak-thumbnail-project.json',JSON.stringify(data,null,2),'application/json');
+}
+function downloadThumbImage(type){
+ drawThumbnail();
+ const mime=type==='jpg'?'image/jpeg':'image/png';
+ const filename=type==='jpg'?'entelaqtak-thumbnail.jpg':'entelaqtak-thumbnail.png';
+ thumbCanvas.toBlob(blob=>{
+  if(!blob){notify('تعذر إنشاء ملف الصورة.');return;}
+  const url=URL.createObjectURL(blob),anchor=document.createElement('a');
+  anchor.href=url;anchor.download=filename;anchor.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1200);
+  const label=$('thumbFileEstimate');if(label)label.textContent=type==='jpg'?'JPG · جودة 94%':'PNG · جودة كاملة';
+  notify('تم تجهيز الصورة وتحميلها.');
+ },mime,type==='jpg'?.94:undefined);
+}
+function applyThumbTemplate(name){
+ const presets={
+  creator:{accent:'#f5b942',bg:'midnight',decor:'glow',overlay:42,align:'right',badge:'#f5b942',sticker:'🚀'},
+  tutorial:{accent:'#39d6bd',bg:'ocean',decor:'grid',overlay:30,align:'right',badge:'#39d6bd',sticker:'💡'},
+  gaming:{accent:'#ff4f9a',bg:'midnight',decor:'rays',overlay:46,align:'left',badge:'#ff4f9a',sticker:'⚡'},
+  podcast:{accent:'#69a9ff',bg:'forest',decor:'glow',overlay:35,align:'center',badge:'#69a9ff',sticker:'🎙️'},
+  minimal:{accent:'#d3e6e5',bg:'paper',decor:'none',overlay:10,align:'center',badge:'#d3e6e5',sticker:''},
+  news:{accent:'#ff654f',bg:'sunset',decor:'slashes',overlay:48,align:'right',badge:'#ff654f',sticker:'🔥'}
+ };
+ const preset=presets[name];if(!preset)return;
+ $('thumbAccent').value=preset.accent;$('thumbBgStyle').value=preset.bg;$('thumbDecor').value=preset.decor;
+ $('thumbOverlay').value=String(preset.overlay);$('thumbAlign').value=preset.align;
+ $('thumbBadgeColor').value=preset.badge;$('thumbSticker').value=preset.sticker;
+ if(!$('thumbBadge').value.trim())$('thumbBadge').value=name==='news'?'عاجل':name==='tutorial'?'شرح خطوة بخطوة':name==='podcast'?'حلقة جديدة':name==='gaming'?'تحدي جديد':'معلومة مهمة';
+ drawThumbnail();pushThumbHistory();notify('تم تطبيق القالب. عدّل النص والصورة كما تحب.');
 }
 if(thumbCanvas){
- ['thumbTitle','thumbSubtitle','thumbAccent','thumbLayout'].forEach(id=>$(id).addEventListener('input',drawThumbnail));
- $('drawThumbnail').addEventListener('click',drawThumbnail);
+ const controlEls=thumbControlIds.map(id=>$(id)).filter(Boolean);
+ controlEls.forEach(el=>{
+  el.addEventListener('input',()=>{drawThumbnail();scheduleThumbHistory();});
+  el.addEventListener('change',()=>{drawThumbnail();pushThumbHistory();});
+ });
  $('thumbImage').addEventListener('change',event=>{
-  const file=event.target.files&&event.target.files[0];
-  if(!file)return;
-  if(!file.type.startsWith('image/')){notify('اختر ملف صورة صالحًا.');event.target.value='';return;}
-  if(file.size>8*1024*1024){notify('حجم الصورة يجب ألا يتجاوز 8 ميجابايت.');event.target.value='';return;}
-  if(thumbObjectUrl)URL.revokeObjectURL(thumbObjectUrl);
-  thumbObjectUrl=URL.createObjectURL(file);
-  const image=new Image();
-  image.onload=()=>{thumbImage=image;drawThumbnail();};
-  image.onerror=()=>notify('تعذر قراءة الصورة المحددة.');
-  image.src=thumbObjectUrl;
+  const file=event.target.files&&event.target.files[0];if(file)readThumbImage(file);
  });
  $('clearThumbnailImage').addEventListener('click',()=>{
-  thumbImage=null;
-  if(thumbObjectUrl)URL.revokeObjectURL(thumbObjectUrl);
-  thumbObjectUrl=null;$('thumbImage').value='';drawThumbnail();
+  thumbImage=null;if(thumbObjectUrl)URL.revokeObjectURL(thumbObjectUrl);
+  thumbObjectUrl=null;$('thumbImage').value='';drawThumbnail();pushThumbHistory();
  });
- $('downloadThumbnail').addEventListener('click',()=>{
-  drawThumbnail();
-  thumbCanvas.toBlob(blob=>{
-   if(!blob){notify('تعذر إنشاء ملف الصورة.');return;}
-   const url=URL.createObjectURL(blob),anchor=document.createElement('a');
-   anchor.href=url;anchor.download='entelaqtak-thumbnail.png';anchor.click();
-   setTimeout(()=>URL.revokeObjectURL(url),1000);
-   notify('تم تجهيز الصورة للتحميل.');
-  },'image/png');
+ $('thumbImageReset').addEventListener('click',()=>{
+  $('thumbZoom').value='100';$('thumbImageX').value='0';$('thumbImageY').value='0';$('thumbFit').value='cover';
+  drawThumbnail();pushThumbHistory();
+ });
+ $('drawThumbnail').addEventListener('click',drawThumbnail);
+ $('downloadThumbnail').addEventListener('click',()=>downloadThumbImage('png'));
+ $('downloadThumbnailJpg').addEventListener('click',()=>downloadThumbImage('jpg'));
+ $('thumbSaveProject').addEventListener('click',saveThumbProject);
+ $('thumbExportProject').addEventListener('click',exportThumbProject);
+ all('[data-thumb-template]').forEach(button=>button.addEventListener('click',()=>applyThumbTemplate(button.dataset.thumbTemplate)));
+ $('thumbUndo').addEventListener('click',()=>{
+  if(thumbHistoryIndex<=0)return;
+  thumbHistoryIndex--;applyThumbState(thumbHistory[thumbHistoryIndex]);updateThumbHistoryButtons();
+ });
+ $('thumbRedo').addEventListener('click',()=>{
+  if(thumbHistoryIndex>=thumbHistory.length-1)return;
+  thumbHistoryIndex++;applyThumbState(thumbHistory[thumbHistoryIndex]);updateThumbHistoryButtons();
  });
  $('thumbFromTitles').addEventListener('click',()=>{
-  const result=$('titlesResult');
-  const text=result?result.textContent.trim():'';
+  const result=$('titlesResult'),text=result?result.textContent.trim():'';
   if(!text||text.includes('ستظهر')||text.includes('اكتب')){notify('ولّد العناوين أولًا من أداة العناوين.');return;}
   $('thumbTitle').value=text.split(/\n/).map(line=>line.replace(/^\s*(?:\d+[\).:-]?|[-•])\s*/,'').trim()).find(Boolean)||text.slice(0,100);
-  app.go('thumbnail');drawThumbnail();
+  app.go('thumbnail');drawThumbnail();pushThumbHistory();
  });
+ const savedProject=(()=>{try{return JSON.parse(localStorage.getItem(thumbProjectKey)||'null');}catch(error){return null;}})();
+ if(savedProject&&savedProject.version===2&&savedProject.state)applyThumbState(savedProject.state);
+ drawThumbnail();pushThumbHistory();
+ const wrap=$('thumbCanvasWrap');
+ if(wrap){
+  wrap.addEventListener('pointerdown',event=>{
+   if(!thumbImage)return;
+   const rect=thumbCanvas.getBoundingClientRect(),scaleX=thumbCanvas.width/rect.width,scaleY=thumbCanvas.height/rect.height;
+   thumbDrag={x:event.clientX,y:event.clientY,imageX:Number($('thumbImageX').value),imageY:Number($('thumbImageY').value),scaleX:scaleX,scaleY:scaleY};
+   wrap.classList.add('dragging');wrap.setPointerCapture&&wrap.setPointerCapture(event.pointerId);
+  });
+  wrap.addEventListener('pointermove',event=>{
+   if(!thumbDrag)return;
+   $('thumbImageX').value=String(Math.max(-640,Math.min(640,Math.round(thumbDrag.imageX+(event.clientX-thumbDrag.x)*thumbDrag.scaleX))));
+   $('thumbImageY').value=String(Math.max(-360,Math.min(360,Math.round(thumbDrag.imageY+(event.clientY-thumbDrag.y)*thumbDrag.scaleY))));
+   drawThumbnail();
+  });
+  const stopDrag=()=>{if(!thumbDrag)return;thumbDrag=null;wrap.classList.remove('dragging');pushThumbHistory();};
+  wrap.addEventListener('pointerup',stopDrag);wrap.addEventListener('pointercancel',stopDrag);
+  wrap.addEventListener('dragover',event=>{event.preventDefault();wrap.classList.add('file-over');});
+  wrap.addEventListener('dragleave',()=>wrap.classList.remove('file-over'));
+  wrap.addEventListener('drop',event=>{
+   event.preventDefault();wrap.classList.remove('file-over');
+   const file=event.dataTransfer&&event.dataTransfer.files&&event.dataTransfer.files[0];
+   if(file)readThumbImage(file);
+  });
+ }
  drawThumbnail();
 }
 
