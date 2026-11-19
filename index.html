@@ -89,6 +89,41 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 #view-settings .divider{height:1px;background:var(--line);margin:20px 0}
 #view-settings .status-line{margin-top:12px;padding:10px;border-radius:10px;background:var(--panel2);font-size:13px}
 @media(max-width:760px){#view-settings .grid2{display:block}}
+
+/* Guided first-run path */
+.start-path{
+ margin:0 0 18px;padding:18px;border:1px solid #3b496c;border-radius:18px;
+ background:radial-gradient(480px 180px at 0 0,#55d6c21a,transparent 72%),linear-gradient(125deg,#1b2741,#151d33);
+ box-shadow:0 14px 34px #0509142b
+}
+.start-path-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
+.start-path-heading h2{font-size:18px;margin:5px 0 2px}
+.start-path-heading p{font-size:11px;color:var(--muted);margin:0}
+.start-path-hint{flex:0 0 auto;padding:7px 10px;border:1px solid #55d6c244;border-radius:99px;color:#9de7dd;font-size:9px;background:#55d6c20b}
+.start-path-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:14px}
+.start-step{
+ display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;min-height:145px;
+ padding:13px;border:1px solid #3a4767;border-radius:13px;background:#0f192d99;color:var(--text);
+ text-align:right;transition:transform .18s ease,border-color .18s ease,background .18s ease
+}
+.start-step:hover{transform:translateY(-3px);border-color:#55d6c288;background:#16243a}
+.start-step-number{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#8b7cf626;color:#c7c0ff;font-size:10px;font-weight:800}
+.start-step strong{font-size:12px}
+.start-step-description{font-size:10px;line-height:1.7;color:var(--muted)}
+.start-step-cta{margin-top:auto;padding-top:5px;color:#91e5d7;font-size:10px;font-weight:700}
+@media(max-width:900px){.start-path-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:520px){
+ .start-path{padding:14px}
+ .start-path-heading{align-items:flex-start;flex-direction:column;gap:8px}
+ .start-path-heading h2{font-size:16px}
+ .start-path-steps{gap:7px}
+ .start-step{min-height:148px;padding:11px}
+ .start-step strong{font-size:11px}
+ .start-step-description{font-size:9px}
+ .start-step-cta{font-size:9px}
+}
+@media(prefers-reduced-motion:reduce){.start-step{transition:none}.start-step:hover{transform:none}}
+
 </style></head>
 <body>
 <div class="app">
@@ -120,6 +155,42 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 <section class="view active" id="view-home">
   <div class="hero"><div class="hero-main"><span class="eyebrow">ابدأ فكرتك… وخليها محتوى يستاهل المشاهدة</span><h1>كل فكرة كبيرة<br>بتبدأ من <span>انطلاقتك.</span></h1><p>مساحة واحدة تساعدك تخطط، تكتب، تجهز وتنظم محتواك على يوتيوب وتيك توك وإنستجرام وباقي المنصات.</p><div class="actions"><button class="btn" data-go="studio">اصنع حزمة محتوى ✦</button><button class="btn alt" data-go="ideas">اكتشف أفكارًا جديدة</button></div></div>
   <div class="hero-side"><div><span class="eyebrow">تقدمك في تحدي 30 يوم</span><h3 id="homeChallengeTitle">ابدأ بأول خطوة</h3><p>كل يوم مهمة صغيرة تقربك من نشر محتوى أفضل.</p></div><div><div class="bar"><span id="homeChallengeBar"></span></div><div class="progressline"><span id="homeChallengeText">0 من 30 مهمة</span><span id="homeChallengePct">0%</span></div></div><button class="btn small alt" data-go="challenge">افتح التحدي</button></div></div>
+  <section class="start-path" aria-labelledby="startPathTitle">
+    <div class="start-path-heading">
+      <div>
+        <span class="eyebrow">مسار بسيط للبداية</span>
+        <h2 id="startPathTitle">من الفكرة للنشر في 4 خطوات</h2>
+        <p>ابدئي بالخطوة المناسبة ليكي، ومش محتاجة تستخدمي كل الأدوات مرة واحدة.</p>
+      </div>
+      <span class="start-path-hint">خطة واضحة من غير تشتّت</span>
+    </div>
+    <div class="start-path-steps">
+      <button class="start-step" type="button" data-go="brain" aria-label="ابدئي بتحديد جمهورك في عقل المحتوى الذكي">
+        <span class="start-step-number">01</span>
+        <strong>اعرفي جمهورك</strong>
+        <span class="start-step-description">حددي المجال والجمهور والهدف من المحتوى.</span>
+        <span class="start-step-cta">ابدئي من هنا ←</span>
+      </button>
+      <button class="start-step" type="button" data-go="ideas" aria-label="انتقلي إلى مولد أفكار المحتوى">
+        <span class="start-step-number">02</span>
+        <strong>اختاري فكرة</strong>
+        <span class="start-step-description">ولّدي أفكارًا تناسب مجالك والمنصة اللي بتستخدميها.</span>
+        <span class="start-step-cta">اكتشفي أفكارًا ←</span>
+      </button>
+      <button class="start-step" type="button" data-go="studio" aria-label="جهزي حزمة المحتوى في استوديو المحتوى">
+        <span class="start-step-number">03</span>
+        <strong>جهّزي المحتوى</strong>
+        <span class="start-step-description">حوّلي الفكرة إلى سكريبت وعنوان وخطة تصوير.</span>
+        <span class="start-step-cta">جهّزي الحزمة ←</span>
+      </button>
+      <button class="start-step" type="button" data-go="calendar" aria-label="أضيفي المحتوى إلى تقويم النشر">
+        <span class="start-step-number">04</span>
+        <strong>حددي موعد النشر</strong>
+        <span class="start-step-description">نظمي مواعيدك وارجعي تابعي أداء المحتوى.</span>
+        <span class="start-step-cta">افتحي التقويم ←</span>
+      </button>
+    </div>
+  </section>
   <div class="stats"><div class="stat"><div class="stattop">أفكار محفوظة <span class="statico">✧</span></div><strong id="statIdeas">0</strong><small>أفكار في مكتبتك</small></div><div class="stat"><div class="stattop">حزم محتوى <span class="statico">✍</span></div><strong id="statPacks">0</strong><small>مشاريع جهزتها</small></div><div class="stat"><div class="stattop">منشورات مخططة <span class="statico">▦</span></div><strong id="statPosts">0</strong><small>في تقويم النشر</small></div><div class="stat"><div class="stattop">مشاهدات مسجلة <span class="statico">◉</span></div><strong id="statViews">0</strong><small>من بياناتك المدخلة</small></div></div>
   <div class="focuspanel"><div class="sectionrow" style="margin:0 0 9px"><h2>🎯 تركيزك اليوم</h2><span>خطوة واحدة تكفي للبداية</span></div><div class="focusrow"><input id="homeFocusInput" maxlength="140" placeholder="اكتب أهم مهمة محتوى عايز تنجزها النهارده"><button class="btn small" id="homeFocusSave">حفظ المهمة</button><button class="btn small alt" id="homeFocusDone">تمت ✓</button></div><div class="focusstate" id="homeFocusState">لسه مفيش مهمة محددة لليوم.</div></div>
   <div class="sectionrow"><h2>ابدأ بسرعة</h2><span>اختار الأداة المناسبة لخطوتك الجاية</span></div><div class="quick">
@@ -220,8 +291,8 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
  <div class="grid2">
   <div class="card">
    <h2>مساعد المحتوى الذكي</h2>
-   <p class="muted">توليد أفكار وسكريبتات وعناوين وتحسين المحتوى عبر خدمة AI آمنة على الخادم، دون إدخال مفتاح داخل الموقع.</p>
-   <div class="note">لا تحتاج لإدخال أي مفتاح أو بيانات اتصال. بياناتك وأعمالك تظل محفوظة محليًا على جهازك.</div>
+   <p class="muted">تصل طلبات المساعد الذكي إلى خدمة الخادم، من غير وضع مفتاح API داخل الموقع. نجاح التوليد يعتمد على إعداد مفتاح الخدمة من مسؤول الموقع.</p>
+   <div class="note">لا تدخلي مفتاح API داخل الموقع. تظل أعمالك محفوظة محليًا على جهازك، وقد يحتاج مسؤول الموقع إلى إعداد مفتاح الخدمة على الخادم لتفعيل التوليد.</div>
    <div id="aiSettingsStatus" class="status-line" role="status">المساعد الذكي متصل بالخادم.</div>
   </div>
 <div class="card">
@@ -581,7 +652,7 @@ bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').val
 
 function renderSettings(){
   $('schemaVersionLabel').textContent=DATA_VERSION;$('dataIdeas').textContent=state.ideas.length;$('dataPacks').textContent=state.packs.length;$('dataPosts').textContent=state.posts.length;$('dataMetrics').textContent=state.metrics.length;
-  $('aiSettingsStatus').textContent='المساعد الذكي يعمل عبر الخادم؛ لا تحتاج لإدخال مفتاح داخل الموقع. قد يلزم إعداد الخدمة مرة واحدة من مسؤول الموقع.';
+  $('aiSettingsStatus').textContent='تُرسل طلبات المساعد عبر الخادم. يعتمد نجاح التوليد على إعداد مفتاح مزود الذكاء الاصطناعي في إعدادات الخادم.';
  }
  function exportAllData(){
   const copyState=normalizeState(state);
