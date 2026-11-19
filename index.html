@@ -216,22 +216,15 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 
 
 <section class="view" id="view-settings">
- <div class="head"><div><span class="eyebrow">تحكم في طريقة عمل الأدوات</span><h1>الإعدادات والبيانات ⚙</h1><p>بدّل بين القوالب المحلية ومزود ذكاء اصطناعي خارجي، واحتفظ بنسخة احتياطية من أعمالك.</p></div></div>
+ <div class="head"><div><span class="eyebrow">تحكم في طريقة عمل الأدوات</span><h1>الإعدادات والبيانات ⚙</h1><p>استخدم أدوات المحتوى المحلية واحتفظ بنسخة احتياطية من أعمالك.</p></div></div>
  <div class="grid2">
   <div class="card">
-   <h2>إعداد الذكاء الاصطناعي</h2>
-   <p class="muted">الوضع المحلي يعمل دون اتصال بمزود خارجي. وضع API يرسل مدخلات الأداة إلى المزود الذي تختاره.</p>
-   <label>وضع التشغيل</label><select id="aiMode"><option value="local">محلي / تجريبي</option><option value="api">ذكاء اصطناعي حقيقي عبر API</option></select>
-   <label>المزود</label><select id="aiProvider"><option value="openai">OpenAI متوافق مع Chat Completions</option><option value="gemini">Google Gemini</option><option value="custom">مزود مخصص متوافق مع OpenAI</option></select>
-   <label>نقطة النهاية (اتركها فارغة لاستخدام الافتراضي)</label><input id="aiEndpoint" type="url" placeholder="https://api.openai.com/v1/chat/completions">
-   <label>اسم النموذج</label><input id="aiModel" type="text" placeholder="gpt-4o-mini">
-   <label>مفتاح API</label><input id="aiKey" type="password" autocomplete="off" placeholder="أدخل المفتاح هنا">
-   <label>مهلة الاتصال بالمللي ثانية</label><input id="aiTimeout" type="number" min="5000" max="120000" step="1000">
-   <div class="actions"><button class="primary" id="saveAISettings" type="button">حفظ الإعدادات</button><button class="secondary" id="testAISettings" type="button">اختبار الاتصال</button></div>
-   <p class="note">تنبيه أمني: مفتاح API يبقى في ذاكرة الصفحة فقط ولا يُحفظ في localStorage أو النسخ الاحتياطية، لكنه يظل قابلًا للرؤية من أدوات المطور وأثناء استخدام المتصفح. لا تستخدم مفتاحًا مشتركًا أو ذا صلاحيات واسعة. لحماية حقيقية عند نشر الموقع للعموم، اربط الخدمة بوسيط خلفي يحفظ المفتاح كسرّ. يلزم HTTPS ونطاق المزود الرسمي؛ وقد تمنع بعض الخدمات طلبات المتصفح عبر CORS.</p>
-   <div id="aiSettingsStatus" class="status-line" role="status">الوضع المحلي جاهز.</div>
+   <h2>مساعد المحتوى المحلي</h2>
+   <p class="muted">أدوات انطلاقتك تعمل مباشرة دون مفاتيح API أو ربط حسابات خارجية. المخرجات قوالب ومسودات قابلة للتعديل والمراجعة.</p>
+   <div class="note">لا تحتاج لإدخال أي مفتاح أو بيانات اتصال. بياناتك وأعمالك تظل محفوظة محليًا على جهازك.</div>
+   <div id="aiSettingsStatus" class="status-line" role="status">المساعد المحلي جاهز.</div>
   </div>
-  <div class="card">
+<div class="card">
    <h2>النسخ الاحتياطي وإدارة البيانات</h2>
    <p class="muted">بيانات الموقع محفوظة محليًا على هذا الجهاز والمتصفح. انقل نسخة JSON يدويًا عند تغيير الجهاز أو المتصفح.</p>
    <div class="actions"><button class="primary" id="settingsExport" type="button">تصدير جميع البيانات JSON</button><button class="secondary" id="settingsImport" type="button">استيراد نسخة JSON</button><input id="settingsImportFile" type="file" accept="application/json,.json" hidden></div>
@@ -258,8 +251,8 @@ window.ENTELAQTAK_CONFIG = {
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const DATA_VERSION=3;
-const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local",provider:"openai",endpoint:"",model:"gpt-4o-mini",timeout:45000}};
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null,sessionApiKey="";
+const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local"}};
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null;
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
@@ -272,14 +265,11 @@ function normalizeState(input){
  out.metrics=records('metrics').map(x=>({...x,title:String(x.title||''),date:/^\d{4}-\d{2}-\d{2}$/.test(String(x.date||''))?String(x.date):'',views:Math.max(0,Number(x.views)||0),likes:Math.max(0,Number(x.likes)||0),comments:Math.max(0,Number(x.comments)||0),shares:Math.max(0,Number(x.shares)||0)})).filter(x=>x.date);
  out.challenge=src.challenge&&typeof src.challenge==='object'&&!Array.isArray(src.challenge)?src.challenge:{};
  out.focus=src.focus&&typeof src.focus==='object'?{text:String(src.focus.text||''),done:!!src.focus.done}:{...defaults.focus};
- out.settings={...defaults.settings,...(src.settings&&typeof src.settings==='object'?src.settings:{})};delete out.settings.apiKey;
- if(!['local','api'].includes(out.settings.aiMode))out.settings.aiMode='local';
- if(!['openai','gemini','custom'].includes(out.settings.provider))out.settings.provider='openai';
- out.settings.timeout=Math.min(120000,Math.max(5000,Number(out.settings.timeout)||45000));
+ out.settings={aiMode:'local'};
  return out;
 }
 let state=normalizeState({});
-try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);sessionApiKey=typeof raw?.settings?.apiKey==='string'?raw.settings.apiKey:'';state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
+try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
 const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}};
@@ -306,7 +296,7 @@ function updateAccountUI(){
  $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
  $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
  $('accountSync').textContent=currentUser?'متصل':'محلي';
- $('accountAI').textContent=currentUser?'جاهز بعد إعداد مفتاح API':'يتطلب حسابًا';
+ $('accountAI').textContent='المساعد المحلي جاهز';
  $('syncState').textContent=currentUser?'مزامنة الحساب مفعّلة':'محلي على هذا الجهاز';
  $('connectionBadge').innerHTML='<span class="dot"></span>'+(currentUser?'متصل بحسابك':'مساحة العمل');
  $('authSignOut').hidden=!currentUser;
@@ -406,35 +396,7 @@ function localDraft(tool,payload){
  if(tool==='repurpose')return 'صياغة تجريبية لمنصة '+(p.platform||'مختلفة')+':\n\n'+String(p.source||'أضف النص الأصلي أولًا').slice(0,900)+'\n\nأعد تحرير النص ليلائم المنصة والنبرة المطلوبة، ولا تنشره قبل المراجعة.';
  return 'مسودة محلية تجريبية عن '+topic+'\n\nالمقدمة والخطاف: ابدأ بسؤال واضح يلامس مشكلة الجمهور.\n\nالمحاور:\n1. وضّح المشكلة والسياق.\n2. قدم خطوات أو أمثلة عملية يمكن التحقق منها.\n3. لخّص أهم نتيجة أو درس.\n\nالخاتمة: اطلب من الجمهور تجربة خطوة واحدة أو مشاركة سؤال.\n\nهذه مسودة قالبية وليست مخرجات نموذج ذكاء اصطناعي.';
 }
-async function callAI(tool,payload){
- const cfg=state.settings||defaults.settings;
- if(cfg.aiMode!=='api')return localDraft(tool,payload);
- if(!sessionApiKey.trim())throw new Error('أدخل مفتاح API من إعدادات الذكاء الاصطناعي أولًا.');
- const provider=cfg.provider||'openai';
- const endpoint=(cfg.endpoint||'').trim()||(provider==='gemini'?'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent':'https://api.openai.com/v1/chat/completions');
- const model=cfg.model?.trim()||(provider==='gemini'?'gemini-2.0-flash':'gpt-4o-mini');
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),cfg.timeout||45000);
- const prompt='أنت مساعد لصانع محتوى عربي. أعد مسودة مفيدة ومنظمة باللغة العربية، وراعِ ملف صانع المحتوى وهوية علامته عند توفرهما. لا تخترع حقائق أو أرقامًا. وضّح ما يحتاج تحققًا.\nالأداة: '+tool+'\nالمدخلات والسياق: '+JSON.stringify({profile:state.profile||{},brand:state.brand||{},input:payload});
- try{
-  let response,data={},textOut='';
-  if(provider==='gemini'){
-   response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':sessionApiKey.trim()},body:JSON.stringify({contents:[{parts:[{text:prompt}]}],generationConfig:{temperature:0.7}}),signal:controller.signal});
-   data=await response.json().catch(()=>({}));
-   textOut=data?.candidates?.[0]?.content?.parts?.map(x=>x.text||'').join('\n')||'';
-  }else{
-   response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+sessionApiKey.trim()},body:JSON.stringify({model,messages:[{role:'user',content:prompt}],temperature:0.7}),signal:controller.signal});
-   data=await response.json().catch(()=>({}));
-   textOut=data?.choices?.[0]?.message?.content||data?.output_text||'';
-  }
-  if(!response.ok)throw new Error(data?.error?.message||data?.error||'فشل طلب API برمز '+response.status+'. راجع المفتاح ونقطة النهاية وإعدادات CORS.');
-  if(!textOut.trim())throw new Error('استجاب المزود دون نص قابل للعرض.');
-  return textOut.trim();
- }catch(error){
-  if(error.name==='AbortError')throw new Error('انتهت مهلة الاتصال. جرّب زيادة المهلة أو تحقق من الشبكة.');
-  if(/Failed to fetch|NetworkError|Load failed/i.test(error.message||''))throw new Error('تعذر الاتصال بالشبكة أو أن المزود منع طلب المتصفح عبر CORS. تحقق من نقطة النهاية.');
-  throw error;
- }finally{clearTimeout(timer);}
-}
+async function callAI(tool,payload){return localDraft(tool,payload);}
 function bindAIButton(id,tool,payloadFactory,onResult){
  $(id).addEventListener('click',async()=>{
   const button=$(id),old=button.textContent;button.disabled=true;button.textContent='جاري التوليد...';
@@ -597,7 +559,7 @@ all('[data-challenge-filter]').forEach(b=>b.addEventListener('click',()=>{challe
 $('challengeReset').addEventListener('click',()=>{if(!confirm('متأكد إنك عايز تصفّر تقدم تحدي الـ30 يوم؟'))return;state.challenge={};save();renderChallenge();renderHome();toast('بدأنا التحدي من جديد. كل التوفيق!');});
 $('exportBtn').addEventListener('click',exportAllData);
 $('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{if(f.size>5*1024*1024)throw new Error('حجم الملف كبير.');const parsed=JSON.parse(await f.text()),d=parsed.data||parsed;if(!d||typeof d!=='object'||Array.isArray(d))throw new Error('صيغة غير صحيحة');for(const k of ['ideas','packs','posts','metrics'])if(d[k]!==undefined&&!Array.isArray(d[k]))throw new Error('بنية البيانات غير صحيحة');if(!confirm('سيتم استبدال البيانات الحالية. متابعة؟'))return;state=normalizeState({...d,settings:{...state.settings,...(d.settings||{}),apiKey:state.settings.apiKey||''}});save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح: '+err.message);}finally{e.target.value='';}});
+$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{if(f.size>5*1024*1024)throw new Error('حجم الملف كبير.');const parsed=JSON.parse(await f.text()),d=parsed.data||parsed;if(!d||typeof d!=='object'||Array.isArray(d))throw new Error('صيغة غير صحيحة');for(const k of ['ideas','packs','posts','metrics'])if(d[k]!==undefined&&!Array.isArray(d[k]))throw new Error('بنية البيانات غير صحيحة');if(!confirm('سيتم استبدال البيانات الحالية. متابعة؟'))return;state=normalizeState(d);save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح: '+err.message);}finally{e.target.value='';}});
 bindAIButton('generateIdeasAI','ideas',()=>({niche:$('ideaNiche').value,platform:$('ideaPlatform').value,type:$('ideaType').value,audience:$('ideaAudience').value,seed:$('ideaSeed').value}),text=>{$('ideasResult').className='result';$('ideasResult').textContent=text;state.ideas.push({id:Date.now(),title:'أفكار الذكاء الاصطناعي',detail:text,niche:$('ideaNiche').value,platform:$('ideaPlatform').value});save();renderHome();});
 bindAIButton('makeScriptAI','script',()=>({topic:$('scriptTopic').value,duration:$('scriptDuration').value,style:$('scriptStyle').value,audience:$('scriptAudience').value,points:$('scriptPoints').value}),text=>{$('scriptOutput').value=text;});
 bindAIButton('studioAI','content_pack',()=>({topic:$('studioTopic').value,niche:$('studioNiche').value,platform:$('studioPlatform').value,audience:$('studioAudience').value,tone:$('studioTone').value,duration:$('studioDuration').value,angle:$('studioAngle').value,notes:$('studioNotes').value}),text=>{$('studioScript').value=text;});
@@ -607,51 +569,15 @@ bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').val
 
 
 function renderSettings(){
- const c=state.settings||defaults.settings;
- $('aiMode').value=c.aiMode;$('aiProvider').value=c.provider;$('aiEndpoint').value=c.endpoint||'';
- $('aiModel').value=c.model||'';$('aiKey').value=sessionApiKey;$('aiTimeout').value=c.timeout||45000;
- $('schemaVersionLabel').textContent=DATA_VERSION;$('dataIdeas').textContent=state.ideas.length;$('dataPacks').textContent=state.packs.length;$('dataPosts').textContent=state.posts.length;$('dataMetrics').textContent=state.metrics.length;
- $('aiSettingsStatus').textContent=c.aiMode==='api'?'وضع API مفعّل — سيتم استخدام المزود المحدد عند التوليد.':'الوضع المحلي التجريبي مفعّل — لا يتم إرسال طلبات خارجية.';
-}
-function exportAllData(){
- const copyState=normalizeState(state);copyState.settings={...copyState.settings,apiKey:''};
- download('entelaqtak-backup-v'+DATA_VERSION+'.json',JSON.stringify({app:'انطلاقتك',schemaVersion:DATA_VERSION,exportedAt:new Date().toISOString(),data:copyState},null,2),'application/json');
- toast('تم تصدير بياناتك. تم استبعاد مفتاح API للحماية.');
-}
-$('saveAISettings').addEventListener('click',()=>{
- sessionApiKey=$('aiKey').value.trim();
- state.settings={...state.settings,aiMode:$('aiMode').value,provider:$('aiProvider').value,endpoint:$('aiEndpoint').value.trim(),model:$('aiModel').value.trim(),timeout:Number($('aiTimeout').value)||45000};
- if(state.settings.endpoint){try{const u=new URL(state.settings.endpoint);const expected=state.settings.provider==='gemini'?'generativelanguage.googleapis.com':state.settings.provider==='openai'?'api.openai.com':null;if(u.protocol!=='https:'||u.username||u.password||(expected&&u.hostname!==expected))throw 0;}catch(e){toast('نقطة النهاية غير آمنة أو لا تطابق مزود الخدمة. استخدم HTTPS ونطاق المزود الصحيح.');return;}}
- save();renderSettings();toast('تم حفظ إعدادات الذكاء الاصطناعي على هذا الجهاز.');
-});
-$('testAISettings').addEventListener('click',async()=>{
- const b=$('testAISettings'),old=b.textContent;b.disabled=true;b.textContent='جارٍ الاختبار...';
- try{
-  sessionApiKey=$('aiKey').value.trim();
-  state.settings={...state.settings,aiMode:$('aiMode').value,provider:$('aiProvider').value,endpoint:$('aiEndpoint').value.trim(),model:$('aiModel').value.trim(),timeout:Number($('aiTimeout').value)||45000};
-  if(state.settings.aiMode==='api'&&!sessionApiKey)throw new Error('أدخل مفتاح API أولًا.');
-  if(state.settings.endpoint){
-   try{
-    const u=new URL(state.settings.endpoint);
-    const expected=state.settings.provider==='gemini'?'generativelanguage.googleapis.com':state.settings.provider==='openai'?'api.openai.com':null;
-    if(u.protocol!=='https:'||u.username||u.password||(expected&&u.hostname!==expected))throw new Error();
-   }catch(e){throw new Error('نقطة النهاية غير صحيحة. استخدم HTTPS ونطاق المزود المطابق.');}
-  }
-  if(state.settings.aiMode==='local'){
-   $('aiSettingsStatus').textContent='الوضع المحلي يعمل، لكن لم يتم الاتصال بمزود خارجي. اختر وضع API لاختبار المفتاح.';
-   toast('الاختبار المحلي ناجح؛ لم يتم إرسال طلب API.');
-  }else{
-   await callAI('test',{topic:'اختبار اتصال'});
-   $('aiSettingsStatus').textContent='نجح الاتصال واستلمنا استجابة من '+state.settings.provider+'.';
-   toast('تم اختبار الاتصال بنجاح.');
-  }
- }catch(e){
-  const msg=e?.message||'تعذر اختبار الاتصال.';
-  $('aiSettingsStatus').textContent='فشل الاختبار: '+msg;
-  toast(msg);
- }finally{b.disabled=false;b.textContent=old;}
-});
-$('settingsExport').addEventListener('click',exportAllData);
+  $('schemaVersionLabel').textContent=DATA_VERSION;$('dataIdeas').textContent=state.ideas.length;$('dataPacks').textContent=state.packs.length;$('dataPosts').textContent=state.posts.length;$('dataMetrics').textContent=state.metrics.length;
+  $('aiSettingsStatus').textContent='المساعد المحلي جاهز — لا يحتاج إلى مفتاح أو اتصال بمزود خارجي.';
+ }
+ function exportAllData(){
+  const copyState=normalizeState(state);
+  download('entelaqtak-backup-v'+DATA_VERSION+'.json',JSON.stringify({app:'انطلاقتك',schemaVersion:DATA_VERSION,exportedAt:new Date().toISOString(),data:copyState},null,2),'application/json');
+  toast('تم تصدير بياناتك.');
+ }
+ $('settingsExport').addEventListener('click',exportAllData);
 $('settingsImport').addEventListener('click',()=>$('settingsImportFile').click());
 $('settingsImportFile').addEventListener('change',async e=>{
  const file=e.target.files?.[0];if(!file)return;
@@ -661,18 +587,17 @@ $('settingsImportFile').addEventListener('change',async e=>{
   if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw new Error('صيغة الملف غير صحيحة.');
   for(const key of ['ideas','packs','posts','metrics'])if(incoming[key]!==undefined&&!Array.isArray(incoming[key]))throw new Error('بنية حقل '+key+' غير صحيحة.');
   if(!confirm('سيتم استبدال بياناتك الحالية بالنسخة المستوردة. هل أنشأت نسخة من بياناتك الحالية؟ متابعة؟'))return;
-  const preservedSettings={...state.settings,...(incoming.settings||{})};delete preservedSettings.apiKey;
-  state=normalizeState({...incoming,settings:preservedSettings});save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
+  state=normalizeState(incoming);save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
  }catch(err){toast('تعذر الاستيراد: '+err.message);}
  finally{e.target.value='';}
 });
 $('clearAllData').addEventListener('click',()=>{
  if(!confirm('تحذير: سيتم حذف جميع الأفكار والحزم والمنشورات والإحصاءات والتقدم والإعدادات المحلية نهائيًا. هل أنت متأكد؟'))return;
- state=normalizeState({});sessionApiKey='';$('aiKey').value='';save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
+ state=normalizeState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
 });
-function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiMode'))renderSettings();}
+function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();}
 window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews};
-$('year').textContent=new Date().getFullYear();if($('aiMode'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
+$('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
 })();
 </script>
 <script src="./creator-suite.js" defer></script>
