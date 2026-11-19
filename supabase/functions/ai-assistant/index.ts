@@ -1,5 +1,3 @@
-import { createClient } from "npm:@supabase/supabase-js@2";
-
 const allowedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose"]);
 const allowedOrigins = new Set(["https://sasa-antilaqatuk.github.io", "https://hfpokf2-boop.github.io"]);
 
@@ -19,6 +17,8 @@ const instructions: Record<string, string> = {
   repurpose: "حوّل المادة إلى الصيغة والمنصة المطلوبة مع الحفاظ على الحقائق والمعنى. لا تضف ادعاءات غير موجودة في المصدر.",
 };
 
+const requestHits = new Map<string, { count: number; resetAt: number }>();
+
 function reply(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
     status,
@@ -32,28 +32,20 @@ Deno.serve(async (req: Request) => {
 
   const origin = req.headers.get("origin");
   if (origin && !allowedOrigins.has(origin)) return reply({ error: "Origin not allowed" }, 403);
+  const forwarded = req.headers.get("x-forwarded-for") || "unknown";
+  const ip = forwarded.split(",")[0].trim();
+  const now = Date.now();
+  const bucket = requestHits.get(ip);
+  if (!bucket || bucket.resetAt <= now) requestHits.set(ip, { count: 1, resetAt: now + 15 * 60 * 1000 });
+  else if (bucket.count >= 5) return reply({ error: "تم تجاوز الحد المؤقت. حاول بعد 15 دقيقة." }, 429);
+  else bucket.count++;
 
-  const authHeader = req.headers.get("Authorization");
-  if (!authHeader?.startsWith("Bearer ")) return reply({ error: "يلزم تسجيل الدخول." }, 401);
-
-  const supabaseUrl = Deno.env.get("SUPABASE_URL");
-  const publishableKey = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY");
   const openAiKey = Deno.env.get("OPENAI_API_KEY");
   const model = Deno.env.get("OPENAI_MODEL") ?? "gpt-6-luna";
 
-  if (!supabaseUrl || !publishableKey) return reply({ error: "إعدادات Supabase غير مكتملة على الخادم." }, 503);
   if (!openAiKey) return reply({ error: "لم يتم إعداد مفتاح الذكاء الاصطناعي على الخادم بعد." }, 503);
 
   try {
-    const supabase = createClient(supabaseUrl, publishableKey, {
-      global: { headers: { Authorization: authHeader } },
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-
-    const token = authHeader.slice("Bearer ".length);
-    const { data: userData, error: userError } = await supabase.auth.getUser(token);
-    if (userError || !userData.user) return reply({ error: "انتهت جلسة الدخول. سجّل الدخول مرة أخرى." }, 401);
-
     const body = await req.json();
     const tool = typeof body?.tool === "string" ? body.tool : "";
     const payload = body?.payload;
@@ -67,19 +59,6 @@ Deno.serve(async (req: Request) => {
     if (serialized.length < 2 || serialized.length > 12000) {
       return reply({ error: "حجم النص يجب أن يكون بين 1 و12,000 حرف/رمز JSON." }, 400);
     }
-
-    const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-    const { count, error: countError } = await supabase
-      .from("ai_usage")
-      .select("id", { count: "exact", head: true })
-      .eq("user_id", userData.user.id)
-      .gte("created_at", since);
-
-    if (countError) {
-      console.error("AI usage count error", countError);
-      return reply({ error: "تعذر التحقق من حد الاستخدام. حاول لاحقًا." }, 503);
-    }
-    if ((count ?? 0) >= 60) return reply({ error: "وصلت إلى حد 60 طلبًا يوميًا لهذا الحساب." }, 429);
 
     const response = await fetch("https://api.openai.com/v1/responses", {
       method: "POST",
@@ -117,13 +96,6 @@ Deno.serve(async (req: Request) => {
           .trim();
 
     if (!text) return reply({ error: "لم يصل نص من خدمة الذكاء الاصطناعي." }, 502);
-
-    const { error: insertError } = await supabase.from("ai_usage").insert({
-      user_id: userData.user.id,
-      tool,
-      input_chars: serialized.length,
-    });
-    if (insertError) console.error("AI usage insert error", insertError);
 
     return reply({ text, model });
   } catch (error) {
