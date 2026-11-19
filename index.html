@@ -28,6 +28,7 @@
   <div class="navlabel">مساحة العمل</div>
   <nav class="nav" id="nav">
     <button class="active" data-view="home"><i>⌂</i>الرئيسية</button>
+    <button data-view="account"><i>◎</i>حسابي والمزامنة</button>
     <button data-view="ideas"><i>✧</i>أفكار المحتوى</button>
     <button data-view="studio"><i>✍</i>استوديو المحتوى</button>
     <button data-view="repurpose"><i>♻</i>إعادة تدوير المحتوى</button>
@@ -43,7 +44,7 @@
   <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>الأدوات الحالية تعمل داخل المتصفح. بياناتك محفوظة على هذا الجهاز فقط.</div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><span class="pill"><span class="dot"></span>نسخة تجريبية محلية</span><button class="iconbtn" id="themeInfo" title="معلومات">؟</button></div></header>
+<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span><button class="btn small alt" data-go="account">حسابي / المزامنة</button></div></header>
 
 <section class="view active" id="view-home">
   <div class="hero"><div class="hero-main"><span class="eyebrow">ابدأ فكرتك… وخليها محتوى يستاهل المشاهدة</span><h1>كل فكرة كبيرة<br>بتبدأ من <span>انطلاقتك.</span></h1><p>مساحة واحدة تساعدك تخطط، تكتب، تجهز وتنظم محتواك على يوتيوب وتيك توك وإنستجرام وباقي المنصات.</p><div class="actions"><button class="btn" data-go="studio">اصنع حزمة محتوى ✦</button><button class="btn alt" data-go="ideas">اكتشف أفكارًا جديدة</button></div></div>
@@ -68,7 +69,7 @@
   <div class="grid2"><div class="field"><label for="ideaPlatform">المنصة</label><select id="ideaPlatform"><option>YouTube</option><option>YouTube Shorts</option><option>TikTok</option><option>Instagram Reels</option><option>Facebook</option><option>بودكاست</option></select></div><div class="field"><label for="ideaType">نوع الفكرة</label><select id="ideaType"><option>مزيج متنوع</option><option>تعليمي</option><option>تجربة وتحدي</option><option>قائمة ونصائح</option><option>قصة وحكاية</option><option>مقارنة ومراجعة</option><option>رأي ونقاش</option></select></div></div>
   <div class="field"><label for="ideaAudience">الجمهور المستهدف</label><input id="ideaAudience" placeholder="مثال: طلبة الجامعة، المبتدئين، أصحاب المشاريع"></div>
   <div class="field"><label for="ideaSeed">كلمة أو موضوع تحب تبدأ منه (اختياري)</label><input id="ideaSeed" placeholder="مثال: الذكاء الاصطناعي أو تنظيم الوقت"></div>
-  <button class="btn" id="generateIdeas">ولّد 6 أفكار جديدة ✦</button></div>
+  <button class="btn" id="generateIdeas">ولّد 6 أفكار جديدة ✦</button><button class="btn alt" id="generateIdeasAI" style="margin-top:8px">أفكار بالذكاء الاصطناعي ✨</button></div>
   <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>الأفكار المقترحة</h3><span id="ideaCount">بانتظار اختيارك</span></div><div id="ideasResult" class="empty" style="min-height:290px">اختار المجال واضغط «ولّد أفكار» لبدء العصف الذهني.</div></div></div>
  <div class="note">الأفكار المقترحة هنا مولّدة من قوالب محلية داخل الصفحة، وليست بحثًا مباشرًا عن الترند أو اتصالًا بخدمة ذكاء اصطناعي.</div>
 </section>
@@ -83,7 +84,7 @@
   <div class="field"><label for="studioNotes">نقاط أو معلومات تريد تضمينها (اختياري)</label><textarea id="studioNotes" placeholder="اكتب أمثلة أو نقاط مهمة أو أسئلة الجمهور..."></textarea></div>
   <button class="btn" id="generateStudio">أنشئ حزمة المحتوى ✦</button></div>
   <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>مكتبة الحزم المحفوظة</h3><span id="studioSavedCount">0 حزمة</span></div><p class="sub">احفظ الحزم المهمة وارجع لها وقت ما تحتاج.</p><div class="savedlist" id="studioHistory"><div class="empty">احفظ أول حزمة لتظهر هنا.</div></div><div class="note">المحتوى مسودة قابلة للتحرير. راجع الحقائق وأضف تجربتك ومصادرك قبل النشر.</div></div></div>
- <div class="panel" id="studioOutput" style="margin-top:15px"><div class="sectionrow" style="margin-top:0"><h3>نتيجة حزمة المحتوى</h3><span id="studioStatus">بانتظار فكرتك</span></div><div class="grid2"><div><div class="eyebrow">الفكرة والخطاف</div><div class="result empty" id="studioHook">سيظهر الخطاف هنا.</div><div class="eyebrow" style="margin-top:12px">عناوين مقترحة</div><div id="studioTitles" class="result empty">سيظهر المحتوى هنا.</div><div class="eyebrow" style="margin-top:12px">الكلمات والهاشتاجات</div><div id="studioKeywords" class="result empty">سيظهر المحتوى هنا.</div></div><div><div class="eyebrow">السكريبت — قابل للتعديل</div><textarea id="studioScript" class="control" style="min-height:260px" placeholder="سيظهر السكريبت هنا بعد إنشاء الحزمة."></textarea><div class="eyebrow" style="margin-top:12px">وصف المنشور — قابل للتعديل</div><textarea id="studioDescription" class="control" style="min-height:110px" placeholder="سيظهر الوصف هنا."></textarea></div></div><div class="two" style="margin-top:12px"><div><div class="eyebrow">تصوّر الصورة المصغّرة</div><div class="result empty" id="studioThumbnail">سيظهر التصور هنا.</div></div><div><div class="eyebrow">قائمة اللقطات</div><div class="result empty" id="studioShots">ستظهر قائمة التصوير هنا.</div></div></div><div class="actions" style="margin-top:12px"><button class="btn small" id="saveStudio">حفظ الحزمة</button><button class="btn small alt" id="copyStudioAll">نسخ الحزمة</button><button class="btn small alt" id="downloadStudio">تحميل TXT</button><button class="btn small ghost" id="studioToCalendar">إرسال عنوان للتقويم</button></div></div>
+ <div class="panel" id="studioOutput" style="margin-top:15px"><div class="sectionrow" style="margin-top:0"><h3>نتيجة حزمة المحتوى</h3><span id="studioStatus">بانتظار فكرتك</span></div><div class="grid2"><div><div class="eyebrow">الفكرة والخطاف</div><div class="result empty" id="studioHook">سيظهر الخطاف هنا.</div><div class="eyebrow" style="margin-top:12px">عناوين مقترحة</div><div id="studioTitles" class="result empty">سيظهر المحتوى هنا.</div><div class="eyebrow" style="margin-top:12px">الكلمات والهاشتاجات</div><div id="studioKeywords" class="result empty">سيظهر المحتوى هنا.</div></div><div><div class="eyebrow">السكريبت — قابل للتعديل</div><textarea id="studioScript" class="control" style="min-height:260px" placeholder="سيظهر السكريبت هنا بعد إنشاء الحزمة."></textarea><div class="eyebrow" style="margin-top:12px">وصف المنشور — قابل للتعديل</div><textarea id="studioDescription" class="control" style="min-height:110px" placeholder="سيظهر الوصف هنا."></textarea></div></div><div class="two" style="margin-top:12px"><div><div class="eyebrow">تصوّر الصورة المصغّرة</div><div class="result empty" id="studioThumbnail">سيظهر التصور هنا.</div></div><div><div class="eyebrow">قائمة اللقطات</div><div class="result empty" id="studioShots">ستظهر قائمة التصوير هنا.</div></div></div><div class="actions" style="margin-top:12px"><button class="btn small" id="saveStudio">حفظ الحزمة</button><button class="btn small alt" id="studioAI">حسّن الحزمة بالذكاء الاصطناعي</button><button class="btn small alt" id="copyStudioAll">نسخ الحزمة</button><button class="btn small alt" id="downloadStudio">تحميل TXT</button><button class="btn small ghost" id="studioToCalendar">إرسال عنوان للتقويم</button></div></div>
 </section>
 
 <section class="view" id="view-repurpose">
@@ -92,24 +93,46 @@
   <div class="field"><label for="repurposeSource">النص أو ملخص المحتوى</label><textarea id="repurposeSource" style="min-height:190px" placeholder="الصق ملخص الفيديو أو أهم النقاط..."></textarea></div>
   <div class="grid2"><div class="field"><label for="repurposePlatform">الصيغة المطلوبة</label><select id="repurposePlatform"><option>YouTube Shorts / Reels / TikTok</option><option>منشور Instagram / Facebook</option><option>منشور مجتمع YouTube</option><option>سلسلة منشورات قصيرة</option><option>مقدمة ونقاط لبودكاست</option></select></div><div class="field"><label for="repurposeTone">نبرة المحتوى</label><select id="repurposeTone"><option>بسيطة وودودة</option><option>حماسية</option><option>تعليمية</option><option>قصصية</option><option>احترافية</option></select></div></div>
   <div class="field"><label for="repurposeAudience">الجمهور المستهدف</label><input id="repurposeAudience" placeholder="مثال: صناع المحتوى المبتدئين"></div>
-  <button class="btn" id="makeRepurpose">حوّل المحتوى ✦</button></div>
+  <button class="btn" id="makeRepurpose">حوّل المحتوى ✦</button><button class="btn alt" id="makeRepurposeAI" style="margin-top:8px">حوّل بالذكاء الاصطناعي ✨</button></div>
   <div class="panel"><h3>النسخة الجديدة</h3><p class="sub">راجع النص، خصص الأمثلة، ثم انسخه أو حمّله.</p><textarea id="repurposeOutput" style="min-height:390px" placeholder="النسخة المحوّلة هتظهر هنا..."></textarea><div class="resultactions"><button class="btn small alt" data-copy="repurposeOutput">نسخ المحتوى</button><button class="btn small alt" id="downloadRepurpose">تحميل TXT</button></div><div class="note">التحويل الحالي يعتمد على قوالب محلية. بعد توصيل الذكاء الاصطناعي سنستخدمه لإعادة كتابة المحتوى حسب المنصة والجمهور والنبرة.</div></div></div>
+</section>
+
+<section class="view" id="view-account">
+ <div class="head"><div><span class="eyebrow">ملفاتك معاك على كل جهاز</span><h1>حسابك ومساحة العمل ☁️</h1><p>أنشئ حسابًا واحتفظ بأفكارك وحزمك وتقويمك في مساحة خاصة بك.</p></div></div>
+ <div class="two">
+  <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>حساب انطلاقتك</h3><span id="authState">غير مسجل</span></div>
+   <p class="sub">استخدم بريدك الإلكتروني وكلمة مرور لتسجيل حسابك أو الدخول إلى مساحة العمل.</p>
+   <div class="field"><label for="authName">الاسم (للحساب الجديد)</label><input id="authName" autocomplete="name" placeholder="اسمك أو اسم القناة"></div>
+   <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com"></div>
+   <div class="field"><label for="authPassword">كلمة المرور</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="8 أحرف على الأقل"></div>
+   <div class="actions"><button class="btn" id="authSignIn">تسجيل الدخول</button><button class="btn alt" id="authSignUp">إنشاء حساب</button><button class="btn ghost" id="authSignOut" hidden>تسجيل الخروج</button></div>
+   <p id="authMessage" class="sub" aria-live="polite" style="margin-top:12px"></p>
+  </div>
+  <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>حالة مساحة العمل</h3><span id="syncState">محلي على هذا الجهاز</span></div>
+   <div class="metricgrid"><div class="metric"><small>الحساب</small><strong id="accountUser">—</strong></div><div class="metric"><small>حفظ المشاريع</small><strong id="accountSync">محلي</strong></div><div class="metric"><small>المساعد الذكي</small><strong id="accountAI">قريبًا</strong></div></div>
+   <div class="note">المشاريع ستتزامن بين أجهزتك بعد تسجيل الدخول. بيانات كل حساب معزولة عن حسابات المستخدمين الآخرين عبر سياسات أمان قاعدة البيانات.</div>
+  </div>
+ </div>
+ <div class="panel" style="margin-top:14px"><h3>المساعد الذكي ✨</h3><p class="sub">بعد تفعيل الخدمة يمكنك استخدام الذكاء الاصطناعي للأفكار والسكريبتات والعناوين والوصف وإعادة تدوير المحتوى.</p>
+  <div class="actions"><a class="btn alt" href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">إدارة مفاتيح OpenAI</a><a class="btn ghost" href="https://supabase.com/dashboard" target="_blank" rel="noopener">لوحة Supabase</a></div>
+  <div class="note">لا تضع مفتاح OpenAI أو أي مفتاح خادم في هذه الصفحة أو في ملفات GitHub العامة. يُحفظ المفتاح على الخادم فقط.</div>
+ </div>
 </section>
 
 <section class="view" id="view-script">
  <div class="head"><div><span class="eyebrow">رتّب كلامك قبل التسجيل</span><h1>كاتب السكريبت ✍️</h1><p>حوّل الموضوع إلى هيكل فيديو واضح مع مقدمة ومحاور وخاتمة.</p></div></div>
- <div class="two"><div class="panel"><h3>بيانات الفيديو</h3><p class="sub">اكتب الموضوع وحدد المدة والجمهور.</p><div class="field"><label for="scriptTopic">موضوع الفيديو</label><input id="scriptTopic" placeholder="عن إيه هتتكلم؟"></div><div class="grid2"><div class="field"><label for="scriptDuration">المدة</label><select id="scriptDuration"><option>5–8 دقائق</option><option>8–12 دقيقة</option><option>15–20 دقيقة</option><option>30–60 ثانية</option><option>60–90 ثانية</option></select></div><div class="field"><label for="scriptStyle">الأسلوب</label><select id="scriptStyle"><option>بسيط وودود</option><option>حماسي</option><option>تعليمي</option><option>قصصي</option><option>كوميدي</option></select></div></div><div class="field"><label for="scriptAudience">الجمهور</label><input id="scriptAudience" placeholder="مثال: المبتدئين"></div><div class="field"><label for="scriptPoints">نقاط لازم تذكرها</label><textarea id="scriptPoints" placeholder="نقطة أولى، نقطة ثانية..."></textarea></div><button class="btn" id="makeScript">اكتب مسودة السكريبت</button></div><div class="panel"><h3>مسودة السكريبت</h3><p class="sub">راجع النص وأضف أمثلة من تجربتك.</p><textarea id="scriptOutput" style="min-height:420px" placeholder="السكريبت هيظهر هنا..."></textarea><div class="resultactions"><button class="btn small alt" data-copy="scriptOutput">نسخ النص</button><button class="btn small alt" id="downloadScript">تحميل TXT</button></div></div></div>
+ <div class="two"><div class="panel"><h3>بيانات الفيديو</h3><p class="sub">اكتب الموضوع وحدد المدة والجمهور.</p><div class="field"><label for="scriptTopic">موضوع الفيديو</label><input id="scriptTopic" placeholder="عن إيه هتتكلم؟"></div><div class="grid2"><div class="field"><label for="scriptDuration">المدة</label><select id="scriptDuration"><option>5–8 دقائق</option><option>8–12 دقيقة</option><option>15–20 دقيقة</option><option>30–60 ثانية</option><option>60–90 ثانية</option></select></div><div class="field"><label for="scriptStyle">الأسلوب</label><select id="scriptStyle"><option>بسيط وودود</option><option>حماسي</option><option>تعليمي</option><option>قصصي</option><option>كوميدي</option></select></div></div><div class="field"><label for="scriptAudience">الجمهور</label><input id="scriptAudience" placeholder="مثال: المبتدئين"></div><div class="field"><label for="scriptPoints">نقاط لازم تذكرها</label><textarea id="scriptPoints" placeholder="نقطة أولى، نقطة ثانية..."></textarea></div><button class="btn" id="makeScript">اكتب مسودة السكريبت</button><button class="btn alt" id="makeScriptAI" style="margin-top:8px">اكتب بالذكاء الاصطناعي ✨</button></div><div class="panel"><h3>مسودة السكريبت</h3><p class="sub">راجع النص وأضف أمثلة من تجربتك.</p><textarea id="scriptOutput" style="min-height:420px" placeholder="السكريبت هيظهر هنا..."></textarea><div class="resultactions"><button class="btn small alt" data-copy="scriptOutput">نسخ النص</button><button class="btn small alt" id="downloadScript">تحميل TXT</button></div></div></div>
 </section>
 
 <section class="view" id="view-titles">
  <div class="head"><div><span class="eyebrow">خلّي الفكرة واضحة وجذابة</span><h1>العناوين والصورة المصغّرة 🧲</h1><p>اقتراحات عنوان وفكرة بصرية تساعد المشاهد يفهم قيمة المحتوى.</p></div></div>
- <div class="two"><div class="panel"><h3>موضوعك</h3><div class="field"><label for="titleTopic">موضوع الفيديو</label><input id="titleTopic" placeholder="مثال: تعلم المونتاج للمبتدئين"></div><div class="field"><label for="titleBenefit">الفائدة أو النتيجة</label><input id="titleBenefit" placeholder="مثال: في أسبوع واحد"></div><div class="field"><label for="titleAudience">الجمهور</label><input id="titleAudience" placeholder="مثال: صناع المحتوى الجدد"></div><button class="btn" id="makeTitles">اقترح عناوين وأفكار</button></div><div class="panel"><h3>عناوين مقترحة</h3><div id="titlesResult" class="result empty">اكتب الموضوع واضغط على الزر.</div><div class="eyebrow" style="margin-top:14px">فكرة الصورة المصغّرة</div><div id="thumbResult" class="result empty">سيظهر تصور الصورة هنا.</div><div class="resultactions"><button class="btn small alt" data-copy="titlesResult">نسخ العناوين</button><button class="btn small alt" data-copy="thumbResult">نسخ فكرة الصورة</button></div></div></div>
+ <div class="two"><div class="panel"><h3>موضوعك</h3><div class="field"><label for="titleTopic">موضوع الفيديو</label><input id="titleTopic" placeholder="مثال: تعلم المونتاج للمبتدئين"></div><div class="field"><label for="titleBenefit">الفائدة أو النتيجة</label><input id="titleBenefit" placeholder="مثال: في أسبوع واحد"></div><div class="field"><label for="titleAudience">الجمهور</label><input id="titleAudience" placeholder="مثال: صناع المحتوى الجدد"></div><button class="btn" id="makeTitles">اقترح عناوين وأفكار</button><button class="btn alt" id="makeTitlesAI" style="margin-top:8px">عناوين بالذكاء الاصطناعي ✨</button></div><div class="panel"><h3>عناوين مقترحة</h3><div id="titlesResult" class="result empty">اكتب الموضوع واضغط على الزر.</div><div class="eyebrow" style="margin-top:14px">فكرة الصورة المصغّرة</div><div id="thumbResult" class="result empty">سيظهر تصور الصورة هنا.</div><div class="resultactions"><button class="btn small alt" data-copy="titlesResult">نسخ العناوين</button><button class="btn small alt" data-copy="thumbResult">نسخ فكرة الصورة</button></div></div></div>
  <div class="note">العنوان الجيد يوضح القيمة الحقيقية للمحتوى. تجنب التضليل أو الوعد بنتيجة لا يقدمها الفيديو.</div>
 </section>
 
 <section class="view" id="view-seo">
  <div class="head"><div><span class="eyebrow">جهّز بيانات النشر</span><h1>مساعد SEO 🔎</h1><p>مسودة وصف وكلمات مفتاحية وهاشتاجات قابلة للتعديل.</p></div></div>
- <div class="two"><div class="panel"><h3>معلومات المحتوى</h3><div class="field"><label for="seoTopic">موضوع المحتوى</label><input id="seoTopic" placeholder="موضوع الفيديو أو المنشور"></div><div class="field"><label for="seoNiche">المجال</label><input id="seoNiche" placeholder="مثال: تعليم، تقنية، طبخ"></div><div class="field"><label for="seoKeywords">كلمات أو عبارات مهمة</label><textarea id="seoKeywords" placeholder="افصل بين العبارات بفاصلة"></textarea></div><div class="field"><label for="seoPlatform">المنصة</label><select id="seoPlatform"><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>Facebook</option></select></div><button class="btn" id="makeSeo">جهّز الوصف والكلمات</button></div><div class="panel"><h3>بيانات مقترحة</h3><div class="eyebrow">الوصف</div><textarea id="seoDescription" style="min-height:150px" placeholder="سيظهر الوصف هنا..."></textarea><div class="eyebrow" style="margin-top:10px">الكلمات المفتاحية والهاشتاجات</div><div id="seoTags" class="result empty">ستظهر الكلمات هنا.</div><div class="resultactions"><button class="btn small alt" data-copy="seoDescription">نسخ الوصف</button><button class="btn small alt" data-copy="seoTags">نسخ الكلمات</button></div></div></div>
+ <div class="two"><div class="panel"><h3>معلومات المحتوى</h3><div class="field"><label for="seoTopic">موضوع المحتوى</label><input id="seoTopic" placeholder="موضوع الفيديو أو المنشور"></div><div class="field"><label for="seoNiche">المجال</label><input id="seoNiche" placeholder="مثال: تعليم، تقنية، طبخ"></div><div class="field"><label for="seoKeywords">كلمات أو عبارات مهمة</label><textarea id="seoKeywords" placeholder="افصل بين العبارات بفاصلة"></textarea></div><div class="field"><label for="seoPlatform">المنصة</label><select id="seoPlatform"><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>Facebook</option></select></div><button class="btn" id="makeSeo">جهّز الوصف والكلمات</button><button class="btn alt" id="makeSeoAI" style="margin-top:8px">تحسين SEO بالذكاء الاصطناعي ✨</button></div><div class="panel"><h3>بيانات مقترحة</h3><div class="eyebrow">الوصف</div><textarea id="seoDescription" style="min-height:150px" placeholder="سيظهر الوصف هنا..."></textarea><div class="eyebrow" style="margin-top:10px">الكلمات المفتاحية والهاشتاجات</div><div id="seoTags" class="result empty">ستظهر الكلمات هنا.</div><div class="resultactions"><button class="btn small alt" data-copy="seoDescription">نسخ الوصف</button><button class="btn small alt" data-copy="seoTags">نسخ الكلمات</button></div></div></div>
  <div class="note">هذه اقتراحات صياغة وليست بيانات بحث أو ترتيب كلمات حقيقية. افحص الكلمات داخل أدوات المنصة قبل النشر.</div>
 </section>
 
@@ -136,19 +159,118 @@
 </main>
 </div>
 <div class="toast" id="toast"></div>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0"></script>
 <script>
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const defaults={ideas:[],packs:[],posts:[],metrics:[],challenge:{}};
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null;
 let state={...defaults};
 try{const raw=JSON.parse(localStorage.getItem('entelaqtak-v1')||'{}');state={...defaults,...raw};['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});if(!state.challenge||typeof state.challenge!=='object')state.challenge={};}catch(e){}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
-const save=()=>{try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('مساحة التخزين ممتلئة؛ صدّر نسخة احتياطية.');}};
+const save=()=>{try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('مساحة التخزين ممتلئة؛ صدّر نسخة احتياطية.');}if(!cloudLoading)scheduleCloudSave();};
+
+function setAuthMessage(message,isError=false){$('authMessage').textContent=message;$('authMessage').style.color=isError?'#ff9ba8':'#9db5a9';}
+function updateAccountUI(){
+ $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
+ $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
+ $('accountSync').textContent=currentUser?'متصل':'محلي';
+ $('accountAI').textContent=currentUser?'جاهز بعد إعداد مفتاح API':'يتطلب حسابًا';
+ $('syncState').textContent=currentUser?'مزامنة الحساب مفعّلة':'محلي على هذا الجهاز';
+ $('connectionBadge').innerHTML='<span class="dot"></span>'+(currentUser?'متصل بحسابك':'مساحة العمل');
+ $('authSignOut').hidden=!currentUser;
+}
+function mergeWorkspace(localData,remoteData){
+ const merged={...defaults,...localData,...remoteData};
+ for(const key of ['ideas','packs','posts','metrics']){
+  const map=new Map();
+  for(const item of [...(localData?.[key]||[]),...(remoteData?.[key]||[])])map.set(String(item.id??JSON.stringify(item)),item);
+  merged[key]=[...map.values()];
+ }
+ merged.challenge={...(localData?.challenge||{}),...(remoteData?.challenge||{})};
+ return merged;
+}
+async function writeCloudWorkspace(){
+ if(!sbClient||!currentUser||cloudLoading)return;
+ const {error}=await sbClient.from('user_workspaces').upsert({user_id:currentUser.id,data:state,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+ if(error)throw error;
+ $('syncState').textContent='تم الحفظ السحابي';$('accountSync').textContent='متزامن';
+}
+function scheduleCloudSave(){
+ if(!sbClient||!currentUser||cloudLoading)return;
+ clearTimeout(cloudSaveTimer);
+ cloudSaveTimer=setTimeout(async()=>{try{await writeCloudWorkspace();}catch(e){console.error('Cloud save failed',e);$('syncState').textContent='تعذر الحفظ السحابي';$('accountSync').textContent='غير متزامن';}},900);
+}
+async function loadCloudWorkspace(){
+ if(!sbClient||!currentUser)return;
+ cloudLoading=true;
+ try{
+  const {data,error}=await sbClient.from('user_workspaces').select('data').eq('user_id',currentUser.id).maybeSingle();
+  if(error)throw error;
+  if(data?.data&&typeof data.data==='object'&&!Array.isArray(data.data))state=mergeWorkspace(state,data.data);
+  ['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});
+  if(!state.challenge||typeof state.challenge!=='object')state.challenge={};
+  localStorage.setItem('entelaqtak-v1',JSON.stringify(state));renderAll();
+  const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:currentUser.id,data:state,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+  if(saveError)throw saveError;
+  updateAccountUI();setAuthMessage('أهلاً بك! مشاريعك متزامنة مع حسابك.');
+ }catch(e){console.error('Cloud workspace load failed',e);setAuthMessage('تعذر تحميل المشاريع. تأكد من تطبيق إعدادات قاعدة البيانات، ثم حاول مرة أخرى.',true);}
+ finally{cloudLoading=false;}
+}
+function connectAuth(){
+ if(!window.supabase?.createClient)return;
+ const config=window.ENTELAQTAK_CONFIG||{};
+ if(!config.url||!config.publishableKey)return;
+ sbClient=window.supabase.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ sbClient.auth.onAuthStateChange((event,session)=>{currentUser=session?.user||null;updateAccountUI();if(currentUser&&event!=='SIGNED_OUT')setTimeout(()=>loadCloudWorkspace(),0);});
+ sbClient.auth.getSession().then(({data,error})=>{if(error){console.error(error);return;}currentUser=data.session?.user||null;updateAccountUI();if(currentUser)loadCloudWorkspace();});
+ updateAccountUI();
+}
+$('authSignUp').addEventListener('click',async()=>{
+ if(!sbClient)return setAuthMessage('تسجيل الحسابات لم يتم تفعيله بعد. سيتم ربط قاعدة البيانات بعد تجهيز مشروع Supabase.',true);
+ const email=$('authEmail').value.trim(),password=$('authPassword').value,name=$('authName').value.trim();
+ if(!email||password.length<8)return setAuthMessage('أدخل بريدًا صحيحًا وكلمة مرور من 8 أحرف على الأقل.',true);
+ const {data,error}=await sbClient.auth.signUp({email,password,options:{data:{display_name:name},emailRedirectTo:location.href}});
+ if(error)return setAuthMessage(error.message,true);
+ if(data.session){currentUser=data.user;await loadCloudWorkspace();}
+ else setAuthMessage('تم إنشاء الحساب. افتح رسالة البريد لتأكيده، ثم ارجع وسجّل الدخول.');
+ updateAccountUI();
+});
+$('authSignIn').addEventListener('click',async()=>{
+ if(!sbClient)return setAuthMessage('تسجيل الدخول لم يتم تفعيله بعد. سيتم ربط قاعدة البيانات بعد تجهيز مشروع Supabase.',true);
+ const email=$('authEmail').value.trim(),password=$('authPassword').value;
+ if(!email||!password)return setAuthMessage('أدخل البريد الإلكتروني وكلمة المرور.',true);
+ const {data,error}=await sbClient.auth.signInWithPassword({email,password});
+ if(error)return setAuthMessage(error.message,true);
+ currentUser=data.user;updateAccountUI();await loadCloudWorkspace();
+});
+$('authSignOut').addEventListener('click',async()=>{
+ if(!sbClient)return;
+ const {error}=await sbClient.auth.signOut();if(error)return setAuthMessage(error.message,true);
+ currentUser=null;updateAccountUI();setAuthMessage('تم تسجيل الخروج. مشاريعك السحابية ما زالت محفوظة.');
+});
+async function callAI(tool,payload){
+ if(!sbClient||!currentUser)throw new Error('سجّل الدخول أولًا لاستخدام المساعد الذكي.');
+ const {data,error}=await sbClient.functions.invoke('ai-assistant',{body:{tool,payload}});
+ if(error)throw new Error('خدمة الذكاء الاصطناعي غير جاهزة. تأكد من نشر وظيفة ai-assistant وإضافة مفتاح API إلى أسرار الخادم.');
+ if(data?.error)throw new Error(data.error);
+ if(typeof data?.text!=='string'||!data.text.trim())throw new Error('لم يصل محتوى من المساعد الذكي.');
+ return data.text;
+}
+function bindAIButton(id,tool,payloadFactory,onResult){
+ $(id).addEventListener('click',async()=>{
+  const button=$(id),old=button.textContent;button.disabled=true;button.textContent='جاري التوليد...';
+  try{const text=await callAI(tool,payloadFactory());onResult(text);toast('تم توليد المحتوى بالذكاء الاصطناعي.');}
+  catch(e){setAuthMessage(e.message||'تعذر استخدام المساعد الذكي.',true);go('account');}
+  finally{button.disabled=false;button.textContent=old;}
+ });
+}
+
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('تم النسخ.');}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('تم النسخ.');}};
 const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
-const go=id=>{all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
+const go=id=>{all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',account:'حسابي والمزامنة',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
 all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 all('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copy);copy(el.value!==undefined?el.value:el.textContent);}));
@@ -247,8 +369,15 @@ function renderChallenge(){const done=Object.values(state.challenge).filter(Bool
 $('exportBtn').addEventListener('click',()=>download('entelaqtak-backup.json',JSON.stringify({app:'انطلاقتك',exportedAt:new Date().toISOString(),...state},null,2),'application/json'));
 $('importBtn').addEventListener('click',()=>$('importFile').click());
 $('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{const d=JSON.parse(await f.text());if(!d||typeof d!=='object')throw 0;if(!confirm('استيراد النسخة سيستبدل بياناتك الحالية على هذا الجهاز. متابعة؟'))return;state={...defaults,...d};['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});if(!state.challenge||typeof state.challenge!=='object')state.challenge={};save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح.');}finally{e.target.value='';}});
+bindAIButton('generateIdeasAI','ideas',()=>({niche:$('ideaNiche').value,platform:$('ideaPlatform').value,type:$('ideaType').value,audience:$('ideaAudience').value,seed:$('ideaSeed').value}),text=>{$('ideasResult').className='result';$('ideasResult').textContent=text;state.ideas.push({id:Date.now(),title:'أفكار الذكاء الاصطناعي',detail:text,niche:$('ideaNiche').value,platform:$('ideaPlatform').value});save();renderHome();});
+bindAIButton('makeScriptAI','script',()=>({topic:$('scriptTopic').value,duration:$('scriptDuration').value,style:$('scriptStyle').value,audience:$('scriptAudience').value,points:$('scriptPoints').value}),text=>{$('scriptOutput').value=text;});
+bindAIButton('studioAI','content_pack',()=>({topic:$('studioTopic').value,niche:$('studioNiche').value,platform:$('studioPlatform').value,audience:$('studioAudience').value,tone:$('studioTone').value,duration:$('studioDuration').value,angle:$('studioAngle').value,notes:$('studioNotes').value}),text=>{$('studioScript').value=text;});
+bindAIButton('makeTitlesAI','titles',()=>({topic:$('titleTopic').value,benefit:$('titleBenefit').value,audience:$('titleAudience').value}),text=>{$('titlesResult').className='result';$('titlesResult').textContent=text;});
+bindAIButton('makeSeoAI','seo',()=>({topic:$('seoTopic').value,niche:$('seoNiche').value,keywords:$('seoKeywords').value,platform:$('seoPlatform').value}),text=>{$('seoDescription').value=text;});
+bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').value,platform:$('repurposePlatform').value,tone:$('repurposeTone').value,audience:$('repurposeAudience').value}),text=>{$('repurposeOutput').value=text;});
+
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();}
-$('year').textContent=new Date().getFullYear();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();
+$('year').textContent=new Date().getFullYear();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();connectAuth();
 })();
 </script>
 </body></html>
