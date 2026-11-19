@@ -8,7 +8,7 @@ state.brand=state.brand||{name:'',voice:'بسيطة وودودة',style:'',avoid
 state.trendNotes=state.trendNotes||'';state.experiments=Array.isArray(state.experiments)?state.experiments:[];state.academy=state.academy||{};
 const tasks=['حدد جمهورًا واحدًا واضحًا واكتب احتياجه الأساسي.','اكتب وعد قناتك في جملة واحدة.','اجمع 10 أسئلة حقيقية من جمهورك أو التعليقات.','جهّز 3 أعمدة محتوى متكررة.','اكتب 5 أفكار مرتبطة بمشكلات الجمهور.','حوّل فكرة إلى سكريبت به خطاف ومحاور وخاتمة.','جهّز قائمة لقطات قبل التصوير.','سجّل نسخة تجريبية وراجع الصوت والإضاءة.','اختبر عنوانين مختلفين دون تضليل.','انشر محتوى وسجل النتائج بعد فترة مناسبة.','راجع ما تعلمته من الأرقام والتعليقات.','خطط للأسبوع القادم بناءً على ما نجح وما يحتاج تحسينًا.'];
 const nav=$('nav'),main=document.querySelector('main.main');
-const links=[['brain','عقل المحتوى الذكي','✧'],['trends','رادار الموضوعات','↗'],['video','مصنع الفيديوهات','▶'],['brand','هوية المحتوى','◈'],['lab','مختبر العناوين','⚗'],['academy','أكاديمية انطلاقتك','★']];
+const links=[['brain','عقل المحتوى الذكي','✧'],['trends','رادار الموضوعات','↗'],['video','مصنع الفيديوهات','▶'],['brand','هوية المحتوى','◈'],['academy','أكاديمية انطلاقتك','★']];
 for(const [id,name,icon] of links){const b=document.createElement('button');b.dataset.view=id;b.innerHTML='<i>'+icon+'</i>'+name;const settings=nav.querySelector('[data-view="settings"]');nav.insertBefore(b,settings);}
 const sections=`
 <section class="view" id="view-brain"><div class="head"><div><span class="eyebrow">مركز التخطيط والتوصيات</span><h1>عقل المحتوى الذكي ✧</h1><p>توصيات مبنية على ملفك وأعمالك وأرقامك المسجلة، وليست وعودًا بمشاهدات.</p></div></div>
@@ -44,6 +44,6 @@ function downloadText(name,t){if(!t.trim())return app.toast('لا يوجد مح�
 const originalGo=app.go;
 app.go=id=>{originalGo(id);if(id==='brain')renderBrain();if(id==='brand')renderBrand();if(id==='lab')renderExperiments();if(id==='academy')renderAcademy();};
 links.forEach(([id])=>{const b=nav.querySelector('[data-view="'+id+'"]');if(b)b.addEventListener('click',()=>app.go(id));});
-app.addViews&&links.forEach(x=>app.addViews.add(x[0]));
+app.addViews&&links.forEach(x=>app.addViews.add(x[0]));if(app.addViews)app.addViews.add('lab');const titlesView=$('view-titles');if(titlesView){const titleHead=titlesView.querySelector('.head');if(titleHead){const shortcut=document.createElement('button');shortcut.className='btn alt small';shortcut.type='button';shortcut.textContent='اختبر العناوين A/B';shortcut.addEventListener('click',()=>app.go('lab'));titleHead.appendChild(shortcut);}}
 renderBrain();renderBrand();renderExperiments();renderAcademy();app.save();
 })();
