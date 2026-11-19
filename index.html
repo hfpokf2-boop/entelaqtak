@@ -106,6 +106,8 @@
    <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com"></div>
    <div class="field"><label for="authPassword">كلمة المرور</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="8 أحرف على الأقل"></div>
    <div class="actions"><button class="btn" id="authSignIn">تسجيل الدخول</button><button class="btn alt" id="authSignUp">إنشاء حساب</button><button class="btn ghost" id="authSignOut" hidden>تسجيل الخروج</button></div>
+   <div style="display:flex;align-items:center;gap:10px;margin:13px 0;color:var(--muted);font-size:12px"><span style="height:1px;background:var(--line);flex:1"></span>أو</div>
+   <button class="btn alt" id="authGoogle" type="button" style="width:100%;background:#fff;color:#222;border:1px solid #ddd">🌐 المتابعة باستخدام Google (Gmail)</button>
    <button class="btn alt" id="authForgotPassword" type="button" style="margin-top:10px;width:100%">🔑 نسيت كلمة المرور؟ اضغط هنا لإرسال رابط إعادة التعيين</button>
    <div id="authRecoveryBox" hidden style="margin-top:12px">
     <p class="sub">اكتب كلمة مرور جديدة بعد فتح رابط الاستعادة الذي وصلك على البريد.</p>
@@ -309,7 +311,12 @@ $('authSignUp').addEventListener('click',()=>withAuthButton('authSignUp',async()
  else setAuthMessage('تم إنشاء الحساب. افتح أحدث رسالة تأكيد وصلتك، ثم ارجع وسجّل الدخول.');
  updateAccountUI();
 }));
-$('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
+$('authGoogle').addEventListener('click',()=>withAuthButton('authGoogle',async()=>{
+  if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
+  const {error}=await sbClient.auth.signInWithOAuth({provider:'google',options:{redirectTo:APP_URL}});
+  if(error)throw error;
+ }));
+ $('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا. حدّث الصفحة وحاول مرة أخرى.');
  const email=$('authEmail').value.trim(),password=$('authPassword').value;
  if(!email||!password)throw new Error('أدخل البريد الإلكتروني وكلمة المرور.');
