@@ -269,7 +269,7 @@ function normalizeState(input){
  return out;
 }
 let state=normalizeState({});
-try{const raw=JSON.parse(localStorage.getItem('entelaqtak-v1')||'{}');state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){try{localStorage.removeItem('entelaqtak-v1');}catch(_e){}}
+try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
 const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}};
