@@ -28,7 +28,6 @@
   <div class="navlabel">مساحة العمل</div>
   <nav class="nav" id="nav">
     <button class="active" data-view="home"><i>⌂</i>الرئيسية</button>
-    <button data-view="account"><i>◎</i>حسابي والمزامنة</button>
     <button data-view="ideas"><i>✧</i>أفكار المحتوى</button>
     <button data-view="studio"><i>✍</i>استوديو المحتوى</button>
     <button data-view="repurpose"><i>♻</i>إعادة تدوير المحتوى</button>
@@ -44,7 +43,7 @@
   <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>الأدوات الحالية تعمل داخل المتصفح. بياناتك محفوظة على هذا الجهاز فقط.</div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span><button class="btn small alt" data-go="account">حسابي / المزامنة</button></div></header>
+<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
 
 <section class="view active" id="view-home">
   <div class="hero"><div class="hero-main"><span class="eyebrow">ابدأ فكرتك… وخليها محتوى يستاهل المشاهدة</span><h1>كل فكرة كبيرة<br>بتبدأ من <span>انطلاقتك.</span></h1><p>مساحة واحدة تساعدك تخطط، تكتب، تجهز وتنظم محتواك على يوتيوب وتيك توك وإنستجرام وباقي المنصات.</p><div class="actions"><button class="btn" data-go="studio">اصنع حزمة محتوى ✦</button><button class="btn alt" data-go="ideas">اكتشف أفكارًا جديدة</button></div></div>
@@ -95,40 +94,6 @@
   <div class="field"><label for="repurposeAudience">الجمهور المستهدف</label><input id="repurposeAudience" placeholder="مثال: صناع المحتوى المبتدئين"></div>
   <button class="btn" id="makeRepurpose">حوّل المحتوى ✦</button><button class="btn alt" id="makeRepurposeAI" style="margin-top:8px">حوّل بالذكاء الاصطناعي ✨</button></div>
   <div class="panel"><h3>النسخة الجديدة</h3><p class="sub">راجع النص، خصص الأمثلة، ثم انسخه أو حمّله.</p><textarea id="repurposeOutput" style="min-height:390px" placeholder="النسخة المحوّلة هتظهر هنا..."></textarea><div class="resultactions"><button class="btn small alt" data-copy="repurposeOutput">نسخ المحتوى</button><button class="btn small alt" id="downloadRepurpose">تحميل TXT</button></div><div class="note">التحويل الحالي يعتمد على قوالب محلية. بعد توصيل الذكاء الاصطناعي سنستخدمه لإعادة كتابة المحتوى حسب المنصة والجمهور والنبرة.</div></div></div>
-</section>
-
-<section class="view" id="view-account">
- <div class="head"><div><span class="eyebrow">ملفاتك معاك على كل جهاز</span><h1>حسابك ومساحة العمل ☁️</h1><p>أنشئ حسابًا واحتفظ بأفكارك وحزمك وتقويمك في مساحة خاصة بك.</p></div></div>
- <div class="two">
-  <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>حساب انطلاقتك</h3><span id="authState">غير مسجل</span></div>
-   <p class="sub">سجّل دخولك بسهولة باستخدام كود تحقق يُرسل إلى بريدك الإلكتروني، أو استخدم كلمة المرور.</p>
-   <div class="field"><label for="authName">الاسم (للحساب الجديد - اختياري)</label><input id="authName" autocomplete="name" placeholder="اسمك أو اسم القناة"></div>
-   <div class="field"><label for="authEmail">البريد الإلكتروني</label><input id="authEmail" type="email" autocomplete="email" placeholder="name@example.com"></div>
-   <div class="field"><label for="authPassword">كلمة المرور (اختياري)</label><input id="authPassword" type="password" autocomplete="current-password" minlength="8" placeholder="للدخول بالطريقة المعتادة"></div>
-   <div class="actions"><button class="btn" id="authSignIn">دخول بكلمة المرور</button><button class="btn alt" id="authSignUp">إنشاء حساب بكلمة مرور</button><button class="btn ghost" id="authSignOut" hidden>تسجيل الخروج</button></div>
-   <div style="display:flex;align-items:center;gap:10px;margin:13px 0;color:var(--muted);font-size:12px"><span style="height:1px;background:var(--line);flex:1"></span>تسجيل بدون كلمة مرور</div>
-   <button class="btn" id="authSendOtp" type="button" style="width:100%">📩 ابعتلي كود على البريد</button>
-   <div id="authOtpBox" hidden style="margin-top:12px">
-    <div class="field"><label for="authOtp">كود التحقق المكوّن من 6 أرقام</label><input id="authOtp" inputmode="numeric" autocomplete="one-time-code" maxlength="6" placeholder="123456"></div>
-    <button class="btn alt" id="authVerifyOtp" type="button" style="width:100%">تأكيد الكود وتسجيل الدخول</button>
-   </div>
-   <button class="btn alt" id="authForgotPassword" type="button" style="margin-top:10px;width:100%">🔑 نسيت كلمة المرور؟ اضغط هنا لإرسال رابط إعادة التعيين</button>
-   <div id="authRecoveryBox" hidden style="margin-top:12px">
-    <p class="sub">اكتب كلمة مرور جديدة بعد فتح رابط الاستعادة الذي وصلك على البريد.</p>
-    <div class="field"><label for="authNewPassword">كلمة المرور الجديدة</label><input id="authNewPassword" type="password" autocomplete="new-password" minlength="8" placeholder="8 أحرف على الأقل"></div>
-    <button class="btn" id="authUpdatePassword" type="button">حفظ كلمة المرور الجديدة</button>
-   </div>
-   <p id="authMessage" class="sub" aria-live="polite" style="margin-top:12px"></p>
-  </div>
-  <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>حالة مساحة العمل</h3><span id="syncState">محلي على هذا الجهاز</span></div>
-   <div class="metricgrid"><div class="metric"><small>الحساب</small><strong id="accountUser">—</strong></div><div class="metric"><small>حفظ المشاريع</small><strong id="accountSync">محلي</strong></div><div class="metric"><small>المساعد الذكي</small><strong id="accountAI">قريبًا</strong></div></div>
-   <div class="note">المشاريع ستتزامن بين أجهزتك بعد تسجيل الدخول. بيانات كل حساب معزولة عن حسابات المستخدمين الآخرين عبر سياسات أمان قاعدة البيانات.</div>
-  </div>
- </div>
- <div class="panel" style="margin-top:14px"><h3>المساعد الذكي ✨</h3><p class="sub">بعد تفعيل الخدمة يمكنك استخدام الذكاء الاصطناعي للأفكار والسكريبتات والعناوين والوصف وإعادة تدوير المحتوى.</p>
-  <div class="actions"><a class="btn alt" href="https://platform.openai.com/api-keys" target="_blank" rel="noopener">إدارة مفاتيح OpenAI</a><a class="btn ghost" href="https://supabase.com/dashboard" target="_blank" rel="noopener">لوحة Supabase</a></div>
-  <div class="note">لا تضع مفتاح OpenAI أو أي مفتاح خادم في هذه الصفحة أو في ملفات GitHub العامة. يُحفظ المفتاح على الخادم فقط.</div>
- </div>
 </section>
 
 <section class="view" id="view-script">
@@ -182,13 +147,12 @@ window.ENTELAQTAK_CONFIG = {
 (()=>{
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const defaults={ideas:[],packs:[],posts:[],metrics:[],challenge:{}};
-const APP_URL='https://hfpokf2-boop.github.io/entelaqtak/';
 let sbClient=null,currentUser=null,cloudLoading=false,cloudSaveTimer=null,authSdkPromise=null;
 let state={...defaults};
 try{const raw=JSON.parse(localStorage.getItem('entelaqtak-v1')||'{}');state={...defaults,...raw};['ideas','packs','posts','metrics'].forEach(k=>{if(!Array.isArray(state[k]))state[k]=[];});if(!state.challenge||typeof state.challenge!=='object')state.challenge={};}catch(e){}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
-const save=()=>{try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('مساحة التخزين ممتلئة؛ صدّر نسخة احتياطية.');}if(!cloudLoading)scheduleCloudSave();};
+const save=()=>{try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('مساحة التخزين ممتلئة؛ صدّر نسخة احتياطية.');}};
 
 function setAuthMessage(message,isError=false){$('authMessage').textContent=message;$('authMessage').style.color=isError?'#ff9ba8':'#9db5a9';}
 function authErrorMessage(error){
@@ -368,7 +332,7 @@ $('authSignOut').addEventListener('click',async()=>{
  currentUser=null;updateAccountUI();setAuthMessage('تم تسجيل الخروج. مشاريعك السحابية ما زالت محفوظة.');
 });
 async function callAI(tool,payload){
- if(!sbClient||!currentUser)throw new Error('سجّل الدخول أولًا لاستخدام المساعد الذكي.');
+ if(!sbClient)throw new Error('خدمة الذكاء الاصطناعي غير متاحة حاليًا.');
  const {data,error}=await sbClient.functions.invoke('ai-assistant',{body:{tool,payload}});
  if(error)throw new Error('خدمة الذكاء الاصطناعي غير جاهزة. تأكد من نشر وظيفة ai-assistant وإضافة مفتاح API إلى أسرار الخادم.');
  if(data?.error)throw new Error(data.error);
@@ -387,7 +351,7 @@ function bindAIButton(id,tool,payloadFactory,onResult){
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('تم النسخ.');}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('تم النسخ.');}};
 const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
-const go=id=>{all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',account:'حسابي والمزامنة',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
+const go=id=>{if(id==='account')id='home';all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
 all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 all('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copy);copy(el.value!==undefined?el.value:el.textContent);}));
