@@ -380,23 +380,34 @@ async function connectAuth(){
   if(error)throw error;
   currentUser=data.session?.user||null;updateAccountUI();
   if(currentUser)await loadCloudWorkspace();
-  else setAuthMessage('خدمات الحساب جاهزة. سجّل الدخول لمزامنة مشاريعك واستخدام أدوات الذكاء الاصطناعي.');
+  else setAuthMessage('خدمات الحساب اختيارية لمزامنة المشاريع فقط. أدوات الذكاء الاصطناعي تعمل من خلال الخادم دون تسجيل دخول.');
  }catch(error){
   console.error('Supabase initialization failed',error);
   updateAccountUI();
   setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر الاتصال بخدمة الحساب حاليًا؛ تحقق من الإنترنت ثم أعد المحاولة.',true);
  }
 }
-function localDraft(tool,payload){
- const p=payload||{},topic=p.topic||p.niche||p.seed||p.source||'موضوعك';
- const title='فكرة محتوى: '+topic;
- if(tool==='ideas')return 'وضع محلي تجريبي — اقتراحات أولية تحتاج مراجعة:\n\n1. '+title+' من زاوية سؤال شائع لدى الجمهور.\n2. أخطاء يقع فيها المبتدئون عند التعامل مع '+topic+'.\n3. دليل عملي من 3 خطوات حول '+topic+'.\n4. مقارنة بين طريقتين شائعتين في '+topic+'.\n5. قصة تجربة أو حالة واقعية موثقة مرتبطة بـ '+topic+'.\n\nخصص الأمثلة وتحقق من الحقائق قبل النشر.';
- if(tool==='titles')return 'وضع محلي تجريبي — عناوين مقترحة:\n1. '+topic+': 5 نقاط تحتاج تعرفها\n2. قبل ما تبدأ في '+topic+' شاهد هذا الدليل\n3. أخطاء شائعة في '+topic+' وكيف تتجنبها\n\nفكرة الصورة: عنوان قصير واضح مع عنصر بصري واحد يعبر عن الموضوع. تجنب الوعود المبالغ فيها.';
- if(tool==='seo')return 'مسودة وصف مبدئية عن '+topic+'، تشرح الفائدة المتوقعة وتلخص النقاط الأساسية بوضوح.\n\nكلمات مفتاحية مقترحة: '+topic+', دليل '+topic+', نصائح '+topic+'\n\nراجع الكلمات وحجم البحث يدويًا قبل الاعتماد عليها.';
- if(tool==='repurpose')return 'صياغة تجريبية لمنصة '+(p.platform||'مختلفة')+':\n\n'+String(p.source||'أضف النص الأصلي أولًا').slice(0,900)+'\n\nأعد تحرير النص ليلائم المنصة والنبرة المطلوبة، ولا تنشره قبل المراجعة.';
- return 'مسودة محلية تجريبية عن '+topic+'\n\nالمقدمة والخطاف: ابدأ بسؤال واضح يلامس مشكلة الجمهور.\n\nالمحاور:\n1. وضّح المشكلة والسياق.\n2. قدم خطوات أو أمثلة عملية يمكن التحقق منها.\n3. لخّص أهم نتيجة أو درس.\n\nالخاتمة: اطلب من الجمهور تجربة خطوة واحدة أو مشاركة سؤال.\n\nهذه مسودة قالبية وليست مخرجات نموذج ذكاء اصطناعي.';
+async function callAI(tool,payload){
+ const config=window.ENTELAQTAK_CONFIG||{};
+ if(!config.url||!config.publishableKey)throw new Error('إعداد الاتصال بالخادم غير مكتمل.');
+ const baseUrl=config.url.endsWith('/')?config.url.slice(0,-1):config.url;
+ const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),90000);
+ try{
+  const response=await fetch(baseUrl+'/functions/v1/ai-assistant',{
+   method:'POST',
+   headers:{'Content-Type':'application/json','apikey':config.publishableKey},
+   body:JSON.stringify({tool,payload}),
+   signal:controller.signal
+  });
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||'تعذر الاتصال بمساعد المحتوى. حاول مرة أخرى.');
+  if(typeof data.text!=='string'||!data.text.trim())throw new Error('لم يصل محتوى من المساعد الذكي.');
+  return data.text;
+ }catch(error){
+  if(error.name==='AbortError')throw new Error('استغرق التوليد وقتًا أطول من اللازم. حاول مرة أخرى.');
+  throw error;
+ }finally{clearTimeout(timer);}
 }
-async function callAI(tool,payload){return localDraft(tool,payload);}
 function bindAIButton(id,tool,payloadFactory,onResult){
  $(id).addEventListener('click',async()=>{
   const button=$(id),old=button.textContent;button.disabled=true;button.textContent='جاري التوليد...';
@@ -570,7 +581,7 @@ bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').val
 
 function renderSettings(){
   $('schemaVersionLabel').textContent=DATA_VERSION;$('dataIdeas').textContent=state.ideas.length;$('dataPacks').textContent=state.packs.length;$('dataPosts').textContent=state.posts.length;$('dataMetrics').textContent=state.metrics.length;
-  $('aiSettingsStatus').textContent='المساعد المحلي جاهز — لا يحتاج إلى مفتاح أو اتصال بمزود خارجي.';
+  $('aiSettingsStatus').textContent='المساعد الذكي يعمل عبر الخادم؛ لا تحتاج لإدخال مفتاح داخل الموقع. قد يلزم إعداد الخدمة مرة واحدة من مسؤول الموقع.';
  }
  function exportAllData(){
   const copyState=normalizeState(state);
