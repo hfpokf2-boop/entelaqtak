@@ -124,7 +124,7 @@ async function recordUsage(
   tool: string,
   inputChars: number,
 ) {
-  if (!projectUrl || !authorization || !userId) return;
+  if (!projectUrl || !authorization || !userId || !trackedTools.has(tool)) return;
   try {
     const response = await fetch(projectUrl.replace(/\/$/, "") + "/rest/v1/ai_usage", {
       method: "POST",
