@@ -24,6 +24,29 @@ jobs:
         uses: actions/configure-pages@v5
         with:
           enablement: true
+      - name: Validate application JavaScript
+        run: |
+          python3 - <<'PY'
+          import re
+          from pathlib import Path
+          html = Path("index.html").read_text(encoding="utf-8")
+          scripts = re.findall(r"<script>([\\s\\S]*?)</script>", html)
+          if not scripts:
+              raise SystemExit("No inline application script found")
+          app = scripts[-1]
+          Path("/tmp/entelaqtak-app.js").write_text(app, encoding="utf-8")
+          ids = set(re.findall(r'\\bid="([^"]+)"', html))
+          refs = set(re.findall(r"\\$\\(['\\\"]([^'\\\"]+)['\\\"]\\)", app))
+          missing = sorted(refs - ids)
+          if missing:
+              raise SystemExit("Missing DOM elements: " + ", ".join(missing))
+          ai_buttons = re.findall(r"bindAIButton\\(['\\\"]([^'\\\"]+)", app)
+          missing_ai = sorted(set(ai_buttons) - ids)
+          if missing_ai:
+              raise SystemExit("Missing AI buttons: " + ", ".join(missing_ai))
+          print("Application references validated.")
+          PY
+          node --check /tmp/entelaqtak-app.js
       - name: Upload site artifact
         uses: actions/upload-pages-artifact@v3
         with:
