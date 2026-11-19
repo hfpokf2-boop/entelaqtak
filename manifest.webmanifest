@@ -1,0 +1,22 @@
+{
+  "id": "./",
+  "name": "انطلاقتك — استوديو صُنّاع المحتوى",
+  "short_name": "انطلاقتك",
+  "description": "مساحة عربية لتخطيط المحتوى وكتابته وتصميم الصور المصغّرة ومتابعة الأداء.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "categories": ["business", "productivity", "utilities"],
+  "icons": [
+    {
+      "src": "./app-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
