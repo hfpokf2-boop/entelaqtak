@@ -235,7 +235,7 @@ function connectAuth(){
   if(authSdkLoading)return;
   authSdkLoading=true;
   const fallback=document.createElement('script');
-  fallback.src='https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js';
+  fallback.src='https://unpkg.com/@supabase/supabase-js@2.95.0/dist/umd/supabase.js';
   fallback.onload=()=>{authSdkLoading=false;if(window.supabase?.createClient)connectAuth();else setAuthMessage('تعذر تحميل خدمة تسجيل الحساب. حدّث الصفحة وحاول مرة أخرى.',true);};
   fallback.onerror=()=>{authSdkLoading=false;setAuthMessage('تعذر تحميل خدمة تسجيل الحساب. تحقق من اتصال الإنترنت ثم حدّث الصفحة.',true);};
   document.head.appendChild(fallback);
