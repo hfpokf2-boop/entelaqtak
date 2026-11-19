@@ -592,9 +592,30 @@ $('saveAISettings').addEventListener('click',()=>{
 });
 $('testAISettings').addEventListener('click',async()=>{
  const b=$('testAISettings'),old=b.textContent;b.disabled=true;b.textContent='جارٍ الاختبار...';
- try{sessionApiKey=$('aiKey').value.trim();const result=await callAI('test',{topic:'اختبار اتصال'});$('aiSettingsStatus').textContent=state.settings.aiMode==='local'?'الوضع المحلي يعمل. للتحقق من API الحقيقي، اختر وضع API واحفظ مفتاحًا صالحًا.':'نجح الاتصال واستلمنا استجابة من المزود.';if(state.settings.aiMode==='local')toast('الوضع المحلي يعمل؛ لم يتم إرسال طلب API.');else toast('تم اختبار الاتصال بنجاح.');}
- catch(e){$('aiSettingsStatus').textContent='فشل الاختبار: '+e.message;toast(e.message);}
- finally{b.disabled=false;b.textContent=old;}
+ try{
+  sessionApiKey=$('aiKey').value.trim();
+  state.settings={...state.settings,aiMode:$('aiMode').value,provider:$('aiProvider').value,endpoint:$('aiEndpoint').value.trim(),model:$('aiModel').value.trim(),timeout:Number($('aiTimeout').value)||45000};
+  if(state.settings.aiMode==='api'&&!sessionApiKey)throw new Error('أدخل مفتاح API أولًا.');
+  if(state.settings.endpoint){
+   try{
+    const u=new URL(state.settings.endpoint);
+    const expected=state.settings.provider==='gemini'?'generativelanguage.googleapis.com':state.settings.provider==='openai'?'api.openai.com':null;
+    if(u.protocol!=='https:'||u.username||u.password||(expected&&u.hostname!==expected))throw new Error();
+   }catch(e){throw new Error('نقطة النهاية غير صحيحة. استخدم HTTPS ونطاق المزود المطابق.');}
+  }
+  if(state.settings.aiMode==='local'){
+   $('aiSettingsStatus').textContent='الوضع المحلي يعمل، لكن لم يتم الاتصال بمزود خارجي. اختر وضع API لاختبار المفتاح.';
+   toast('الاختبار المحلي ناجح؛ لم يتم إرسال طلب API.');
+  }else{
+   await callAI('test',{topic:'اختبار اتصال'});
+   $('aiSettingsStatus').textContent='نجح الاتصال واستلمنا استجابة من '+state.settings.provider+'.';
+   toast('تم اختبار الاتصال بنجاح.');
+  }
+ }catch(e){
+  const msg=e?.message||'تعذر اختبار الاتصال.';
+  $('aiSettingsStatus').textContent='فشل الاختبار: '+msg;
+  toast(msg);
+ }finally{b.disabled=false;b.textContent=old;}
 });
 $('settingsExport').addEventListener('click',exportAllData);
 $('settingsImport').addEventListener('click',()=>$('settingsImportFile').click());
