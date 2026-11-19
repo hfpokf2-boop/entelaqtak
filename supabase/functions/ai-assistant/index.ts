@@ -1,126 +1,133 @@
-import { withSupabase } from "npm:@supabase/server@1";
+import { createClient } from "npm:@supabase/supabase-js@2";
+
+const allowedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose"]);
+const allowedOrigin = "https://hfpokf2-boop.github.io";
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Origin": allowedOrigin,
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Vary": "Origin",
 };
 
-const allowedTools = new Set([
-  "ideas",
-  "script",
-  "content_pack",
-  "titles",
-  "seo",
-  "repurpose",
-]);
-
-const toolBriefs: Record<string, string> = {
-  ideas: "اقترح أفكار محتوى مبتكرة ومتنوعة تناسب المجال والمنصة والجمهور. أعطِ عنوانًا، زاوية تناول، وخطافًا لكل فكرة.",
-  script: "اكتب مسودة سكريبت عربية طبيعية فيها خطاف افتتاحي، تمهيد، محاور واضحة، أمثلة مواضعها محددة، وخاتمة مع سؤال للجمهور. لا تخترع حقائق.",
-  content_pack: "أنشئ حزمة محتوى متكاملة: الفكرة، الخطاف، 5 عناوين صادقة، سكريبت، وصف، كلمات مفتاحية وهاشتاجات، تصور للصورة المصغرة، وقائمة لقطات.",
-  titles: "اقترح عناوين واضحة وجذابة وغير مضللة، ثم وصفًا لتصميم صورة مصغرة يعبر فعلًا عن المحتوى.",
-  seo: "اكتب وصفًا طبيعيًا، كلمات مفتاحية مرتبطة فعلًا بالموضوع، وهاشتاجات محدودة وذات صلة. لا تدّعِ أنها كلمات رائجة أو ذات حجم بحث مثبت.",
-  repurpose: "حوّل المادة إلى الصيغة والمنصة المطلوبة مع الحفاظ على الحقائق والمعنى. أنشئ خطافًا وبنية مناسبة للمنصة، ولا تضف ادعاءات غير موجودة في المصدر.",
+const instructions: Record<string, string> = {
+  ideas: "اقترح أفكارًا مبتكرة ومتنوعة تناسب المجال والمنصة والجمهور. لكل فكرة اكتب عنوانًا وزاوية تناول وخطافًا. تجنب تكرار الفكرة نفسها.",
+  script: "اكتب مسودة سكريبت عربية طبيعية فيها خطاف افتتاحي وتمهيد ومحاور واضحة وأمثلة قابلة للتحقق وخاتمة مع سؤال للجمهور. لا تخترع حقائق.",
+  content_pack: "أنشئ حزمة محتوى: الفكرة والخطاف و5 عناوين صادقة وسكريبت ووصف وكلمات مفتاحية وهاشتاجات وفكرة صورة مصغرة وقائمة لقطات. نظّم الإجابة بعناوين.",
+  titles: "اقترح عناوين جذابة وواضحة وغير مضللة، ثم وصفًا لتصميم صورة مصغرة يعبر فعلًا عن المحتوى.",
+  seo: "اكتب وصفًا طبيعيًا وكلمات مفتاحية مرتبطة فعلًا بالموضوع وهاشتاجات محدودة. لا تدّعِ أنها ترند أو ذات حجم بحث مثبت.",
+  repurpose: "حوّل المادة إلى الصيغة والمنصة المطلوبة مع الحفاظ على الحقائق والمعنى. لا تضف ادعاءات غير موجودة في المصدر.",
 };
 
-function json(data: unknown, status = 200) {
-  return new Response(JSON.stringify(data), {
+function reply(body: unknown, status = 200) {
+  return new Response(JSON.stringify(body), {
     status,
     headers: { ...corsHeaders, "Content-Type": "application/json; charset=utf-8" },
   });
 }
 
-export default {
-  fetch: withSupabase({ auth: "user" }, async (req: Request, ctx: any) => {
-    if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
-    if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
+Deno.serve(async (req: Request) => {
+  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  if (req.method !== "POST") return reply({ error: "Method not allowed" }, 405);
 
-    try {
-      const body = await req.json();
-      const tool = typeof body?.tool === "string" ? body.tool : "";
-      const payload = body?.payload;
+  const origin = req.headers.get("origin");
+  if (origin && origin !== allowedOrigin) return reply({ error: "Origin not allowed" }, 403);
 
-      if (!allowedTools.has(tool)) return json({ error: "الأداة المطلوبة غير مدعومة." }, 400);
-      if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
-        return json({ error: "بيانات الطلب غير صحيحة." }, 400);
-      }
+  const authHeader = req.headers.get("Authorization");
+  if (!authHeader?.startsWith("Bearer ")) return reply({ error: "يلزم تسجيل الدخول." }, 401);
 
-      const serialized = JSON.stringify(payload);
-      if (serialized.length < 2 || serialized.length > 12000) {
-        return json({ error: "حجم النص كبير جدًا أو فارغ. اختصر المحتوى وحاول مرة أخرى." }, 400);
-      }
+  const supabaseUrl = Deno.env.get("SUPABASE_URL");
+  const publishableKey = Deno.env.get("SUPABASE_PUBLISHABLE_KEY") ?? Deno.env.get("SUPABASE_ANON_KEY");
+  const openAiKey = Deno.env.get("OPENAI_API_KEY");
+  const model = Deno.env.get("OPENAI_MODEL") ?? "gpt-6-luna";
 
-      const userId = ctx.userClaims?.sub;
-      if (!userId) return json({ error: "يلزم تسجيل الدخول لاستخدام المساعد الذكي." }, 401);
+  if (!supabaseUrl || !publishableKey) return reply({ error: "إعدادات Supabase غير مكتملة على الخادم." }, 503);
+  if (!openAiKey) return reply({ error: "لم يتم إعداد مفتاح الذكاء الاصطناعي على الخادم بعد." }, 503);
 
-      const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
-      const { count, error: usageReadError } = await ctx.supabase
-        .from("ai_usage")
-        .select("id", { count: "exact", head: true })
-        .eq("user_id", userId)
-        .gte("created_at", since);
+  try {
+    const supabase = createClient(supabaseUrl, publishableKey, {
+      global: { headers: { Authorization: authHeader } },
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
 
-      if (usageReadError) {
-        console.error("usage read failed", usageReadError);
-        return json({ error: "تعذر التحقق من حد الاستخدام. حاول لاحقًا." }, 503);
-      }
-      if ((count ?? 0) >= 60) {
-        return json({ error: "وصلت إلى الحد التجريبي اليومي: 60 طلبًا. حاول غدًا." }, 429);
-      }
+    const token = authHeader.slice("Bearer ".length);
+    const { data: userData, error: userError } = await supabase.auth.getUser(token);
+    if (userError || !userData.user) return reply({ error: "انتهت جلسة الدخول. سجّل الدخول مرة أخرى." }, 401);
 
-      const apiKey = Deno.env.get("OPENAI_API_KEY");
-      if (!apiKey) return json({ error: "لم يتم إعداد مفتاح الذكاء الاصطناعي على الخادم بعد." }, 503);
-      const model = Deno.env.get("OPENAI_MODEL") || "gpt-6-luna";
+    const body = await req.json();
+    const tool = typeof body?.tool === "string" ? body.tool : "";
+    const payload = body?.payload;
 
-      const aiResponse = await fetch("https://api.openai.com/v1/responses", {
-        method: "POST",
-        headers: {
-          "Authorization": `Bearer ${apiKey}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          model,
-          instructions: [
-            "أنت مساعد متخصص لصناع المحتوى باللغة العربية.",
-            "اكتب بلهجة عربية سهلة ومفهومة، وكن دقيقًا ولا تختلق معلومات أو أرقامًا أو مصادر.",
-            "التزم ببيانات المستخدم ولا تضف وعودًا مضللة أو عناوين clickbait كاذبة.",
-            toolBriefs[tool],
-            "أخرج إجابة منظمة بعناوين واضحة ونص جاهز للتحرير. لا تذكر أنك نظام ذكاء اصطناعي إلا إذا سُئلت.",
-          ].join("\n"),
-          input: serialized,
-          max_output_tokens: 1800,
-        }),
-      });
-
-      const result = await aiResponse.json();
-      if (!aiResponse.ok) {
-        console.error("OpenAI request failed", aiResponse.status, result?.error?.type);
-        return json({ error: "تعذر توليد المحتوى الآن. راجع إعدادات مزود الذكاء الاصطناعي وحاول لاحقًا." }, 502);
-      }
-
-      const text = typeof result.output_text === "string"
-        ? result.output_text
-        : (result.output ?? [])
-            .flatMap((item: any) => Array.isArray(item.content) ? item.content : [])
-            .filter((part: any) => part.type === "output_text" && typeof part.text === "string")
-            .map((part: any) => part.text)
-            .join("\n")
-            .trim();
-
-      if (!text) return json({ error: "لم يصل نص من خدمة الذكاء الاصطناعي. حاول مرة أخرى." }, 502);
-
-      const { error: usageInsertError } = await ctx.supabase.from("ai_usage").insert({
-        user_id: userId,
-        tool,
-        input_chars: serialized.length,
-      });
-      if (usageInsertError) console.error("usage insert failed", usageInsertError);
-
-      return json({ text, model });
-    } catch (error) {
-      console.error("ai-assistant error", error);
-      return json({ error: "حدث خطأ غير متوقع. حاول مرة أخرى." }, 500);
+    if (!allowedTools.has(tool)) return reply({ error: "الأداة المطلوبة غير مدعومة." }, 400);
+    if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+      return reply({ error: "بيانات الطلب غير صحيحة." }, 400);
     }
-  }),
-};
+
+    const serialized = JSON.stringify(payload);
+    if (serialized.length < 2 || serialized.length > 12000) {
+      return reply({ error: "حجم النص يجب أن يكون بين 1 و12,000 حرف/رمز JSON." }, 400);
+    }
+
+    const since = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+    const { count, error: countError } = await supabase
+      .from("ai_usage")
+      .select("id", { count: "exact", head: true })
+      .eq("user_id", userData.user.id)
+      .gte("created_at", since);
+
+    if (countError) {
+      console.error("AI usage count error", countError);
+      return reply({ error: "تعذر التحقق من حد الاستخدام. حاول لاحقًا." }, 503);
+    }
+    if ((count ?? 0) >= 60) return reply({ error: "وصلت إلى حد 60 طلبًا يوميًا لهذا الحساب." }, 429);
+
+    const response = await fetch("https://api.openai.com/v1/responses", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${openAiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model,
+        instructions: [
+          "أنت مساعد متخصص لصناع المحتوى باللغة العربية.",
+          "اكتب بلغة طبيعية واضحة، وكن دقيقًا ولا تختلق معلومات أو أرقامًا أو مصادر.",
+          "التزم ببيانات المستخدم ولا تضف وعودًا مضللة أو عناوين كاذبة.",
+          instructions[tool],
+          "قدّم الإجابة في أقسام قصيرة وواضحة قابلة للتحرير.",
+        ].join("\n"),
+        input: serialized,
+        max_output_tokens: 1800,
+      }),
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      console.error("OpenAI API error", response.status, result?.error?.type ?? "unknown");
+      return reply({ error: "تعذر توليد المحتوى. راجع مفتاح API والنموذج وإعدادات الفوترة." }, 502);
+    }
+
+    const text = typeof result.output_text === "string"
+      ? result.output_text
+      : (result.output ?? [])
+          .flatMap((item: any) => Array.isArray(item.content) ? item.content : [])
+          .filter((part: any) => part.type === "output_text" && typeof part.text === "string")
+          .map((part: any) => part.text)
+          .join("\n")
+          .trim();
+
+    if (!text) return reply({ error: "لم يصل نص من خدمة الذكاء الاصطناعي." }, 502);
+
+    const { error: insertError } = await supabase.from("ai_usage").insert({
+      user_id: userData.user.id,
+      tool,
+      input_chars: serialized.length,
+    });
+    if (insertError) console.error("AI usage insert error", insertError);
+
+    return reply({ text, model });
+  } catch (error) {
+    console.error("ai-assistant failed", error);
+    return reply({ error: "حدث خطأ غير متوقع أثناء توليد المحتوى." }, 500);
+  }
+});
