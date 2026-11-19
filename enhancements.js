@@ -198,6 +198,17 @@ function copyDiagnostics(){
  else notify('النسخ غير مدعوم في هذا المتصفح.');
 }
 addSettingsCard();
+// Observe the same-page local workspace writes so core tools receive recovery snapshots too.
+const nativeStorageSetItem=Storage.prototype.setItem;
+Storage.prototype.setItem=function(key,value){
+ const result=nativeStorageSetItem.call(this,key,value);
+ if(this===localStorage&&key==='entelaqtak-v1'){
+  const schedule=()=>storeSnapshot('نسخة تلقائية',false);
+  if(typeof queueMicrotask==='function')queueMicrotask(schedule);
+  else setTimeout(schedule,0);
+ }
+ return result;
+};
 storeSnapshot('نسخة تلقائية',false);
 document.addEventListener('click',event=>{
  const clear=event.target&&event.target.closest&&event.target.closest('#clearAllData');
