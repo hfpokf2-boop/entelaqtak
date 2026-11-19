@@ -289,7 +289,7 @@ function bindAIButton(id,tool,payloadFactory,onResult){
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('تم النسخ.');}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('تم النسخ.');}};
 const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
-const go=id=>{if(id==='account')id='home';all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
+const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','ideas','studio','repurpose','script','titles','seo','calendar','analytics','challenge']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
 all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
 all('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copy);copy(el.value!==undefined?el.value:el.textContent);}));
@@ -395,7 +395,7 @@ bindAIButton('makeSeoAI','seo',()=>({topic:$('seoTopic').value,niche:$('seoNiche
 bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').value,platform:$('repurposePlatform').value,tone:$('repurposeTone').value,audience:$('repurposeAudience').value}),text=>{$('repurposeOutput').value=text;});
 
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();}
-$('year').textContent=new Date().getFullYear();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();
+$('year').textContent=new Date().getFullYear();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
 })();
 </script>
 </body></html>
