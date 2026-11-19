@@ -57,6 +57,15 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
  *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 
+
+.tool-search{display:flex;align-items:center;gap:7px;width:clamp(145px,22vw,245px);height:37px;padding:0 10px;border:1px solid var(--line);border-radius:11px;background:#10182c;color:var(--muted)}
+.tool-search>span{font-size:19px;line-height:1}
+.tool-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--text);font-size:10px}
+.tool-search input::placeholder{color:#8592ad}
+.tool-search:focus-within{border-color:var(--accent2);box-shadow:0 0 0 3px #55d6c21c}
+@media(max-width:760px){.tool-search{width:clamp(135px,42vw,210px)}}
+@media(max-width:390px){.tool-search{width:145px}.tool-search input{font-size:9px}}
+
 </style>
 </head>
 <body>
@@ -81,7 +90,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
   <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>الأدوات الحالية تعمل داخل المتصفح. بياناتك محفوظة على هذا الجهاز فقط.</div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
+<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><label class="tool-search"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" list="toolSearchOptions" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة" autocomplete="off"><datalist id="toolSearchOptions"><option value="الرئيسية"><option value="أفكار المحتوى"><option value="استوديو المحتوى"><option value="إعادة تدوير المحتوى"><option value="كاتب السكريبت"><option value="العناوين والصورة"><option value="مساعد SEO"><option value="تقويم النشر"><option value="متابعة الأداء"><option value="تحدي 30 يوم"></datalist></label><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
 
 <section class="view active" id="view-home">
   <div class="hero"><div class="hero-main"><span class="eyebrow">ابدأ فكرتك… وخليها محتوى يستاهل المشاهدة</span><h1>كل فكرة كبيرة<br>بتبدأ من <span>انطلاقتك.</span></h1><p>مساحة واحدة تساعدك تخطط، تكتب، تجهز وتنظم محتواك على يوتيوب وتيك توك وإنستجرام وباقي المنصات.</p><div class="actions"><button class="btn" data-go="studio">اصنع حزمة محتوى ✦</button><button class="btn alt" data-go="ideas">اكتشف أفكارًا جديدة</button></div></div>
@@ -330,7 +339,15 @@ const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('ت�
 const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
 const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','ideas','studio','repurpose','script','titles','seo','calendar','analytics','challenge']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
+
 all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
+const toolRoutes=[['الرئيسية','home'],['أفكار المحتوى','ideas'],['استوديو المحتوى','studio'],['إعادة تدوير المحتوى','repurpose'],['كاتب السكريبت','script'],['العناوين والصورة','titles'],['مساعد SEO','seo'],['تقويم النشر','calendar'],['متابعة الأداء','analytics'],['تحدي 30 يوم','challenge']];
+const toolSearch=$('toolSearch');
+function jumpToTool(){const q=toolSearch.value.trim().toLocaleLowerCase('ar');if(!q)return;const match=toolRoutes.find(([name])=>name.toLocaleLowerCase('ar')===q)||toolRoutes.find(([name])=>name.toLocaleLowerCase('ar').includes(q)||q.includes(name.toLocaleLowerCase('ar')));if(match){go(match[1]);toolSearch.value='';toolSearch.blur();}else toast('مش لاقي أداة بالاسم ده. جرّب اسم أداة من القائمة.');}
+toolSearch.addEventListener('change',jumpToTool);
+toolSearch.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();jumpToTool();}if(e.key==='Escape')toolSearch.value='';});
+document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();toolSearch.focus();toolSearch.select();}});
+
 all('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copy);copy(el.value!==undefined?el.value:el.textContent);}));
 function renderHome(){
  $('statIdeas').textContent=state.ideas.length;$('statPacks').textContent=state.packs.length;$('statPosts').textContent=state.posts.length;$('statViews').textContent=state.metrics.reduce((s,x)=>s+(+x.views||0),0).toLocaleString('en-US');
