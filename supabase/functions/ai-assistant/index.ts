@@ -1,10 +1,10 @@
 import { createClient } from "npm:@supabase/supabase-js@2";
 
 const allowedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose"]);
-const allowedOrigin = "https://hfpokf2-boop.github.io";
+const allowedOrigins = new Set(["https://sasa-antilaqatuk.github.io", "https://hfpokf2-boop.github.io"]);
 
 const corsHeaders = {
-  "Access-Control-Allow-Origin": allowedOrigin,
+  "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
   "Access-Control-Allow-Methods": "POST, OPTIONS",
   "Vary": "Origin",
@@ -31,7 +31,7 @@ Deno.serve(async (req: Request) => {
   if (req.method !== "POST") return reply({ error: "Method not allowed" }, 405);
 
   const origin = req.headers.get("origin");
-  if (origin && origin !== allowedOrigin) return reply({ error: "Origin not allowed" }, 403);
+  if (origin && !allowedOrigins.has(origin)) return reply({ error: "Origin not allowed" }, 403);
 
   const authHeader = req.headers.get("Authorization");
   if (!authHeader?.startsWith("Bearer ")) return reply({ error: "يلزم تسجيل الدخول." }, 401);
