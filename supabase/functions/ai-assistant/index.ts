@@ -8,6 +8,7 @@ const allowedOrigins = new Set([
 const WINDOW_MS = 15 * 60 * 1000;
 const REQUEST_LIMIT = 5;
 const requestHits = new Map<string, { count: number; resetAt: number }>();
+const trackedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose"]);
 
 const instructions: Record<string, string> = {
   ideas: "اقترح أفكارًا مبتكرة ومتنوعة تناسب المجال والمنصة والجمهور. لكل فكرة اكتب عنوانًا وزاوية تناول وخطافًا. تجنب تكرار الفكرة نفسها.",
@@ -89,6 +90,32 @@ async function resolveUser(
   }
 }
 
+async function countRecentUsage(
+  projectUrl: string | undefined,
+  apiKey: string,
+  authorization: string | null,
+  userId: string | null,
+): Promise<number | null> {
+  if (!projectUrl || !authorization || !userId) return null;
+  const cutoff = new Date(Date.now() - WINDOW_MS).toISOString();
+  const url = projectUrl.replace(/\/$/, "") + "/rest/v1/ai_usage?select=id&user_id=eq." +
+    encodeURIComponent(userId) + "&created_at=gte." + encodeURIComponent(cutoff) + "&limit=6";
+  try {
+    const response = await fetch(url, {
+      headers: { apikey: apiKey, Authorization: authorization },
+    });
+    if (!response.ok) {
+      console.warn("AI usage quota lookup failed", response.status);
+      return null;
+    }
+    const rows = await response.json().catch(() => null);
+    return Array.isArray(rows) ? rows.length : null;
+  } catch {
+    console.warn("AI usage quota lookup unavailable");
+    return null;
+  }
+}
+
 async function recordUsage(
   projectUrl: string | undefined,
   apiKey: string,
@@ -166,6 +193,19 @@ Deno.serve(async (req: Request) => {
     return reply({ error: "حجم المدخلات يجب ألا يتجاوز 12,000 حرف." }, 400, origin);
   }
 
+  const projectUrl = Deno.env.get("SUPABASE_URL");
+  const persistedUsage = auth.userId && trackedTools.has(tool)
+    ? await countRecentUsage(projectUrl, apiKey, authorization, auth.userId)
+    : null;
+  if (persistedUsage !== null && persistedUsage >= REQUEST_LIMIT) {
+    return reply(
+      { error: "وصلت للحد المؤقت من طلبات المساعد على حسابك. حاول بعد 15 دقيقة." },
+      429,
+      origin,
+      { "Retry-After": "900", "X-RateLimit-Limit": String(REQUEST_LIMIT), "X-RateLimit-Remaining": "0" },
+    );
+  }
+
   const forwarded = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "unknown";
   const ip = forwarded.split(",")[0].trim() || "unknown";
   const rateIdentity = auth.userId ? "user:" + auth.userId : "ip:" + ip;
@@ -241,7 +281,7 @@ Deno.serve(async (req: Request) => {
 
     if (!text) return reply({ error: "لم يصل نص من خدمة الذكاء الاصطناعي." }, 502, origin);
 
-    await recordUsage(Deno.env.get("SUPABASE_URL"), apiKey, authorization, auth.userId, tool, inputChars);
+    await recordUsage(projectUrl, apiKey, authorization, auth.userId, tool, inputChars);
 
     const currentBucket = requestHits.get(rateKey);
     const remaining = currentBucket ? Math.max(0, REQUEST_LIMIT - currentBucket.count) : 0;
