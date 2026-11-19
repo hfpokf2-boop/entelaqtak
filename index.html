@@ -132,18 +132,6 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 @media(max-width:520px){.start-path-actions{align-items:flex-start}.start-guide-button{font-size:9px}}
 
 
-/* ElevenLabs voice studio */
-.voice-intro{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px;border:1px solid #55d6c255;border-radius:18px;background:radial-gradient(420px 180px at 0 0,#55d6c222,transparent 70%),linear-gradient(120deg,#29234c,#17243d);margin-bottom:12px}
-.voice-kicker{font-size:10px;color:#9de7dd;font-weight:800}.voice-intro h2{font-size:clamp(18px,2.5vw,24px);margin:6px 0}.voice-intro p{font-size:11px;color:#b8c5d9;margin:0}
-.voice-intro-icon{display:grid;place-items:center;flex:0 0 72px;width:72px;height:72px;border-radius:22px;background:#8b7cf627;color:#c9c2ff;font-size:38px}
-.voice-notice a{color:#a9e7f4;text-decoration:underline}.voice-notice code{color:#9de7dd;background:#10182c;padding:2px 5px;border-radius:5px}.voice-notice{display:grid;gap:4px;padding:12px 15px;margin:0 0 14px;border:1px solid #f0c97944;background:#f0c9790c;border-radius:12px;color:#e7d8ae;font-size:10px;line-height:1.8}
-.voice-auth-panel{margin-bottom:14px}.voice-auth-status{font-size:10px;color:var(--muted);line-height:1.7}.voice-counter{font-size:9px;color:var(--muted);text-align:left}.voice-help{font-size:9px;color:var(--muted);line-height:1.8}
-.voice-setting{margin:13px 0}.voice-setting label{display:flex;justify-content:space-between;gap:12px;font-size:10px;color:#cbd5e5}.voice-setting output{color:#9de7dd;font-variant-numeric:tabular-nums}.voice-setting input{width:100%;accent-color:var(--accent2);margin-top:9px}
-.voice-actions{display:grid;gap:8px;margin-top:16px}.voice-output-empty{min-height:230px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;border:1px dashed #526184;border-radius:14px;background:#0e172a88;text-align:center;color:var(--muted)}
-.voice-output-empty span{font-size:36px;color:#bcb3ff}.voice-output-empty b{font-size:12px;color:#dbe4f1}.voice-output-empty small{font-size:9px}
-.voice-download{display:inline-flex;text-decoration:none;margin-top:10px;justify-content:center}.voice-layout .panel{min-width:0}
-@media(max-width:650px){.voice-intro{padding:15px}.voice-intro-icon{flex-basis:55px;width:55px;height:55px;font-size:30px}.voice-layout{grid-template-columns:1fr}}
-
 </style></head>
 <body>
 <div class="app">
@@ -154,7 +142,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
     <button class="active" data-view="home"><i>⌂</i>الرئيسية</button>
     <button data-view="ideas"><i>✧</i>أفكار المحتوى</button>
     <button data-view="studio"><i>✍</i>استوديو المحتوى</button>
-    <button data-view="voice"><i>♫</i>استوديو الصوت</button>
+    
     <button data-view="repurpose"><i>♻</i>إعادة تدوير المحتوى</button>
     <button data-view="script"><i>▤</i>كاتب السكريبت</button>
     <button data-view="titles"><i>▣</i>العناوين والصورة</button>
@@ -171,7 +159,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
   <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>الأدوات الحالية تعمل داخل المتصفح. بياناتك محفوظة على هذا الجهاز فقط.</div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><label class="tool-search"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" list="toolSearchOptions" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة" autocomplete="off"><datalist id="toolSearchOptions"><option value="الرئيسية"><option value="أفكار المحتوى"><option value="استوديو المحتوى"><option value="استوديو الصوت"><option value="إعادة تدوير المحتوى"><option value="كاتب السكريبت"><option value="العناوين والصورة"><option value="مساعد SEO"><option value="تقويم النشر"><option value="متابعة الأداء"><option value="تحدي 30 يوم"><option value="عقل المحتوى الذكي"><option value="رادار الموضوعات"><option value="مصنع الفيديوهات"><option value="هوية المحتوى"><option value="مختبر العناوين"><option value="أكاديمية انطلاقتك"><option value="دليل الاستخدام"></datalist></label><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
+<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><label class="tool-search"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" list="toolSearchOptions" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة" autocomplete="off"><datalist id="toolSearchOptions"><option value="الرئيسية"><option value="أفكار المحتوى"><option value="استوديو المحتوى"><option value="إعادة تدوير المحتوى"><option value="كاتب السكريبت"><option value="العناوين والصورة"><option value="مساعد SEO"><option value="تقويم النشر"><option value="متابعة الأداء"><option value="تحدي 30 يوم"><option value="عقل المحتوى الذكي"><option value="رادار الموضوعات"><option value="مصنع الفيديوهات"><option value="هوية المحتوى"><option value="مختبر العناوين"><option value="أكاديمية انطلاقتك"><option value="دليل الاستخدام"></datalist></label><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
 
 <section class="view active" id="view-home">
   <div class="hero"><div class="hero-main"><span class="eyebrow">ابدأ فكرتك… وخليها محتوى يستاهل المشاهدة</span><h1>كل فكرة كبيرة<br>بتبدأ من <span>انطلاقتك.</span></h1><p>مساحة واحدة تساعدك تخطط، تكتب، تجهز وتنظم محتواك على يوتيوب وتيك توك وإنستجرام وباقي المنصات.</p><div class="actions"><button class="btn" data-go="studio">اصنع حزمة محتوى ✦</button><button class="btn alt" data-go="ideas">اكتشف أفكارًا جديدة</button></div></div>
@@ -252,46 +240,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 <div class="panel" style="margin-top:15px"><div class="sectionrow"><h3>قائمة المراجعة قبل النشر</h3><span id="prePublishProgress">0 من 6</span></div><p class="sub">علّم على كل نقطة بعد مراجعتها. الاختيارات محفوظة على جهازك.</p><div class="grid2" id="prePublishChecklist"><label><input type="checkbox" data-precheck="hook"> الخطاف واضح ويشد الانتباه</label><label><input type="checkbox" data-precheck="facts"> راجعت صحة المعلومات والمصادر</label><label><input type="checkbox" data-precheck="audio"> الصوت والإضاءة بجودة مناسبة</label><label><input type="checkbox" data-precheck="thumb"> الصورة المصغّرة واضحة ومقروءة</label><label><input type="checkbox" data-precheck="seo"> العنوان والوصف والكلمات المفتاحية جاهزة</label><label><input type="checkbox" data-precheck="cta"> توجد دعوة واضحة للتفاعل</label></div><button class="btn small alt" id="resetPrePublish" type="button" style="margin-top:12px">إعادة تعيين القائمة</button></div>
 </section>
 
-<section class="view" id="view-voice">
- <div class="head"><div><span class="eyebrow">حوّل السكريبت لتعليق صوتي</span><h1>استوديو الصوت 🎙️</h1><p>اكتب أو الصق النص، اختار صوتًا من حساب ElevenLabs، اسمع النتيجة وحمّلها بصيغة MP3.</p></div></div>
- <div class="voice-intro"><div><span class="voice-kicker">صوت لمحتواك في خطوات بسيطة</span><h2>من النص إلى تعليق صوتي جاهز للمونتاج</h2><p>يدعم النص العربي باستخدام نموذج متعدد اللغات. جرّب أكثر من صوت لأن اللهجة والأداء يختلفان من صوت لآخر.</p></div><div class="voice-intro-icon" aria-hidden="true">♫</div></div>
- <div class="voice-notice"><b>قبل الاستخدام</b><span>1) أنشئ مفتاحًا في <a href="https://elevenlabs.io/app/settings/api-keys" target="_blank" rel="noopener noreferrer">إعدادات API في ElevenLabs</a> بصلاحية قراءة الأصوات وتحويل النص إلى كلام. 2) في <a href="https://supabase.com/dashboard/project/dbetanrnhdabuachxdhc/functions/secrets" target="_blank" rel="noopener noreferrer">أسرار Supabase</a> أضف الاسم <code>ELEVENLABS_API_KEY</code> والصق المفتاح كقيمة. لا تضع المفتاح هنا أو في GitHub. كل عملية توليد قد تستهلك رصيدًا من خطة ElevenLabs.</span></div>
- <div class="panel voice-auth-panel" id="voiceAuthPanel">
-  <h3>سجّل الدخول لاستخدام استوديو الصوت</h3><p class="sub">تسجيل الدخول مطلوب لحماية رصيد تحويل النص إلى صوت من الاستخدام المجهول.</p>
-  <div class="grid2"><div class="field"><label for="voiceEmail">البريد الإلكتروني</label><input id="voiceEmail" type="email" autocomplete="email" placeholder="name@example.com"></div><div class="field"><label for="voicePassword">كلمة المرور</label><input id="voicePassword" type="password" autocomplete="current-password" placeholder="8 أحرف على الأقل"></div></div>
-  <div class="actions"><button class="btn" id="voiceLogin" type="button">تسجيل الدخول</button><button class="btn alt" id="voiceSignup" type="button">إنشاء حساب جديد</button></div>
-  <p class="voice-auth-status" id="voiceAuthStatus" role="status">استخدم حسابك أو أنشئ حسابًا بالبريد الإلكتروني.</p>
- </div>
- <div id="voiceStudioPanel" hidden>
-  <div class="panel">
-   <div class="sectionrow" style="margin-top:0"><div><h3>1. اكتب النص</h3><p class="sub">استخدم سكريبتك أو الصق فقرة تريد تحويلها إلى صوت.</p></div><button class="mini" id="voiceSignOut" type="button">تسجيل الخروج</button></div>
-   <div class="field"><label for="voiceText">النص المراد تحويله</label><textarea id="voiceText" maxlength="5000" style="min-height:180px" placeholder="أهلًا بيك في فيديو جديد من انطلاقتك... اكتب النص بالطريقة اللي تحب الصوت ينطقه بيها."></textarea><div class="voice-counter"><span id="voiceCharCount">0</span> / 5000 حرف</div></div>
-   <div class="actions"><button class="btn small alt" id="voiceUseScript" type="button">استخدم نص كاتب السكريبت</button><button class="btn small alt" id="voiceUseStudio" type="button">استخدم سكريبت حزمة المحتوى</button><button class="btn small alt" id="voiceClearText" type="button">مسح النص</button></div>
-  </div>
-  <div class="two voice-layout" style="margin-top:14px">
-   <div class="panel">
-    <h3>2. اختار الصوت والإعدادات</h3><p class="sub">حمّل قائمة الأصوات المتاحة في حساب ElevenLabs المرتبط بالمفتاح.</p>
-    <div class="field"><label for="voiceSelect">الأصوات المتاحة</label><select id="voiceSelect"><option value="">اضغط «تحميل الأصوات» أولًا</option></select></div>
-    <button class="btn small alt" id="voiceLoadVoices" type="button">تحميل الأصوات من ElevenLabs</button>
-    <div class="field" style="margin-top:12px"><label for="voiceId">Voice ID (اختياري)</label><input id="voiceId" placeholder="يُملأ تلقائيًا عند اختيار صوت"></div>
-    <p class="voice-help">تقدر تلصق Voice ID لصوت تملكه أو عندك إذن باستخدامه. لو ظهر صوت في المعاينة، تقدر تسمعه قبل التوليد.</p>
-    <audio id="voicePreview" controls hidden style="width:100%;margin:8px 0"></audio>
-    <div class="voice-setting"><label for="voiceStability">ثبات الصوت <output id="voiceStabilityValue">50%</output></label><input id="voiceStability" type="range" min="0" max="100" value="50"></div>
-    <div class="voice-setting"><label for="voiceSimilarity">التشابه مع الصوت <output id="voiceSimilarityValue">75%</output></label><input id="voiceSimilarity" type="range" min="0" max="100" value="75"></div>
-    <div class="voice-setting"><label for="voiceStyle">التعبير والأسلوب <output id="voiceStyleValue">0%</output></label><input id="voiceStyle" type="range" min="0" max="100" value="0"></div>
-    <div class="voice-setting"><label for="voiceSpeed">سرعة الكلام <output id="voiceSpeedValue">1.0×</output></label><input id="voiceSpeed" type="range" min="70" max="120" value="100"></div>
-    <div class="voice-actions"><button class="btn" id="voiceGenerate" type="button">حوّل النص إلى صوت</button><span id="voiceGenerateStatus" class="voice-auth-status" role="status">أدخل النص، وحمّل الأصوات، ثم ابدأ التوليد.</span></div>
-   </div>
-   <div class="panel">
-    <h3>3. استمع وحمّل النتيجة</h3><p class="sub">بعد انتهاء التوليد، شغّل الملف هنا أو نزّله لاستخدامه في المونتاج.</p>
-    <div class="voice-output-empty" id="voiceOutputEmpty"><span>♫</span><b>الصوت الناتج هيظهر هنا</b><small>ملف MP3 جاهز للمعاينة والتنزيل</small></div>
-    <audio id="voiceAudio" controls hidden style="width:100%;margin:12px 0"></audio>
-    <a class="btn voice-download" id="voiceDownload" hidden download="entelaqtak-voice.mp3">تحميل الصوت MP3</a>
-    <div class="note">احتفظ بنسخة من الملف بعد التنزيل؛ الصوت الناتج لا يُحفظ تلقائيًا في حسابك داخل الموقع.</div>
-   </div>
-  </div>
- </div>
-</section>
+
 <section class="view" id="view-repurpose">
  <div class="head"><div><span class="eyebrow">فكرة واحدة — محتوى بأكثر من شكل</span><h1>إعادة تدوير المحتوى ♻️</h1><p>حوّل فيديو طويل أو فكرة أساسية إلى مقاطع قصيرة ومنشورات تناسب منصات مختلفة.</p></div></div>
  <div class="two"><div class="panel"><h3>المحتوى الأصلي</h3><p class="sub">اكتب ملخص الفيديو أو النص أو الفكرة الأساسية.</p>
@@ -552,11 +501,11 @@ function bindAIButton(id,tool,payloadFactory,onResult){
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('تم النسخ.');}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('تم النسخ.');}};
 const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
-const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','guide','ideas','studio','voice','repurpose','script','titles','seo','calendar','analytics','challenge','brain','trends','video','brand','lab','academy','settings']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',guide:'دليل الاستخدام',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',voice:'استوديو الصوت',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم',brain:'عقل المحتوى الذكي',trends:'رادار الموضوعات',video:'مصنع الفيديوهات',brand:'هوية المحتوى',lab:'مختبر العناوين',academy:'أكاديمية انطلاقتك',settings:'الإعدادات والبيانات'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
+const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','guide','ideas','studio','repurpose','script','titles','seo','calendar','analytics','challenge','brain','trends','video','brand','lab','academy','settings']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',guide:'دليل الاستخدام',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم',brain:'عقل المحتوى الذكي',trends:'رادار الموضوعات',video:'مصنع الفيديوهات',brand:'هوية المحتوى',lab:'مختبر العناوين',academy:'أكاديمية انطلاقتك',settings:'الإعدادات والبيانات'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
 
 all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
-const toolRoutes=[['الرئيسية','home'],['دليل الاستخدام','guide'],['أفكار المحتوى','ideas'],['استوديو المحتوى','studio'],['استوديو الصوت','voice'],['إعادة تدوير المحتوى','repurpose'],['كاتب السكريبت','script'],['العناوين والصورة','titles'],['مساعد SEO','seo'],['تقويم النشر','calendar'],['متابعة الأداء','analytics'],['تحدي 30 يوم','challenge'],['عقل المحتوى الذكي','brain'],['رادار الموضوعات','trends'],['مصنع الفيديوهات','video'],['هوية المحتوى','brand'],['مختبر العناوين','lab'],['أكاديمية انطلاقتك','academy'],['الإعدادات','settings']];
+const toolRoutes=[['الرئيسية','home'],['دليل الاستخدام','guide'],['أفكار المحتوى','ideas'],['استوديو المحتوى','studio'],['إعادة تدوير المحتوى','repurpose'],['كاتب السكريبت','script'],['العناوين والصورة','titles'],['مساعد SEO','seo'],['تقويم النشر','calendar'],['متابعة الأداء','analytics'],['تحدي 30 يوم','challenge'],['عقل المحتوى الذكي','brain'],['رادار الموضوعات','trends'],['مصنع الفيديوهات','video'],['هوية المحتوى','brand'],['مختبر العناوين','lab'],['أكاديمية انطلاقتك','academy'],['الإعدادات','settings']];
 const toolSearch=$('toolSearch');
 function jumpToTool(){const q=toolSearch.value.trim().toLocaleLowerCase('ar');if(!q)return;const match=toolRoutes.find(([name])=>name.toLocaleLowerCase('ar')===q)||toolRoutes.find(([name])=>name.toLocaleLowerCase('ar').includes(q)||q.includes(name.toLocaleLowerCase('ar')));if(match){go(match[1]);toolSearch.value='';toolSearch.blur();}else toast('مش لاقي أداة بالاسم ده. جرّب اسم أداة من القائمة.');}
 toolSearch.addEventListener('change',jumpToTool);
@@ -739,64 +688,7 @@ $('clearAllData').addEventListener('click',()=>{
  state=normalizeState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
 });
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();}
-async function ensureVoiceAuthClient(){
- if(sbClient)return sbClient;
- const config=window.ENTELAQTAK_CONFIG||{};
- if(!config.url||!config.publishableKey)throw new Error('إعدادات الاتصال بخدمة الحساب غير مكتملة.');
- const sdk=await loadSupabaseSdk();
- sbClient=sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
- return sbClient;
-}
-async function getVoiceSession(){
- const client=await ensureVoiceAuthClient();
- const {data,error}=await client.auth.getSession();
- if(error)throw error;
- currentUser=data.session?.user||null;
- return data.session||null;
-}
-async function voiceSignIn(email,password){
- const client=await ensureVoiceAuthClient();
- const {data,error}=await client.auth.signInWithPassword({email,password});
- if(error)throw error;
- currentUser=data.user||data.session?.user||null;
- return data;
-}
-async function voiceSignUp(email,password){
- const client=await ensureVoiceAuthClient();
- const {data,error}=await client.auth.signUp({email,password});
- if(error)throw error;
- currentUser=data.user||data.session?.user||null;
- return data;
-}
-async function voiceSignOut(){
- const client=await ensureVoiceAuthClient();
- const {error}=await client.auth.signOut();
- if(error)throw error;
- currentUser=null;
-}
-async function callVoiceFunction(payload){
- const config=window.ENTELAQTAK_CONFIG||{},session=await getVoiceSession();
- if(!session?.access_token)throw new Error('سجّل الدخول أولًا لاستخدام استوديو الصوت.');
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),120000);
- try{
-  const base=config.url.replace(/\/$/,'');
-  const response=await fetch(base+'/functions/v1/elevenlabs-speech',{
-   method:'POST',
-   headers:{'Content-Type':'application/json','apikey':config.publishableKey,'Authorization':'Bearer '+session.access_token},
-   body:JSON.stringify(payload),signal:controller.signal
-  });
-  if(!response.ok){
-   const data=await response.json().catch(()=>({}));
-   throw new Error(data.error||'تعذر الاتصال بخدمة الصوت. حاول مرة أخرى.');
-  }
-  if(payload.action==='voices')return await response.json();
-  return new Blob([await response.arrayBuffer()],{type:response.headers.get('content-type')||'audio/mpeg'});
- }catch(error){
-  if(error.name==='AbortError')throw new Error('استغرق توليد الصوت وقتًا أطول من اللازم. جرّب نصًا أقصر.');
-  throw error;
- }finally{clearTimeout(timer);}
-}
-window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews,getVoiceSession,voiceSignIn,voiceSignUp,voiceSignOut,callVoiceFunction};
+window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews};
 $('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
 })();
 </script>
