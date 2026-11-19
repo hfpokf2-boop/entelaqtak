@@ -408,7 +408,7 @@ async function callAI(tool,payload){
  const endpoint=(cfg.endpoint||'').trim()||(provider==='gemini'?'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent':'https://api.openai.com/v1/chat/completions');
  const model=cfg.model?.trim()||(provider==='gemini'?'gemini-2.0-flash':'gpt-4o-mini');
  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),cfg.timeout||45000);
- const prompt='أنت مساعد لصانع محتوى عربي. أعد مسودة مفيدة ومنظمة باللغة العربية، ولا تخترع حقائق أو أرقامًا. وضّح ما يحتاج تحققًا.\nالأداة: '+tool+'\nالمدخلات: '+JSON.stringify(payload);
+ const prompt='أنت مساعد لصانع محتوى عربي. أعد مسودة مفيدة ومنظمة باللغة العربية، وراعِ ملف صانع المحتوى وهوية علامته عند توفرهما. لا تخترع حقائق أو أرقامًا. وضّح ما يحتاج تحققًا.\nالأداة: '+tool+'\nالمدخلات والسياق: '+JSON.stringify({profile:state.profile||{},brand:state.brand||{},input:payload});
  try{
   let response,data={},textOut='';
   if(provider==='gemini'){
