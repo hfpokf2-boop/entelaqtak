@@ -47,7 +47,6 @@
     const timer = setInterval(() => heartbeat(), 30000);
     document.addEventListener('visibilitychange', () => {
       if (document.visibilityState === 'visible') heartbeat();
-      else heartbeat(true);
     });
     window.addEventListener('pagehide', () => {
       closed = true;
