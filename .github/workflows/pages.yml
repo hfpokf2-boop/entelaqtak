@@ -156,6 +156,20 @@ jobs:
                   if not Path(path).is_file():
                       errors.append(f"service-worker.js: missing precache file {cached}")
 
+          home = Path("index.html").read_text(encoding="utf-8")
+          sitemap_root = "https://sasa-antilaqatuk.github.io/entelaqtak/"
+          if '<meta name="robots" content="index,follow,max-image-preview:large">' not in home:
+              errors.append("index.html: public homepage must remain indexable")
+          if '<link rel="canonical" href="' + sitemap_root + '">' not in home:
+              errors.append("index.html: homepage canonical must point to the Pages project root")
+          if "WebSite" not in home or "alternateName" not in home:
+              errors.append("index.html: WebSite structured data is missing")
+          sitemap_text = Path("sitemap.xml").read_text(encoding="utf-8")
+          if sitemap_root not in sitemap_text or "<lastmod>2026-11-20</lastmod>" not in sitemap_text:
+              errors.append("sitemap.xml: homepage URL or lastmod is missing")
+          if "workspace.html" in sitemap_text:
+              errors.append("sitemap.xml: noindex workspace must not be submitted for indexing")
+
           fb_url = "https://www.facebook.com/profile.php?id=61596964071145"
           index = Path("index.html").read_text(encoding="utf-8")
           if index.count(f'href="{fb_url}"') != 2:
