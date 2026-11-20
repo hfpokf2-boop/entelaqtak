@@ -1106,3 +1106,54 @@ button.primary:active,button.secondary:active,button.danger:active,button.ghost:
 button.alt:active,button.text-btn:active,button.menu-toggle:active,button.theme-close:active,button.small:active{
  background:#6856A8!important;border-color:#D9C8FF!important;
 }
+
+/* STRICT DARK FINISH — prevent pale surfaces across every page */
+:root{
+ color-scheme:dark!important;
+ --bg:#080D18!important;
+ --surface:#101827!important;
+ --surface2:#151F31!important;
+ --panel:#111A29!important;
+ --line:#283449!important;
+ --text:#F0EDF7!important;
+ --muted:#9A9AAF!important;
+ --accent:#9278D8!important;
+ --accent2:#A85F91!important;
+ --purple:#9278D8!important;
+ --mint:#A85F91!important;
+ --cyan:#9278D8!important;
+ --green:#A85F91!important;
+ --workspace-violet:#9278D8!important;
+ --workspace-mint:#A85F91!important;
+}
+html,body{background-color:#080D18!important;color:#F0EDF7!important}
+body{background-image:radial-gradient(900px 500px at 88% -12%,rgba(146,120,216,.09),transparent 68%),radial-gradient(760px 480px at 0 45%,rgba(168,95,145,.055),transparent 70%)!important}
+button,.btn,.button,.contact,.btn-primary,.btn:not(.alt):not(.ghost),.button:not(.ghost){
+ background:linear-gradient(115deg,#59458F,#49345F)!important;
+ color:#F7F3FF!important;
+ border-color:#8067B7!important;
+ box-shadow:0 8px 22px rgba(0,0,0,.28)!important;
+}
+button.alt,.btn.alt,.btn.ghost,.button.ghost,.btn-secondary,.button.ghost{
+ background:#151D2B!important;color:#D8D1E8!important;border-color:#30384A!important;box-shadow:none!important
+}
+.panel,.card,.stat,.feature,.step,.info-panel,.section,.preview-shell,.preview-window,.hero-side,.hero-main,.quick button,.idea,.saveditem,.calendaritem,.metric,.challenge label,.start-path,.start-step,.focuspanel,.result,.side-note,.top,.sidebar,.site-header,.topbar,.modal,.dialog,.dropdown-menu,.popover,.menu,.toast,.notice,.alert,.note,.caution,.final-cta{
+ background-color:#111A29!important;color:#EAE6F2!important;border-color:#2B3548!important;
+}
+.panel,.card,.stat,.feature,.step,.info-panel,.section,.hero-side,.hero-main,.quick button,.idea,.saveditem,.calendaritem,.metric,.challenge label,.start-path,.start-step,.focuspanel,.result,.modal,.dialog,.dropdown-menu,.popover,.menu{
+ background-image:linear-gradient(145deg,#151F30,#0F1725)!important;
+}
+input,select,textarea,.control,.field input,.field select,.field textarea{
+ background:#0B1321!important;color:#F0EDF7!important;border-color:#303B50!important;
+}
+input::placeholder,textarea::placeholder{color:#78849A!important}
+.badge,.pill,.enhance-pill,.eyebrow,.kicker,.statico,.datebox,.feature-icon,.nav button i{
+ background-color:rgba(146,120,216,.12)!important;color:#C7B7F1!important;border-color:rgba(146,120,216,.32)!important;
+}
+a{color:#C5B4F0}
+a:hover{color:#D9A0C5!important}
+.toast{background:#171F2E!important;color:#F0EDF7!important;border:1px solid #374258!important}
+.note,.alert,.notice,.caution{background:#171D2B!important;color:#DCD6E8!important;border-color:#55436F!important}
+#view-settings .card button.primary{background:linear-gradient(110deg,#59458F,#49345F)!important;color:#F7F3FF!important;border-color:#8067B7!important}
+::selection{background:#7056A8!important;color:#fff!important}
+
