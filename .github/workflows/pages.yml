@@ -63,7 +63,7 @@ jobs:
               raise SystemExit("No executable inline JavaScript found")
           print(f"Extracted {total} executable inline script(s) from index and workspace.")
           PY
-          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js sidebar-organizer.js content-pack-pro.js service-worker.js; do
+          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js sidebar-organizer.js content-pack-pro.js visitor-tracker.js service-worker.js; do
             echo "Checking $file"
             node --check "$file"
           done
@@ -88,10 +88,40 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v33"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v34"), 'Service worker cache version was not bumped.');
           assert(worker.includes("'./content-pack-pro.js'"), 'Content pack module missing from offline app shell.');
           console.log('Workspace state identity, platform event bindings, and offline cache checks passed.');
           NODE
+      - name: Audit dark theme and blue button states
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          errors = []
+          version = "20261120-dark-blue-2"
+          for page in ("index.html", "workspace.html", "admin.html", "advertise.html", "legal.html"):
+              html = Path(page).read_text(encoding="utf-8")
+              if f"design-system.css?v={version}" not in html:
+                  errors.append(f"{page}: design-system.css cache version is stale")
+          workspace = Path("workspace.html").read_text(encoding="utf-8")
+          if f"ui-polish.css?v={version}" not in workspace:
+              errors.append("workspace.html: ui-polish.css cache version is stale")
+          css = Path("design-system.css").read_text(encoding="utf-8")
+          required = [
+              "--bg:#0B1120", "--accent:#3B82F6", "--accent2:#10B981",
+              "button:hover", "button:active", "button:focus-visible",
+              "background:linear-gradient(115deg,#3B82F6,#1D4ED8)",
+              "button.active,#nav button.active",
+          ]
+          for token in required:
+              if token not in css:
+                  errors.append("design-system.css: missing blue/dark theme rule " + token)
+          worker = Path("service-worker.js").read_text(encoding="utf-8")
+          if "entelaqtak-shell-v34" not in worker:
+              errors.append("service-worker.js: shell cache version was not bumped")
+          if errors:
+              raise SystemExit("\n".join(errors))
+          print("Dark palette, consistent stylesheet versions, and blue button states passed.")
+          PY
       - name: Audit HTML, local assets, and PWA metadata
         run: |
           python3 - <<'PY'
