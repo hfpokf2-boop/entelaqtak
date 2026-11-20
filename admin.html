@@ -41,7 +41,7 @@ window.ENTELAQTAK_CONFIG={url:"https://dbetanrnhdabuachxdhc.supabase.co",publish
   <div class="card metric cyan"><div class="label">زيارات اليوم</div><strong id="today">—</strong><div class="hint">من بداية اليوم بالتوقيت المحلي</div></div>
   <div class="card metric gold"><div class="label">آخر 7 أيام</div><strong id="week">—</strong><div class="hint">جلسات بدأت خلال أسبوع</div></div>
   <div class="card metric red"><div class="label">انتهت / غير نشطة</div><strong id="exited">—</strong><div class="hint">خروج مسجل أو انقطاع النشاط</div></div>
-  <div class="card metric purple"><div class="label">مستخدمون مسجلون</div><strong id="members">—</strong><div class="hint">جلسات مرتبطة بحساب مسجل</div></div>
+  <div class="card metric purple"><div class="label">جلسات بحساب مسجل</div><strong id="members">—</strong><div class="hint">جلسات مرتبطة بحساب مسجل</div></div>
  </div>
 
  <div class="section-grid">
@@ -78,6 +78,7 @@ window.ENTELAQTAK_CONFIG={url:"https://dbetanrnhdabuachxdhc.supabase.co",publish
  const iso=d=>d.toISOString();
  const startOfToday=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
  const fmt=v=>v?new Date(v).toLocaleString('ar-EG',{dateStyle:'short',timeStyle:'short'}):'—';
+ const sourceHost=v=>{try{return v?new URL(v).hostname:'دخول مباشر / غير معروف'}catch(_){return 'مصدر غير معروف'}};
  const active=x=>!x.ended_at && now()-new Date(x.last_seen).getTime()<90000;
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const device=ua=>{ua=ua||'';const os=/Android/i.test(ua)?'Android':/iPhone|iPad/i.test(ua)?'iOS':/Windows/i.test(ua)?'Windows':/Mac OS/i.test(ua)?'Mac':/Linux/i.test(ua)?'Linux':'غير معروف';const br=/Edg\//i.test(ua)?'Edge':/Firefox\//i.test(ua)?'Firefox':/Chrome\//i.test(ua)?'Chrome':/Safari\//i.test(ua)?'Safari':'متصفح غير معروف';return os+' · '+br};
@@ -152,7 +153,7 @@ window.ENTELAQTAK_CONFIG={url:"https://dbetanrnhdabuachxdhc.supabase.co",publish
    const isLive=active(x),who=x.visitor_email?esc(x.visitor_email):'زائر مجهول';
    const sub=x.visitor_email?'حساب مسجل':'جلسة '+esc(x.session_id.slice(0,8));
    const stateTag=isLive?'<span class="state online">● نشط الآن</span>':x.ended_at?'<span class="state offline">انتهت الجلسة</span>':'<span class="state unknown">غير نشط</span>';
-   return '<tr><td><span class="visitor">'+who+'</span><span class="sub">'+sub+'</span></td><td>'+esc(x.page_path||'/')+'</td><td>'+fmt(x.first_seen)+'</td><td>'+fmt(x.last_seen)+'</td><td>'+stateTag+'</td><td>'+esc(device(x.user_agent))+'</td><td>'+esc(x.referrer?new URL(x.referrer).hostname:'دخول مباشر / غير معروف')+'</td></tr>';
+   return '<tr><td><span class="visitor">'+who+'</span><span class="sub">'+sub+'</span></td><td>'+esc(x.page_path||'/')+'</td><td>'+fmt(x.first_seen)+'</td><td>'+fmt(x.last_seen)+'</td><td>'+stateTag+'</td><td>'+esc(device(x.user_agent))+'</td><td>'+esc(sourceHost(x.referrer))+'</td></tr>';
   }).join(''):'<tr><td colspan="7" class="empty">لا توجد نتائج مطابقة للفلاتر.</td></tr>';
   $('resultCount').textContent='عرض '+(visible.length?start+1:0)+'–'+(start+visible.length)+' من '+list.length+' نتيجة ضمن أحدث 500 جلسة.';
   $('pageLabel').textContent=state.page+' / '+pages;
