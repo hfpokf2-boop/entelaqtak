@@ -27,27 +27,37 @@ jobs:
       - name: Validate application JavaScript
         run: |
           python3 - <<'PY'
+          from html.parser import HTMLParser
           from pathlib import Path
-          import re
 
-          html = Path("index.html").read_text(encoding="utf-8")
-          scripts = re.findall(r"<script\\b([^>]*)>([\\s\\S]*?)</script\\s*>", html, re.IGNORECASE)
-          inline_scripts = []
-          for attrs, body in scripts:
-              if re.search(r"\\bsrc\\s*=", attrs, re.IGNORECASE):
-                  continue
-              match = re.search(r"""\\btype\\s*=\\s*["']?([^"'\\s>]+)""", attrs, re.IGNORECASE)
-              script_type = match.group(1).lower() if match else "text/javascript"
-              if script_type not in ("text/javascript", "application/javascript", "module"):
-                  continue
-              if body.strip():
-                  inline_scripts.append(body)
+          class ScriptExtractor(HTMLParser):
+              def __init__(self):
+                  super().__init__(convert_charrefs=False)
+                  self.current = None
+                  self.scripts = []
+              def handle_starttag(self, tag, attrs):
+                  if tag.lower() == "script":
+                      self.current = (dict(attrs), [])
+              def handle_data(self, data):
+                  if self.current is not None:
+                      self.current[1].append(data)
+              def handle_endtag(self, tag):
+                  if tag.lower() == "script" and self.current is not None:
+                      attrs, chunks = self.current
+                      script_type = attrs.get("type", "text/javascript").lower()
+                      if "src" not in attrs and script_type in ("text/javascript", "application/javascript", "module"):
+                          body = "".join(chunks)
+                          if body.strip():
+                              self.scripts.append(body)
+                      self.current = None
 
-          if not inline_scripts:
+          parser = ScriptExtractor()
+          parser.feed(Path("index.html").read_text(encoding="utf-8"))
+          if not parser.scripts:
               raise SystemExit("No executable inline JavaScript found")
-          for number, body in enumerate(inline_scripts, 1):
+          for number, body in enumerate(parser.scripts, 1):
               Path(f"/tmp/entelaqtak-inline-{number}.js").write_text(body, encoding="utf-8")
-          print(f"Extracted {len(inline_scripts)} executable inline script(s).")
+          print(f"Extracted {len(parser.scripts)} executable inline script(s).")
           PY
           for file in creator-suite.js enhancements.js theme.js service-worker.js; do
             echo "Checking $file"
@@ -64,7 +74,6 @@ jobs:
           from pathlib import Path
           from urllib.parse import unquote, urlparse
           import json
-          import re
           import xml.etree.ElementTree as ET
 
           errors = []
@@ -126,11 +135,17 @@ jobs:
               errors.append(f"sitemap.xml: invalid XML ({exc})")
 
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          match = re.search(r"const\\s+APP_FILES\\s*=\\s*\\[(.*?)\\]", worker, re.DOTALL)
-          if not match:
+          marker = "const APP_FILES="
+          position = worker.find(marker)
+          opening = worker.find("[", position) if position >= 0 else -1
+          closing = worker.find("]", opening) if opening >= 0 else -1
+          if opening < 0 or closing < 0:
               errors.append("service-worker.js: APP_FILES list not found")
           else:
-              for cached in re.findall(r"""["']([^"']+)["']""", match.group(1)):
+              for item in worker[opening + 1:closing].split(","):
+                  cached = item.strip().strip("'""")
+                  if not cached:
+                      continue
                   path = cached.removeprefix("./") or "index.html"
                   if not Path(path).is_file():
                       errors.append(f"service-worker.js: missing precache file {cached}")
@@ -141,7 +156,7 @@ jobs:
               errors.append("index.html: expected the Facebook link at both the top and bottom")
 
           if errors:
-              raise SystemExit("\\n".join(errors))
+              raise SystemExit("\n".join(errors))
           print("HTML ids, local assets, fragments, manifest, sitemap, service-worker assets, and both Facebook links passed.")
           PY
       - name: Validate Supabase Edge Function TypeScript
