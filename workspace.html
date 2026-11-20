@@ -968,7 +968,7 @@ $('authSignOut').addEventListener('click',()=>withAuthButton('authSignOut',async
  currentUser=null;updateAccountUI();
  setAuthMessage('تم تسجيل الخروج. تظل النسخة المحلية على هذا الجهاز كما هي.',false,'authSignOutMessage');
 }));
-async function callAI(tool,payload){
+async function callAI(tool,payload,options={}){
  const config=window.ENTELAQTAK_CONFIG||{};
  if(!config.url||!config.publishableKey)throw new Error('إعداد الاتصال بالخادم غير مكتمل.');
  const baseUrl=config.url.endsWith('/')?config.url.slice(0,-1):config.url;
@@ -991,7 +991,7 @@ async function callAI(tool,payload){
   const data=await response.json().catch(()=>({}));
   if(!response.ok)throw new Error(data.error||'تعذر الاتصال بمساعد المحتوى. حاول مرة أخرى.');
   if(typeof data.text!=='string'||!data.text.trim())throw new Error('لم يصل محتوى من المساعد الذكي.');
-  return data.text;
+  return options.fullResponse?data:data.text;
  }catch(error){
   if(error.name==='AbortError')throw new Error('استغرق التوليد وقتًا أطول من اللازم. حاول مرة أخرى.');
   throw error;
