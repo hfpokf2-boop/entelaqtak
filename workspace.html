@@ -373,6 +373,52 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 @media(max-width:760px){.sidebar{background:#0b1222f8;border-top-color:#334155}}
 </style>
 
+
+<style id="entelaqtak-remove-light-surfaces">
+/* Darken every light surface while preserving readable light text */
+:root{
+ --surface-black:#080D18;
+ --surface-deep:#0B1220;
+ --surface-card:#111827;
+ --surface-raised:#172033;
+ --surface-border:#263449;
+}
+html,body{background-color:var(--surface-black)!important}
+body{background-image:radial-gradient(900px 440px at 85% -12%,#2878FF18,transparent 65%),radial-gradient(760px 440px at 0 35%,#54A5FF0c,transparent 65%)!important}
+.toast{
+ background:#111827!important;
+ color:#F1F5F9!important;
+ border:1px solid #334155!important;
+ box-shadow:0 16px 40px #0009!important;
+}
+[role="dialog"],.modal,.modal-content,.popover,.dropdown-menu,
+.context-menu,.menu-panel,.settings-panel{
+ background-color:#111827!important;
+ color:#F1F5F9!important;
+ border-color:#334155!important;
+}
+input,select,textarea,option,
+.field input,.field select,.field textarea,.control{
+ color:#F1F5F9!important;
+ background-color:#0B1220!important;
+ border-color:#334155!important;
+}
+select option{background:#0B1220!important;color:#F1F5F9!important}
+.pill,.iconbtn,.mini,.text-btn,.challenge-filters button{
+ background-color:#111827!important;color:#DCE7F7!important;
+}
+.calendaritem,.saveditem,.challenge label,.idea{
+ background-color:#101827!important;
+}
+.footer,.side-note{background-color:transparent}
+button:not(.btn):not(.theme-preset):active{
+ background-color:#1D3152!important;
+}
+@media(prefers-color-scheme:light){
+ html,body{color-scheme:dark!important}
+}
+</style>
+
 </head>
 <body>
 <div class="app">
