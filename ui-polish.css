@@ -485,3 +485,23 @@ body{
  .theme-swatch{width:21px;height:21px;flex-basis:21px}
 }
 @media(prefers-reduced-motion:reduce){.theme-panel{animation:none}.theme-toggle,.theme-preset{transition:none}}
+
+
+/* Account actions are separate, clearly labelled panels */
+.account-flow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:12px 0 22px}
+.account-flow-card{min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:clamp(17px,2.2vw,24px);border:1px solid var(--ui-line);border-radius:var(--ui-radius-lg);background:linear-gradient(155deg,var(--ui-surface-raised),var(--ui-surface))}
+.account-flow-heading{display:flex;flex-direction:column;gap:5px}
+.account-flow-heading>span{color:#8be0d3;font-size:9px;font-weight:800;letter-spacing:1.1px}
+.account-flow-heading h2{margin:0;font-size:18px}
+.account-flow-card>.muted{margin:0;line-height:1.85}
+.account-flow-card .field{margin:0}
+.account-flow-card .actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:2px}
+.account-flow-card .actions button{min-height:40px}
+.account-flow-card input{width:100%;min-width:0}
+.account-flow-detail{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:11px 12px;border:1px solid var(--ui-line);border-radius:11px;background:#ffffff06;font-size:12px}
+.account-flow-detail span{color:var(--ui-muted)}
+.account-flow-detail b{overflow-wrap:anywhere;text-align:left}
+.account-flow-card .status-line{margin:0;min-height:18px;font-size:11px;line-height:1.75}
+.account-flow-card [hidden]{display:none!important}
+.account-flow-global-message{grid-column:1/-1;margin:0;padding:12px 14px;border:1px solid var(--ui-line);border-radius:12px;background:#ffffff06}
+@media(max-width:760px){.account-flow-grid{grid-template-columns:minmax(0,1fr);gap:12px}.account-flow-card{padding:16px}}
