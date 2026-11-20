@@ -1,0 +1,104 @@
+/* ENTELAQTAK 2027 — Obsidian / Crimson visual system */
+:root{
+ color-scheme:dark;
+ --bg:#090a0d;--surface:#111318;--surface2:#191c23;--panel:#14171d;
+ --line:#2a2e37;--text:#f5f5f6;--muted:#a0a4ae;
+ --accent:#e23b4f;--accent2:#ff6574;--purple:#e23b4f;--mint:#ff6574;
+ --cyan:#b8bec9;--green:#65d6a5;--shadow:0 24px 70px #0009;
+ --workspace-violet:#e23b4f;--workspace-mint:#ff6574;--workspace-border:#30343e;
+}
+*{scrollbar-color:#414550 #0b0c10}
+::selection{background:#e23b4f66;color:#fff}
+body{background-color:#090a0d!important;color:#f5f5f6}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:2px solid #ff6574!important;outline-offset:3px}
+button,.btn,.button{transition:transform .18s ease,border-color .18s ease,background .18s ease,filter .18s ease}
+button:hover,.btn:hover,.button:hover{filter:brightness(1.08)}
+/* Shared surfaces */
+.panel,.hero-side,.stat,.feature,.step,.info-panel,.faq details,.card,.section,.preview-shell,.preview-window{
+ border-color:#2c3039!important;
+ box-shadow:0 12px 38px #0003,inset 0 1px 0 #ffffff08;
+}
+.btn-primary,.btn:not(.alt):not(.ghost),.button:not(.ghost),.contact{
+ background:linear-gradient(115deg,#e23b4f,#a91e35)!important;color:#fff!important;
+ border:1px solid #ff687866!important;box-shadow:0 9px 26px #d52c432e!important;
+}
+.btn-secondary,.btn.alt,.btn.ghost,.button.ghost{background:#ffffff08!important;border:1px solid #373b46!important;color:#f0f1f4!important;box-shadow:none!important}
+.eyebrow,.kicker,.eyebrow,.crumb:before{color:#ff7885}
+.eyebrow{border-color:#e23b4f55}
+input:focus,select:focus,textarea:focus{border-color:#f05a6b!important;box-shadow:0 0 0 3px #e23b4f22!important}
+/* Public landing page */
+.site-header{background:#090a0deF!important;border-bottom-color:#ffffff12!important}
+.brand-mark{background:linear-gradient(135deg,#ed465a,#8e1d32)!important;color:#fff!important;box-shadow:0 9px 28px #e23b4f33!important}
+.nav a:hover,.footer-links a:hover{color:#ff7b88!important}
+.hero{background:transparent}
+.hero .eyebrow{background:#e23b4f12!important;color:#ff8994!important;border-color:#e23b4f55!important}
+.pulse{background:#ff6574!important;box-shadow:0 0 0 5px #e23b4f22!important}
+h1 span{background:linear-gradient(100deg,#fff,#ff6b7b 75%)!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important}
+.preview-shell{background:linear-gradient(145deg,#1a1c22,#0d0e12)!important;border-color:#45404a!important;transform:none!important}
+.preview-shell:before{background:linear-gradient(135deg,#e23b4f30,#7d1d3020)!important}
+.preview-window{background:#0d0e12!important;border-color:#393d47!important}
+.preview-welcome{background:linear-gradient(120deg,#e23b4f2b,#ffffff04)!important;border-color:#e23b4f55!important}
+.preview-welcome small{color:#ff8994!important}
+.preview-stat,.preview-card{background:#14161c!important;border-color:#30343e!important}
+.fake-line i{background:linear-gradient(90deg,#a91e35,#ff6574)!important}
+.feature{background:linear-gradient(145deg,#17191f,#101115)!important}
+.feature:hover,.step:hover{border-color:#e23b4f88!important;box-shadow:0 15px 36px #0006!important}
+.feature-icon{background:#e23b4f1c!important;color:#ff7885!important}
+.step:before{background:#e23b4f20!important;color:#ff8994!important}
+.info-panel{background:linear-gradient(145deg,#191b22,#111318)!important}
+.caution{background:linear-gradient(145deg,#25171c,#141419)!important;border-color:#7c303c!important}
+.final-cta{background:radial-gradient(420px 210px at 0 100%,#e23b4f25,transparent 72%),linear-gradient(120deg,#24151b,#17191f)!important;border-color:#8e3542!important}
+.footer{border-color:#ffffff15!important}
+/* Workspace application */
+.app{background:transparent}
+.sidebar{background:linear-gradient(180deg,#111318f7,#0c0d11f8)!important;border-left:1px solid #2d3038!important;box-shadow:12px 0 42px #0003}
+.brandmark{background:linear-gradient(135deg,#ed465a,#901c32)!important;color:#fff!important;box-shadow:0 8px 26px #e23b4f30!important}
+.nav button{color:#b5b8c1!important}
+.nav button i{color:#ff7582!important;background:#e23b4f12!important;border-color:#e23b4f22!important}
+.nav button:hover{background:#e23b4f12!important;border-color:#e23b4f33!important}
+.nav button.active{background:linear-gradient(100deg,#e23b4f28,#e23b4f0c)!important;border-color:#e23b4f66!important;box-shadow:inset -3px 0 0 #ed465a,0 8px 22px #0004!important}
+.nav button.active i{background:#e23b4f22!important;color:#ff8a95!important;border-color:#e23b4f55!important}
+.navlabel,.nav .nav-group-label{color:#8c909b!important;border-color:#292d35!important}
+.side-note{background:#17191f!important;border-color:#30343e!important}
+.main{background:transparent}
+.top{background:#111318eF!important;border-color:#30343e!important;box-shadow:0 12px 34px #0005!important}
+.crumb{color:#a3a7b1!important}
+.crumb:before{background:#ed465a!important;box-shadow:0 0 10px #e23b4f66!important}
+.toptitle{color:#fff}
+.pill,.enhance-pill{background:#ffffff08!important;border-color:#353943!important;color:#c5c8d0!important}
+.tool-search{background:#0b0c10!important;border-color:#343842!important}
+.hero-main{background:radial-gradient(360px 230px at 0 100%,#e23b4f28,transparent 75%),linear-gradient(120deg,#29171e,#191a20 65%,#14161b)!important;border-color:#8d3643!important}
+.hero-main h1 span{background:linear-gradient(100deg,#fff,#ff6879)!important;background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important}
+.hero-side,.panel{background:linear-gradient(145deg,#191c23,#121419)!important;border-color:#30343e!important}
+.stat{background:linear-gradient(145deg,#1a1c22,#121419)!important;border-color:#30343e!important}
+.statico,.quick button em{background:#e23b4f1c!important;color:#ff7b88!important;border-color:#e23b4f33!important}
+.quick button{background:linear-gradient(145deg,#191b21,#121419)!important;border-color:#30343e!important}
+.quick button:hover{border-color:#e23b4f77!important;box-shadow:0 12px 28px #0006!important}
+.field input,.field select,.field textarea,.control,.focusrow input{background:#0c0d11!important;border-color:#353943!important;color:#f5f5f6!important}
+.result{background:linear-gradient(145deg,#101216,#0c0d11)!important;border-color:#414650!important}
+.idea,.saveditem,.calendaritem,.metric,.challenge label{background:#15171d!important;border-color:#30343e!important}
+.datebox{background:#e23b4f1b!important;border-color:#e23b4f44!important}
+.focuspanel{background:radial-gradient(360px 150px at 0 100%,#e23b4f22,transparent 75%),linear-gradient(120deg,#25171d,#17191f)!important;border-color:#813440!important}
+.bar span,.barfill{background:linear-gradient(90deg,#a91e35,#ff6574)!important}
+.toast{background:#f5f5f6!important;color:#15161a!important}
+@media(max-width:760px){
+ .sidebar{background:#0b0c10f7!important;border-top:1px solid #353943!important}
+ #nav button.active{background:#e23b4f22!important;border-color:#e23b4f55!important;box-shadow:inset 0 2px 0 #ed465a!important}
+ .top{background:#111318!important}
+}
+/* Admin console */
+body:has(.wrap .topbar){background:radial-gradient(900px 480px at 90% -10%,#e23b4f1c,transparent 65%),#090a0d!important}
+.topbar .brandmark{background:linear-gradient(135deg,#ed465a,#901c32)!important;color:white!important}
+.card{background:linear-gradient(145deg,#191b21,#111318)!important;border-color:#30343e!important}
+.metrics .metric{background:linear-gradient(145deg,#191b21,#111318)!important}
+.barfill{background:linear-gradient(90deg,#a91e35,#ff6574)!important}
+input,select{background:#0c0d11!important;border-color:#353943!important;color:#f5f5f6!important}
+.status.ok{border-color:#28664e!important}
+/* Legal and partnership pages */
+body:has(main .section),body:has(main .grid){background:radial-gradient(850px 420px at 84% -12%,#e23b4f1c,transparent 65%),#090a0d!important}
+header:has(.top .brand),header:has(.brand){border-bottom-color:#292d35!important}
+main .section,main>header,main .card,main .note{background:linear-gradient(145deg,#191b21,#111318)!important;border-color:#30343e!important}
+main .notice{background:#e23b4f12!important;border-color:#e23b4f55!important;color:#ffb4bc!important}
+main h2{color:#ff8994}
+main a{color:#ff8a95}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
