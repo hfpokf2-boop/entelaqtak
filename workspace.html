@@ -358,8 +358,6 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
     <div class="navlabel nav-group-label">الإدارة والتطوير</div>
     <button data-view="settings"><i>⚙</i>الإعدادات والبيانات</button>
   </nav>
-  <div class="navlabel">ملفاتك</div>
-  <nav class="nav"><button id="exportBtn"><i>⇩</i>تصدير نسخة احتياطية</button><button id="importBtn"><i>⇧</i>استيراد نسخة احتياطية</button><input id="importFile" type="file" accept="application/json" hidden></nav>
   <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>احفظ أعمالك على جهازك، أو سجّل الدخول لمزامنتها سحابيًا بين أجهزتك.</div>
 </aside>
 <main class="main">
@@ -1169,9 +1167,7 @@ function renderChallenge(){
 }
 all('[data-challenge-filter]').forEach(b=>b.addEventListener('click',()=>{challengeFilter=b.dataset.challengeFilter;renderChallenge();}));
 $('challengeReset').addEventListener('click',()=>{if(!confirm('متأكد إنك عايز تصفّر تقدم تحدي الـ30 يوم؟'))return;state.challenge={};save();renderChallenge();renderHome();toast('بدأنا التحدي من جديد. كل التوفيق!');});
-$('exportBtn').addEventListener('click',exportAllData);
-$('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{if(f.size>5*1024*1024)throw new Error('حجم الملف كبير.');const parsed=JSON.parse(await f.text()),d=parsed.data||parsed;if(!d||typeof d!=='object'||Array.isArray(d))throw new Error('صيغة غير صحيحة');for(const k of ['ideas','packs','productionProjects','posts','metrics','scriptTemplates','experiments'])if(d[k]!==undefined&&!Array.isArray(d[k]))throw new Error('بنية البيانات غير صحيحة');for(const k of ['challenge','prePublishChecks','academy','profile','brand','focus','settings'])if(d[k]!==undefined&&(!d[k]||typeof d[k]!=='object'||Array.isArray(d[k])))throw new Error('نوع حقل '+k+' غير صحيح');if(!confirm('سيتم استبدال البيانات الحالية. متابعة؟'))return;replaceWorkspaceState(d);save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح: '+err.message);}finally{e.target.value='';}});
+
 bindAIButton('generateIdeasAI','ideas',()=>({niche:$('ideaNiche').value,platform:$('ideaPlatform').value,type:$('ideaType').value,audience:$('ideaAudience').value,seed:$('ideaSeed').value}),text=>{$('ideasResult').className='result';$('ideasResult').textContent=text;state.ideas.push({id:Date.now(),title:'أفكار الذكاء الاصطناعي',detail:text,niche:$('ideaNiche').value,platform:$('ideaPlatform').value});save();renderHome();});
 bindAIButton('makeScriptAI','script',()=>({topic:$('scriptTopic').value,duration:$('scriptDuration').value,style:$('scriptStyle').value,audience:$('scriptAudience').value,points:$('scriptPoints').value}),text=>{$('scriptOutput').value=text;});
 bindAIButton('studioAI','content_pack',()=>({topic:$('studioTopic').value,niche:$('studioNiche').value,platform:$('studioPlatform').value,audience:$('studioAudience').value,tone:$('studioTone').value,duration:$('studioDuration').value,angle:$('studioAngle').value,notes:$('studioNotes').value,promise:$('studioPromise')?.value||'',goal:$('studioGoal')?.value||'',avoid:$('studioAvoid')?.value||''}),text=>{
