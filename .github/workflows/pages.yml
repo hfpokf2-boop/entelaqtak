@@ -110,7 +110,7 @@ jobs:
               if f"design-system.css?v={version}" not in html:
                   errors.append(f"{page}: design-system.css cache version is stale")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
-          if "ui-polish.css?v=20261120-organized-dark-1" not in workspace:
+          if "ui-polish.css?v=20261120-dark-only-1" not in workspace:
               errors.append("workspace.html: ui-polish.css cache version is stale")
           css = Path("design-system.css").read_text(encoding="utf-8")
           polish = Path("ui-polish.css").read_text(encoding="utf-8")
