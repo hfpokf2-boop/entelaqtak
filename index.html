@@ -1,1169 +1,299 @@
 <!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#0b1020">
-<meta name="description" content="انطلاقتك — استوديو أدوات عملي لصناع المحتوى: أفكار، سكريبتات، عناوين، SEO، تقويم نشر ومتابعة الأداء.">
-<title>انطلاقتك | استوديو صُنّاع المحتوى</title>
-<link rel="icon" type="image/svg+xml" href="./favicon.svg">
+<meta name="description" content="انطلاقتك مساحة عربية لصنّاع المحتوى: خطط أفكارك، اكتب السكريبتات، جهّز العناوين والصور المصغّرة، ونظّم النشر وتابع نتائجك.">
+<title>انطلاقتك | مساحة واحدة لصناعة محتوى أفضل</title>
 <link rel="canonical" href="https://sasa-antilaqatuk.github.io/entelaqtak/">
-<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./favicon.svg">
 <link rel="apple-touch-icon" href="./app-icon.svg">
+<link rel="manifest" href="./manifest.webmanifest">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="referrer" content="strict-origin-when-cross-origin">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="انطلاقتك">
-<meta property="og:title" content="انطلاقتك | استوديو صُنّاع المحتوى">
-<meta property="og:description" content="خطط للمحتوى، اكتب السكريبتات، صمّم الصور المصغّرة، ونظّم النشر وتابع أداء أعمالك.">
+<meta property="og:title" content="انطلاقتك | مساحة واحدة لصناعة محتوى أفضل">
+<meta property="og:description" content="من أول فكرة لحد خطة محتوى واضحة — أدوات عربية تساعدك تخطط وتكتب وتنظم شغلك.">
 <meta property="og:url" content="https://sasa-antilaqatuk.github.io/entelaqtak/">
 <meta property="og:locale" content="ar_AR">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="انطلاقتك | استوديو صُنّاع المحتوى">
-<meta name="twitter:description" content="مساحة عربية لتخطيط المحتوى وكتابته وتصميم الصور المصغّرة ومتابعة الأداء.">
-<style>.footer-links{display:inline-flex;gap:10px;flex-wrap:wrap}.footer-links a{color:#aebbd0;text-decoration:none}.footer-links a:hover{color:var(--accent2)}.footer-links a.social-link{color:#b9b2ff;font-weight:700}.social-top-link{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;padding:6px 10px;border:1px solid #8b7cf655;border-radius:999px;background:#8b7cf610;color:#d6d0ff;text-decoration:none;font-size:10px;font-weight:700;white-space:nowrap}.social-top-link:hover{color:var(--accent2);border-color:var(--accent2)}.social-top-link .social-mark{display:grid;place-items:center;width:17px;height:17px;border-radius:50%;background:#1877f2;color:#fff;font:bold 12px Arial,sans-serif}@media(max-width:390px){.social-top-link{padding:6px 7px;gap:0;font-size:0}.social-top-link .social-mark{font-size:12px}}</style>
+<meta name="twitter:title" content="انطلاقتك | مساحة واحدة لصناعة محتوى أفضل">
+<meta name="twitter:description" content="خطط، اكتب، جهّز، ونظّم محتواك في مساحة عمل عربية واحدة.">
 <script type="application/ld+json">
 {
-  "@context": "https://schema.org",
-  "@type": "SoftwareApplication",
-  "name": "انطلاقتك",
-  "applicationCategory": "MultimediaApplication",
-  "operatingSystem": "Any",
-  "inLanguage": "ar",
-  "url": "https://sasa-antilaqatuk.github.io/entelaqtak/",
-  "description": "استوديو عربي لصنّاع المحتوى لتخطيط الأفكار وكتابة السكريبتات وتصميم الصور المصغّرة وتنظيم النشر ومراجعة الأداء.",
-  "featureList": [
-    "توليد أفكار المحتوى",
-    "كتابة السكريبتات وحزم المحتوى",
-    "مصمم صور مصغّرة محلي",
-    "تقويم النشر",
-    "متابعة الأداء وتصدير CSV",
-    "نسخ احتياطية محلية"
-  ]
+  "@context":"https://schema.org",
+  "@type":"SoftwareApplication",
+  "name":"انطلاقتك",
+  "applicationCategory":"MultimediaApplication",
+  "operatingSystem":"Any",
+  "inLanguage":"ar",
+  "url":"https://sasa-antilaqatuk.github.io/entelaqtak/",
+  "description":"مساحة عمل عربية لتخطيط المحتوى وكتابة المسودات وتجهيز العناوين وتنظيم النشر ومتابعة الأداء.",
+  "featureList":["أفكار المحتوى","كتابة السكريبتات","استوديو حزم المحتوى","العناوين والصور المصغّرة","مساعد SEO","تقويم النشر","متابعة الأداء","نسخ احتياطية ومزامنة اختيارية"]
 }
 </script>
 <style>
-:root{--bg:#0b1020;--panel:#151d33;--panel2:#202b46;--line:#303d5b;--text:#f4f5ff;--muted:#a5aec8;--accent:#8b7cf6;--accent2:#55d6c2;--cyan:#79c9ef;--green:#65d6a5;--shadow:0 18px 48px #0005}
-*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(850px 420px at 84% -12%,#35c8a724,transparent 65%),radial-gradient(720px 420px at 0 35%,#ffc35a16,transparent 65%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.7}button,input,select,textarea{font:inherit}button{cursor:pointer}.app{display:grid;grid-template-columns:250px minmax(0,1fr);min-height:100vh}.sidebar{position:sticky;top:0;height:100vh;overflow:auto;padding:22px 15px;border-left:1px solid var(--line);background:#11182aee;backdrop-filter:blur(16px);display:flex;flex-direction:column;z-index:20}.brand{display:flex;align-items:center;gap:11px;padding:0 9px 25px}.brandmark{height:43px;width:43px;border-radius:15px;background:linear-gradient(135deg,var(--accent),var(--accent2));display:grid;place-items:center;font-size:22px;color:#141a27;box-shadow:0 8px 25px #35c8a740}.brand strong{font-size:20px}.brand small{display:block;color:var(--muted);font-size:10px;margin-top:-5px}.navlabel{font-size:10px;color:#71829d;font-weight:bold;padding:10px 12px 6px}.nav{display:grid;gap:5px}.nav button{width:100%;border:1px solid transparent;border-radius:12px;background:none;color:#aebbd0;display:flex;align-items:center;gap:11px;text-align:right;padding:10px 12px;font-size:12px;transition:.18s}.nav button:hover{background:#ffffff09;color:white}.nav button.active{background:linear-gradient(100deg,#8b7cf627,#8b7cf609);border-color:#55d6c255;color:white}.nav i{font-style:normal;font-size:17px;width:23px;text-align:center}.side-note{margin-top:auto;padding:13px;border:1px solid var(--line);background:#ffffff05;border-radius:14px;font-size:10px;color:var(--muted)}.side-note b{display:block;color:#eef2fa;font-size:11px;margin-bottom:3px}
-.main{min-width:0;padding:24px clamp(14px,3vw,38px) 55px;max-width:1600px;width:100%;margin:auto}.top{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:27px}.crumb{font-size:10px;color:var(--muted)}.toptitle{font-size:21px;font-weight:bold;margin-top:2px}.topactions{display:flex;align-items:center;gap:8px}.pill{font-size:10px;color:#c4d0e1;border:1px solid var(--line);border-radius:99px;padding:7px 11px;background:#ffffff06}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-left:5px}.iconbtn{width:37px;height:37px;border:1px solid var(--line);border-radius:11px;background:var(--panel);color:white}.mobilebrand{display:none}
-.view{display:none;animation:fade .2s ease}.view.active{display:block}@keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}.head{display:flex;justify-content:space-between;align-items:flex-end;gap:12px;margin:5px 0 20px}.head h1{font-size:25px;margin:0 0 4px}.head p{font-size:12px;color:var(--muted);margin:0}.eyebrow{font-size:10px;color:#b9b2ff;font-weight:bold;letter-spacing:.2px}
-.hero{display:grid;grid-template-columns:1.25fr .75fr;gap:15px;margin-bottom:17px}.hero-main{background:linear-gradient(120deg,#8b7cf627,#18243b 62%,#172239);border:1px solid #55d6c24d;border-radius:22px;padding:26px;min-height:235px;position:relative;overflow:hidden}.hero-main:after{content:'✦';position:absolute;left:18px;bottom:-60px;font-size:210px;color:#ffffff08}.hero-main h1{font-size:clamp(27px,3.5vw,42px);line-height:1.3;margin:13px 0;position:relative;z-index:1}.hero-main h1 span{color:#b9b2ff}.hero-main p{font-size:12px;color:#c1cada;max-width:610px;margin:0 0 19px}.actions{display:flex;gap:8px;flex-wrap:wrap;position:relative;z-index:1}.btn{border:0;border-radius:10px;padding:10px 15px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#1a1c25;font-size:11px;font-weight:bold;box-shadow:0 8px 22px #8b7cf62b;transition:.16s}.btn:hover{filter:brightness(1.08);transform:translateY(-1px)}.btn.alt{background:#ffffff09;border:1px solid var(--line);box-shadow:none;color:#e7edf7}.btn.small{padding:7px 10px;font-size:10px}.btn.ghost{background:transparent;color:#e8edf6;border:1px solid var(--line);box-shadow:none}.hero-side,.panel{background:linear-gradient(145deg,#202944,#151d33);border:1px solid var(--line);border-radius:17px;padding:18px;min-width:0}.hero-side{display:flex;flex-direction:column;justify-content:space-between;min-height:225px}.hero-side h3{font-size:16px;margin:12px 0 3px}.hero-side p{font-size:11px;color:var(--muted);margin:0}.bar{height:7px;border-radius:20px;background:#303d5b;overflow:hidden;margin:14px 0 6px}.bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:20px}.progressline{display:flex;justify-content:space-between;font-size:10px;color:var(--muted)}
-.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:19px}.stat{padding:14px;border:1px solid var(--line);background:linear-gradient(145deg,#1b2540,#141c32);border-radius:15px}.stattop{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:10px}.statico{width:32px;height:32px;border-radius:10px;background:#8b7cf61c;display:grid;place-items:center;font-size:16px}.stat strong{display:block;font-size:23px;margin-top:7px}.stat small{font-size:9px;color:#8493aa}.sectionrow{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:20px 0 11px}.sectionrow h2{font-size:15px;margin:0}.sectionrow>span{color:var(--muted);font-size:10px}.quick{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.quick button{background:#18223b;border:1px solid var(--line);border-radius:15px;padding:15px;text-align:right;color:white;transition:.18s}.quick button:hover{border-color:#55d6c288;transform:translateY(-2px)}.quick b{display:block;font-size:12px;margin:6px 0 2px}.quick p{font-size:10px;color:var(--muted);margin:0}.quick em{font-style:normal;font-size:21px}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:14px}.three{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.panel h3{font-size:14px;margin:0 0 4px}.sub{font-size:10px;color:var(--muted);margin:0 0 13px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field{display:grid;gap:5px;margin-bottom:11px}.field label{font-size:10px;color:#c0cadd}.field input,.field select,.field textarea,.control{width:100%;min-width:0;border:1px solid #394766;background:#10182c;color:#f2f5fb;padding:10px;border-radius:9px;outline:none;font-size:11px}.field select option{background:#101a2b}.field textarea{min-height:92px;resize:vertical;line-height:1.8}.field input:focus,.field select:focus,.field textarea:focus{border-color:#54d4b6;box-shadow:0 0 0 3px #8b7cf61a}.result{background:#0e1629;border:1px dashed #465474;border-radius:12px;padding:13px;min-height:85px;color:#dce4f1;white-space:pre-wrap;line-height:1.9;font-size:11px;overflow-wrap:anywhere}.result.empty,.empty{color:#8291a8;text-align:center;display:grid;place-items:center}.resultactions{display:flex;gap:7px;flex-wrap:wrap;margin-top:9px}.note{padding:10px 12px;border:1px solid #79c9ef33;background:#79c9ef0c;border-radius:10px;color:#b7eaf0;font-size:10px;line-height:1.8;margin-top:10px}.savedlist{display:grid;gap:8px}.saveditem{display:flex;justify-content:space-between;gap:9px;align-items:flex-start;border:1px solid var(--line);border-radius:11px;background:#ffffff04;padding:10px}.saveditem b{font-size:11px}.saveditem p{font-size:9px;color:var(--muted);margin:3px 0 0}.mini{padding:6px 8px;border-radius:8px;border:1px solid var(--line);background:#ffffff08;color:white;font-size:9px}.danger{color:#ff9ba8}.idea{background:#111a30;border:1px solid #394761;border-radius:12px;padding:12px;margin-top:9px}.idea h4{font-size:12px;margin:0 0 5px}.idea p{font-size:10px;color:#b7c4d7;margin:3px 0}.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}.tags span{font-size:9px;color:#9eacc3;border:1px solid #344157;border-radius:99px;padding:3px 7px}
-.calendaritem{display:grid;grid-template-columns:55px minmax(0,1fr) auto;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);background:#ffffff04;border-radius:11px;margin-bottom:8px}.datebox{text-align:center;border-radius:9px;background:#8b7cf61a;border:1px solid #8b7cf633;padding:5px}.datebox b{font-size:18px;display:block;line-height:1.2}.datebox small{font-size:9px;color:#a6eadf}.calendaritem strong{font-size:11px}.calendaritem p{font-size:9px;color:var(--muted);margin:2px 0 0}.status{font-size:9px;border-radius:99px;padding:4px 7px;white-space:nowrap}.status.plan{background:#f5c86b1b;color:#f5d68d}.status.progress{background:#79c9ef1b;color:#83d9e9}.status.done{background:#52d6a01c;color:#75e4b6}.metricgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.metric{padding:11px;background:#121b31;border:1px solid var(--line);border-radius:11px}.metric small{color:var(--muted);font-size:9px}.metric strong{display:block;font-size:19px;margin-top:3px}.challenge{display:grid;gap:8px}.challenge label{display:flex;align-items:flex-start;gap:9px;padding:10px;border:1px solid var(--line);border-radius:10px;background:#ffffff04;font-size:10px;color:#d0d8e6}.challenge input{accent-color:var(--green);margin-top:3px}.challenge label.done{color:#8291a8;text-decoration:line-through}
-.focuspanel{margin:15px 0;background:linear-gradient(130deg,#17372d,#142238);border:1px solid #35c8a755;border-radius:17px;padding:16px}.focusrow{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.focusrow input{flex:1;min-width:180px;border:1px solid #394766;background:#10182c;color:#f2f5fb;padding:10px;border-radius:9px;font:inherit;font-size:11px}.focusstate{font-size:10px;color:var(--muted);margin-top:7px}.focusstate.done{color:var(--green)}.footer{border-top:1px solid var(--line);margin-top:30px;padding-top:15px;color:#75839a;font-size:9px;display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}.toast{position:fixed;bottom:20px;left:20px;z-index:100;background:#eaf5f4;color:#12202b;border-radius:12px;padding:10px 15px;font-size:11px;box-shadow:var(--shadow);transform:translateY(20px);opacity:0;pointer-events:none;transition:.2s}.toast.show{transform:none;opacity:1}.mobilebar{display:none}
-@media(max-width:1050px){.app{grid-template-columns:215px minmax(0,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}
-.nav .nav-group-label{grid-column:1/-1;margin-top:8px;border-top:1px solid var(--line);padding-top:9px}.nav .nav-group-label:first-of-type{border-top:0;margin-top:0}@media(max-width:760px){.nav .nav-group-label{display:none}.app{display:block}.sidebar{position:fixed;right:0;left:0;bottom:0;top:auto;height:auto;padding:7px 7px calc(7px + env(safe-area-inset-bottom));border-left:0;border-top:1px solid var(--line);background:#0c1b16f5;backdrop-filter:blur(18px)}.nav{display:flex;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;overscroll-behavior-x:contain}.nav::-webkit-scrollbar{display:none}.nav button{flex:0 0 64px;white-space:nowrap;scroll-snap-align:center}.sidebar{overflow:visible}.brand,.navlabel,.side-note{display:none}.nav{display:flex;justify-content:space-around;gap:2px}.nav button{justify-content:center;flex-direction:column;gap:1px;padding:5px 3px;border-radius:9px;font-size:8px;min-width:0}.nav i{font-size:17px}.main{padding:17px 13px 100px}.top{margin-bottom:18px}.toptitle{font-size:17px}.pill{font-size:9px}.hero{grid-template-columns:1fr}.hero-main{min-height:220px;padding:21px}.hero-side{min-height:170px}.quick{grid-template-columns:repeat(2,1fr)}.two{grid-template-columns:1fr}.three{grid-template-columns:1fr}.head{align-items:flex-start;flex-direction:column}.head h1{font-size:22px}.grid2{grid-template-columns:1fr}.stats{gap:7px}.stat{padding:11px}.stat strong{font-size:20px}.calendaritem{grid-template-columns:48px minmax(0,1fr) auto;gap:7px}.metricgrid{grid-template-columns:repeat(3,1fr)}.footer{margin-bottom:10px}}
-@media(max-width:390px){.nav button{font-size:7px}.nav i{font-size:15px}.stats{grid-template-columns:repeat(2,1fr)}.metricgrid{grid-template-columns:1fr 1fr}.topactions .pill{display:none}}
-
-/* Product polish: consistent interaction states and mobile workspace */
-:root{color-scheme:dark;--shadow:0 20px 55px #05091488}
-::selection{background:#8b7cf655;color:#fff}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--accent2);outline-offset:3px}
-button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:none!important}
-.sidebar{background:linear-gradient(180deg,#151e34f5,#10182bf5);border-left-color:#34415f}
-.nav button{min-height:42px}
-.nav button.active{background:linear-gradient(105deg,#8b7cf633,#55d6c20e);border-color:#8b7cf677;box-shadow:inset -3px 0 0 var(--accent)}
-.hero-main{background:radial-gradient(420px 220px at 8% 100%,#55d6c21b,transparent 70%),linear-gradient(120deg,#8b7cf633,#18243b 62%,#172239)}
-.hero-side,.panel,.stat,.quick button{transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
-.panel:hover,.hero-side:hover,.stat:hover{border-color:#59698d}
-.quick button:hover{box-shadow:0 12px 28px #05091455}
-.focuspanel{background:radial-gradient(360px 150px at 0 100%,#55d6c21b,transparent 75%),linear-gradient(120deg,#28234b,#17243d);border-color:#8b7cf655}
-.focusrow input:focus{border-color:var(--accent2);box-shadow:0 0 0 3px #55d6c21c;outline:none}
-.field input:focus,.field select:focus,.field textarea:focus,.control:focus{border-color:var(--accent2);box-shadow:0 0 0 3px #55d6c21c}
-.result{border-color:#435276;background:linear-gradient(145deg,#10192d,#0e1629)}
-.toast{max-width:min(92vw,480px);text-align:center;line-height:1.7}
-@media(max-width:760px){
- .sidebar{background:#0d1427f7;border-top:1px solid #394766;padding:6px 8px calc(7px + env(safe-area-inset-bottom))}
- .sidebar>nav.nav:not(#nav){display:none}
- #nav{display:flex;justify-content:flex-start;gap:5px;overflow-x:auto;overflow-y:hidden;scrollbar-width:none;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;padding:0 2px}
- #nav::-webkit-scrollbar{display:none}
- #nav button{flex:0 0 72px;min-width:72px;min-height:55px;white-space:nowrap;scroll-snap-align:center;padding:5px 4px;font-size:9px;border:1px solid transparent}
- #nav button.active{background:#8b7cf626;border-color:#8b7cf655;box-shadow:inset 0 2px 0 var(--accent)}
- #nav button i{font-size:18px}
- .main{padding-bottom:112px}
- .focuspanel{padding:13px}
- .topactions .pill{display:inline-flex}
+:root{color-scheme:dark;--bg:#0b1020;--surface:#121b30;--surface2:#18243b;--line:#303d5b;--text:#f4f6ff;--muted:#aab5cb;--purple:#9b8cff;--mint:#62e0c5;--blue:#79c9ef;--shadow:0 24px 70px #02061280}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:86px}
+body{margin:0;background:radial-gradient(900px 500px at 85% -10%,#55d6c222,transparent 65%),radial-gradient(700px 480px at 0 35%,#9b8cff20,transparent 70%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+.wrap{width:min(1160px,calc(100% - 40px));margin:auto}
+.site-header{position:sticky;top:0;z-index:20;background:#0b1020dd;backdrop-filter:blur(18px);border-bottom:1px solid #ffffff12}
+.header-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:800;font-size:19px;white-space:nowrap}
+.brand-mark{display:grid;place-items:center;width:42px;height:42px;border-radius:14px;background:linear-gradient(135deg,var(--purple),var(--mint));color:#11182a;font-size:22px;box-shadow:0 9px 25px #62e0c528}
+.brand small{display:block;font-size:10px;color:var(--muted);font-weight:500;margin-top:-5px}
+.nav{display:flex;align-items:center;gap:25px;color:#c5cde0;font-size:12px}
+.nav a:hover{color:var(--mint)}
+.header-actions{display:flex;align-items:center;gap:10px}
+.facebook{display:inline-flex;align-items:center;gap:8px;color:#c9c1ff;font-size:11px;font-weight:700;white-space:nowrap}
+.facebook-mark{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:#1877f2;color:#fff;font:bold 14px Arial}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid transparent;border-radius:12px;padding:12px 19px;font-size:12px;font-weight:800;transition:.2s;cursor:pointer}
+.btn-primary{background:linear-gradient(120deg,var(--purple),var(--mint));color:#101827;box-shadow:0 10px 28px #8b7cf62b}
+.btn-primary:hover{transform:translateY(-2px);filter:brightness(1.06)}
+.btn-secondary{border-color:#526080;background:#ffffff08;color:#eef2ff}
+.btn-secondary:hover{border-color:var(--mint);background:#62e0c510}
+.menu-toggle{display:none;border:1px solid var(--line);border-radius:10px;background:#ffffff08;color:white;padding:8px 11px;font-size:18px}
+.hero{padding:76px 0 54px}
+.hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:52px;align-items:center}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;padding:6px 11px;border:1px solid #62e0c544;background:#62e0c510;border-radius:99px;color:#9cebdc;font-size:11px;font-weight:700}
+.pulse{width:7px;height:7px;background:var(--mint);border-radius:50%;box-shadow:0 0 0 5px #62e0c51d}
+h1{font-size:clamp(34px,5vw,58px);line-height:1.28;letter-spacing:-1.2px;margin:19px 0 15px}
+h1 span{background:linear-gradient(100deg,#c6baff,#71ead0);background-clip:text;-webkit-background-clip:text;color:transparent}
+.hero-copy{max-width:590px;color:#b8c4d9;font-size:15px;margin:0 0 25px}
+.hero-actions{display:flex;gap:11px;flex-wrap:wrap}
+.hero-points{display:flex;gap:15px;flex-wrap:wrap;margin-top:22px;color:#aebbd0;font-size:10px}
+.hero-points span{display:flex;align-items:center;gap:6px}
+.check{color:var(--mint);font-weight:bold}
+.preview-shell{position:relative;padding:13px;border:1px solid #7180a044;border-radius:24px;background:linear-gradient(145deg,#ffffff12,#ffffff04);box-shadow:var(--shadow);transform:rotate(-1deg)}
+.preview-shell:before{content:"";position:absolute;inset:16% -10% -8% 12%;background:linear-gradient(135deg,#8b7cf62b,#55d6c21a);filter:blur(35px);z-index:-1}
+.preview-window{overflow:hidden;border:1px solid #435174;border-radius:16px;background:#0e172a}
+.preview-top{display:flex;align-items:center;justify-content:space-between;padding:13px 15px;border-bottom:1px solid #ffffff12;color:#c6d0e2;font-size:10px}
+.window-dots{display:flex;gap:5px}.window-dots i{width:7px;height:7px;border-radius:50%;background:#64718d}
+.preview-content{padding:17px}
+.preview-welcome{padding:17px;border:1px solid #7f79d655;border-radius:13px;background:linear-gradient(120deg,#8b7cf62b,#55d6c20c)}
+.preview-welcome small{color:#bcb3ff;font-size:9px}.preview-welcome b{display:block;font-size:17px;margin:7px 0}.preview-welcome p{color:#b5c2d7;font-size:10px;margin:0}
+.preview-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0}
+.preview-stat{border:1px solid #34415e;border-radius:10px;padding:10px;background:#ffffff05}
+.preview-stat small{display:block;color:#9daac2;font-size:8px}.preview-stat b{font-size:18px}
+.preview-lower{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.preview-card{padding:12px;border:1px solid #34415e;border-radius:11px;background:#ffffff05}
+.preview-card b{font-size:10px}.preview-card p{font-size:9px;color:#aab6cc;margin:5px 0 0}
+.fake-line{height:6px;background:#293550;border-radius:10px;margin-top:9px;overflow:hidden}.fake-line i{display:block;width:72%;height:100%;background:linear-gradient(90deg,var(--purple),var(--mint));border-radius:10px}
+.preview-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:10px}
+.preview-tags span{padding:3px 7px;border:1px solid #495775;border-radius:20px;color:#b7c3d8;font-size:8px}
+.section{padding:62px 0}
+.section-soft{background:linear-gradient(180deg,transparent,#ffffff04,transparent);border-top:1px solid #ffffff0b;border-bottom:1px solid #ffffff0b}
+.section-head{text-align:center;max-width:710px;margin:0 auto 30px}
+.kicker{color:#a69bff;font-size:10px;font-weight:800;letter-spacing:.4px}
+h2{font-size:clamp(24px,3.5vw,35px);line-height:1.4;margin:7px 0}
+.section-head p{color:var(--muted);font-size:12px;margin:7px 0 0}
+.features{display:grid;grid-template-columns:repeat(3,1fr);gap:13px}
+.feature{min-height:170px;padding:19px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,#1a2540aa,#121b30);transition:.2s}
+.feature:hover{transform:translateY(-3px);border-color:#7782b2}
+.feature-icon{width:39px;height:39px;display:grid;place-items:center;border-radius:12px;background:#8b7cf620;color:#c2baff;font-size:19px}
+.feature h3{font-size:14px;margin:11px 0 4px}
+.feature p{font-size:10px;line-height:1.9;color:#aab6cc;margin:0}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;counter-reset:step}
+.step{padding:19px;border:1px solid var(--line);border-radius:15px;background:#ffffff05;counter-increment:step}
+.step:before{content:"0" counter(step);display:grid;place-items:center;width:35px;height:35px;border-radius:10px;background:#62e0c51a;color:#8de9d6;font-size:11px;font-weight:800}
+.step h3{font-size:13px;margin:11px 0 4px}.step p{font-size:10px;color:var(--muted);margin:0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:stretch}
+.info-panel{padding:25px;border:1px solid var(--line);border-radius:18px;background:linear-gradient(145deg,#1b2742,#121b30)}
+.info-panel h3{font-size:17px;margin:0 0 8px}
+.info-panel p{font-size:11px;color:#b5c1d6;margin:0 0 13px}
+.info-list{display:grid;gap:9px;margin-top:14px}
+.info-list div{display:flex;gap:9px;align-items:flex-start;color:#c8d2e2;font-size:10px}
+.info-list i{font-style:normal;color:var(--mint)}
+.caution{border-color:#8b7cf655;background:linear-gradient(145deg,#282348,#151f34)}
+.caution .caution-label{display:inline-block;color:#f0d69a;background:#e8b94b18;border:1px solid #e8b94b44;border-radius:30px;padding:4px 8px;font-size:9px;margin-bottom:10px}
+.faq{max-width:850px;margin:auto;display:grid;gap:9px}
+.faq details{border:1px solid var(--line);border-radius:13px;background:#ffffff05;padding:14px 17px}
+.faq summary{font-size:12px;font-weight:800;cursor:pointer}
+.faq p{font-size:10px;color:#b2bfd3;margin:9px 0 0}
+.final-cta{padding:34px;border:1px solid #7e79d866;border-radius:22px;background:radial-gradient(400px 200px at 0 100%,#62e0c51f,transparent 70%),linear-gradient(120deg,#28234b,#172640);text-align:center}
+.final-cta p{color:#bdc8da;font-size:11px;margin:6px 0 18px}
+.footer{padding:25px 0 30px;border-top:1px solid #ffffff12;color:#8997b1;font-size:9px}
+.footer-inner{display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap}
+.footer-links{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.footer-links a:hover{color:var(--mint)}
+@media(max-width:900px){.hero-grid{gap:27px}.nav{gap:14px}.features{grid-template-columns:repeat(2,1fr)}.steps{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:700px){
+ .wrap{width:min(100% - 28px,600px)}.header-inner{height:67px}.menu-toggle{display:block}
+ .nav{display:none;position:absolute;top:66px;right:14px;left:14px;padding:13px;border:1px solid var(--line);border-radius:14px;background:#111a2eeF;box-shadow:var(--shadow);flex-direction:column;align-items:stretch;gap:0}
+ .nav.open{display:flex}.nav a{padding:9px 7px}.header-actions .facebook span:last-child{display:none}
+ .hero{padding:45px 0 35px}.hero-grid{grid-template-columns:1fr}.hero-copy{font-size:13px}
+ .preview-shell{max-width:540px;width:100%;margin:7px auto 0;transform:none}
+ .section{padding:46px 0}.features{grid-template-columns:1fr 1fr;gap:8px}.feature{padding:14px;min-height:165px}
+ .split{grid-template-columns:1fr}.final-cta{padding:25px 17px}
 }
-@media(max-width:390px){
- #nav button{flex-basis:67px;min-width:67px;font-size:8px}
- .topactions .pill{display:none}
-}
-@media(prefers-reduced-motion:reduce){
- *,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
-}
-
-
-.tool-search{display:flex;align-items:center;gap:7px;width:clamp(145px,22vw,245px);height:37px;padding:0 10px;border:1px solid var(--line);border-radius:11px;background:#10182c;color:var(--muted)}
-.tool-search>span{font-size:19px;line-height:1}
-.tool-search input{width:100%;min-width:0;border:0;outline:0;background:transparent;color:var(--text);font-size:10px}
-.tool-search input::placeholder{color:#8592ad}
-.tool-search:focus-within{border-color:var(--accent2);box-shadow:0 0 0 3px #55d6c21c}
-@media(max-width:760px){.tool-search{width:clamp(135px,42vw,210px)}}
-@media(max-width:390px){.tool-search{width:145px}.tool-search input{font-size:9px}}
-
-
-/* 30-day challenge refresh */
-.challenge-hero{padding:22px;border:1px solid #59608b88;border-radius:19px;background:radial-gradient(420px 220px at 0 0,#55d6c226,transparent 70%),linear-gradient(125deg,#29234c,#17243e 70%,#142b3b);box-shadow:0 18px 45px #05091444}
-.challenge-hero-top{display:flex;align-items:center;justify-content:space-between;gap:18px}.challenge-kicker{font-size:10px;color:#8fe5d9}.challenge-hero h2{font-size:clamp(19px,3vw,27px);margin:8px 0}.challenge-hero p{font-size:11px;color:#b8c5d9;margin:0}.challenge-ring{width:92px;height:92px;flex:0 0 92px;border-radius:50%;display:grid;place-content:center;text-align:center;background:radial-gradient(circle at center,#1b2941 58%,transparent 60%),conic-gradient(var(--accent2) var(--progress,0%),#ffffff20 0);border:1px solid #ffffff20}.challenge-ring strong{font-size:20px}.challenge-ring small{font-size:9px;color:#9eacc3}.challenge-track{height:9px;border-radius:99px;background:#ffffff17;overflow:hidden;margin:20px 0 13px}.challenge-track span{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .35s ease}.challenge-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.challenge-stats div{padding:10px 12px;border:1px solid #ffffff18;border-radius:11px;background:#ffffff08}.challenge-stats strong,.challenge-stats small{display:block}.challenge-stats strong{font-size:18px}.challenge-stats small{font-size:9px;color:#aab8cd;margin-top:2px}
-.challenge-next{margin:13px 0;padding:15px 17px;border:1px solid #55d6c255;border-radius:15px;background:linear-gradient(110deg,#55d6c212,#8b7cf615);display:flex;align-items:center;justify-content:space-between;gap:12px}.challenge-next small{font-size:9px;color:#8fe5d9}.challenge-next strong{display:block;font-size:13px;margin:4px 0}.challenge-next p{font-size:10px;color:#aab8cd;margin:0}.challenge-next button{flex:0 0 auto;border:0;border-radius:9px;padding:9px 13px;background:var(--accent2);color:#10182b;font-weight:800;cursor:pointer}
-.challenge-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px}.challenge-toolbar h3{font-size:15px;margin:0}.challenge-toolbar p{font-size:10px;color:var(--muted);margin:4px 0 0}.challenge-filters{display:flex;gap:5px;flex-wrap:wrap}.challenge-filters button,.text-btn{border:1px solid var(--line);background:#ffffff06;color:#b8c5d9;border-radius:8px;padding:7px 10px;font-size:10px;cursor:pointer}.challenge-filters button.active{background:#8b7cf626;border-color:#8b7cf677;color:#fff}
-.challenge-phases{display:grid;gap:12px}.challenge-phase{padding:13px;border:1px solid var(--line);background:#111a30;border-radius:14px}.challenge-phase-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}.challenge-phase-head strong{font-size:11px}.challenge-phase-head small{font-size:9px;color:var(--muted)}.challenge-phase .challenge{display:grid;gap:6px}.challenge-phase .challenge label{margin:0;align-items:center;min-height:44px;cursor:pointer;transition:border-color .15s,background .15s}.challenge-phase .challenge label:hover{border-color:#65739a;background:#ffffff09}.challenge-phase .challenge label.done{opacity:.65}.challenge-phase .challenge input{width:16px;height:16px;flex:0 0 auto;accent-color:var(--accent2)}.challenge-phase .challenge label span{font-size:11px;line-height:1.7}.challenge-phase .challenge label b{color:#9de7dd;margin-left:4px}.challenge-footer{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:13px;color:var(--muted);font-size:10px}.text-btn{color:#f0a4b0;border-color:#f0a4b044}
-@media(max-width:600px){.challenge-hero{padding:16px}.challenge-ring{width:78px;height:78px;flex-basis:78px}.challenge-toolbar{align-items:flex-start;flex-direction:column}.challenge-filters{width:100%}.challenge-filters button{flex:1}.challenge-next{align-items:flex-start;flex-direction:column}.challenge-next button{width:100%}.challenge-footer{align-items:flex-start;flex-direction:column}}
-
+@media(max-width:430px){.features,.steps{grid-template-columns:1fr}.hero-actions .btn{width:100%}.hero-points{gap:9px}.preview-stats{gap:5px}.preview-stat{padding:8px}.preview-stat b{font-size:15px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
-<style>
-#view-settings .card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:22px;margin-bottom:16px}
-#view-settings label{display:block;margin:13px 0 5px;color:var(--muted);font-size:13px}
-#view-settings input,#view-settings select{width:100%;padding:11px 12px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);min-height:44px}
-#view-settings .actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:16px}
-#view-settings button{border:1px solid var(--line);border-radius:10px;padding:10px 15px;color:var(--text);background:var(--panel2)}
-#view-settings button.primary{background:var(--accent);color:#111}
-#view-settings button.danger{background:#7f2638;border-color:#a43d52;margin-top:10px}
-#view-settings .note{font-size:12px;color:var(--muted);padding:10px 0}
-#view-settings .muted{color:var(--muted);font-size:13px}
-#view-settings .divider{height:1px;background:var(--line);margin:20px 0}
-#view-settings .status-line{margin-top:12px;padding:10px;border-radius:10px;background:var(--panel2);font-size:13px}
-@media(max-width:760px){#view-settings .grid2{display:block}}
-
-/* Guided first-run path */
-.start-path{
- margin:0 0 18px;padding:18px;border:1px solid #3b496c;border-radius:18px;
- background:radial-gradient(480px 180px at 0 0,#55d6c21a,transparent 72%),linear-gradient(125deg,#1b2741,#151d33);
- box-shadow:0 14px 34px #0509142b
-}
-.start-path-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
-.start-path-heading h2{font-size:18px;margin:5px 0 2px}
-.start-path-heading p{font-size:11px;color:var(--muted);margin:0}
-.start-path-hint{flex:0 0 auto;padding:7px 10px;border:1px solid #55d6c244;border-radius:99px;color:#9de7dd;font-size:9px;background:#55d6c20b}
-.start-path-steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px;margin-top:14px}
-.start-step{
- display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0;min-height:145px;
- padding:13px;border:1px solid #3a4767;border-radius:13px;background:#0f192d99;color:var(--text);
- text-align:right;transition:transform .18s ease,border-color .18s ease,background .18s ease
-}
-.start-step:hover{transform:translateY(-3px);border-color:#55d6c288;background:#16243a}
-.start-step-number{display:grid;place-items:center;width:29px;height:29px;border-radius:9px;background:#8b7cf626;color:#c7c0ff;font-size:10px;font-weight:800}
-.start-step strong{font-size:12px}
-.start-step-description{font-size:10px;line-height:1.7;color:var(--muted)}
-.start-step-cta{margin-top:auto;padding-top:5px;color:#91e5d7;font-size:10px;font-weight:700}
-@media(max-width:900px){.start-path-steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
-@media(max-width:520px){
- .start-path{padding:14px}
- .start-path-heading{align-items:flex-start;flex-direction:column;gap:8px}
- .start-path-heading h2{font-size:16px}
- .start-path-steps{gap:7px}
- .start-step{min-height:148px;padding:11px}
- .start-step strong{font-size:11px}
- .start-step-description{font-size:9px}
- .start-step-cta{font-size:9px}
-}
-@media(prefers-reduced-motion:reduce){.start-step{transition:none}.start-step:hover{transform:none}}
-
-
-/* Help center entry point */
-.start-path-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.start-guide-button{border:1px solid #8b7cf677;border-radius:99px;padding:7px 11px;background:#8b7cf61b;color:#eeeaff;font:inherit;font-size:10px;font-weight:700;cursor:pointer}
-.start-guide-button:hover{background:#8b7cf633;border-color:#b9b2ff}
-@media(max-width:520px){.start-path-actions{align-items:flex-start}.start-guide-button{font-size:9px}}
-
-
-
-/* Creator Workspace — premium command-center refresh */
-:root{
- --workspace-violet:#9b8cff;
- --workspace-mint:#62e0c5;
- --workspace-glass:rgba(19,28,48,.88);
- --workspace-border:rgba(153,171,214,.17);
-}
-.app{grid-template-columns:276px minmax(0,1fr)}
-.sidebar{
- padding:23px 16px;
- background:
-  radial-gradient(260px 240px at 100% 0%,rgba(139,124,246,.13),transparent 72%),
-  linear-gradient(180deg,#141d33f7 0%,#0d1528f7 100%);
- border-left:1px solid rgba(151,166,207,.2);
- box-shadow:16px 0 48px rgba(2,7,20,.16);
-}
-.brand{padding:0 8px 20px}
-.brandmark{
- width:47px;height:47px;border-radius:16px;
- background:linear-gradient(145deg,#b6aaff 0%,#8878f5 48%,#51d7c3 100%);
- color:#10182a;font-weight:900;
- box-shadow:0 8px 26px rgba(116,103,230,.36),inset 0 1px 0 rgba(255,255,255,.55);
-}
-.brand strong{letter-spacing:.1px}
-.workspace-card{
- position:relative;isolation:isolate;overflow:hidden;
- margin:0 2px 17px;padding:15px 14px 12px;
- border:1px solid rgba(164,151,255,.37);border-radius:19px;
- background:
-  radial-gradient(180px 120px at 4% 0%,rgba(98,224,197,.19),transparent 78%),
-  radial-gradient(180px 140px at 100% 100%,rgba(139,124,246,.25),transparent 78%),
-  linear-gradient(145deg,#27264c 0%,#1a2540 58%,#142c3d 100%);
- box-shadow:0 15px 34px rgba(3,8,22,.27),inset 0 1px 0 rgba(255,255,255,.08);
-}
-.workspace-card:after{
- content:"";position:absolute;z-index:-1;left:-30px;bottom:-80px;
- width:170px;height:170px;border:1px solid rgba(255,255,255,.08);
- border-radius:50%;box-shadow:0 0 0 18px rgba(255,255,255,.018),0 0 0 38px rgba(255,255,255,.014);
-}
-.workspace-card-top{display:flex;align-items:center;justify-content:space-between;gap:8px}
-.workspace-mark{
- display:grid;place-items:center;width:37px;height:37px;border-radius:12px;
- color:#131a2b;font-size:21px;font-weight:bold;
- background:linear-gradient(140deg,#d0c8ff,#8b7cf6 60%,#70e5d0);
- box-shadow:0 7px 18px rgba(123,109,235,.3);
-}
-.workspace-live{
- display:inline-flex;align-items:center;gap:6px;padding:5px 8px;
- border:1px solid rgba(113,231,201,.2);border-radius:99px;
- background:rgba(10,24,34,.24);color:#b4f2e3;font-size:9px;
-}
-.workspace-live i{width:6px;height:6px;border-radius:50%;background:#67e3bd;box-shadow:0 0 9px #67e3bd;display:inline-block}
-.workspace-card>strong{display:block;margin-top:11px;color:#fff;font-size:17px;letter-spacing:.1px}
-.workspace-card>p{margin:3px 0 12px;color:#bdc9dc;font-size:10px;line-height:1.8;max-width:230px}
-.workspace-start{
- display:flex;align-items:center;justify-content:center;gap:7px;width:100%;
- padding:9px 10px;border:1px solid rgba(255,255,255,.15);border-radius:11px;
- background:linear-gradient(100deg,#a99cff,#70ddcb);color:#141b2c;
- font-size:10px;font-weight:900;box-shadow:0 7px 17px rgba(105,202,191,.14);
- transition:transform .18s ease,filter .18s ease,box-shadow .18s ease;
-}
-.workspace-start span{font-size:16px;line-height:1}
-.workspace-start:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 10px 22px rgba(105,202,191,.22)}
-.workspace-card-meta{
- display:flex;justify-content:space-between;gap:8px;margin-top:11px;padding-top:9px;
- border-top:1px solid rgba(255,255,255,.1);color:#8798b7;
- font-size:7px;letter-spacing:.8px;font-weight:800;
-}
-.navlabel{padding:10px 12px 7px;color:#8293b2;font-size:9px;letter-spacing:.7px;font-weight:900}
-.nav .nav-group-label{
- margin-top:10px;padding:12px 12px 7px;border-top:1px solid rgba(149,164,204,.15);
- color:#8999b8;font-size:9px;letter-spacing:.45px;
-}
-.nav{gap:6px}
-.nav button{
- min-height:45px;padding:9px 11px;border:1px solid transparent;
- border-radius:13px;color:#b7c3d8;font-size:11px;font-weight:600;
-}
-.nav button i{
- display:grid;place-items:center;flex:0 0 29px;width:29px;height:29px;
- border:1px solid rgba(166,181,220,.1);border-radius:9px;
- background:linear-gradient(145deg,rgba(255,255,255,.08),rgba(255,255,255,.025));
- color:#b7b0ff;font-size:16px;
-}
-.nav button:hover{
- background:linear-gradient(100deg,rgba(139,124,246,.14),rgba(85,214,194,.045));
- border-color:rgba(139,124,246,.23);color:#fff;transform:translateX(-2px);
-}
-.nav button.active{
- background:linear-gradient(100deg,rgba(139,124,246,.24),rgba(85,214,194,.09));
- border-color:rgba(157,144,255,.46);
- box-shadow:inset -3px 0 0 var(--workspace-mint),0 7px 20px rgba(3,8,22,.16);
- color:#fff;
-}
-.nav button.active i{
- border-color:rgba(164,151,255,.32);
- background:linear-gradient(145deg,rgba(173,159,255,.25),rgba(85,214,194,.13));
- color:#d8d2ff;
-}
-.side-note{
- border-color:rgba(153,171,214,.18);
- background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.018));
- box-shadow:inset 0 1px 0 rgba(255,255,255,.04);
-}
-.main{padding-top:22px}
-.top{
- position:sticky;top:10px;z-index:18;
- margin-bottom:24px;padding:12px 15px;
- border:1px solid var(--workspace-border);border-radius:17px;
- background:rgba(14,22,40,.84);backdrop-filter:blur(18px);
- box-shadow:0 12px 34px rgba(2,7,20,.2),inset 0 1px 0 rgba(255,255,255,.045);
-}
-.crumb{display:flex;align-items:center;gap:7px;color:#8798b7;font-size:9px}
-.crumb:before{content:"";display:inline-block;width:6px;height:6px;border-radius:2px;background:linear-gradient(135deg,var(--workspace-violet),var(--workspace-mint));box-shadow:0 0 10px rgba(98,224,197,.42)}
-.toptitle{font-size:20px;letter-spacing:.1px}
-.tool-search{border-color:rgba(153,171,214,.2);background:rgba(5,12,25,.48);height:39px}
-.tool-search:focus-within{border-color:rgba(98,224,197,.55);box-shadow:0 0 0 3px rgba(98,224,197,.1)}
-.topactions .pill,.enhance-pill{
- border-color:rgba(153,171,214,.2);background:rgba(255,255,255,.045);
-}
-.hero{gap:13px}
-.hero-main{
- border-color:rgba(155,140,255,.38);
- box-shadow:0 20px 48px rgba(3,8,22,.2),inset 0 1px 0 rgba(255,255,255,.06);
- background:
-  radial-gradient(300px 230px at 4% 100%,rgba(85,214,194,.16),transparent 74%),
-  radial-gradient(360px 260px at 100% 0%,rgba(139,124,246,.18),transparent 75%),
-  linear-gradient(125deg,#27264a 0%,#19253e 58%,#142b3a 100%);
-}
-.hero-main h1 span{background:linear-gradient(100deg,#c9c0ff,#83e5d2);background-clip:text;-webkit-background-clip:text;color:transparent}
-.hero-side{border-color:rgba(98,224,197,.2);box-shadow:0 15px 32px rgba(3,8,22,.14)}
-.stat{background:linear-gradient(145deg,rgba(34,46,75,.93),rgba(19,28,49,.97));border-color:rgba(153,171,214,.16)}
-.stat:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(3,8,22,.2)}
-.quick button{background:linear-gradient(145deg,#1c2945,#141e34);border-color:rgba(153,171,214,.18)}
-.quick button em{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(145deg,rgba(139,124,246,.2),rgba(85,214,194,.1));border:1px solid rgba(153,171,214,.15)}
-@media(max-width:1050px){
- .app{grid-template-columns:238px minmax(0,1fr)}
- .workspace-card{padding:13px 12px 11px}
-}
-@media(max-width:760px){
- .app{display:block}
- .sidebar{padding:6px 8px calc(7px + env(safe-area-inset-bottom));box-shadow:0 -12px 32px rgba(2,7,20,.2)}
- .workspace-card{display:none}
- .top{position:relative;top:auto;padding:10px 11px;margin-bottom:17px;border-radius:14px}
- .toptitle{font-size:17px}
- .main{padding-top:14px}
- .nav button i{border:0;background:transparent}
-}
-@media(prefers-reduced-motion:reduce){
- .workspace-start,.nav button,.stat{transition:none}
- .workspace-start:hover,.nav button:hover,.stat:hover{transform:none}
-}
-
-</style><link rel="stylesheet" href="./ui-polish.css">
 </head>
 <body>
-<div class="app">
-<aside class="sidebar">
-  <div class="brand"><div class="brandmark">ن</div><div><strong>انطلاقتك</strong><small>استوديو صُنّاع المحتوى</small></div></div>
-  <section class="workspace-card" aria-label="مساحة العمل">
-    <div class="workspace-card-top">
-      <span class="workspace-mark" aria-hidden="true">✦</span>
-      <span class="workspace-live"><i></i> مساحة إبداعك</span>
-    </div>
-    <strong>مساحة العمل</strong>
-    <p>مركزك لإدارة الأفكار وصناعة المحتوى والنشر في مكان واحد.</p>
-    <button class="workspace-start" type="button" data-go="studio"><span aria-hidden="true">＋</span> ابدأ مشروع محتوى</button>
-    <div class="workspace-card-meta"><span>CREATOR WORKSPACE</span><span>01 / STUDIO</span></div>
-  </section>
-  <div class="navlabel">الإنتاج اليومي</div>
-  <nav class="nav" id="nav">
-    <button class="active" data-view="home"><i>⌂</i>الرئيسية</button>
-    <button data-view="ideas"><i>✧</i>أفكار المحتوى</button>
-    <button data-view="studio"><i>✍</i>استوديو المحتوى</button>
-    
-    <button data-view="repurpose"><i>♻</i>إعادة تدوير المحتوى</button>
-    <button data-view="script"><i>▤</i>كاتب السكريبت</button>
-    <button data-view="titles"><i>▣</i>العناوين والصورة</button>
-    <button data-view="seo"><i>⌕</i>مساعد SEO</button>
-    <button data-view="calendar"><i>▦</i>تقويم النشر</button>
-    <div class="navlabel nav-group-label">التخطيط وقياس الأداء</div>
-    <button data-view="analytics"><i>▥</i>متابعة الأداء</button>
-    <button data-view="challenge"><i>♜</i>تحدي 30 يوم</button>
-    <div class="navlabel nav-group-label">الإدارة والتطوير</div>
-    <button data-view="settings"><i>⚙</i>الإعدادات والبيانات</button>
+<header class="site-header">
+ <div class="wrap header-inner">
+  <a class="brand" href="./" aria-label="انطلاقتك - الرئيسية"><span class="brand-mark" aria-hidden="true">✦</span><span>انطلاقتك<small>مساحة لصنّاع المحتوى</small></span></a>
+  <nav class="nav" id="siteNav" aria-label="التنقل الرئيسي">
+   <a href="#tools">الأدوات</a><a href="#how">طريقة العمل</a><a href="#about">عن المنصة</a><a href="#faq">الأسئلة الشائعة</a>
   </nav>
-  <div class="navlabel">ملفاتك</div>
-  <nav class="nav"><button id="exportBtn"><i>⇩</i>تصدير نسخة احتياطية</button><button id="importBtn"><i>⇧</i>استيراد نسخة احتياطية</button><input id="importFile" type="file" accept="application/json" hidden></nav>
-  <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>احفظ أعمالك على جهازك، أو سجّل الدخول لمزامنتها سحابيًا بين أجهزتك.</div>
-</aside>
-<main class="main">
-<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><label class="tool-search"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" list="toolSearchOptions" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة" autocomplete="off"><datalist id="toolSearchOptions"><option value="الرئيسية"><option value="أفكار المحتوى"><option value="استوديو المحتوى"><option value="إعادة تدوير المحتوى"><option value="كاتب السكريبت"><option value="العناوين والصورة"><option value="مساعد SEO"><option value="تقويم النشر"><option value="متابعة الأداء"><option value="تحدي 30 يوم"><option value="عقل المحتوى الذكي"><option value="رادار الموضوعات"><option value="مصنع الفيديوهات"><option value="هوية المحتوى"><option value="مختبر العناوين"><option value="أكاديمية انطلاقتك"><option value="مصمم الصور المصغرة"><option value="دليل الاستخدام"></datalist></label><a class="social-top-link" href="https://www.facebook.com/profile.php?id=61596964071145" target="_blank" rel="noopener noreferrer" aria-label="تابع انطلاقتك على فيسبوك"><span class="social-mark" aria-hidden="true">f</span><span>فيسبوك</span></a><div class="theme-control-wrap">
-<button class="theme-toggle" id="themeToggle" type="button" aria-label="تغيير ألوان الموقع" aria-haspopup="dialog" aria-controls="themePanel" aria-expanded="false" title="تغيير ألوان الموقع">
-<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18h1.1a2 2 0 0 0 1.4-3.4 1.8 1.8 0 0 1 1.3-3.1H18a3 3 0 0 0 3-3c0-4.7-4-8.5-9-8.5Z"/><path d="M7.5 10h.01M10.5 6.8h.01M15 7.7h.01M17 11h.01"/></svg>
-<span class="sr-only">تغيير الألوان</span>
-</button>
-<div class="theme-panel" id="themePanel" role="dialog" aria-label="ألوان الموقع" hidden>
-<div class="theme-panel-head"><div><strong>ألوان انطلاقتك</strong><small>اختار الجو اللي يناسبك</small></div><button class="theme-close" id="themeClose" type="button" aria-label="إغلاق">×</button></div>
-<div class="theme-presets" aria-label="الألوان الجاهزة">
-<button class="theme-preset" type="button" data-theme="aurora" aria-pressed="true"><span class="theme-swatch aurora"></span><strong>بنفسجي</strong></button>
-<button class="theme-preset" type="button" data-theme="ocean" aria-pressed="false"><span class="theme-swatch ocean"></span><strong>محيطي</strong></button>
-<button class="theme-preset" type="button" data-theme="sunset" aria-pressed="false"><span class="theme-swatch sunset"></span><strong>غروب</strong></button>
-<button class="theme-preset" type="button" data-theme="emerald" aria-pressed="false"><span class="theme-swatch emerald"></span><strong>زمردي</strong></button>
-<button class="theme-preset" type="button" data-theme="rose" aria-pressed="false"><span class="theme-swatch rose"></span><strong>وردي</strong></button>
-<button class="theme-preset" type="button" data-theme="sapphire" aria-pressed="false"><span class="theme-swatch sapphire"></span><strong>ياقوتي</strong></button>
-</div>
-<div class="theme-custom">
-<div class="theme-custom-title"><strong>لونك الخاص</strong><small>اختار لونين للهوية</small></div>
-<label for="themePrimary">اللون الرئيسي<input id="themePrimary" type="color" value="#9b8cff"></label>
-<label for="themeSecondary">اللون المساعد<input id="themeSecondary" type="color" value="#62e0c5"></label>
-</div>
-<div class="theme-panel-footer"><span id="themeStatus" role="status" aria-live="polite">الثيم البنفسجي مفعّل</span><button id="themeReset" type="button">استعادة الافتراضي</button></div>
-</div>
-</div><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
+  <div class="header-actions">
+   <a class="facebook" href="https://www.facebook.com/profile.php?id=61596964071145" target="_blank" rel="noopener noreferrer" aria-label="تابع انطلاقتك على فيسبوك"><span class="facebook-mark" aria-hidden="true">f</span><span>فيسبوك</span></a>
+   <a class="btn btn-primary" href="./workspace.html">ادخل مساحة العمل <span aria-hidden="true">←</span></a>
+   <button class="menu-toggle" id="menuToggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="siteNav">☰</button>
+  </div>
+ </div>
+</header>
 
-<section class="view active" id="view-home">
-  <div class="hero"><div class="hero-main"><span class="eyebrow">ابدأ فكرتك… وخليها محتوى يستاهل المشاهدة</span><h1>كل فكرة كبيرة<br>بتبدأ من <span>انطلاقتك.</span></h1><p>مساحة واحدة تساعدك تخطط، تكتب، تجهز وتنظم محتواك على يوتيوب وتيك توك وإنستجرام وباقي المنصات.</p><div class="actions"><button class="btn" data-go="studio">اصنع حزمة محتوى ✦</button><button class="btn alt" data-go="ideas">اكتشف أفكارًا جديدة</button></div></div>
-  <div class="hero-side"><div><span class="eyebrow">تقدمك في تحدي 30 يوم</span><h3 id="homeChallengeTitle">ابدأ بأول خطوة</h3><p>كل يوم مهمة صغيرة تقربك من نشر محتوى أفضل.</p></div><div><div class="bar"><span id="homeChallengeBar"></span></div><div class="progressline"><span id="homeChallengeText">0 من 30 مهمة</span><span id="homeChallengePct">0%</span></div></div><button class="btn small alt" data-go="challenge">افتح التحدي</button></div></div>
-  <section class="start-path" aria-labelledby="startPathTitle">
-    <div class="start-path-heading">
-      <div>
-        <span class="eyebrow">مسار بسيط للبداية</span>
-        <h2 id="startPathTitle">من الفكرة للنشر في 4 خطوات</h2>
-        <p>ابدئي بالخطوة المناسبة ليكي، ومش محتاجة تستخدمي كل الأدوات مرة واحدة.</p>
-      </div>
-      <div class="start-path-actions"><span class="start-path-hint">خطة واضحة من غير تشتّت</span><button type="button" class="start-guide-button" data-go="guide">دليل الاستخدام الكامل <span aria-hidden="true">←</span></button></div>
+<main>
+<section class="hero">
+ <div class="wrap hero-grid">
+  <div>
+   <div class="eyebrow"><span class="pulse"></span> مساحة عربية عملية لصنّاع المحتوى</div>
+   <h1>من أول فكرة…<br>لحد محتوى <span>جاهز لخطوتك الجاية</span></h1>
+   <p class="hero-copy">بدل ما أفكارك ومسوداتك ومواعيدك يبقوا متفرقين، اجمع شغلك في مكان واحد. خطّط، اكتب، جهّز، ونظّم محتواك ليوتيوب وتيك توك وإنستجرام وفيسبوك.</p>
+   <div class="hero-actions">
+    <a class="btn btn-primary" href="./workspace.html">ابدأ استخدام انطلاقتك <span aria-hidden="true">←</span></a>
+    <a class="btn btn-secondary" href="#tools">اكتشف الأدوات</a>
+   </div>
+   <div class="hero-points">
+    <span><b class="check">✓</b> ابدأ بدون تسجيل</span>
+    <span><b class="check">✓</b> احفظ شغلك محليًا</span>
+    <span><b class="check">✓</b> مزامنة سحابية اختيارية</span>
+   </div>
+  </div>
+  <div class="preview-shell" aria-label="معاينة توضيحية لمساحة العمل">
+   <div class="preview-window">
+    <div class="preview-top"><span>✦ مساحة العمل — انطلاقتك</span><span class="window-dots" aria-hidden="true"><i></i><i></i><i></i></span></div>
+    <div class="preview-content">
+     <div class="preview-welcome"><small>مساحة أفكارك وإنتاجك</small><b>خلّي فكرتك تاخد شكلها ✨</b><p>ابدأ بخطوة صغيرة، وكمّل عليها واحدة واحدة.</p></div>
+     <div class="preview-stats">
+      <div class="preview-stat"><small>أفكار المحتوى</small><b>✧</b></div>
+      <div class="preview-stat"><small>حزم المحتوى</small><b>✍</b></div>
+      <div class="preview-stat"><small>تقويم النشر</small><b>▦</b></div>
+     </div>
+     <div class="preview-lower">
+      <div class="preview-card"><b>خطة المحتوى</b><p>فكرة ← سكريبت ← تجهيز ← نشر</p><div class="fake-line"><i></i></div></div>
+      <div class="preview-card"><b>أدواتك في مكان واحد</b><div class="preview-tags"><span>SEO</span><span>عناوين</span><span>أفكار</span><span>تحليل</span></div></div>
+     </div>
     </div>
-    <div class="start-path-steps">
-      <button class="start-step" type="button" data-go="brain" aria-label="ابدئي بتحديد جمهورك في عقل المحتوى الذكي">
-        <span class="start-step-number">01</span>
-        <strong>اعرفي جمهورك</strong>
-        <span class="start-step-description">حددي المجال والجمهور والهدف من المحتوى.</span>
-        <span class="start-step-cta">ابدئي من هنا ←</span>
-      </button>
-      <button class="start-step" type="button" data-go="ideas" aria-label="انتقلي إلى مولد أفكار المحتوى">
-        <span class="start-step-number">02</span>
-        <strong>اختاري فكرة</strong>
-        <span class="start-step-description">ولّدي أفكارًا تناسب مجالك والمنصة اللي بتستخدميها.</span>
-        <span class="start-step-cta">اكتشفي أفكارًا ←</span>
-      </button>
-      <button class="start-step" type="button" data-go="studio" aria-label="جهزي حزمة المحتوى في استوديو المحتوى">
-        <span class="start-step-number">03</span>
-        <strong>جهّزي المحتوى</strong>
-        <span class="start-step-description">حوّلي الفكرة إلى سكريبت وعنوان وخطة تصوير.</span>
-        <span class="start-step-cta">جهّزي الحزمة ←</span>
-      </button>
-      <button class="start-step" type="button" data-go="calendar" aria-label="أضيفي المحتوى إلى تقويم النشر">
-        <span class="start-step-number">04</span>
-        <strong>حددي موعد النشر</strong>
-        <span class="start-step-description">نظمي مواعيدك وارجعي تابعي أداء المحتوى.</span>
-        <span class="start-step-cta">افتحي التقويم ←</span>
-      </button>
-    </div>
-  </section>
-  <div class="stats"><div class="stat"><div class="stattop">أفكار محفوظة <span class="statico">✧</span></div><strong id="statIdeas">0</strong><small>أفكار في مكتبتك</small></div><div class="stat"><div class="stattop">حزم محتوى <span class="statico">✍</span></div><strong id="statPacks">0</strong><small>مشاريع جهزتها</small></div><div class="stat"><div class="stattop">منشورات مخططة <span class="statico">▦</span></div><strong id="statPosts">0</strong><small>في تقويم النشر</small></div><div class="stat"><div class="stattop">مشاهدات مسجلة <span class="statico">◉</span></div><strong id="statViews">0</strong><small>من بياناتك المدخلة</small></div></div>
-  <div class="focuspanel"><div class="sectionrow" style="margin:0 0 9px"><h2>🎯 تركيزك اليوم</h2><span>خطوة واحدة تكفي للبداية</span></div><div class="focusrow"><input id="homeFocusInput" maxlength="140" placeholder="اكتب أهم مهمة محتوى عايز تنجزها النهارده"><button class="btn small" id="homeFocusSave">حفظ المهمة</button><button class="btn small alt" id="homeFocusDone">تمت ✓</button></div><div class="focusstate" id="homeFocusState">لسه مفيش مهمة محددة لليوم.</div></div>
-  <div class="sectionrow"><h2>ابدأ بسرعة</h2><span>اختار الأداة المناسبة لخطوتك الجاية</span></div><div class="quick">
-    <button data-go="ideas"><em>🎲</em><b>مولّد الأفكار</b><p>أفكار متنوعة حسب مجالك ومنصتك.</p></button>
-    <button data-go="studio"><em>🚀</em><b>حزمة محتوى كاملة</b><p>من الفكرة إلى خطة تصوير ونشر.</p></button>
-    <button data-go="repurpose"><em>♻</em><b>إعادة تدوير المحتوى</b><p>حوّل فكرة واحدة لصيغ ومنصات مختلفة.</p></button>
-    <button data-go="script"><em>✍️</em><b>كاتب السكريبت</b><p>رتّب كلامك ومشاهد الفيديو.</p></button>
-    <button data-go="titles"><em>🧲</em><b>العناوين والصورة</b><p>عناوين واضحة وفكرة Thumbnail.</p></button>
-    <button data-go="seo"><em>🔎</em><b>مساعد SEO</b><p>وصف وكلمات مفتاحية وهاشتاجات.</p></button>
-    <button data-go="calendar"><em>🗓️</em><b>تقويم النشر</b><p>نظم مواعيدك وخطة محتواك.</p></button>
-  </div>
-  <div class="two" style="margin-top:15px"><div class="panel"><h3>آخر حزم المحتوى</h3><p class="sub">كمل مشروع كنت بدأت فيه.</p><div class="savedlist" id="homeRecentPacks"><div class="empty">لسه مفيش حزم محفوظة.</div></div></div><div class="panel"><h3>أقرب مواعيد النشر</h3><p class="sub">نظرة سريعة على خطتك.</p><div id="homeUpcoming"><div class="empty">أضف أول موعد للنشر.</div></div><button class="btn small alt" data-go="calendar">افتح التقويم</button></div></div>
-</section>
-
-<section class="view" id="view-ideas">
- <div class="head"><div><span class="eyebrow">اكتشف اتجاهات جديدة</span><h1>مولّد أفكار المحتوى 🎲</h1><p>اختار المجال والمنصة ونوع الفيديو، وابدأ بعصف ذهني سريع.</p></div></div>
- <div class="two"><div class="panel"><h3>خلّينا نحدد فكرتك</h3><p class="sub">تقدر تختار «كل المجالات» علشان توسّع اختياراتك.</p>
-  <div class="field"><label for="ideaNiche">مجال المحتوى</label><select id="ideaNiche"><option>كل المجالات</option><option>التعليم والشروحات</option><option>التقنية والتطبيقات</option><option>الألعاب والجيمينج</option><option>الطبخ والطعام</option><option>الجمال والموضة</option><option>الصحة واللياقة</option><option>الرياضة</option><option>السفر والخروجات</option><option>القصص والترفيه</option><option>الأعمال وريادة الأعمال</option><option>المال والادخار</option><option>السيارات</option><option>المراجعات والتجارب</option><option>التطوير الشخصي</option><option>الحياة اليومية</option><option>الفن والتصميم</option></select></div>
-  <div class="grid2"><div class="field"><label for="ideaPlatform">المنصة</label><select id="ideaPlatform"><option>YouTube</option><option>YouTube Shorts</option><option>TikTok</option><option>Instagram Reels</option><option>Facebook</option><option>بودكاست</option></select></div><div class="field"><label for="ideaType">نوع الفكرة</label><select id="ideaType"><option>مزيج متنوع</option><option>تعليمي</option><option>تجربة وتحدي</option><option>قائمة ونصائح</option><option>قصة وحكاية</option><option>مقارنة ومراجعة</option><option>رأي ونقاش</option></select></div></div>
-  <div class="field"><label for="ideaAudience">الجمهور المستهدف</label><input id="ideaAudience" placeholder="مثال: طلبة الجامعة، المبتدئين، أصحاب المشاريع"></div>
-  <div class="field"><label for="ideaSeed">كلمة أو موضوع تحب تبدأ منه (اختياري)</label><input id="ideaSeed" placeholder="مثال: الذكاء الاصطناعي أو تنظيم الوقت"></div>
-  <button class="btn" id="generateIdeas">ولّد 6 أفكار جديدة ✦</button><button class="btn alt" id="generateIdeasAI" style="margin-top:8px">أفكار بالذكاء الاصطناعي ✨</button></div>
-  <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>الأفكار المقترحة</h3><span id="ideaCount">بانتظار اختيارك</span></div><div id="ideasResult" class="empty" style="min-height:290px">اختار المجال واضغط «ولّد أفكار» لبدء العصف الذهني.</div></div></div>
- <div class="note">الأفكار المقترحة هنا مولّدة من قوالب محلية داخل الصفحة، وليست بحثًا مباشرًا عن الترند أو اتصالًا بخدمة ذكاء اصطناعي.</div>
-</section>
-
-<section class="view" id="view-studio">
- <div class="head"><div><span class="eyebrow">من نقطة البداية إلى خطة إنتاج</span><h1>استوديو حزمة المحتوى 🚀</h1><p>جهّز مسودة متكاملة لفيديو أو منشور، ثم عدّلها واحفظها في مكتبتك.</p></div></div>
- <div class="two"><div class="panel"><h3>تفاصيل الفكرة</h3><p class="sub">كل ما كانت التفاصيل أوضح، كانت المسودة أنسب لاحتياجك.</p>
-  <div class="field"><label for="studioTopic">موضوع المحتوى *</label><input id="studioTopic" placeholder="مثال: أفضل طرق تعلم مهارة جديدة" required></div>
-  <div class="grid2"><div class="field"><label for="studioNiche">المجال</label><select id="studioNiche"><option>تعليم وشروحات</option><option>تقنية</option><option>ألعاب</option><option>طبخ</option><option>جمال وموضة</option><option>رياضة ولياقة</option><option>سفر</option><option>ترفيه وقصص</option><option>أعمال</option><option>مراجعات</option><option>حياة يومية</option><option>مجال آخر</option></select></div><div class="field"><label for="studioPlatform">المنصة</label><select id="studioPlatform"><option>YouTube</option><option>YouTube Shorts</option><option>TikTok</option><option>Instagram Reels</option><option>Facebook</option><option>Podcast</option></select></div></div>
-  <div class="grid2"><div class="field"><label for="studioAudience">الجمهور</label><input id="studioAudience" value="المهتمون بالموضوع"></div><div class="field"><label for="studioTone">الأسلوب</label><select id="studioTone"><option>بسيط وودود</option><option>حماسي</option><option>احترافي</option><option>كوميدي</option><option>قصصي</option><option>تعليمي مباشر</option></select></div></div>
-  <div class="grid2"><div class="field"><label for="studioDuration">المدة التقريبية</label><select id="studioDuration"><option>5–8 دقائق</option><option>8–12 دقيقة</option><option>15–20 دقيقة</option><option>30–60 ثانية</option><option>60–90 ثانية</option><option>حلقة بودكاست</option></select></div><div class="field"><label for="studioAngle">زاوية التناول</label><select id="studioAngle"><option>شرح خطوة بخطوة</option><option>تجربة شخصية</option><option>قائمة نصائح</option><option>حل مشكلة</option><option>مقارنة</option><option>قصة من البداية للنهاية</option></select></div></div>
-  <div class="field"><label for="studioNotes">نقاط أو معلومات تريد تضمينها (اختياري)</label><textarea id="studioNotes" placeholder="اكتب أمثلة أو نقاط مهمة أو أسئلة الجمهور..."></textarea></div>
-  <button class="btn" id="generateStudio">أنشئ حزمة المحتوى ✦</button></div>
-  <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>مكتبة الحزم المحفوظة</h3><span id="studioSavedCount">0 حزمة</span></div><p class="sub">احفظ الحزم المهمة وارجع لها وقت ما تحتاج.</p><div class="savedlist" id="studioHistory"><div class="empty">احفظ أول حزمة لتظهر هنا.</div></div><div class="note">المحتوى مسودة قابلة للتحرير. راجع الحقائق وأضف تجربتك ومصادرك قبل النشر.</div></div></div>
- <div class="panel" id="studioOutput" style="margin-top:15px"><div class="sectionrow" style="margin-top:0"><h3>نتيجة حزمة المحتوى</h3><span id="studioStatus">بانتظار فكرتك</span></div><div class="grid2"><div><div class="eyebrow">الفكرة والخطاف</div><div class="result empty" id="studioHook">سيظهر الخطاف هنا.</div><div class="eyebrow" style="margin-top:12px">عناوين مقترحة</div><div id="studioTitles" class="result empty">سيظهر المحتوى هنا.</div><div class="eyebrow" style="margin-top:12px">الكلمات والهاشتاجات</div><div id="studioKeywords" class="result empty">سيظهر المحتوى هنا.</div></div><div><div class="eyebrow">السكريبت — قابل للتعديل</div><textarea id="studioScript" class="control" style="min-height:260px" placeholder="سيظهر السكريبت هنا بعد إنشاء الحزمة."></textarea><div class="eyebrow" style="margin-top:12px">وصف المنشور — قابل للتعديل</div><textarea id="studioDescription" class="control" style="min-height:110px" placeholder="سيظهر الوصف هنا."></textarea></div></div><div class="two" style="margin-top:12px"><div><div class="eyebrow">تصوّر الصورة المصغّرة</div><div class="result empty" id="studioThumbnail">سيظهر التصور هنا.</div></div><div><div class="eyebrow">قائمة اللقطات</div><div class="result empty" id="studioShots">ستظهر قائمة التصوير هنا.</div></div></div><div class="actions" style="margin-top:12px"><button class="btn small" id="saveStudio">حفظ الحزمة</button><button class="btn small alt" id="studioAI">حسّن الحزمة بالذكاء الاصطناعي</button><button class="btn small alt" id="copyStudioAll">نسخ الحزمة</button><button class="btn small alt" id="downloadStudio">تحميل TXT</button><button class="btn small ghost" id="studioToCalendar">إرسال عنوان للتقويم</button></div></div>
-<div class="panel" style="margin-top:15px"><div class="sectionrow"><h3>قائمة المراجعة قبل النشر</h3><span id="prePublishProgress">0 من 6</span></div><p class="sub">علّم على كل نقطة بعد مراجعتها. الاختيارات محفوظة على جهازك.</p><div class="grid2" id="prePublishChecklist"><label><input type="checkbox" data-precheck="hook"> الخطاف واضح ويشد الانتباه</label><label><input type="checkbox" data-precheck="facts"> راجعت صحة المعلومات والمصادر</label><label><input type="checkbox" data-precheck="audio"> الصوت والإضاءة بجودة مناسبة</label><label><input type="checkbox" data-precheck="thumb"> الصورة المصغّرة واضحة ومقروءة</label><label><input type="checkbox" data-precheck="seo"> العنوان والوصف والكلمات المفتاحية جاهزة</label><label><input type="checkbox" data-precheck="cta"> توجد دعوة واضحة للتفاعل</label></div><button class="btn small alt" id="resetPrePublish" type="button" style="margin-top:12px">إعادة تعيين القائمة</button></div>
-</section>
-
-
-<section class="view" id="view-repurpose">
- <div class="head"><div><span class="eyebrow">فكرة واحدة — محتوى بأكثر من شكل</span><h1>إعادة تدوير المحتوى ♻️</h1><p>حوّل فيديو طويل أو فكرة أساسية إلى مقاطع قصيرة ومنشورات تناسب منصات مختلفة.</p></div></div>
- <div class="two"><div class="panel"><h3>المحتوى الأصلي</h3><p class="sub">اكتب ملخص الفيديو أو النص أو الفكرة الأساسية.</p>
-  <div class="field"><label for="repurposeSource">النص أو ملخص المحتوى</label><textarea id="repurposeSource" style="min-height:190px" placeholder="الصق ملخص الفيديو أو أهم النقاط..."></textarea></div>
-  <div class="grid2"><div class="field"><label for="repurposePlatform">الصيغة المطلوبة</label><select id="repurposePlatform"><option>YouTube Shorts / Reels / TikTok</option><option>منشور Instagram / Facebook</option><option>منشور مجتمع YouTube</option><option>سلسلة منشورات قصيرة</option><option>مقدمة ونقاط لبودكاست</option></select></div><div class="field"><label for="repurposeTone">نبرة المحتوى</label><select id="repurposeTone"><option>بسيطة وودودة</option><option>حماسية</option><option>تعليمية</option><option>قصصية</option><option>احترافية</option></select></div></div>
-  <div class="field"><label for="repurposeAudience">الجمهور المستهدف</label><input id="repurposeAudience" placeholder="مثال: صناع المحتوى المبتدئين"></div>
-  <button class="btn" id="makeRepurpose">حوّل المحتوى ✦</button><button class="btn alt" id="makeRepurposeAI" style="margin-top:8px">حوّل بالذكاء الاصطناعي ✨</button></div>
-  <div class="panel"><h3>النسخة الجديدة</h3><p class="sub">راجع النص، خصص الأمثلة، ثم انسخه أو حمّله.</p><textarea id="repurposeOutput" style="min-height:390px" placeholder="النسخة المحوّلة هتظهر هنا..."></textarea><div class="resultactions"><button class="btn small alt" data-copy="repurposeOutput">نسخ المحتوى</button><button class="btn small alt" id="downloadRepurpose">تحميل TXT</button></div><div class="note">التحويل الحالي يعتمد على قوالب محلية. بعد توصيل الذكاء الاصطناعي سنستخدمه لإعادة كتابة المحتوى حسب المنصة والجمهور والنبرة.</div></div></div>
-</section>
-
-<section class="view" id="view-script">
- <div class="head"><div><span class="eyebrow">رتّب كلامك قبل التسجيل</span><h1>كاتب السكريبت ✍️</h1><p>حوّل الموضوع إلى هيكل فيديو واضح مع مقدمة ومحاور وخاتمة.</p></div></div>
- <div class="two"><div class="panel"><h3>بيانات الفيديو</h3><p class="sub">اكتب الموضوع وحدد المدة والجمهور.</p><div class="field"><label for="scriptTopic">موضوع الفيديو</label><input id="scriptTopic" placeholder="عن إيه هتتكلم؟"></div><div class="grid2"><div class="field"><label for="scriptDuration">المدة</label><select id="scriptDuration"><option>5–8 دقائق</option><option>8–12 دقيقة</option><option>15–20 دقيقة</option><option>30–60 ثانية</option><option>60–90 ثانية</option></select></div><div class="field"><label for="scriptStyle">الأسلوب</label><select id="scriptStyle"><option>بسيط وودود</option><option>حماسي</option><option>تعليمي</option><option>قصصي</option><option>كوميدي</option></select></div></div><div class="field"><label for="scriptAudience">الجمهور</label><input id="scriptAudience" placeholder="مثال: المبتدئين"></div><div class="field"><label for="scriptPoints">نقاط لازم تذكرها</label><textarea id="scriptPoints" placeholder="نقطة أولى، نقطة ثانية..."></textarea></div><button class="btn" id="makeScript">اكتب مسودة السكريبت</button><button class="btn alt" id="makeScriptAI" style="margin-top:8px">اكتب بالذكاء الاصطناعي ✨</button></div><div class="panel"><h3>مسودة السكريبت</h3><p class="sub">راجع النص وأضف أمثلة من تجربتك.</p><textarea id="scriptOutput" style="min-height:420px" placeholder="السكريبت هيظهر هنا..."></textarea><div class="resultactions"><button class="btn small alt" data-copy="scriptOutput">نسخ النص</button><button class="btn small alt" id="downloadScript">تحميل TXT</button></div></div></div>
-<div class="panel" style="margin-top:15px"><div class="sectionrow"><h3>مكتبتي من قوالب السكريبت</h3><span id="scriptTemplatesCount">0 قالب</span></div><p class="sub">احفظ السكريبتات المفيدة كقوالب وارجع لها وقت ما تحتاج.</p><div class="grid2"><div class="field"><label for="scriptTemplateName">اسم القالب</label><input id="scriptTemplateName" placeholder="مثال: قالب فيديو تعليمي"></div><button class="btn alt" id="saveScriptTemplate" type="button">حفظ السكريبت الحالي كقالب</button></div><div class="savedlist" id="scriptTemplatesList"><div class="empty">لسه مفيش قوالب محفوظة.</div></div></div>
-</section>
-
-<section class="view" id="view-titles">
- <div class="head"><div><span class="eyebrow">خلّي الفكرة واضحة وجذابة</span><h1>العناوين والصورة المصغّرة 🧲</h1><p>اقتراحات عنوان وفكرة بصرية تساعد المشاهد يفهم قيمة المحتوى.</p></div></div>
- <div class="two"><div class="panel"><h3>موضوعك</h3><div class="field"><label for="titleTopic">موضوع الفيديو</label><input id="titleTopic" placeholder="مثال: تعلم المونتاج للمبتدئين"></div><div class="field"><label for="titleBenefit">الفائدة أو النتيجة</label><input id="titleBenefit" placeholder="مثال: في أسبوع واحد"></div><div class="field"><label for="titleAudience">الجمهور</label><input id="titleAudience" placeholder="مثال: صناع المحتوى الجدد"></div><button class="btn" id="makeTitles">اقترح عناوين وأفكار</button><button class="btn alt" id="makeTitlesAI" style="margin-top:8px">عناوين بالذكاء الاصطناعي ✨</button></div><div class="panel"><h3>عناوين مقترحة</h3><div id="titlesResult" class="result empty">اكتب الموضوع واضغط على الزر.</div><div class="eyebrow" style="margin-top:14px">فكرة الصورة المصغّرة</div><div id="thumbResult" class="result empty">سيظهر تصور الصورة هنا.</div><div class="resultactions"><button class="btn small alt" data-copy="titlesResult">نسخ العناوين</button><button class="btn small alt" data-copy="thumbResult">نسخ فكرة الصورة</button></div></div></div>
- <div class="note">العنوان الجيد يوضح القيمة الحقيقية للمحتوى. تجنب التضليل أو الوعد بنتيجة لا يقدمها الفيديو.</div>
-</section>
-
-<section class="view" id="view-seo">
- <div class="head"><div><span class="eyebrow">جهّز بيانات النشر</span><h1>مساعد SEO 🔎</h1><p>مسودة وصف وكلمات مفتاحية وهاشتاجات قابلة للتعديل.</p></div></div>
- <div class="two"><div class="panel"><h3>معلومات المحتوى</h3><div class="field"><label for="seoTopic">موضوع المحتوى</label><input id="seoTopic" placeholder="موضوع الفيديو أو المنشور"></div><div class="field"><label for="seoNiche">المجال</label><input id="seoNiche" placeholder="مثال: تعليم، تقنية، طبخ"></div><div class="field"><label for="seoKeywords">كلمات أو عبارات مهمة</label><textarea id="seoKeywords" placeholder="افصل بين العبارات بفاصلة"></textarea></div><div class="field"><label for="seoPlatform">المنصة</label><select id="seoPlatform"><option>YouTube</option><option>TikTok</option><option>Instagram</option><option>Facebook</option></select></div><button class="btn" id="makeSeo">جهّز الوصف والكلمات</button><button class="btn alt" id="makeSeoAI" style="margin-top:8px">تحسين SEO بالذكاء الاصطناعي ✨</button></div><div class="panel"><h3>بيانات مقترحة</h3><div class="eyebrow">الوصف</div><textarea id="seoDescription" style="min-height:150px" placeholder="سيظهر الوصف هنا..."></textarea><div class="eyebrow" style="margin-top:10px">الكلمات المفتاحية والهاشتاجات</div><div id="seoTags" class="result empty">ستظهر الكلمات هنا.</div><div class="resultactions"><button class="btn small alt" data-copy="seoDescription">نسخ الوصف</button><button class="btn small alt" data-copy="seoTags">نسخ الكلمات</button></div></div></div>
- <div class="note">هذه اقتراحات صياغة وليست بيانات بحث أو ترتيب كلمات حقيقية. افحص الكلمات داخل أدوات المنصة قبل النشر.</div>
-</section>
-
-<section class="view" id="view-calendar">
- <div class="head"><div><span class="eyebrow">خطة واضحة = استمرارية أسهل</span><h1>تقويم النشر 🗓️</h1><p>سجل مواعيدك وتابع حالة كل محتوى.</p></div><button class="btn small alt" id="calendarExport">تحميل CSV</button></div>
- <div class="two"><div class="panel"><h3>أضف محتوى للتقويم</h3><div class="field"><label for="postTitle">عنوان المحتوى</label><input id="postTitle" placeholder="عنوان الفيديو أو المنشور"></div><div class="grid2"><div class="field"><label for="postPlatform">المنصة</label><select id="postPlatform"><option>YouTube</option><option>YouTube Shorts</option><option>TikTok</option><option>Instagram</option><option>Facebook</option><option>Podcast</option></select></div><div class="field"><label for="postDate">تاريخ النشر</label><input id="postDate" type="date"></div></div><div class="field"><label for="postStatus">الحالة</label><select id="postStatus"><option value="plan">مخطط</option><option value="progress">قيد التجهيز</option><option value="done">تم النشر</option></select></div><button class="btn" id="addPost">إضافة للتقويم</button></div><div class="panel"><div class="sectionrow" style="margin-top:0"><h3>المحتوى المخطط</h3><span id="postCount">0 منشور</span></div><div id="calendarList"><div class="empty">لسه مفيش مواعيد. أضف أول محتوى.</div></div></div></div>
-</section>
-
-<section class="view" id="view-analytics">
- <div class="head"><div><span class="eyebrow">الأرقام تساعدك تتعلم</span><h1>متابعة الأداء 📊</h1><p>سجل نتائج المنشورات يدويًا وقارن أداء المحتوى عبر الوقت.</p></div></div>
- <div class="panel"><h3>سجل نتيجة منشور</h3><div class="grid2"><div class="field"><label for="metricTitle">عنوان المحتوى</label><input id="metricTitle" placeholder="عنوان المنشور"></div><div class="field"><label for="metricDate">التاريخ</label><input id="metricDate" type="date"></div><div class="field"><label for="metricViews">المشاهدات</label><input id="metricViews" type="number" min="0" placeholder="0"></div><div class="field"><label for="metricLikes">الإعجابات</label><input id="metricLikes" type="number" min="0" placeholder="0"></div><div class="field"><label for="metricComments">التعليقات</label><input id="metricComments" type="number" min="0" placeholder="0"></div><div class="field"><label for="metricShares">المشاركات</label><input id="metricShares" type="number" min="0" placeholder="0"></div></div><button class="btn" id="addMetric">حفظ النتائج</button></div>
- <div class="stats" style="margin-top:14px"><div class="stat"><div class="stattop">إجمالي المشاهدات</div><strong id="totalViews">0</strong></div><div class="stat"><div class="stattop">إجمالي التفاعلات</div><strong id="totalEngagement">0</strong></div><div class="stat"><div class="stattop">معدل التفاعل التقريبي</div><strong id="engagementRate">0%</strong><small>تفاعلات ÷ مشاهدات</small></div><div class="stat"><div class="stattop">عدد المنشورات المسجلة</div><strong id="metricCount">0</strong></div></div>
- <div class="panel"><div class="sectionrow" style="margin-top:0"><h3>سجل الأداء</h3><span>البيانات التي أدخلتها يدويًا</span></div><div id="metricsList"><div class="empty">سجل أول منشور لمتابعة النتائج.</div></div></div>
- <div class="note">هذه الصفحة لا تتصل بحساباتك الاجتماعية ولا تجلب إحصائيات مباشرة. أدخل الأرقام التي تظهر لك في لوحة تحكم كل منصة.</div>
-</section>
-
-<section class="view" id="view-challenge">
- <div class="head"><div><span class="eyebrow">خطة عملية من الفكرة للنشر</span><h1>تحدي 30 يوم 🏆</h1><p>كل يوم خطوة صغيرة تقرّبك من محتوى أقوى وجمهور أوضح. تقدّمك محفوظ على جهازك.</p></div></div>
- <div class="challenge-hero">
-  <div class="challenge-hero-top"><div><span class="challenge-kicker">رحلتك لصناعة المحتوى</span><h2 id="challengeHeadline">كل بداية قوية تبدأ بخطوة</h2><p id="challengeSubline">اختار مهمة واحدة وابدأ دلوقتي.</p></div><div class="challenge-ring" id="challengeRing"><strong id="challengePct">0%</strong><small>إنجازك</small></div></div>
-  <div class="challenge-track"><span id="challengeBar"></span></div>
-  <div class="challenge-stats"><div><strong id="challengeDone">0/30</strong><small>مهمة مكتملة</small></div><div><strong id="challengeLeft">30</strong><small>متبقية</small></div><div><strong id="challengeMilestone">0/3</strong><small>مراحل مكتملة</small></div></div>
- </div>
- <div class="challenge-next" id="challengeNext"></div>
- <div class="challenge-toolbar"><div><h3>خطة الـ 30 يوم</h3><p>علّم على كل خطوة بعد ما تخلصها.</p></div><div class="challenge-filters"><button type="button" class="active" data-challenge-filter="all">الكل</button><button type="button" data-challenge-filter="todo">المتبقي</button><button type="button" data-challenge-filter="done">المكتمل</button></div></div>
- <div class="challenge-phases" id="challengeList"></div>
- <div class="challenge-footer"><span>💡 الاستمرارية أهم من السرعة. نفّذ التحدي على إيقاعك.</span><button type="button" class="text-btn" id="challengeReset">إعادة ضبط التحدي</button></div>
-</section>
-
-
-<section class="view" id="view-settings">
- <div class="head"><div><span class="eyebrow">تحكم في طريقة عمل الأدوات</span><h1>الإعدادات والبيانات ⚙</h1><p>استخدم أدوات المحتوى المحلية واحتفظ بنسخة احتياطية من أعمالك.</p></div></div>
- <div class="card account-card" id="accountSyncCard">
-  <h2>الحساب والمزامنة السحابية</h2>
-  <p class="muted">تسجيل الدخول اختياري. بعد تسجيل الدخول تُحفظ التعديلات سحابيًا، وتصل تحديثات أجهزتك الأخرى مباشرة عند اتصال الإنترنت. يمكنك الاستمرار دون حساب مع الحفظ المحلي.</p>
-  <div class="grid2">
-   <div class="field"><label for="accountEmail">البريد الإلكتروني</label><input id="accountEmail" type="email" autocomplete="username" inputmode="email" placeholder="name@example.com"></div>
-   <div class="field"><label for="accountPassword">كلمة المرور</label><input id="accountPassword" type="password" minlength="8" autocomplete="current-password" placeholder="8 أحرف على الأقل"></div>
-  </div>
-  <div class="actions">
-   <button class="primary" id="authSignIn" type="button">تسجيل الدخول</button>
-   <button class="secondary" id="authSignUp" type="button">إنشاء حساب</button>
-   <button class="secondary" id="authReset" type="button">نسيت كلمة المرور؟</button>
-   <button class="secondary" id="authSyncNow" type="button" hidden>مزامنة الآن ↻</button>
-   <button class="danger" id="authSignOut" type="button" hidden>تسجيل الخروج</button>
-  </div>
-  <div class="divider"></div>
-  <div class="grid2">
-   <p>حالة الحساب: <b id="authState">غير مسجل</b></p>
-   <p>الحساب الحالي: <b id="accountUser">—</b></p>
-   <p>حالة المزامنة: <b id="accountSync">محلي فقط</b></p>
-   <p>آخر حالة حفظ: <b id="syncState">الحفظ على هذا الجهاز</b></p>
-   <p>خدمة الذكاء الاصطناعي: <b id="accountAI">تعمل عبر الخادم</b></p>
-  </div>
-  <div id="authRecoveryBox" hidden>
-   <div class="field"><label for="accountNewPassword">كلمة المرور الجديدة</label><input id="accountNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="اكتب كلمة مرور جديدة"></div>
-   <button class="primary" id="authUpdatePassword" type="button">حفظ كلمة المرور الجديدة</button>
-  </div>
-  <p id="authMessage" class="status-line" role="status" aria-live="polite">يمكنك استخدام الموقع دون تسجيل الدخول، أو تسجيل الدخول لتفعيل المزامنة السحابية.</p>
- </div>
- <div class="grid2">
-  <div class="card">
-   <h2>مساعد المحتوى الذكي</h2>
-   <p class="muted">تصل طلبات المساعد الذكي إلى خدمة الخادم، من غير وضع مفتاح API داخل الموقع. نجاح التوليد يعتمد على إعداد مفتاح الخدمة من مسؤول الموقع.</p>
-   <div class="note">لا تدخلي مفتاح API داخل الموقع. تظل أعمالك محفوظة محليًا على جهازك، وقد يحتاج مسؤول الموقع إلى إعداد مفتاح الخدمة على الخادم لتفعيل التوليد.</div>
-   <div id="aiSettingsStatus" class="status-line" role="status">المساعد الذكي متصل بالخادم.</div>
-  </div>
-<div class="card">
-   <h2>النسخ الاحتياطي وإدارة البيانات</h2>
-   <p class="muted">يتم حفظ البيانات محليًا على جهازك، ويمكنك تسجيل الدخول لمزامنة مساحة العمل مع حسابك على أجهزتك الأخرى. احتفظ أيضًا بنسخة JSON احتياطية مستقلة.</p>
-   <div class="actions"><button class="primary" id="settingsExport" type="button">تصدير جميع البيانات JSON</button><button class="secondary" id="settingsImport" type="button">استيراد نسخة JSON</button><input id="settingsImportFile" type="file" accept="application/json,.json" hidden></div>
-   <div class="divider"></div>
-   <p>إصدار بنية البيانات: <b id="schemaVersionLabel">2</b></p>
-   <p>عدد الأفكار: <b id="dataIdeas">0</b> · الحزم: <b id="dataPacks">0</b> · المنشورات: <b id="dataPosts">0</b> · سجلات الأداء: <b id="dataMetrics">0</b></p>
-   <button class="danger" id="clearAllData" type="button">مسح جميع البيانات المحلية</button>
-   <p class="note">قبل المسح، صدّر نسخة احتياطية. المسح لا يمكن التراجع عنه بعد تأكيده.</p>
+   </div>
   </div>
  </div>
 </section>
-<footer class="footer"><span>© <span id="year"></span> انطلاقتك — مساحة تساعدك تبدأ وتستمر.</span><span>البيانات المحلية محفوظة على جهازك · المزامنة السحابية اختيارية</span><span class="footer-links"><a href="./legal.html#privacy">الخصوصية</a><a href="./legal.html#terms">شروط الاستخدام</a><a href="./legal.html#support">الدعم والإبلاغ</a><a class="social-link" href="https://www.facebook.com/profile.php?id=61596964071145" target="_blank" rel="noopener noreferrer" aria-label="تابع انطلاقتك على فيسبوك">تابعنا على فيسبوك ↗</a></span></footer>
+
+<section class="section section-soft" id="tools">
+ <div class="wrap">
+  <div class="section-head"><span class="kicker">أدوات تساعدك تنجز</span><h2>كل مرحلة من صناعة المحتوى ليها أداة</h2><p>ابدأ باللي تحتاجه دلوقتي، واستخدم باقي الأدوات وقت ما مشروعك يكبر.</p></div>
+  <div class="features">
+   <article class="feature"><span class="feature-icon">✧</span><h3>أفكار المحتوى</h3><p>ولّد زوايا وأفكار تناسب مجالك والمنصة والجمهور اللي بتكلمه.</p></article>
+   <article class="feature"><span class="feature-icon">✍</span><h3>استوديو حزمة المحتوى</h3><p>حوّل موضوعك لمسودة فيها خطاف وسكريبت وعناوين ووصف وأفكار تصوير.</p></article>
+   <article class="feature"><span class="feature-icon">▤</span><h3>كاتب السكريبت</h3><p>جهّز مسودة فيديو تناسب المدة والأسلوب والجمهور، وبعدها عدّلها بصوتك.</p></article>
+   <article class="feature"><span class="feature-icon">▣</span><h3>العناوين والصور المصغّرة</h3><p>اقترح عناوين وجّهز صورة مصغّرة قابلة للتخصيص والتنزيل.</p></article>
+   <article class="feature"><span class="feature-icon">⌕</span><h3>مساعد SEO</h3><p>رتّب وصف المحتوى والكلمات المفتاحية والهاشتاجات كبداية قابلة للمراجعة.</p></article>
+   <article class="feature"><span class="feature-icon">♻</span><h3>إعادة تدوير المحتوى</h3><p>حوّل ملخصك لصيغ مناسبة لريلز أو منشورات أو محتوى قصير.</p></article>
+   <article class="feature"><span class="feature-icon">▦</span><h3>تقويم النشر</h3><p>خطط للمواعيد وسجّل حالة كل محتوى عشان تحافظ على الاستمرارية.</p></article>
+   <article class="feature"><span class="feature-icon">▥</span><h3>متابعة الأداء</h3><p>سجّل المشاهدات والتفاعلات وتابع اتجاه النتائج من خلال تقاريرك.</p></article>
+   <article class="feature"><span class="feature-icon">♜</span><h3>الأكاديمية وتحدي 30 يوم</h3><p>خطوات تعليمية ومهام عملية تساعدك تبدأ وتبني عادة صناعة المحتوى.</p></article>
+  </div>
+ </div>
+</section>
+
+<section class="section" id="how">
+ <div class="wrap">
+  <div class="section-head"><span class="kicker">بداية سهلة</span><h2>رحلتك من الفكرة للخطة في أربع خطوات</h2><p>مش مطلوب تستخدم كل حاجة مرة واحدة. اختار خطوة وابدأ.</p></div>
+  <div class="steps">
+   <article class="step"><h3>حدد فكرتك</h3><p>اختار المجال والجمهور والمنصة والموضوع اللي عايز تشتغل عليه.</p></article>
+   <article class="step"><h3>جهّز المسودة</h3><p>استخدم الأفكار أو السكريبت أو استوديو الحزم لتكوين نسخة أولى.</p></article>
+   <article class="step"><h3>نظّم شغلك</h3><p>راجع المحتوى وأضف موعده لتقويم النشر وخلي خطتك واضحة.</p></article>
+   <article class="step"><h3>تابع وتعلّم</h3><p>سجّل النتائج بنفسك، وراجع اللي نجح وحدد تجربة جديدة.</p></article>
+  </div>
+ </div>
+</section>
+
+<section class="section section-soft" id="about">
+ <div class="wrap split">
+  <article class="info-panel">
+   <span class="kicker">مساحة شغلك ملكك</span><h3>ابدأ فورًا، وسجّل الدخول وقت ما تحتاج المزامنة</h3>
+   <p>تقدر تستخدم الأدوات الأساسية من غير حساب. شغلك بيتحفظ على نفس المتصفح والجهاز، وتقدر تصدّر نسخة احتياطية. تسجيل الدخول اختياري لمزامنة مساحة الحساب بين أجهزتك المتصلة.</p>
+   <div class="info-list">
+    <div><i>✓</i><span>مساحة عمل محلية بدون إلزام بالتسجيل.</span></div>
+    <div><i>✓</i><span>نسخ احتياطي واستيراد لبياناتك.</span></div>
+    <div><i>✓</i><span>مزامنة سحابية اختيارية عند تسجيل الدخول.</span></div>
+    <div><i>✓</i><span>تجهيز الصور المصغّرة داخل المتصفح.</span></div>
+   </div>
+  </article>
+  <article class="info-panel caution">
+   <span class="caution-label">شفافية مهمة</span><h3>إيه اللي المنصة بتعمله حاليًا؟</h3>
+   <p>انطلاقتك تساعدك في التخطيط والتجهيز والمتابعة، لكنها لا تنشر نيابة عنك على حسابات التواصل حاليًا.</p>
+   <div class="info-list">
+    <div><i>•</i><span>النشر التلقائي وربط الحسابات الاجتماعية غير متاحين حاليًا.</span></div>
+    <div><i>•</i><span>أرقام الأداء بتدخلها يدويًا؛ مفيش سحب تلقائي لتحليلات المنصات.</span></div>
+    <div><i>•</i><span>رادار الموضوعات يفتح مصادر بحث خارجية، ولا يعرض بيانات ترند لحظية مملوكة للمنصة.</span></div>
+    <div><i>•</i><span>مخرجات الذكاء الاصطناعي مسودات، وضروري تراجع المعلومات قبل النشر.</span></div>
+   </div>
+  </article>
+ </div>
+</section>
+
+<section class="section" id="faq">
+ <div class="wrap">
+  <div class="section-head"><span class="kicker">أسئلة شائعة</span><h2>قبل ما تبدأ</h2><p>إجابات مباشرة عن طريقة استخدام انطلاقتك وحفظ شغلك.</p></div>
+  <div class="faq">
+   <details><summary>هل لازم أعمل حساب عشان أستخدم الموقع؟</summary><p>لا. تقدر تبدأ باستخدام الأدوات الأساسية بدون تسجيل. الحساب اختياري للمزامنة السحابية.</p></details>
+   <details><summary>هل الموقع بينشر الفيديوهات أو المنشورات تلقائيًا؟</summary><p>لا، النشر التلقائي وربط الحسابات الاجتماعية غير متاحين حاليًا. الموقع يساعدك تجهز المحتوى وتنظم مواعيده، وبعدها تنشر من منصتك بنفسك.</p></details>
+   <details><summary>هل الإحصائيات بتتسحب من يوتيوب وتيك توك؟</summary><p>لا حاليًا. أرقام المشاهدات والتفاعل بتدخلها يدويًا داخل لوحة متابعة الأداء.</p></details>
+   <details><summary>فين بتتحفظ بياناتي؟</summary><p>بدون تسجيل دخول، تُحفظ بيانات مساحة العمل على المتصفح والجهاز الحالي. عند تسجيل الدخول تتاح المزامنة السحابية لمساحة الحساب. احتفظ بنسخة احتياطية دورية.</p></details>
+   <details><summary>هل النصوص اللي بيولدها الذكاء الاصطناعي جاهزة للنشر؟</summary><p>اعتبرها مسودات تساعدك تبدأ. راجع الحقائق والمصادر وخصص الأسلوب قبل النشر.</p></details>
+   <details><summary>هل أقدر استخدم انطلاقتك من الموبايل؟</summary><p>أيوه، الواجهة متجاوبة مع الشاشات الصغيرة، والتطبيق قابل للتثبيت من المتصفح المتوافق.</p></details>
+  </div>
+ </div>
+</section>
+
+<section class="section">
+ <div class="wrap">
+  <div class="final-cta">
+   <span class="kicker">ابدأ من مكانك الحالي</span>
+   <h2>فكرتك تستاهل تاخد أول خطوة</h2>
+   <p>افتح مساحة العمل، اختار أداة واحدة، وابدأ تجهيز محتواك.</p>
+   <a class="btn btn-primary" href="./workspace.html">ادخل مساحة العمل مجانًا <span aria-hidden="true">←</span></a>
+  </div>
+ </div>
+</section>
 </main>
-</div>
-<div class="toast" id="toast"></div>
+
+<footer class="footer">
+ <div class="wrap footer-inner">
+  <span>© <span id="year"></span> انطلاقتك — مساحة تساعدك تبدأ وتستمر.</span>
+  <div class="footer-links">
+   <a href="./legal.html#privacy">الخصوصية</a>
+   <a href="./legal.html#terms">شروط الاستخدام</a>
+   <a href="./legal.html#support">الدعم والإبلاغ</a>
+   <a class="facebook" href="https://www.facebook.com/profile.php?id=61596964071145" target="_blank" rel="noopener noreferrer">تابعنا على فيسبوك ↗</a>
+  </div>
+ </div>
+</footer>
+
 <script>
-window.ENTELAQTAK_CONFIG = {
-  url: "https://dbetanrnhdabuachxdhc.supabase.co",
-  publishableKey: "sb_publishable_C2IK6I_dArVgsJayOHajVw_bM2zLK2i"
-};
+'use strict';
+const menuButton=document.getElementById('menuToggle');
+const siteNav=document.getElementById('siteNav');
+menuButton.addEventListener('click',()=>{
+ const open=siteNav.classList.toggle('open');
+ menuButton.setAttribute('aria-expanded',String(open));
+ menuButton.setAttribute('aria-label',open?'إغلاق القائمة':'فتح القائمة');
+});
+siteNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
+ siteNav.classList.remove('open');
+ menuButton.setAttribute('aria-expanded','false');
+ menuButton.setAttribute('aria-label','فتح القائمة');
+}));
+document.getElementById('year').textContent=String(new Date().getFullYear());
 </script>
-<!-- Supabase loads asynchronously so a CDN delay cannot block the app. -->
-<script>
-(()=>{
-const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
-const DATA_VERSION=3;
-const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local"}};
-const CLOUD_DIRTY_OWNER_KEY='entelaqtak-cloud-dirty-owner-v1';
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,localChangesPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null,authInitError=null;
-function normalizeState(input){
- const src=input&&typeof input==='object'?input:{};
- const out={...defaults,...src,schemaVersion:DATA_VERSION};
- const records=key=>Array.isArray(src[key])?src[key].filter(x=>x&&typeof x==='object'&&!Array.isArray(x)).map((x,i)=>({...x,id:String(x.id??('legacy-'+key+'-'+i)).slice(0,80)})):[];
- out.ideas=records('ideas').map(x=>({...x,title:String(x.title||''),niche:String(x.niche||''),platform:String(x.platform||''),audience:String(x.audience||''),angle:String(x.angle||'')}));
- out.scriptTemplates=records('scriptTemplates').map(x=>({...x,name:String(x.name||'قالب بدون اسم').slice(0,80),content:String(x.content||'').slice(0,20000)})).filter(x=>x.content);
- out.prePublishChecks=Object.fromEntries(['hook','facts','audio','thumb','seo','cta'].map(k=>[k,!!src.prePublishChecks?.[k]]));
- out.packs=records('packs').map(x=>({...x,topic:String(x.topic||''),platform:String(x.platform||''),niche:String(x.niche||''),audience:String(x.audience||''),createdAt:String(x.createdAt||''),hook:String(x.hook||''),titles:Array.isArray(x.titles)?x.titles.map(String):[],script:String(x.script||''),description:String(x.description||''),keywords:String(x.keywords||''),thumbnail:String(x.thumbnail||''),shots:String(x.shots||'')}));
- out.posts=records('posts').map(x=>({...x,title:String(x.title||''),platform:String(x.platform||''),date:/^\d{4}-\d{2}-\d{2}$/.test(String(x.date||''))?String(x.date):'',status:['planned','progress','done'].includes(x.status)?x.status:'planned'})).filter(x=>x.date);
- out.metrics=records('metrics').map(x=>({...x,title:String(x.title||''),date:/^\d{4}-\d{2}-\d{2}$/.test(String(x.date||''))?String(x.date):'',views:Math.max(0,Number(x.views)||0),likes:Math.max(0,Number(x.likes)||0),comments:Math.max(0,Number(x.comments)||0),shares:Math.max(0,Number(x.shares)||0)})).filter(x=>x.date);
- out.challenge=src.challenge&&typeof src.challenge==='object'&&!Array.isArray(src.challenge)?src.challenge:{};
- out.focus=src.focus&&typeof src.focus==='object'?{text:String(src.focus.text||''),done:!!src.focus.done}:{...defaults.focus};
- out.settings={...defaults.settings,...(src.settings&&typeof src.settings==='object'&&!Array.isArray(src.settings)?src.settings:{})};
- return out;
-}
-let state=normalizeState({});
-try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
-const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
-const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}scheduleCloudSave();};
-
-function setAuthMessage(message,isError=false){const host=$('authMessage');if(host){host.textContent=message;host.classList.toggle('error',!!isError);}if(isError)toast(message);}
-function authErrorMessage(error){
- const code=error?.code||error?.error_code||'';
- const message=String(error?.message||'');
- if(code==='invalid_credentials'||/invalid login credentials/i.test(message))return 'كلمة المرور لا تطابق هذا الحساب. لو أنشأت الحساب من قبل، لا تضغط «إنشاء حساب» مرة أخرى؛ اضغط «نسيت كلمة المرور؟» وعيّن كلمة مرور جديدة.';
- if(code==='email_not_confirmed'||/email not confirmed/i.test(message))return 'الحساب موجود، لكن تأكيد البريد لم يكتمل. افتح أحدث رسالة تأكيد فقط.';
- if(/rate.?limit/i.test(message))return 'تم طلب رسائل كثيرة خلال وقت قصير. انتظر قليلًا قبل طلب رسالة أخرى.';
- if(/otp_expired|one-time token not found|invalid or has expired/i.test(message))return 'رابط البريد قديم أو انتهت صلاحيته. اطلب رابطًا جديدًا واستخدم أحدث رسالة فقط.';
- return message||'حدث خطأ أثناء تنفيذ الطلب. حاول مرة أخرى.';
-}
-async function withAuthButton(id,task){
- const button=$(id),old=button.textContent;
- if(button.disabled)return;
- button.disabled=true;
- try{
-  if(!sbClient){await connectAuth();if(!sbClient)throw new Error(authInitError||'تعذر تهيئة خدمة الحساب. تحقق من اتصال الإنترنت ثم حاول مرة أخرى.');}
-  await task();
- }
- catch(error){console.error('Authentication action failed',error);setAuthMessage(authErrorMessage(error),true);}
- finally{button.disabled=false;button.textContent=old;}
-}
-function updateAccountUI(){
- $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
- $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
- $('accountSync').textContent=!currentUser?'محلي فقط':cloudLoading?'جارٍ تحميل المساحة':cloudSaving?'جارٍ حفظ التعديلات':(cloudSavePending||cloudSaveTimer)?'في انتظار الحفظ':realtimeConnected?'متصل بالمزامنة المباشرة':'محفوظ سحابيًا';
- $('accountAI').textContent='مساعد ذكي عبر الخادم';
- if($('syncState')&&!cloudLoading&&!cloudSaving&&!currentUser)$('syncState').textContent='الحفظ على هذا الجهاز';
- $('connectionBadge').innerHTML='<span class="dot"></span>'+(currentUser?'متصل بحسابك':'مساحة العمل');
- $('authSignOut').hidden=!currentUser;
- $('authSyncNow').hidden=!currentUser;
- $('authSyncNow').disabled=!currentUser||cloudLoading||cloudSaving;
- $('authSyncNow').textContent=cloudLoading?'جارٍ التحديث...':'مزامنة الآن ↻';
-}
-function workspaceHasPendingLocalChanges(ownerId){
- if(localChangesPending||cloudSavePending||!!cloudSaveTimer)return true;
- try{const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);return marker===ownerId||marker==='__local__';}catch(e){return false;}
-}
-function markWorkspaceDirty(ownerId){
- localChangesPending=true;
- try{localStorage.setItem(CLOUD_DIRTY_OWNER_KEY,ownerId);}catch(e){console.warn('Could not store workspace sync marker.',e);}
-}
-function clearWorkspaceDirty(ownerId){
- if(currentUser?.id!==ownerId)return;
- localChangesPending=false;
- try{const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);if(marker===ownerId||marker==='__local__')localStorage.removeItem(CLOUD_DIRTY_OWNER_KEY);}catch(e){console.warn('Could not clear workspace sync marker.',e);}
-}
-function mergeWorkspace(localData,remoteData,localWins=false){
- const local=localData&&typeof localData==='object'&&!Array.isArray(localData)?localData:{};
- const remote=remoteData&&typeof remoteData==='object'&&!Array.isArray(remoteData)?remoteData:{};
- const merged=localWins?{...defaults,...remote,...local}:{...defaults,...local,...remote};
- for(const key of ['ideas','packs','posts','metrics','scriptTemplates','experiments']){
-  const map=new Map();
-  const localItems=Array.isArray(local[key])?local[key]:[];
-  const remoteItems=Array.isArray(remote[key])?remote[key]:[];
-  const items=localWins?[...remoteItems,...localItems]:[...localItems,...remoteItems];
-  for(const item of items){
-   if(!item||typeof item!=='object'||Array.isArray(item))continue;
-   const identity=String(item.id??JSON.stringify(item));
-   map.set(identity,item);
-  }
-  merged[key]=[...map.values()];
- }
- for(const key of ['challenge','focus','profile','brand','academy','prePublishChecks','settings']){
-  const localObject=local[key]&&typeof local[key]==='object'&&!Array.isArray(local[key])?local[key]:{};
-  const remoteObject=remote[key]&&typeof remote[key]==='object'&&!Array.isArray(remote[key])?remote[key]:{};
-  const combined=localWins?{...remoteObject,...localObject}:{...localObject,...remoteObject};
-  if(localWins){
-   for(const [field,value] of Object.entries(localObject)){
-    const fallback=value===undefined||value===null||value===''||(key==='focus'&&field==='done'&&value===false)||(key==='profile'&&field==='goal'&&value==='الاستمرارية والنشر المنتظم')||(key==='brand'&&field==='voice'&&value==='بسيطة وودودة')||(key==='settings'&&field==='aiMode'&&value==='local');
-    if(fallback&&remoteObject[field]!==undefined)combined[field]=remoteObject[field];
-   }
-   if(key==='prePublishChecks'){
-    for(const field of ['hook','facts','audio','thumb','seo','cta'])combined[field]=localObject[field]===true||remoteObject[field]===true;
-   }
-  }
-  merged[key]=combined;
- }
- return normalizeState(merged);
-}
-function saveLocalWorkspace(){
- try{localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){console.warn('Local workspace save failed',e);}
-}
-function formatSyncTime(){
- try{return new Date().toLocaleTimeString('ar-EG',{hour:'2-digit',minute:'2-digit'});}catch(e){return new Date().toLocaleTimeString();}
-}
-async function writeCloudWorkspace(){
- if(!sbClient||!currentUser)return;
- if(cloudLoading||cloudSaving){cloudSavePending=true;return;}
- cloudSaving=true;
- const ownerId=currentUser.id;
- const snapshotJson=JSON.stringify(state);
- const snapshot=JSON.parse(snapshotJson);
- $('accountSync').textContent='جارٍ حفظ التعديلات';
- $('syncState').textContent='يتم حفظ التعديلات في السحابة...';
- updateAccountUI();
- try{
-  const {error}=await sbClient.from('user_workspaces').upsert({user_id:ownerId,data:snapshot,updated_at:new Date().toISOString()},{onConflict:'user_id'});
-  if(error)throw error;
-  if(currentUser?.id===ownerId){
-   if(JSON.stringify(state)===snapshotJson&&!cloudSavePending)clearWorkspaceDirty(ownerId);
-   $('syncState').textContent='آخر حفظ سحابي: '+formatSyncTime();
-   $('accountSync').textContent=realtimeConnected?'متصل بالمزامنة المباشرة':'محفوظ سحابيًا';
-  }
- }finally{
-  cloudSaving=false;
-  if(cloudSavePending){cloudSavePending=false;scheduleCloudSave();}
-  if(cloudLoadPending&&currentUser){cloudLoadPending=false;setTimeout(()=>loadCloudWorkspace(),0);}
-  updateAccountUI();
- }
-}
-function scheduleCloudSave(){
- if(!currentUser){
-  try{const owner=localStorage.getItem('entelaqtak-workspace-owner');localStorage.setItem(CLOUD_DIRTY_OWNER_KEY,owner||'__local__');}catch(e){console.warn('Could not mark local workspace changes.',e);}
-  return;
- }
- if(!sbClient)return;
- markWorkspaceDirty(currentUser.id);
- if(cloudLoading||cloudSaving){cloudSavePending=true;return;}
- clearTimeout(cloudSaveTimer);cloudSaveTimer=null;
- $('accountSync').textContent='في انتظار الحفظ';
- $('syncState').textContent='تغييرات بانتظار المزامنة...';
- updateAccountUI();
- cloudSaveTimer=setTimeout(async()=>{
-  cloudSaveTimer=null;
-  try{await writeCloudWorkspace();}
-  catch(e){console.error('Cloud save failed',e);if(currentUser){$('syncState').textContent='تعذر الحفظ السحابي؛ احتفظ بنسخة احتياطية.';$('accountSync').textContent='غير متزامن';}}
- },700);
- updateAccountUI();
-}
-function applyRealtimeWorkspace(payload,ownerId){
- if(!currentUser||currentUser.id!==ownerId||!payload?.new||payload.new.user_id!==ownerId)return;
- if(cloudLoading){pendingRealtimeWorkspace=payload.new.data;return;}
- const remote=payload.new.data;
- if(!remote||typeof remote!=='object'||Array.isArray(remote))return;
- const localWins=workspaceHasPendingLocalChanges(ownerId);
- const merged=mergeWorkspace(state,remote,localWins);
- const normalizedRemote=normalizeState(remote);
- const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(normalizedRemote);
- state=merged;
- saveLocalWorkspace();
- renderAll();
- $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
- $('accountSync').textContent=realtimeConnected?'متصل بالمزامنة المباشرة':'متصل';
- if(needsMergeSave)scheduleCloudSave();else if(localWins)clearWorkspaceDirty(ownerId);
-}
-function subscribeWorkspaceRealtime(){
- if(!sbClient||!currentUser)return;
- if(workspaceRealtimeChannel){sbClient.removeChannel(workspaceRealtimeChannel);workspaceRealtimeChannel=null;}
- const ownerId=currentUser.id;
- workspaceRealtimeChannel=sbClient.channel('workspace-sync-'+ownerId)
-  .on('postgres_changes',{event:'*',schema:'public',table:'user_workspaces',filter:'user_id=eq.'+ownerId},payload=>applyRealtimeWorkspace(payload,ownerId))
-  .subscribe((status,error)=>{
-   if(currentUser?.id!==ownerId)return;
-   if(status==='SUBSCRIBED'){
-    realtimeConnected=true;
-    $('accountSync').textContent='متصل بالمزامنة المباشرة';
-    updateAccountUI();
-   }else if(status==='CHANNEL_ERROR'||status==='TIMED_OUT'||status==='CLOSED'){
-    realtimeConnected=false;
-    $('accountSync').textContent='الحفظ السحابي متاح؛ الاتصال المباشر متوقف';
-    if(error)console.warn('Workspace realtime subscription issue:',error);
-    updateAccountUI();
-   }
-  });
-}
-function stopWorkspaceRealtime(){
- realtimeConnected=false;pendingRealtimeWorkspace=null;
- if(workspaceRealtimeChannel&&sbClient){sbClient.removeChannel(workspaceRealtimeChannel);workspaceRealtimeChannel=null;}
-}
-async function loadCloudWorkspace(){
- if(!sbClient||!currentUser)return;
- if(cloudLoading||cloudSaving){cloudLoadPending=true;return;}
- clearTimeout(cloudSaveTimer);cloudSaveTimer=null;
- cloudLoading=true;
- updateAccountUI();
- let loaded=false;
- try{
-  const ownerId=currentUser.id;
-  const preferLocal=workspaceHasPendingLocalChanges(ownerId);
-  const storedOwner=localStorage.getItem('entelaqtak-workspace-owner');
-  const localForThisUser=(!storedOwner||storedOwner===ownerId)?state:{...defaults};
-  const {data,error}=await sbClient.from('user_workspaces').select('data').eq('user_id',ownerId).maybeSingle();
-  if(error)throw error;
-  if(currentUser?.id!==ownerId)return;
-  state=data?.data&&typeof data.data==='object'&&!Array.isArray(data.data)?mergeWorkspace(localForThisUser,data.data,preferLocal):normalizeState(localForThisUser);
-  localStorage.setItem('entelaqtak-workspace-owner',ownerId);
-  saveLocalWorkspace();
-  renderAll();
-  const syncSnapshotJson=JSON.stringify(state);
-  const syncSnapshot=JSON.parse(syncSnapshotJson);
-  const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:ownerId,data:syncSnapshot,updated_at:new Date().toISOString()},{onConflict:'user_id'});
-  if(saveError)throw saveError;
-  if(currentUser?.id===ownerId){
-   if(JSON.stringify(state)===syncSnapshotJson&&!cloudSavePending)clearWorkspaceDirty(ownerId);
-   $('syncState').textContent='آخر مزامنة: '+formatSyncTime();
-   $('accountSync').textContent='محفوظ سحابيًا';
-   setAuthMessage('تمت مزامنة مساحة العمل مع حسابك.');
-   loaded=true;
-  }
- }catch(e){
-  console.error('Cloud workspace load failed',e);
-  if(currentUser){$('accountSync').textContent='تعذر الاتصال';$('syncState').textContent='لم تكتمل المزامنة';setAuthMessage('تعذر تحميل المشاريع. تأكد من اتصال الإنترنت وإعدادات الحساب، ثم حاول مرة أخرى.',true);}
- }finally{
-  cloudLoading=false;
-  if(pendingRealtimeWorkspace&&currentUser){
-   const queuedRemote=pendingRealtimeWorkspace;pendingRealtimeWorkspace=null;
-   const localWins=workspaceHasPendingLocalChanges(currentUser.id);
-   const merged=mergeWorkspace(state,queuedRemote,localWins),remoteNormalized=normalizeState(queuedRemote);
-   const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(remoteNormalized);
-   state=merged;saveLocalWorkspace();renderAll();
-   $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
-   if(needsMergeSave)cloudSavePending=true;else if(localWins)clearWorkspaceDirty(currentUser.id);
-  }
-  updateAccountUI();
-  if(loaded&&currentUser)subscribeWorkspaceRealtime();
-  if(cloudSavePending){cloudSavePending=false;scheduleCloudSave();}
-  if(cloudLoadPending&&currentUser){cloudLoadPending=false;setTimeout(()=>loadCloudWorkspace(),0);}
- }
-}
-async function loadSupabaseSdk(){
- if(window.supabase?.createClient)return window.supabase;
- if(authSdkPromise)return authSdkPromise;
- authSdkPromise=(async()=>{
-  const sources=['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js','https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js'];
-  let lastError;
-  for(const src of sources){
-   try{
-    await new Promise((resolve,reject)=>{
-     const script=document.createElement('script');
-     const timer=setTimeout(()=>{script.remove();reject(new Error('انتهت مهلة تحميل مكتبة الاتصال.'));},10000);
-     script.src=src;script.async=true;
-     script.onload=()=>{clearTimeout(timer);if(window.supabase?.createClient)resolve();else reject(new Error('مكتبة الاتصال لم تتهيأ بعد التحميل.'));};
-     script.onerror=()=>{clearTimeout(timer);script.remove();reject(new Error('تعذر الوصول إلى مصدر مكتبة الاتصال.'));};
-     document.head.appendChild(script);
-    });
-    return window.supabase;
-   }catch(error){lastError=error;}
-  }
-  // Last fallback: load the ESM build if both classic-script CDNs are blocked.
-  try{
-   const moduleSdk=await import('https://esm.sh/@supabase/supabase-js@2');
-   if(moduleSdk?.createClient)return moduleSdk;
-  }catch(error){lastError=error;}
-  throw lastError||new Error('تعذر تحميل مكتبة الاتصال من مصادرها المتاحة.');
- })();
- try{return await authSdkPromise;}finally{authSdkPromise=null;}
-}
-async function connectAuth(){
- authInitError=null;
- const config=window.ENTELAQTAK_CONFIG||{};
- if(!config.url||!config.publishableKey){setAuthMessage('إعدادات ربط قاعدة البيانات غير مكتملة.');return;}
- try{
-  const sdk=await loadSupabaseSdk();
-  sbClient=sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
-  sbClient.auth.onAuthStateChange((event,session)=>{
-   const previousUserId=currentUser?.id||null;
-   currentUser=session?.user||null;
-   if(previousUserId&&currentUser?.id!==previousUserId){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;localChangesPending=false;stopWorkspaceRealtime();}
-   updateAccountUI();
-   if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
-   if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
-   if(event==='SIGNED_IN')setTimeout(()=>loadCloudWorkspace(),0);
-  });
-  const {data,error}=await sbClient.auth.getSession();
-  if(error)throw error;
-  currentUser=data.session?.user||null;updateAccountUI();
-  if(currentUser)await loadCloudWorkspace();
-  else setAuthMessage('يمكنك استخدام الموقع دون حساب. سجّل الدخول فقط إذا أردت مزامنة أعمالك بين الأجهزة.');
- }catch(error){
-  authInitError=error?.message||'تعذر تحميل مكتبة الاتصال.';
-  console.error('Supabase initialization failed',error);
-  updateAccountUI();
-  setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر تهيئة خدمة الحساب: '+authInitError+' يمكنك إعادة المحاولة من زر تسجيل الدخول.',true);
- }
-}
-function authRedirectUrl(){return 'https://sasa-antilaqatuk.github.io/entelaqtak/';}
-$('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
- if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
- const email=$('accountEmail').value.trim(),password=$('accountPassword').value;
- if(!email||!password)throw new Error('اكتب البريد الإلكتروني وكلمة المرور أولًا.');
- const {error}=await sbClient.auth.signInWithPassword({email,password});
- if(error)throw error;
- setAuthMessage('تم تسجيل الدخول. جارٍ تحميل مساحة عملك ومزامنتها.');
-}));
-$('authSignUp').addEventListener('click',()=>withAuthButton('authSignUp',async()=>{
- if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
- const email=$('accountEmail').value.trim(),password=$('accountPassword').value;
- if(!email||password.length<8)throw new Error('اكتب بريدًا صحيحًا وكلمة مرور لا تقل عن 8 أحرف.');
- const {data,error}=await sbClient.auth.signUp({email,password,options:{emailRedirectTo:authRedirectUrl()}});
- if(error)throw error;
- if(data.session)setAuthMessage('تم إنشاء الحساب وتسجيل الدخول. جارٍ تجهيز المزامنة.');
- else setAuthMessage('تم إرسال رسالة تأكيد إلى بريدك. افتح الرسالة ثم ارجع إلى الموقع لتسجيل الدخول.');
-}));
-$('authReset').addEventListener('click',()=>withAuthButton('authReset',async()=>{
- if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
- const email=$('accountEmail').value.trim();
- if(!email)throw new Error('اكتب بريدك الإلكتروني أولًا لإرسال رابط الاستعادة.');
- const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:authRedirectUrl()});
- if(error)throw error;
- setAuthMessage('إذا كان البريد مسجلًا، فستصلك رسالة لاستعادة كلمة المرور. افحص صندوق الوارد والرسائل غير المرغوب فيها.');
-}));
-$('authUpdatePassword').addEventListener('click',()=>withAuthButton('authUpdatePassword',async()=>{
- if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا.');
- const password=$('accountNewPassword').value;
- if(password.length<8)throw new Error('كلمة المرور الجديدة يجب ألا تقل عن 8 أحرف.');
- const {error}=await sbClient.auth.updateUser({password});
- if(error)throw error;
- $('accountPassword').value='';$('accountNewPassword').value='';$('authRecoveryBox').hidden=true;
- setAuthMessage('تم تحديث كلمة المرور بنجاح.');
-}));
-$('authSyncNow').addEventListener('click',()=>withAuthButton('authSyncNow',async()=>{
- if(!sbClient||!currentUser)throw new Error('سجّل الدخول أولًا لتفعيل المزامنة.');
- await loadCloudWorkspace();
-}));
-$('authSignOut').addEventListener('click',()=>withAuthButton('authSignOut',async()=>{
- if(!sbClient)return;
- const {error}=await sbClient.auth.signOut();
- if(error)throw error;
- currentUser=null;updateAccountUI();
- setAuthMessage('تم تسجيل الخروج. تظل النسخة المحلية على هذا الجهاز كما هي.');
-}));
-async function callAI(tool,payload){
- const config=window.ENTELAQTAK_CONFIG||{};
- if(!config.url||!config.publishableKey)throw new Error('إعداد الاتصال بالخادم غير مكتمل.');
- const baseUrl=config.url.endsWith('/')?config.url.slice(0,-1):config.url;
- const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),65000);
- try{
-  const headers={'Content-Type':'application/json','apikey':config.publishableKey};
-  // Pass the signed-in user's access token when available; anonymous use remains supported.
-  if(sbClient&&currentUser){
-   try{
-    const {data:sessionData,error:sessionError}=await sbClient.auth.getSession();
-    if(!sessionError&&sessionData?.session?.access_token)headers.Authorization='Bearer '+sessionData.session.access_token;
-   }catch(sessionError){console.warn('AI request will continue without account context.',sessionError);}
-  }
-  const response=await fetch(baseUrl+'/functions/v1/ai-assistant',{
-   method:'POST',
-   headers,
-   body:JSON.stringify({tool,payload}),
-   signal:controller.signal
-  });
-  const data=await response.json().catch(()=>({}));
-  if(!response.ok)throw new Error(data.error||'تعذر الاتصال بمساعد المحتوى. حاول مرة أخرى.');
-  if(typeof data.text!=='string'||!data.text.trim())throw new Error('لم يصل محتوى من المساعد الذكي.');
-  return data.text;
- }catch(error){
-  if(error.name==='AbortError')throw new Error('استغرق التوليد وقتًا أطول من اللازم. حاول مرة أخرى.');
-  throw error;
- }finally{clearTimeout(timer);}
-}
-function bindAIButton(id,tool,payloadFactory,onResult){
- $(id).addEventListener('click',async()=>{
-  const button=$(id),old=button.textContent;button.disabled=true;button.textContent='جاري التوليد...';
-  try{const text=await callAI(tool,payloadFactory());onResult(text);toast('تم توليد المحتوى بالذكاء الاصطناعي.');}
-  catch(e){toast(e.message||'تعذر استخدام المساعد الذكي.');console.error('AI request failed',e);}
-  finally{button.disabled=false;button.textContent=old;}
- });
-}
-
-const pick=a=>a[Math.floor(Math.random()*a.length)];
-const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('تم النسخ.');}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('تم النسخ.');}};
-const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
-const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','guide','ideas','studio','repurpose','script','titles','seo','calendar','analytics','challenge','brain','trends','video','brand','lab','academy','settings']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',guide:'دليل الاستخدام',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم',brain:'عقل المحتوى الذكي',trends:'رادار الموضوعات',video:'مصنع الفيديوهات',brand:'هوية المحتوى',lab:'مختبر العناوين',academy:'أكاديمية انطلاقتك',settings:'الإعدادات والبيانات'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
-all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
-
-all('[data-go]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.go)));
-const toolRoutes=[['الرئيسية','home'],['دليل الاستخدام','guide'],['أفكار المحتوى','ideas'],['استوديو المحتوى','studio'],['إعادة تدوير المحتوى','repurpose'],['كاتب السكريبت','script'],['العناوين والصورة','titles'],['مساعد SEO','seo'],['تقويم النشر','calendar'],['متابعة الأداء','analytics'],['تحدي 30 يوم','challenge'],['عقل المحتوى الذكي','brain'],['رادار الموضوعات','trends'],['مصنع الفيديوهات','video'],['هوية المحتوى','brand'],['مختبر العناوين','lab'],['أكاديمية انطلاقتك','academy'],['مصمم الصور المصغرة','thumbnail'],['الإعدادات','settings']];
-const toolSearch=$('toolSearch');
-function jumpToTool(){const q=toolSearch.value.trim().toLocaleLowerCase('ar');if(!q)return;const match=toolRoutes.find(([name])=>name.toLocaleLowerCase('ar')===q)||toolRoutes.find(([name])=>name.toLocaleLowerCase('ar').includes(q)||q.includes(name.toLocaleLowerCase('ar')));if(match){go(match[1]);toolSearch.value='';toolSearch.blur();}else toast('مش لاقي أداة بالاسم ده. جرّب اسم أداة من القائمة.');}
-toolSearch.addEventListener('change',jumpToTool);
-toolSearch.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();jumpToTool();}if(e.key==='Escape')toolSearch.value='';});
-document.addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();toolSearch.focus();toolSearch.select();}});
-
-all('[data-copy]').forEach(b=>b.addEventListener('click',()=>{const el=$(b.dataset.copy);copy(el.value!==undefined?el.value:el.textContent);}));
-renderScriptTemplates();renderPrePublishChecks();
-function renderHome(){
- $('statIdeas').textContent=state.ideas.length;$('statPacks').textContent=state.packs.length;$('statPosts').textContent=state.posts.length;$('statViews').textContent=state.metrics.reduce((s,x)=>s+(+x.views||0),0).toLocaleString('en-US');
- const done=Object.values(state.challenge).filter(Boolean).length,pct=Math.round(done/30*100);$('homeChallengeBar').style.width=pct+'%';$('homeChallengeText').textContent=done+' من 30 مهمة';$('homeChallengePct').textContent=pct+'%';$('homeChallengeTitle').textContent=done?'استمر — أنت بتتقدم!':'ابدأ بأول خطوة';
- const recent=[...state.packs].reverse().slice(0,3);$('homeRecentPacks').innerHTML=recent.length?recent.map(p=>'<div class="saveditem"><div><b>'+safe(p.topic)+'</b><p>'+safe(p.platform||'')+'</p></div><button class="mini" data-open-home="'+safe(p.id)+'">فتح</button></div>').join(''):'<div class="empty">لسه مفيش حزم محفوظة.</div>';
- all('[data-open-home]').forEach(b=>b.addEventListener('click',()=>{loadPack(b.dataset.openHome);go('studio');}));
- $('homeFocusInput').value=state.focus?.text||'';$('homeFocusState').textContent=state.focus?.text?(state.focus.done?'✓ أنجزت مهمة اليوم: ':'مهمتك الحالية: ')+state.focus.text:'لسه مفيش مهمة محددة لليوم.';$('homeFocusState').classList.toggle('done',!!state.focus?.done);$('homeFocusDone').textContent=state.focus?.done?'تم الإنجاز ✓':'تمت ✓';$('homeFocusDone').disabled=!state.focus?.text||!!state.focus?.done;
- const upcoming=[...state.posts].filter(p=>p.date>=new Date().toISOString().slice(0,10)).sort((a,b)=>a.date.localeCompare(b.date)).slice(0,3);
- $('homeUpcoming').innerHTML=upcoming.length?upcoming.map(p=>'<div class="calendaritem"><div class="datebox"><b>'+safe(p.date.slice(8,10))+'</b><small>'+safe(p.date.slice(5,7))+'</small></div><div><strong>'+safe(p.title)+'</strong><p>'+safe(p.platform)+'</p></div><span class="status '+safe(p.status)+'">'+statusName(p.status)+'</span></div>').join(''):'<div class="empty">أضف أول موعد للنشر.</div>';
-}
-$('homeFocusSave').addEventListener('click',()=>{const text=$('homeFocusInput').value.trim();if(!text)return toast('اكتب مهمة اليوم الأول.');state.focus={text,done:false};save();renderHome();toast('اتحفظت مهمة اليوم.');});
-$('homeFocusDone').addEventListener('click',()=>{if(!state.focus?.text)return toast('حدد مهمة اليوم الأول.');state.focus.done=true;save();renderHome();toast('عاش! سجلنا إنجاز مهمة اليوم.');});
-function statusName(s){return s==='done'?'تم النشر':s==='progress'?'قيد التجهيز':'مخطط';}
-const ideaTemplates={
-'التعليم والشروحات':['شرح {x} من الصفر في خطوات بسيطة','5 أخطاء بتعطّل تقدمك في {x}','اختبر نفسك: هل تعرف الأساسيات في {x}؟','طريقة عملية لتتعلم {x} من غير تعقيد','مصطلحات في {x} لازم تفهمها قبل ما تبدأ','خطة 7 أيام لتحسين مستواك في {x}'],
-'التقنية والتطبيقات':['جربت أدوات تساعدك في {x} — إيه المفيد فعلًا؟','مقارنة بين طريقتين لإنجاز {x}','إعدادات بسيطة تحسّن تجربتك مع {x}','هل تحتاج فعلًا إلى أحدث أدوات {x}؟','حل مشكلة شائعة أثناء استخدام {x}','دليل المبتدئ لاختيار أدوات {x}'],
-'الألعاب والجيمينج':['تحدي غير معتاد داخل {x}','أخطاء المبتدئين في {x}','أفضل استراتيجية جربتها في {x}','هل تستطيع إنهاء {x} بهذه الشروط؟','مقارنة بين أساليب اللعب في {x}','أغرب موقف حصل لي أثناء {x}'],
-'الطبخ والطعام':['وصفة {x} بمكونات بسيطة','3 أسرار لنجاح {x} من أول مرة','جربت طريقة مختلفة لتحضير {x}','أخطاء شائعة بتغيّر طعم {x}','وجبة سريعة لعشاق {x}','مقارنة بين طريقتين لعمل {x}'],
-'الجمال والموضة':['روتين بسيط يناسب محبي {x}','أخطاء شائعة عند اختيار {x}','كيف تختار {x} بما يناسبك؟','تجربة منتج أو أسلوب متعلق بـ{x}','تنسيقات مختلفة لفكرة {x}','أسئلة مهمة قبل تجربة {x}'],
-'الصحة واللياقة':['عادات صغيرة لتحسين {x}','مفاهيم شائعة تحتاج مراجعة عن {x}','تجربة أسبوع مع روتين {x}','كيف تبدأ {x} بشكل تدريجي؟','أخطاء في ممارسة {x} وكيف تتجنبها','أسئلة تسألها لمتخصص عن {x}'],
-'الرياضة':['تحليل لقطة أو موقف مرتبط بـ{x}','تحدي مهارة في {x}','مقارنة بين أسلوبين في {x}','كيف تطور مستواك في {x}؟','قصة ملهمة من عالم {x}','أهم ما تعلمته من متابعة {x}'],
-'السفر والخروجات':['يوم كامل في مكان مناسب لمحبي {x}','ميزانية وتجهيزات تجربة {x}','أماكن أو أنشطة غير متوقعة في {x}','أخطاء تجنبها قبل تجربة {x}','دليل عملي لأول مرة في {x}','تجربة محلية من زاوية مختلفة عن {x}'],
-'القصص والترفيه':['القصة وراء {x} — من البداية للنهاية','تفاصيل ربما لم تنتبه لها في {x}','ماذا لو حدث العكس في {x}؟','3 دروس أو مفاجآت من {x}','حكاية تجربة غير متوقعة مع {x}','أسئلة الجمهور عن {x} والإجابة عنها'],
-'الأعمال وريادة الأعمال':['فكرة مشروع صغيرة مرتبطة بـ{x}','أخطاء البداية في {x}','كيف تختبر فكرة {x} قبل أن تستثمر؟','خلف الكواليس: تجربة عملية في {x}','مقارنة طرق العمل في {x}','أسئلة يجب أن تسألها قبل بدء {x}'],
-'المال والادخار':['طريقة بسيطة لمتابعة مصروفات {x}','عادات مالية مرتبطة بـ{x} تستحق التجربة','أخطاء شائعة في التخطيط لـ{x}','كيف تضع هدفًا واقعيًا لـ{x}؟','مقارنة خيارات مرتبطة بـ{x}','أسئلة مهمة قبل قرار مالي يخص {x}'],
-'السيارات':['شرح ميزة في {x} بلغة بسيطة','ما الذي تفحصه قبل شراء {x}؟','مقارنة عملية مرتبطة بـ{x}','أخطاء العناية بـ{x} التي يجب تجنبها','تجربة قيادة أو استخدام لـ{x}','أسئلة شائعة عن {x}'],
-'المراجعات والتجارب':['تجربتي مع {x}: المميزات والقيود','هل يستحق {x} وقتك أو ميزانيتك؟','مقارنة {x} ببديل آخر','ما الذي لم يعجبني في {x}؟','مراجعة بعد استخدام {x} لفترة','لمن أنصح بـ{x} ولمن لا؟'],
-'التطوير الشخصي':['تحدي 7 أيام لتحسين {x}','عادة صغيرة أثرت على {x}','كيف تتعامل مع التسويف في {x}؟','خطة واقعية لبناء مهارة {x}','3 أسئلة تساعدك تفهم {x}','تجربة تغيير واحد في {x}'],
-'الحياة اليومية':['روتين واقعي لتحسين {x}','يوم من حياتي وأنا أجرب {x}','أشياء تمنيت معرفتها عن {x}','تنظيم بسيط يساعدك في {x}','قبل وبعد تجربة {x}','تحدي شخصي مرتبط بـ{x}'],
-'الفن والتصميم':['خطوات تصميم عمل مستوحى من {x}','أخطاء شائعة في بداية {x}','من الفكرة إلى النتيجة: مشروع {x}','مقارنة أساليب مختلفة في {x}','كيف تختار أدوات {x}؟','تحدي إبداعي باستخدام {x}']
-};
-const types={
-'تعليمي':['دليل عملي','خطوة بخطوة','أهم الأساسيات','شرح مبسط'],
-'تجربة وتحدي':['تجربتي','تحدي 24 ساعة','هل أقدر؟','النتيجة بعد التجربة'],
-'قائمة ونصائح':['5 نصائح','أهم 7 نقاط','أخطاء لازم تتجنبها','قائمة للمبتدئين'],
-'قصة وحكاية':['القصة الكاملة','ما الذي حدث؟','درس من التجربة','من البداية للنهاية'],
-'مقارنة ومراجعة':['مقارنة صريحة','المميزات والقيود','هل يستحق؟','مين الأنسب ليه؟'],
-'رأي ونقاش':['رأيي بصراحة','خلينا نناقش','هل تتفق؟','وجهة نظر مختلفة']
-};
-$('generateIdeas').addEventListener('click',()=>{
- const chosen=$('ideaNiche').value,platform=$('ideaPlatform').value,type=$('ideaType').value,aud=$('ideaAudience').value.trim()||'المهتمين بالمجال',seed=$('ideaSeed').value.trim()||'الموضوع';
- const niches=chosen==='كل المجالات'?Object.keys(ideaTemplates):[chosen];let out=[];
- for(let i=0;i<6;i++){const niche=pick(niches),x=seed==='الموضوع'?niche:seed;let title=pick(ideaTemplates[niche]||ideaTemplates['التطوير الشخصي']).replaceAll('{x}',x);if(type!=='مزيج متنوع')title=pick(types[type])+' عن '+x+' — '+title;out.push({id:Date.now()+i,title,niche,platform,audience:aud,angle:pick(['شرح عملي','قصة قصيرة','تجربة شخصية','قائمة منظمة','مقارنة واضحة'])});}
- state.ideas=[...state.ideas,...out];save();renderHome();$('ideaCount').textContent=out.length+' أفكار';$('ideasResult').className='';$('ideasResult').innerHTML=out.map((x,i)=>'<div class="idea"><h4>'+ (i+1)+'. '+safe(x.title)+'</h4><p>المجال: '+safe(x.niche)+' · المنصة: '+safe(x.platform)+'</p><p>الجمهور: '+safe(x.audience)+' · الزاوية: '+safe(x.angle)+'</p><div class="resultactions"><button class="mini" data-idea-copy="'+i+'">نسخ الفكرة</button><button class="mini" data-idea-studio="'+i+'">استخدمها في الاستوديو</button></div></div>').join('');
- all('[data-idea-copy]').forEach(b=>b.addEventListener('click',()=>copy(out[+b.dataset.ideaCopy].title)));all('[data-idea-studio]').forEach(b=>b.addEventListener('click',()=>{$('studioTopic').value=out[+b.dataset.ideaStudio].title;go('studio');}));
- toast('اتولدت 6 أفكار جديدة. راجعها واختر الأنسب.');
-});
-function createScript(topic,duration,style,audience,points){
- const hook=pick(['خليني أسألك سؤال: هل واجهت قبل كده تحديًا متعلقًا بـ'+topic+'؟','في الفيديو ده هنجرب نفهم '+topic+' بطريقة عملية وبسيطة.','قبل ما تبدأ في '+topic+'، فيه شوية نقاط ممكن توفر عليك وقت ومجهود.','لو '+topic+' من اهتماماتك، فخلينا نمشي مع بعض خطوة خطوة.']);
- return 'عنوان العمل: '+topic+'\nالمدة التقريبية: '+duration+'\nالأسلوب: '+style+'\nالجمهور: '+audience+'\n\n1) الخطاف — أول 5 إلى 10 ثوانٍ\n'+hook+'\n[ابدأ بلقطة أو مثال يجذب الانتباه بدل مقدمة طويلة.]\n\n2) تمهيد سريع ووعد واضح\nاشرح لماذا يهم الموضوع الجمهور، وما الذي سيستفيده المشاهد بنهاية الفيديو.\n\n3) المحور الأول — الأساسيات\nعرّف الفكرة والمصطلحات الضرورية بلغة بسيطة، مع مثال واضح.\n\n4) المحور الثاني — التطبيق العملي\nاعرض الخطوات بالتسلسل. وضّح ما الذي يجب فعله، ولماذا، وما النتيجة المتوقعة.\n\n5) المحور الثالث — الأخطاء والأسئلة\nاذكر خطأين شائعين، وأجب عن سؤال محتمل من الجمهور.\n'+(points?'\nنقاطك الخاصة:\n'+points+'\n':'')+'\n6) الخاتمة والدعوة للتفاعل\nلخّص أهم نتيجة في جملة، ثم اسأل سؤالًا محددًا مرتبطًا بالموضوع.\n\nملاحظات الإنتاج:\n• أضف أمثلة من تجربتك ومصادرك.\n• غيّر المشهد عند الانتقال بين المحاور.\n• راجع كل معلومة أو رقم قبل النشر.\n• هذه مسودة تحتاج مراجعة وتخصيص قبل التسجيل.';
-}
-$('makeRepurpose').addEventListener('click',()=>{
- const source=$('repurposeSource').value.trim();if(!source)return toast('الصق ملخص المحتوى أو اكتب فكرتك أولًا.');
- const platform=$('repurposePlatform').value,tone=$('repurposeTone').value,audience=$('repurposeAudience').value.trim()||'المهتمون بالموضوع';
- const clean=source.replace(/\s+/g,' ').trim(),parts=clean.split(/(?<=[.!؟?])\s+/).filter(Boolean),sentences=parts.length?parts:[clean];
- const hook=pick(['فيه نقطة مهمة لازم تعرفها عن الموضوع ده:','خليني أشاركك فكرة ممكن تغيّر طريقتك في فهم الموضوع:','لو الموضوع ده شاغلك، ركّز في النقطة دي:','أكتر حاجة تستحق الانتباه هنا هي:']);
- let out='إعادة تدوير المحتوى\nالصيغة: '+platform+'\nالنبرة: '+tone+'\nالجمهور: '+audience+'\n\n';
- if(platform.startsWith('YouTube Shorts')){
-   out+='خطاف البداية (0–3 ثوانٍ)\n'+hook+'\n\nالسيناريو المقترح (30–45 ثانية)\n';
-   out+='1. '+(sentences[0]||clean)+'\n2. '+(sentences[1]||'اشرح السبب أو الفائدة في جملة واضحة.')+'\n3. '+(sentences[2]||'اعرض مثالًا سريعًا أو خطوة عملية.')+'\n4. اختم بسؤال محدد أو دعوة لحفظ الفيديو ومشاركته.\n\n';
-   out+='اقتراحات تصوير: لقطة قريبة في البداية، نص مختصر على الشاشة، تغيير زاوية عند كل نقطة، وترجمة واضحة.';
- }else if(platform.startsWith('منشور Instagram')){
-   out+=hook+'\n\n'+sentences.slice(0,5).map((s,i)=>(i+1)+'. '+s).join('\n')+'\n\nسؤال للتفاعل: أي نقطة كانت الأكثر فائدة بالنسبة لك؟\n\n#صناعة_المحتوى #تعلم #نصائح';
- }else if(platform.startsWith('منشور مجتمع')){
-   out+='سؤال للجمهور: '+(sentences[0]||clean)+'\n\nحابب أعرف رأيكم: إيه أكتر جزء محتاجين نشرحه بالتفصيل؟\n\nاكتبوا أسئلتكم في التعليقات.';
- }else if(platform.startsWith('سلسلة')){
-   out+='منشور 1 — الفكرة الأساسية\n'+(sentences[0]||clean)+'\n\n'+sentences.slice(1,6).map((s,i)=>'منشور '+(i+2)+'\n'+s).join('\n\n')+'\n\nالمنشور الأخير — الخلاصة\nاحفظ السلسلة وارجع لها وقت التطبيق، واكتب سؤالك لو محتاج توضيح.';
- }else{
-   out+='مقدمة البودكاست\n'+hook+'\n\nمحاور النقاش\n'+sentences.slice(0,6).map((s,i)=>(i+1)+'. '+s).join('\n')+'\n\nسؤال ختامي للضيف أو المستمع: ما الخطوة العملية التي يمكن البدء بها اليوم؟';
- }
- $('repurposeOutput').value=out;toast('جهزنا مسودة جديدة — راجعها قبل النشر.');
-});
-$('downloadRepurpose').addEventListener('click',()=>{if(!$('repurposeOutput').value.trim())return toast('حوّل المحتوى أولًا.');download('entelaqtak-repurposed-content.txt',$('repurposeOutput').value);});
-$('makeScript').addEventListener('click',()=>{const topic=$('scriptTopic').value.trim();if(!topic){toast('اكتب موضوع الفيديو أولًا.');return;}$('scriptOutput').value=createScript(topic,$('scriptDuration').value,$('scriptStyle').value,$('scriptAudience').value.trim()||'المهتمون بالموضوع',$('scriptPoints').value.trim());state.lastScript=$('scriptOutput').value;save();toast('المسودة جاهزة للتعديل.');});
-function renderScriptTemplates(){
- const list=$('scriptTemplatesList');if(!list)return;
- $('scriptTemplatesCount').textContent=state.scriptTemplates.length+' قالب';
- list.innerHTML=state.scriptTemplates.length?state.scriptTemplates.map(t=>'<div class="saveditem"><div><b>'+safe(t.name)+'</b><p>'+safe(t.content.slice(0,110))+'</p></div><div class="actions"><button class="mini" data-use-script-template="'+safe(t.id)+'">استخدام</button><button class="mini" data-delete-script-template="'+safe(t.id)+'">حذف</button></div></div>').join(''):'<div class="empty">لسه مفيش قوالب محفوظة.</div>';
-}
-$('saveScriptTemplate').addEventListener('click',()=>{
- const content=$('scriptOutput').value.trim(),name=$('scriptTemplateName').value.trim();
- if(!content)return toast('اكتب أو ولّد سكريبت الأول.');
- if(!name)return toast('اكتب اسمًا للقالب.');
- state.scriptTemplates.unshift({id:'tpl-'+Date.now(),name,content,createdAt:new Date().toISOString()});
- state.scriptTemplates=state.scriptTemplates.slice(0,50);save();renderScriptTemplates();$('scriptTemplateName').value='';toast('اتحفظ القالب في مكتبتك.');
-});
-$('scriptTemplatesList').addEventListener('click',e=>{
- const use=e.target.closest('[data-use-script-template]'),del=e.target.closest('[data-delete-script-template]');
- if(use){const t=state.scriptTemplates.find(x=>x.id===use.dataset.useScriptTemplate);if(t){$('scriptOutput').value=t.content;state.lastScript=t.content;save();toast('تم تحميل القالب في محرر السكريبت.');}}
- if(del){state.scriptTemplates=state.scriptTemplates.filter(x=>x.id!==del.dataset.deleteScriptTemplate);save();renderScriptTemplates();toast('تم حذف القالب.');}
-});
-function renderPrePublishChecks(){
- const checks=state.prePublishChecks||{};document.querySelectorAll('[data-precheck]').forEach(el=>el.checked=!!checks[el.dataset.precheck]);
- const done=['hook','facts','audio','thumb','seo','cta'].filter(k=>checks[k]).length;
- $('prePublishProgress').textContent=done+' من 6';
-}
-document.querySelectorAll('[data-precheck]').forEach(el=>el.addEventListener('change',()=>{
- state.prePublishChecks={...state.prePublishChecks,[el.dataset.precheck]:el.checked};save();renderPrePublishChecks();
-}));
-$('resetPrePublish').addEventListener('click',()=>{state.prePublishChecks={};save();renderPrePublishChecks();toast('تم إعادة تعيين قائمة المراجعة.');});
-
-$('downloadScript').addEventListener('click',()=>{if(!$('scriptOutput').value.trim())return toast('اكتب السكريبت أولًا.');download('entelaqtak-script.txt',$('scriptOutput').value);});
-$('makeTitles').addEventListener('click',()=>{const t=$('titleTopic').value.trim();if(!t)return toast('اكتب موضوع الفيديو أولًا.');const b=$('titleBenefit').value.trim()||'بطريقة عملية',a=$('titleAudience').value.trim()||'المهتمين بالموضوع';const arr=['دليلك العملي إلى '+t,'5 نقاط مهمة لازم تعرفها عن '+t,t+': '+b,'أخطاء شائعة في '+t+' وكيف تتجنبها','هل '+t+' مناسب لـ'+a+'؟','ابدأ '+t+' صح — خطوات واضحة'];$('titlesResult').className='result';$('titlesResult').textContent=arr.map((x,i)=>(i+1)+'. '+x).join('\n');$('thumbResult').className='result';$('thumbResult').textContent='التكوين المقترح:\n• عنصر بصري رئيسي واحد يعبر عن '+t+'.\n• نص قصير من 2 إلى 4 كلمات مثل: «ابدأ صح» أو «خلّي بالك».\n• خلفية بسيطة وتباين واضح.\n• تعبير أو لقطة حقيقية من الفيديو.\n• تجنب الحشو والوعود المضللة.';});
-$('makeSeo').addEventListener('click',()=>{const t=$('seoTopic').value.trim();if(!t)return toast('اكتب موضوع المحتوى أولًا.');const n=$('seoNiche').value.trim(),k=$('seoKeywords').value.split(/[،,\n]/).map(x=>x.trim()).filter(Boolean),terms=[t,n,...k].filter((x,i,a)=>x&&a.indexOf(x)===i).slice(0,12);$('seoDescription').value='في المحتوى ده هنتكلم عن '+t+' بشكل واضح ومناسب للمهتمين بـ'+(n||t)+'.\n\nهنتناول الفكرة الأساسية وأهم النقاط العملية، مع أمثلة تساعدك تفهم الموضوع وتحدد الخطوة المناسبة ليك.\n\nشاركنا سؤالك أو تجربتك في التعليقات، وتابعنا للمزيد من المحتوى.\n\nأضف روابطك ومصادرك وتفاصيل تجربتك قبل النشر.';$('seoTags').className='result';$('seoTags').textContent='عبارات مقترحة:\n'+terms.join('، ')+'\n\nهاشتاجات مقترحة:\n'+terms.slice(0,5).map(x=>'#'+x.replace(/\s+/g,'_')).join(' ')+' #صناعة_المحتوى';});
-let activePack=null;
-const renderPack=p=>{activePack=p;$('studioStatus').textContent='تم إنشاء مسودة';$('studioHook').className='result';$('studioHook').textContent=p.hook;$('studioTitles').className='result';$('studioTitles').textContent=p.titles.map((t,i)=>(i+1)+'. '+t).join('\n');$('studioKeywords').className='result';$('studioKeywords').textContent=p.keywords;$('studioThumbnail').className='result';$('studioThumbnail').textContent=p.thumbnail;$('studioShots').className='result';$('studioShots').textContent=p.shots;$('studioScript').value=p.script;$('studioDescription').value=p.description;};
-function createPack(){const topic=$('studioTopic').value.trim();if(!topic){toast('اكتب موضوع المحتوى أولًا.');return;}const niche=$('studioNiche').value,platform=$('studioPlatform').value,audience=$('studioAudience').value.trim()||'المهتمون بالموضوع',tone=$('studioTone').value,duration=$('studioDuration').value,angle=$('studioAngle').value,notes=$('studioNotes').value.trim();const hook=pick(['هل بتواجه تحديًا متعلقًا بـ«'+topic+'»؟ خلينا نفكّه مع بعض خطوة بخطوة.','فيه طريقة أوضح للتعامل مع «'+topic+'» — ودي أهم الحاجات اللي لازم تعرفها.','قبل ما تجرّب «'+topic+'»، فيه تفاصيل صغيرة ممكن تفرق في النتيجة.','خلينا نبدأ من السؤال الأهم: إزاي تستفيد فعلًا من «'+topic+'»؟']);const titles=['دليلك العملي إلى '+topic+': من البداية للنتيجة','5 نقاط مهمة لازم تعرفها عن '+topic,'أشهر أخطاء '+topic+' وكيف تتجنبها','هل '+topic+' مناسب ليك؟ شرح وتجربة عملية'];const kw=[topic,niche,audience,...notes.split(/[،,\n]/).map(x=>x.trim()).filter(Boolean)].filter((x,i,a)=>x&&a.indexOf(x)===i).slice(0,8);const pack={id:Date.now(),topic,niche,platform,audience,tone,duration,angle,hook,titles,script:createScript(topic,duration,tone,audience,notes),description:'في المحتوى ده هنتكلم عن '+topic+' بشكل '+tone+' ومناسب لـ'+audience+'.\n\nهنتناول الفكرة الأساسية وأهم الخطوات العملية والأخطاء اللي من الأفضل تتجنبها، مع أمثلة تساعدك تبدأ أو تطوّر طريقتك.\n\nلو مهتم بـ'+niche+' وبتبحث عن شرح واضح حول '+topic+'، تابع المحتوى للنهاية وشاركنا تجربتك أو سؤالك في التعليقات.\n\nأضف روابطك ومصادرك وتفاصيل تجربتك قبل النشر.',keywords:'كلمات مفتاحية مقترحة: '+kw.join('، ')+'\n\nهاشتاجات مقترحة: '+kw.slice(0,4).map(x=>'#'+x.replace(/\s+/g,'_')).join(' ')+' #صناعة_المحتوى',thumbnail:'الفكرة البصرية: لقطة أو عنصر يوضح نتيجة «'+topic+'» بصريًا.\nالنص القصير: «'+pick(['ابدأ صح','خلّي بالك','الحل هنا','5 نقاط مهمة','قبل ما تبدأ'])+'»\nالتكوين: عنصر رئيسي واضح + خلفية بسيطة + تباين قوي + مساحة للنص.\nتجنّب الوعود المبالغ فيها أو صورة لا تمثل محتوى الفيديو.',shots:'1. لقطة افتتاحية تعرض المشكلة أو النتيجة.\n2. لقطة تشرح الفكرة الأساسية.\n3. تسجيل شاشة أو لقطة مقربة أثناء شرح الخطوات.\n4. لقطات مساندة توضح المثال العملي.\n5. لقطة تلخص أهم 3 نقاط.\n6. لقطة ختامية بسؤال أو دعوة للتفاعل.',createdAt:new Date().toISOString()};renderPack(pack);toast('حزمة المحتوى جاهزة — راجعها وعدّلها قبل النشر.');}
-$('generateStudio').addEventListener('click',createPack);
-function packText(p){return 'حزمة محتوى: '+p.topic+'\nالمجال: '+p.niche+' | المنصة: '+p.platform+' | الجمهور: '+p.audience+'\n\nالفكرة والخطاف\n'+p.hook+'\n\nالعناوين\n'+p.titles.join('\n')+'\n\nالسكريبت\n'+$('studioScript').value+'\n\nالوصف\n'+$('studioDescription').value+'\n\nالكلمات والهاشتاجات\n'+p.keywords+'\n\nالصورة المصغّرة\n'+p.thumbnail+'\n\nقائمة التصوير\n'+p.shots;}
-function renderHistory(){const host=$('studioHistory');$('studioSavedCount').textContent=state.packs.length+' حزمة';host.innerHTML=state.packs.length?[...state.packs].reverse().map(p=>'<div class="saveditem"><div><b>'+safe(p.topic)+'</b><p>'+safe(p.platform)+' · '+new Date(p.createdAt||Date.now()).toLocaleDateString('ar-EG')+'</p></div><div style="display:flex;gap:5px"><button class="mini" data-loadpack="'+safe(p.id)+'">فتح</button><button class="mini danger" data-delpack="'+safe(p.id)+'">حذف</button></div></div>').join(''):'<div class="empty">احفظ أول حزمة لتظهر هنا.</div>';all('[data-loadpack]',host).forEach(b=>b.addEventListener('click',()=>loadPack(b.dataset.loadpack)));all('[data-delpack]',host).forEach(b=>b.addEventListener('click',()=>{state.packs=state.packs.filter(p=>String(p.id)!==b.dataset.delpack);save();renderHistory();renderHome();}));}
-function loadPack(id){const p=state.packs.find(x=>String(x.id)===String(id));if(p){renderPack(p);go('studio');toast('فتحنا الحزمة المحفوظة.');}}
-$('saveStudio').addEventListener('click',()=>{if(!activePack)return toast('أنشئ حزمة أولًا.');const p={...activePack,script:$('studioScript').value,description:$('studioDescription').value};const exists=state.packs.some(x=>x.id===p.id);state.packs=exists?state.packs.map(x=>x.id===p.id?p:x):[...state.packs,p];save();renderHistory();renderHome();toast('اتحفظت الحزمة على جهازك.');});
-$('copyStudioAll').addEventListener('click',()=>activePack?copy(packText(activePack)):toast('أنشئ حزمة أولًا.'));
-$('downloadStudio').addEventListener('click',()=>activePack?download('entelaqtak-content-pack.txt',packText(activePack)):toast('أنشئ حزمة أولًا.'));
-$('studioToCalendar').addEventListener('click',()=>{if(!activePack)return toast('أنشئ حزمة أولًا.');$('postTitle').value=activePack.titles[0]||activePack.topic;$('postPlatform').value=activePack.platform.includes('Shorts')?'YouTube Shorts':activePack.platform.includes('TikTok')?'TikTok':activePack.platform.includes('Instagram')?'Instagram':activePack.platform.includes('Facebook')?'Facebook':activePack.platform.includes('Podcast')?'Podcast':'YouTube';const d=new Date();d.setDate(d.getDate()+1);$('postDate').value=new Date(d.getTime()-d.getTimezoneOffset()*60000).toISOString().slice(0,10);go('calendar');toast('راجع الموعد ثم أضفه للتقويم.');});
-function renderCalendar(){const list=$('calendarList');$('postCount').textContent=state.posts.length+' منشور';const sorted=[...state.posts].sort((a,b)=>a.date.localeCompare(b.date));list.innerHTML=sorted.length?sorted.map(p=>'<div class="calendaritem"><div class="datebox"><b>'+safe(p.date.slice(8,10))+'</b><small>'+safe(p.date.slice(5,7))+'</small></div><div><strong>'+safe(p.title)+'</strong><p>'+safe(p.platform)+'</p></div><div style="display:grid;gap:5px"><span class="status '+safe(p.status)+'">'+statusName(p.status)+'</span><button class="mini danger" data-delpost="'+safe(p.id)+'">حذف</button></div></div>').join(''):'<div class="empty">لسه مفيش مواعيد. أضف أول محتوى.</div>';all('[data-delpost]').forEach(b=>b.addEventListener('click',()=>{state.posts=state.posts.filter(p=>String(p.id)!==b.dataset.delpost);save();renderCalendar();renderHome();}));}
-$('addPost').addEventListener('click',()=>{const title=$('postTitle').value.trim(),date=$('postDate').value;if(!title||!date)return toast('اكتب العنوان وحدد التاريخ.');state.posts.push({id:Date.now(),title,date,platform:$('postPlatform').value,status:$('postStatus').value});save();$('postTitle').value='';renderCalendar();renderHome();toast('اتضاف المحتوى للتقويم.');});
-$('calendarExport').addEventListener('click',()=>{const rows=[['العنوان','التاريخ','المنصة','الحالة'],...state.posts.map(p=>[p.title,p.date,p.platform,statusName(p.status)])];download('entelaqtak-calendar.csv','\uFEFF'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\n'),'text/csv;charset=utf-8');});
-function renderMetrics(){const v=state.metrics.reduce((s,x)=>s+(+x.views||0),0),e=state.metrics.reduce((s,x)=>s+(+x.likes||0)+(+x.comments||0)+(+x.shares||0),0);$('totalViews').textContent=v.toLocaleString('en-US');$('totalEngagement').textContent=e.toLocaleString('en-US');$('engagementRate').textContent=(v?((e/v)*100).toFixed(2):0)+'%';$('metricCount').textContent=state.metrics.length;$('metricsList').innerHTML=state.metrics.length?[...state.metrics].sort((a,b)=>b.date.localeCompare(a.date)).map(m=>'<div class="saveditem"><div><b>'+safe(m.title)+'</b><p>'+safe(m.date)+' · '+(+m.views).toLocaleString('en-US')+' مشاهدة · '+((+m.likes||0)+(+m.comments||0)+(+m.shares||0)).toLocaleString('en-US')+' تفاعل</p></div><button class="mini danger" data-delmetric="'+safe(m.id)+'">حذف</button></div>').join(''):'<div class="empty">سجل أول منشور لمتابعة النتائج.</div>';all('[data-delmetric]').forEach(b=>b.addEventListener('click',()=>{state.metrics=state.metrics.filter(m=>String(m.id)!==b.dataset.delmetric);save();renderMetrics();renderHome();}));}
-$('addMetric').addEventListener('click',()=>{const title=$('metricTitle').value.trim(),date=$('metricDate').value||new Date().toISOString().slice(0,10),views=+$('metricViews').value;if(!title||views<0||!Number.isFinite(views))return toast('اكتب العنوان والمشاهدات بشكل صحيح.');state.metrics.push({id:Date.now(),title,date,views,likes:+$('metricLikes').value||0,comments:+$('metricComments').value||0,shares:+$('metricShares').value||0});save();['metricTitle','metricViews','metricLikes','metricComments','metricShares'].forEach(id=>$(id).value='');renderMetrics();renderHome();toast('اتحفظت نتائج المنشور.');});
-const tasks=['حدد المجال الأساسي لقناتك أو حسابك.','اكتب وصفًا واضحًا للجمهور الذي تريد الوصول إليه.','اكتب 10 أسئلة يطرحها جمهورك.','اختر 3 موضوعات مناسبة لأول محتوى.','اكتب فكرة أول فيديو أو منشور.','جهّز عنوانًا واضحًا لأول محتوى.','اكتب الخطاف لأول 5 ثوانٍ.','اكتب مسودة السكريبت أو النقاط الأساسية.','جهّز قائمة اللقطات المطلوبة.','اختر مكانًا مناسبًا للتصوير أو التسجيل.','جرّب الإضاءة والصوت قبل التسجيل.','سجّل نسخة تجريبية قصيرة.','راجع التسجيل وحدد ما يحتاج تحسينًا.','جهّز صورة مصغرة أو غلافًا واضحًا.','اكتب وصف المحتوى والكلمات المهمة.','حدد موعد نشر واقعي.','انشر أول محتوى أو جهزه للنشر.','أخبر جمهورك أو أصدقاءك بالمحتوى الجديد.','راقب التعليقات والأسئلة.','سجل نتائج أول منشور.','اكتب 3 أشياء تعلمتها من التجربة.','ابدأ فكرة المحتوى الثاني.','جرّب صيغة أو أسلوبًا مختلفًا.','حسّن العنوان أو الصورة وفق ما تعلمته.','جهّز محتوى قصيرًا من فكرة سابقة.','انشر محتوى جديدًا.','راجع أسئلة الجمهور لاستخراج أفكار جديدة.','خطط لأسبوع قادم من المحتوى.','قارن تقدمك بأول يوم.','اكتب خطتك للشهر القادم واحتفل باستمرارك.'];
-let challengeFilter='all';
-function renderChallenge(){
- const done=tasks.reduce((n,_,i)=>n+(state.challenge[i]===true?1:0),0),left=tasks.length-done,pct=Math.round(done/tasks.length*100),milestones=[0,1,2].filter(n=>Array.from({length:10},(_,j)=>state.challenge[n*10+j]===true).every(Boolean)).length,next=tasks.findIndex((_,i)=>state.challenge[i]!==true);
- $('challengeBar').style.width=pct+'%';$('challengePct').textContent=pct+'%';$('challengeDone').textContent=done+'/30';$('challengeLeft').textContent=left;$('challengeMilestone').textContent=milestones+'/3';$('challengeRing').style.setProperty('--progress',pct+'%');
- $('challengeHeadline').textContent=done===30?'أنت بطل التحدي! 🎉':done>=20?'أنت قريب جدًا من هدفك!':done>=10?'نص الطريق تقريبًا.. كمّل!':done>0?'بداية ممتازة، استمر!':'كل بداية قوية تبدأ بخطوة';
- $('challengeSubline').textContent=done===30?'أنهيت كل الخطوات. احتفل بإنجازك وخطط للمرحلة الجاية.': 'أنجزت '+done+' من 30 خطوة — خطوة واحدة كل مرة تصنع فرقًا.';
- $('challengeNext').innerHTML=next<0?'<div><small>اكتمل التحدي</small><strong>أنجزت الرحلة كاملة 🏆</strong><p>راجع نتائجك وابدأ تحديًا جديدًا بهدف أكبر.</p></div>':'<div><small>خطوتك التالية · اليوم '+(next+1)+'</small><strong>'+safe(tasks[next])+'</strong><p>ابدأ بها الآن، ومش لازم تخلص كل حاجة مرة واحدة.</p></div><button type="button" id="challengeGoNext">ابدأ المهمة ←</button>';
- const groups=[{name:'المرحلة الأولى: التأسيس والتخطيط',sub:'الأيام 1–10 · اعرف جمهورك وجهّز فكرتك'},{name:'المرحلة الثانية: الإنتاج والنشر',sub:'الأيام 11–20 · حوّل الفكرة لمحتوى حقيقي'},{name:'المرحلة الثالثة: التطوير والاستمرار',sub:'الأيام 21–30 · تعلّم وحسّن خطوتك القادمة'}];
- $('challengeList').innerHTML=groups.map((g,group)=>{const items=tasks.map((t,i)=>({t,i})).filter(x=>Math.floor(x.i/10)===group&&(challengeFilter==='all'||(challengeFilter==='done'?state.challenge[x.i]===true:state.challenge[x.i]!==true)));if(!items.length)return '';const count=items.filter(x=>state.challenge[x.i]===true).length;return '<div class="challenge-phase"><div class="challenge-phase-head"><div><strong>'+g.name+'</strong><br><small>'+g.sub+'</small></div><small>'+count+'/10 مكتمل</small></div><div class="challenge">'+items.map(x=>'<label class="'+(state.challenge[x.i]?'done':'')+'"><input type="checkbox" data-task="'+x.i+'" '+(state.challenge[x.i]?'checked':'')+'><span><b>اليوم '+(x.i+1)+'</b>'+safe(x.t)+'</span></label>').join('')+'</div></div>';}).join('')||'<div class="empty">مفيش مهام في التصنيف ده حاليًا.</div>';
- all('[data-task]').forEach(c=>c.addEventListener('change',()=>{state.challenge[c.dataset.task]=c.checked;save();renderChallenge();renderHome();}));
- all('[data-challenge-filter]').forEach(b=>b.classList.toggle('active',b.dataset.challengeFilter===challengeFilter));
- const go=$('challengeGoNext');if(go)go.addEventListener('click',()=>{const target=$('[data-task="'+next+'"]');if(target){target.closest('label').scrollIntoView({behavior:'smooth',block:'center'});target.focus();}});
-}
-all('[data-challenge-filter]').forEach(b=>b.addEventListener('click',()=>{challengeFilter=b.dataset.challengeFilter;renderChallenge();}));
-$('challengeReset').addEventListener('click',()=>{if(!confirm('متأكد إنك عايز تصفّر تقدم تحدي الـ30 يوم؟'))return;state.challenge={};save();renderChallenge();renderHome();toast('بدأنا التحدي من جديد. كل التوفيق!');});
-$('exportBtn').addEventListener('click',exportAllData);
-$('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{if(f.size>5*1024*1024)throw new Error('حجم الملف كبير.');const parsed=JSON.parse(await f.text()),d=parsed.data||parsed;if(!d||typeof d!=='object'||Array.isArray(d))throw new Error('صيغة غير صحيحة');for(const k of ['ideas','packs','posts','metrics'])if(d[k]!==undefined&&!Array.isArray(d[k]))throw new Error('بنية البيانات غير صحيحة');if(!confirm('سيتم استبدال البيانات الحالية. متابعة؟'))return;state=normalizeState(d);save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح: '+err.message);}finally{e.target.value='';}});
-bindAIButton('generateIdeasAI','ideas',()=>({niche:$('ideaNiche').value,platform:$('ideaPlatform').value,type:$('ideaType').value,audience:$('ideaAudience').value,seed:$('ideaSeed').value}),text=>{$('ideasResult').className='result';$('ideasResult').textContent=text;state.ideas.push({id:Date.now(),title:'أفكار الذكاء الاصطناعي',detail:text,niche:$('ideaNiche').value,platform:$('ideaPlatform').value});save();renderHome();});
-bindAIButton('makeScriptAI','script',()=>({topic:$('scriptTopic').value,duration:$('scriptDuration').value,style:$('scriptStyle').value,audience:$('scriptAudience').value,points:$('scriptPoints').value}),text=>{$('scriptOutput').value=text;});
-bindAIButton('studioAI','content_pack',()=>({topic:$('studioTopic').value,niche:$('studioNiche').value,platform:$('studioPlatform').value,audience:$('studioAudience').value,tone:$('studioTone').value,duration:$('studioDuration').value,angle:$('studioAngle').value,notes:$('studioNotes').value}),text=>{$('studioScript').value=text;});
-bindAIButton('makeTitlesAI','titles',()=>({topic:$('titleTopic').value,benefit:$('titleBenefit').value,audience:$('titleAudience').value}),text=>{$('titlesResult').className='result';$('titlesResult').textContent=text;});
-bindAIButton('makeSeoAI','seo',()=>({topic:$('seoTopic').value,niche:$('seoNiche').value,keywords:$('seoKeywords').value,platform:$('seoPlatform').value}),text=>{$('seoDescription').value=text;});
-bindAIButton('makeRepurposeAI','repurpose',()=>({source:$('repurposeSource').value,platform:$('repurposePlatform').value,tone:$('repurposeTone').value,audience:$('repurposeAudience').value}),text=>{$('repurposeOutput').value=text;});
-
-
-function renderSettings(){
-  $('schemaVersionLabel').textContent=DATA_VERSION;$('dataIdeas').textContent=state.ideas.length;$('dataPacks').textContent=state.packs.length;$('dataPosts').textContent=state.posts.length;$('dataMetrics').textContent=state.metrics.length;
-  $('aiSettingsStatus').textContent='تُرسل طلبات المساعد عبر الخادم. يعتمد نجاح التوليد على إعداد مفتاح مزود الذكاء الاصطناعي في إعدادات الخادم.';
- }
- function exportAllData(){
-  const copyState=normalizeState(state);
-  download('entelaqtak-backup-v'+DATA_VERSION+'.json',JSON.stringify({app:'انطلاقتك',schemaVersion:DATA_VERSION,exportedAt:new Date().toISOString(),data:copyState},null,2),'application/json');
-  toast('تم تصدير بياناتك.');
- }
- $('settingsExport').addEventListener('click',exportAllData);
-$('settingsImport').addEventListener('click',()=>$('settingsImportFile').click());
-$('settingsImportFile').addEventListener('change',async e=>{
- const file=e.target.files?.[0];if(!file)return;
- try{
-  if(file.size>5*1024*1024)throw new Error('حجم الملف أكبر من 5 ميجابايت.');
-  const parsed=JSON.parse(await file.text()),incoming=parsed.data||parsed;
-  if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw new Error('صيغة الملف غير صحيحة.');
-  for(const key of ['ideas','packs','posts','metrics'])if(incoming[key]!==undefined&&!Array.isArray(incoming[key]))throw new Error('بنية حقل '+key+' غير صحيحة.');
-  if(!confirm('سيتم استبدال بياناتك الحالية بالنسخة المستوردة. هل أنشأت نسخة من بياناتك الحالية؟ متابعة؟'))return;
-  state=normalizeState(incoming);save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
- }catch(err){toast('تعذر الاستيراد: '+err.message);}
- finally{e.target.value='';}
-});
-$('clearAllData').addEventListener('click',()=>{
- if(!confirm('تحذير: سيتم حذف جميع الأفكار والحزم والمنشورات والإحصاءات والتقدم والإعدادات المحلية نهائيًا. هل أنت متأكد؟'))return;
- state=normalizeState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
-});
-function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();}
-window.addEventListener('online',()=>{if(currentUser){$('accountSync').textContent='عاد الاتصال؛ جارٍ التحقق من المزامنة';loadCloudWorkspace();}});
-window.addEventListener('offline',()=>{if(currentUser){$('accountSync').textContent='غير متصل';$('syncState').textContent='تُحفظ التعديلات محليًا حتى عودة الاتصال.';}});
-window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews};
-$('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);connectAuth();
-})();
-</script>
-<script src="./creator-suite.js" defer></script>
-<script src="./enhancements.js" defer></script>
-<script src="./theme.js" defer></script>
-</body></html>
+</body>
+</html>
