@@ -357,7 +357,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
   </nav>
   <div class="navlabel">ملفاتك</div>
   <nav class="nav"><button id="exportBtn"><i>⇩</i>تصدير نسخة احتياطية</button><button id="importBtn"><i>⇧</i>استيراد نسخة احتياطية</button><input id="importFile" type="file" accept="application/json" hidden></nav>
-  <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>الأدوات الحالية تعمل داخل المتصفح. بياناتك محفوظة على هذا الجهاز فقط.</div>
+  <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>احفظ أعمالك على جهازك، أو سجّل الدخول لمزامنتها سحابيًا بين أجهزتك.</div>
 </aside>
 <main class="main">
 <header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><label class="tool-search"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" list="toolSearchOptions" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة" autocomplete="off"><datalist id="toolSearchOptions"><option value="الرئيسية"><option value="أفكار المحتوى"><option value="استوديو المحتوى"><option value="إعادة تدوير المحتوى"><option value="كاتب السكريبت"><option value="العناوين والصورة"><option value="مساعد SEO"><option value="تقويم النشر"><option value="متابعة الأداء"><option value="تحدي 30 يوم"><option value="عقل المحتوى الذكي"><option value="رادار الموضوعات"><option value="مصنع الفيديوهات"><option value="هوية المحتوى"><option value="مختبر العناوين"><option value="أكاديمية انطلاقتك"><option value="مصمم الصور المصغرة"><option value="دليل الاستخدام"></datalist></label><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
@@ -499,6 +499,33 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 
 <section class="view" id="view-settings">
  <div class="head"><div><span class="eyebrow">تحكم في طريقة عمل الأدوات</span><h1>الإعدادات والبيانات ⚙</h1><p>استخدم أدوات المحتوى المحلية واحتفظ بنسخة احتياطية من أعمالك.</p></div></div>
+ <div class="card account-card" id="accountSyncCard">
+  <h2>الحساب والمزامنة السحابية</h2>
+  <p class="muted">تسجيل الدخول اختياري. بعد تسجيل الدخول، تُزامَن مساحة العمل مع حسابك لتتمكن من الوصول إليها من أجهزتك الأخرى. يمكنك الاستمرار دون حساب مع الحفظ المحلي.</p>
+  <div class="grid2">
+   <div class="field"><label for="accountEmail">البريد الإلكتروني</label><input id="accountEmail" type="email" autocomplete="username" inputmode="email" placeholder="name@example.com"></div>
+   <div class="field"><label for="accountPassword">كلمة المرور</label><input id="accountPassword" type="password" minlength="8" autocomplete="current-password" placeholder="8 أحرف على الأقل"></div>
+  </div>
+  <div class="actions">
+   <button class="primary" id="authSignIn" type="button">تسجيل الدخول</button>
+   <button class="secondary" id="authSignUp" type="button">إنشاء حساب</button>
+   <button class="secondary" id="authReset" type="button">نسيت كلمة المرور؟</button>
+   <button class="danger" id="authSignOut" type="button" hidden>تسجيل الخروج</button>
+  </div>
+  <div class="divider"></div>
+  <div class="grid2">
+   <p>حالة الحساب: <b id="authState">غير مسجل</b></p>
+   <p>الحساب الحالي: <b id="accountUser">—</b></p>
+   <p>حالة المزامنة: <b id="accountSync">محلي فقط</b></p>
+   <p>آخر حالة حفظ: <b id="syncState">الحفظ على هذا الجهاز</b></p>
+   <p>خدمة الذكاء الاصطناعي: <b id="accountAI">تعمل عبر الخادم</b></p>
+  </div>
+  <div id="authRecoveryBox" hidden>
+   <div class="field"><label for="accountNewPassword">كلمة المرور الجديدة</label><input id="accountNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="اكتب كلمة مرور جديدة"></div>
+   <button class="primary" id="authUpdatePassword" type="button">حفظ كلمة المرور الجديدة</button>
+  </div>
+  <p id="authMessage" class="status-line" role="status" aria-live="polite">يمكنك استخدام الموقع دون تسجيل الدخول، أو تسجيل الدخول لتفعيل المزامنة السحابية.</p>
+ </div>
  <div class="grid2">
   <div class="card">
    <h2>مساعد المحتوى الذكي</h2>
@@ -554,9 +581,9 @@ let state=normalizeState({});
 try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
-const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}};
+const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}scheduleCloudSave();};
 
-function setAuthMessage(message,isError=false){toast(message);}
+function setAuthMessage(message,isError=false){const host=$('authMessage');if(host){host.textContent=message;host.classList.toggle('error',!!isError);}if(isError)toast(message);}
 function authErrorMessage(error){
  const code=error?.code||error?.error_code||'';
  const message=String(error?.message||'');
@@ -577,9 +604,9 @@ async function withAuthButton(id,task){
 function updateAccountUI(){
  $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
  $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
- $('accountSync').textContent=currentUser?'متصل':'محلي';
+ $('accountSync').textContent=currentUser?'جارٍ تجهيز المزامنة':'محلي فقط';
  $('accountAI').textContent='مساعد ذكي عبر الخادم';
- $('syncState').textContent=currentUser?'مزامنة الحساب مفعّلة':'محلي على هذا الجهاز';
+ $('syncState').textContent=currentUser?'جارٍ تحميل مساحة العمل':'الحفظ على هذا الجهاز';
  $('connectionBadge').innerHTML='<span class="dot"></span>'+(currentUser?'متصل بحسابك':'مساحة العمل');
  $('authSignOut').hidden=!currentUser;
 }
@@ -655,20 +682,62 @@ async function connectAuth(){
   sbClient=sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   sbClient.auth.onAuthStateChange((event,session)=>{
    currentUser=session?.user||null;updateAccountUI();
-   if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('account');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
-   if(currentUser&&event!=='SIGNED_OUT')setTimeout(()=>loadCloudWorkspace(),0);
+   if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
+   if(event==='SIGNED_IN')setTimeout(()=>loadCloudWorkspace(),0);
   });
   const {data,error}=await sbClient.auth.getSession();
   if(error)throw error;
   currentUser=data.session?.user||null;updateAccountUI();
   if(currentUser)await loadCloudWorkspace();
-  else setAuthMessage('خدمات الحساب اختيارية لمزامنة المشاريع فقط. أدوات الذكاء الاصطناعي تعمل من خلال الخادم دون تسجيل دخول.');
+  else setAuthMessage('يمكنك استخدام الموقع دون حساب. سجّل الدخول فقط إذا أردت مزامنة أعمالك بين الأجهزة.');
  }catch(error){
   console.error('Supabase initialization failed',error);
   updateAccountUI();
   setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر الاتصال بخدمة الحساب حاليًا؛ تحقق من الإنترنت ثم أعد المحاولة.',true);
  }
 }
+function authRedirectUrl(){return 'https://sasa-antilaqatuk.github.io/entelaqtak/';}
+$('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
+ const email=$('accountEmail').value.trim(),password=$('accountPassword').value;
+ if(!email||!password)throw new Error('اكتب البريد الإلكتروني وكلمة المرور أولًا.');
+ const {error}=await sbClient.auth.signInWithPassword({email,password});
+ if(error)throw error;
+ setAuthMessage('تم تسجيل الدخول. جارٍ تحميل مساحة عملك ومزامنتها.');
+}));
+$('authSignUp').addEventListener('click',()=>withAuthButton('authSignUp',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
+ const email=$('accountEmail').value.trim(),password=$('accountPassword').value;
+ if(!email||password.length<8)throw new Error('اكتب بريدًا صحيحًا وكلمة مرور لا تقل عن 8 أحرف.');
+ const {data,error}=await sbClient.auth.signUp({email,password,options:{emailRedirectTo:authRedirectUrl()}});
+ if(error)throw error;
+ if(data.session)setAuthMessage('تم إنشاء الحساب وتسجيل الدخول. جارٍ تجهيز المزامنة.');
+ else setAuthMessage('تم إرسال رسالة تأكيد إلى بريدك. افتح الرسالة ثم ارجع إلى الموقع لتسجيل الدخول.');
+}));
+$('authReset').addEventListener('click',()=>withAuthButton('authReset',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
+ const email=$('accountEmail').value.trim();
+ if(!email)throw new Error('اكتب بريدك الإلكتروني أولًا لإرسال رابط الاستعادة.');
+ const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:authRedirectUrl()});
+ if(error)throw error;
+ setAuthMessage('إذا كان البريد مسجلًا، فستصلك رسالة لاستعادة كلمة المرور. افحص صندوق الوارد والرسائل غير المرغوب فيها.');
+}));
+$('authUpdatePassword').addEventListener('click',()=>withAuthButton('authUpdatePassword',async()=>{
+ if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا.');
+ const password=$('accountNewPassword').value;
+ if(password.length<8)throw new Error('كلمة المرور الجديدة يجب ألا تقل عن 8 أحرف.');
+ const {error}=await sbClient.auth.updateUser({password});
+ if(error)throw error;
+ $('accountPassword').value='';$('accountNewPassword').value='';$('authRecoveryBox').hidden=true;
+ setAuthMessage('تم تحديث كلمة المرور بنجاح.');
+}));
+$('authSignOut').addEventListener('click',()=>withAuthButton('authSignOut',async()=>{
+ if(!sbClient)return;
+ const {error}=await sbClient.auth.signOut();
+ if(error)throw error;
+ currentUser=null;updateAccountUI();
+ setAuthMessage('تم تسجيل الخروج. تظل النسخة المحلية على هذا الجهاز كما هي.');
+}));
 async function callAI(tool,payload){
  const config=window.ENTELAQTAK_CONFIG||{};
  if(!config.url||!config.publishableKey)throw new Error('إعداد الاتصال بالخادم غير مكتمل.');
@@ -898,7 +967,7 @@ $('clearAllData').addEventListener('click',()=>{
 });
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();}
 window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews};
-$('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);
+$('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);connectAuth();
 })();
 </script>
 <script src="./creator-suite.js" defer></script>
