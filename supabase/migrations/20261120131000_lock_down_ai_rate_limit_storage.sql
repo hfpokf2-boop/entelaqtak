@@ -1,0 +1,1 @@
+alter table private.ai_rate_limits enable row level security; revoke all on private.ai_rate_limits from public, anon, authenticated;
