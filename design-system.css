@@ -1,11 +1,11 @@
 /* ENTELAQTAK 2027 — Obsidian / Crimson visual system */
 :root{
  color-scheme:dark;
- --bg:#090a0d;--surface:#111318;--surface2:#191c23;--panel:#14171d;
- --line:#2a2e37;--text:#f5f5f6;--muted:#a0a4ae;
- --accent:#e23b4f;--accent2:#ff6574;--purple:#e23b4f;--mint:#ff6574;
- --cyan:#b8bec9;--green:#65d6a5;--shadow:0 24px 70px #0009;
- --workspace-violet:#e23b4f;--workspace-mint:#ff6574;--workspace-border:#30343e;
+ --bg:#0a0f1a;--surface:#121a28;--surface2:#192437;--panel:#141e2e;
+ --line:#29364a;--text:#f2f5fc;--muted:#9aa9bd;
+ --accent:#8b7cff;--accent2:#36d9c5;--purple:#8b7cff;--mint:#36d9c5;
+ --cyan:#65b8ff;--green:#65d6a5;--shadow:0 24px 70px #0009;
+ --workspace-violet:#8b7cff;--workspace-mint:#36d9c5;--workspace-border:#30343e;
 }
 *{scrollbar-color:#414550 #0b0c10}
 ::selection{background:#e23b4f66;color:#fff}
