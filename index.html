@@ -47,6 +47,62 @@
   "description":"أدوات عربية لصنّاع المحتوى لتخطيط الأفكار وكتابة السكريبتات وتجهيز المحتوى وتنظيم النشر."
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "هل لازم أعمل حساب عشان أستخدم الموقع؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "لا. تقدر تبدأ باستخدام الأدوات الأساسية بدون تسجيل. الحساب اختياري للمزامنة السحابية."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل الموقع بينشر الفيديوهات أو المنشورات تلقائيًا؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "لا، النشر التلقائي وربط الحسابات الاجتماعية غير متاحين حاليًا. الموقع يساعدك تجهز المحتوى وتنظم مواعيده، وبعدها تنشر من منصتك بنفسك."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل الإحصائيات بتتسحب من يوتيوب وتيك توك؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "لا حاليًا. أرقام المشاهدات والتفاعل بتدخلها يدويًا داخل لوحة متابعة الأداء."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "فين بتتحفظ بياناتي؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "بدون تسجيل دخول، تُحفظ بيانات مساحة العمل على المتصفح والجهاز الحالي. عند تسجيل الدخول تتاح المزامنة السحابية لمساحة الحساب. احتفظ بنسخة احتياطية دورية."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل النصوص اللي بيولدها الذكاء الاصطناعي جاهزة للنشر؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "اعتبرها مسودات تساعدك تبدأ. راجع الحقائق والمصادر وخصص الأسلوب قبل النشر."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "هل أقدر استخدم انطلاقتك من الموبايل؟",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "أيوه، الواجهة متجاوبة مع الشاشات الصغيرة، والتطبيق قابل للتثبيت من المتصفح المتوافق."
+      }
+    }
+  ]
+}
+</script>
 <style>
 :root{color-scheme:dark;--bg:#0b1020;--surface:#121b30;--surface2:#18243b;--line:#303d5b;--text:#f4f6ff;--muted:#aab5cb;--purple:#9b8cff;--mint:#62e0c5;--blue:#79c9ef;--shadow:0 24px 70px #02061280}
 *{box-sizing:border-box}
@@ -54,6 +110,9 @@ html{scroll-behavior:smooth;scroll-padding-top:86px}
 body{margin:0;background:radial-gradient(900px 500px at 85% -10%,#55d6c222,transparent 65%),radial-gradient(700px 480px at 0 35%,#9b8cff20,transparent 70%),var(--bg);color:var(--text);font-family:Tahoma,Arial,sans-serif;line-height:1.8}
 a{color:inherit;text-decoration:none}
 a:focus-visible,button:focus-visible,summary:focus-visible{outline:2px solid var(--mint);outline-offset:4px}
+.skip-link{position:absolute;top:8px;right:8px;z-index:100;padding:10px 14px;border-radius:10px;background:var(--mint);color:#101827;font-weight:800;transform:translateY(-160%);transition:transform .15s}
+.skip-link:focus{transform:translateY(0)}
+
 .wrap{width:min(1160px,calc(100% - 40px));margin:auto}
 .site-header{position:sticky;top:0;z-index:20;background:#0b1020dd;backdrop-filter:blur(18px);border-bottom:1px solid #ffffff12}
 .header-inner{height:76px;display:flex;align-items:center;justify-content:space-between;gap:20px}
@@ -149,6 +208,7 @@ h2{font-size:clamp(24px,3.5vw,35px);line-height:1.4;margin:7px 0}
 </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">تخطي إلى المحتوى الرئيسي</a>
 <header class="site-header">
  <div class="wrap header-inner">
   <a class="brand" href="./" aria-label="انطلاقتك - الرئيسية"><span class="brand-mark" aria-hidden="true">✦</span><span>انطلاقتك<small>مساحة لصنّاع المحتوى</small></span></a>
@@ -163,7 +223,7 @@ h2{font-size:clamp(24px,3.5vw,35px);line-height:1.4;margin:7px 0}
  </div>
 </header>
 
-<main>
+<main id="main-content" tabindex="-1">
 <section class="hero">
  <div class="wrap hero-grid">
   <div>
@@ -304,6 +364,15 @@ menuButton.addEventListener('click',()=>{
  menuButton.setAttribute('aria-expanded',String(open));
  menuButton.setAttribute('aria-label',open?'إغلاق القائمة':'فتح القائمة');
 });
+
+ document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&siteNav.classList.contains('open')){
+   siteNav.classList.remove('open');
+   menuButton.setAttribute('aria-expanded','false');
+   menuButton.setAttribute('aria-label','فتح القائمة');
+   menuButton.focus();
+  }
+ });
 siteNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
  siteNav.classList.remove('open');
  menuButton.setAttribute('aria-expanded','false');
