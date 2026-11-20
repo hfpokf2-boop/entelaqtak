@@ -175,6 +175,25 @@ jobs:
           if index.count(f'href="{fb_url}"') != 2:
               errors.append("index.html: expected the Facebook link at both the top and bottom")
 
+          workspace = Path("workspace.html").read_text(encoding="utf-8")
+          studio = Path("production-studio.js").read_text(encoding="utf-8")
+          studio_required = [
+              'src="./production-studio.js"',
+              "productionProjects:[]",
+              "records('productionProjects')",
+              "'productionProjects','posts'",
+              "data-ai=\"research\"",
+              "data-ai=\"fact\"",
+              "data-ai=\"script\"",
+              "data-ai=\"edit\"",
+              "data-ai=\"publish\"",
+              "data-action=\"calendar\"",
+              "data-action=\"export\"",
+          ]
+          missing_studio = [item for item in studio_required if item not in (workspace + studio)]
+          if missing_studio:
+              errors.append("Production studio workflow missing: " + ", ".join(missing_studio))
+
           if errors:
               raise SystemExit("\n".join(errors))
           print("HTML ids, local assets, fragments, manifest, sitemap, service-worker assets, and both Facebook links passed.")
