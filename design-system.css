@@ -627,13 +627,13 @@ body:has(.top .brand) main .section p,body:has(.top .brand) main .section li{lin
    Shared visual layer for the public site and creator studio
    ========================================================= */
 :root{
- color-scheme:light!important;
- --bg:#f4f6fb!important;--surface:#ffffff!important;--surface2:#edf1f8!important;
- --panel:#ffffff!important;--line:#e2e7f0!important;--text:#172238!important;
- --muted:#69778d!important;--accent:#6257e8!important;--accent2:#0cae9a!important;
- --purple:#6257e8!important;--mint:#0cae9a!important;--cyan:#2388d8!important;
- --green:#149b70!important;--shadow:0 18px 55px rgba(29,43,73,.09)!important;
- --workspace-violet:#6257e8!important;--workspace-mint:#0cae9a!important;
+ color-scheme:light;
+ --bg:#f4f6fb;--surface:#ffffff;--surface2:#edf1f8;
+ --panel:#ffffff;--line:#e2e7f0;--text:#172238;
+ --muted:#69778d;--accent:#6257e8;--accent2:#0cae9a;
+ --purple:#6257e8;--mint:#0cae9a;--cyan:#2388d8;
+ --green:#149b70;--shadow:0 18px 55px rgba(29,43,73,.09);
+ --workspace-violet:#6257e8;--workspace-mint:#0cae9a;
 }
 html{color-scheme:light!important;background:#f4f6fb!important}
 body{
