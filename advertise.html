@@ -23,9 +23,10 @@ footer{border-top:1px solid #ffffff16;padding:22px 0;color:var(--muted);font-siz
 @media(max-width:700px){.grid{grid-template-columns:1fr}main{padding-top:38px}.lead{font-size:16px}}
 </style>
  <link rel="stylesheet" href="./design-system.css?v=20261120-dark-only-1">
+<script>try{if(localStorage.getItem("entelaqtak-language-v1")==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";}}catch(e){}</script>
 </head>
 <body>
-<header><div class="wrap top"><a class="brand" href="./">✦ انطلاقتك <small>Entelaqtak · Creator workspace</small></a><div class="lang"><button id="arBtn" type="button" aria-pressed="true">العربية</button><button id="enBtn" type="button" aria-pressed="false">English</button></div></div></header>
+<header><div class="wrap top"><a class="brand" href="./">✦ انطلاقتك <small>Entelaqtak · Creator workspace</small></a><button class="language-toggle" data-language-toggle type="button">English</button></div></header>
 <main class="wrap">
 <section id="ar" lang="ar" dir="rtl">
 <div class="hero"><span class="eyebrow">فرص الإعلان والشراكات</span><h1>خلّي علامتك التجارية قريبة من صُنّاع المحتوى</h1><p class="lead">انطلاقتك مساحة عمل تساعد صُنّاع المحتوى على التخطيط وكتابة المسودات وتنظيم النشر ومتابعة الأداء. نرحّب بالتعاون مع العلامات التجارية والأدوات والخدمات المناسبة لهذا الجمهور حول العالم.</p></div>
@@ -53,9 +54,6 @@ footer{border-top:1px solid #ffffff16;padding:22px 0;color:var(--muted);font-siz
 </section>
 </main>
 <footer><div class="wrap">© <span id="year"></span> Entelaqtak · <a href="./">Home</a><a href="./legal.html#privacy">Privacy</a><a href="./legal.html#terms">Terms</a></div></footer>
-<script>
-const ar=document.getElementById('ar'),en=document.getElementById('en'),arBtn=document.getElementById('arBtn'),enBtn=document.getElementById('enBtn');
-function setLang(lang){const isEn=lang==='en';ar.style.display=isEn?'none':'block';en.style.display=isEn?'block':'none';document.documentElement.lang=isEn?'en':'ar';document.documentElement.dir=isEn?'ltr':'rtl';arBtn.setAttribute('aria-pressed',String(!isEn));enBtn.setAttribute('aria-pressed',String(isEn));}
-arBtn.addEventListener('click',()=>setLang('ar'));enBtn.addEventListener('click',()=>setLang('en'));document.getElementById('year').textContent=new Date().getFullYear();
-</script>
+<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script src="./language.js" defer></script>
 </body></html>
