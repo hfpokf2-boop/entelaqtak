@@ -828,7 +828,7 @@ async function loadSupabaseSdk(){
  if(window.supabase?.createClient)return window.supabase;
  if(authSdkPromise)return authSdkPromise;
  authSdkPromise=(async()=>{
-  const sources=['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.95.0','https://unpkg.com/@supabase/supabase-js@2.95.0'];
+  const sources=['https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js','https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js'];
   let lastError;
   for(const src of sources){
    try{
