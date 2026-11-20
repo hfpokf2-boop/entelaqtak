@@ -8,8 +8,8 @@
   "start_url": "./workspace.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#090a0d",
-  "theme_color": "#090a0d",
+  "background_color": "#0B1120",
+  "theme_color": "#0B1120",
   "categories": ["business", "productivity", "utilities"],
   "icons": [
     {
