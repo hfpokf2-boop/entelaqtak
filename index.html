@@ -586,7 +586,7 @@ const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(roo
 const DATA_VERSION=3;
 const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local"}};
 const CLOUD_DIRTY_OWNER_KEY='entelaqtak-cloud-dirty-owner-v1';
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,localChangesPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null;
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,localChangesPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null,authInitError=null;
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
@@ -622,7 +622,10 @@ async function withAuthButton(id,task){
  const button=$(id),old=button.textContent;
  if(button.disabled)return;
  button.disabled=true;
- try{await task();}
+ try{
+  if(!sbClient){await connectAuth();if(!sbClient)throw new Error(authInitError||'تعذر تهيئة خدمة الحساب. تحقق من اتصال الإنترنت ثم حاول مرة أخرى.');}
+  await task();
+ }
  catch(error){console.error('Authentication action failed',error);setAuthMessage(authErrorMessage(error),true);}
  finally{button.disabled=false;button.textContent=old;}
 }
@@ -843,11 +846,17 @@ async function loadSupabaseSdk(){
     return window.supabase;
    }catch(error){lastError=error;}
   }
-  throw lastError||new Error('تعذر تحميل مكتبة الاتصال.');
+  // Last fallback: load the ESM build if both classic-script CDNs are blocked.
+  try{
+   const moduleSdk=await import('https://esm.sh/@supabase/supabase-js@2');
+   if(moduleSdk?.createClient)return moduleSdk;
+  }catch(error){lastError=error;}
+  throw lastError||new Error('تعذر تحميل مكتبة الاتصال من مصادرها المتاحة.');
  })();
  try{return await authSdkPromise;}finally{authSdkPromise=null;}
 }
 async function connectAuth(){
+ authInitError=null;
  const config=window.ENTELAQTAK_CONFIG||{};
  if(!config.url||!config.publishableKey){setAuthMessage('إعدادات ربط قاعدة البيانات غير مكتملة.');return;}
  try{
@@ -868,9 +877,10 @@ async function connectAuth(){
   if(currentUser)await loadCloudWorkspace();
   else setAuthMessage('يمكنك استخدام الموقع دون حساب. سجّل الدخول فقط إذا أردت مزامنة أعمالك بين الأجهزة.');
  }catch(error){
+  authInitError=error?.message||'تعذر تحميل مكتبة الاتصال.';
   console.error('Supabase initialization failed',error);
   updateAccountUI();
-  setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر الاتصال بخدمة الحساب حاليًا؛ تحقق من الإنترنت ثم أعد المحاولة.',true);
+  setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر تهيئة خدمة الحساب: '+authInitError+' يمكنك إعادة المحاولة من زر تسجيل الدخول.',true);
  }
 }
 function authRedirectUrl(){return 'https://sasa-antilaqatuk.github.io/entelaqtak/';}
