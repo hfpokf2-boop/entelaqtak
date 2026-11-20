@@ -203,7 +203,7 @@ Deno.serve(async (req: Request) => {
   }
 
   const isResearch = tool === "research" || tool === "fact_check";
-  const model = isResearch ? (Deno.env.get("OPENAI_RESEARCH_MODEL")?.trim() || "gpt-6.2-astra") : (Deno.env.get("OPENAI_MODEL")?.trim() || "gpt-6-luna");
+  const model = isResearch ? (Deno.env.get("OPENAI_RESEARCH_MODEL")?.trim() || "gpt-6-astra") : (Deno.env.get("OPENAI_MODEL")?.trim() || "gpt-6-luna");
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 55000);
 
