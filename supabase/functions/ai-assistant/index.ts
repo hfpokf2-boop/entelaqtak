@@ -169,6 +169,8 @@ Deno.serve(async (req: Request) => {
   }
 
   const projectUrl = Deno.env.get("SUPABASE_URL");
+  const openAiKey = Deno.env.get("OPENAI_API_KEY");
+  if (!openAiKey) return reply({ error: "الخدمة تحتاج إعداد مفتاح الذكاء الاصطناعي على الخادم." }, 503, origin);
   const forwarded = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "unknown";
   const ip = forwarded.split(",")[0].trim() || "unknown";
   const rateIdentity = auth.userId ? "user:" + auth.userId : "ip:" + ip;
@@ -197,9 +199,6 @@ Deno.serve(async (req: Request) => {
         { "Retry-After": String(retryAfter), "X-RateLimit-Limit": String(quota.limit ?? 5), "X-RateLimit-Remaining": "0" });
     }
   } catch { return reply({ error: "تعذر الاتصال بخدمة حماية الاستخدام. حاول مرة أخرى." }, 503, origin); }
-
-  const openAiKey = Deno.env.get("OPENAI_API_KEY");
-  if (!openAiKey) return reply({ error: "الخدمة تحتاج إعداد مفتاح الذكاء الاصطناعي على الخادم." }, 503, origin);
 
   const isResearch = tool === "research" || tool === "fact_check";
   const model = isResearch ? (Deno.env.get("OPENAI_RESEARCH_MODEL")?.trim() || "gpt-6.2-astra") : (Deno.env.get("OPENAI_MODEL")?.trim() || "gpt-6-luna");
