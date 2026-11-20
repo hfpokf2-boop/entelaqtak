@@ -627,6 +627,13 @@ function normalizeState(input){
 }
 let state=normalizeState({});
 try{const stored=localStorage.getItem('entelaqtak-v1');if(stored!==null){const raw=JSON.parse(stored);state=normalizeState(raw);localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}}catch(e){console.warn('تعذر ترحيل البيانات القديمة؛ تم الاحتفاظ بالقيمة الأصلية دون حذفها.',e);}
+// Keep a stable state object so feature modules holding app.getState() never become stale.
+function replaceWorkspaceState(next){
+ const normalized=normalizeState(next);
+ Object.keys(state).forEach(key=>delete state[key]);
+ Object.assign(state,normalized);
+ return state;
+}
 const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
 const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}scheduleCloudSave();};
@@ -773,7 +780,7 @@ function applyRealtimeWorkspace(payload,ownerId){
  const merged=mergeWorkspace(state,remote,localWins);
  const normalizedRemote=normalizeState(remote);
  const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(normalizedRemote);
- state=merged;
+ replaceWorkspaceState(merged);
  saveLocalWorkspace();
  renderAll();
  $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
@@ -819,7 +826,7 @@ async function loadCloudWorkspace(){
   const {data,error}=await sbClient.from('user_workspaces').select('data').eq('user_id',ownerId).maybeSingle();
   if(error)throw error;
   if(currentUser?.id!==ownerId)return;
-  state=data?.data&&typeof data.data==='object'&&!Array.isArray(data.data)?mergeWorkspace(localForThisUser,data.data,preferLocal):normalizeState(localForThisUser);
+  replaceWorkspaceState(data?.data&&typeof data.data==='object'&&!Array.isArray(data.data)?mergeWorkspace(localForThisUser,data.data,preferLocal):localForThisUser);
   localStorage.setItem('entelaqtak-workspace-owner',ownerId);
   saveLocalWorkspace();
   renderAll();
@@ -844,7 +851,7 @@ async function loadCloudWorkspace(){
    const localWins=workspaceHasPendingLocalChanges(currentUser.id);
    const merged=mergeWorkspace(state,queuedRemote,localWins),remoteNormalized=normalizeState(queuedRemote);
    const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(remoteNormalized);
-   state=merged;saveLocalWorkspace();renderAll();
+   replaceWorkspaceState(merged);saveLocalWorkspace();renderAll();
    $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
    if(needsMergeSave)cloudSavePending=true;else if(localWins)clearWorkspaceDirty(currentUser.id);
   }
@@ -887,7 +894,7 @@ function isolateWorkspaceForAccount(ownerId){
  try{storedOwner=localStorage.getItem('entelaqtak-workspace-owner');}catch(error){console.warn('Could not inspect local workspace owner.',error);return false;}
  // Keep first-time anonymous work available for migration, but never show one account's cache to another.
  if(!storedOwner||storedOwner===ownerId)return false;
- state=normalizeState({});
+ replaceWorkspaceState({});
  try{
   const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);
   if(marker&&marker!==ownerId)localStorage.removeItem(CLOUD_DIRTY_OWNER_KEY);
@@ -1013,7 +1020,7 @@ function bindAIButton(id,tool,payloadFactory,onResult){
 
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const copy=async text=>{try{await navigator.clipboard.writeText(text);toast('تم النسخ.');}catch(e){const ta=document.createElement('textarea');ta.value=text;document.body.append(ta);ta.select();document.execCommand('copy');ta.remove();toast('تم النسخ.');}};
-const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.click();URL.revokeObjectURL(url);};
+const download=(name,text,type='text/plain;charset=utf-8')=>{const blob=new Blob([text],{type});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=name;a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);};
 const LAST_VIEW_KEY='entelaqtak-last-view-v1';const validViews=new Set(['home','guide','ideas','studio','production','repurpose','script','titles','seo','calendar','analytics','challenge','brain','trends','video','brand','lab','academy','settings']);const go=id=>{if(id==='account'||!validViews.has(id))id='home';try{localStorage.setItem(LAST_VIEW_KEY,id);}catch(e){}all('.view').forEach(v=>v.classList.toggle('active',v.id==='view-'+id));all('[data-view]').forEach(b=>b.classList.toggle('active',b.dataset.view===id));const names={home:'الرئيسية',guide:'دليل الاستخدام',ideas:'أفكار المحتوى',studio:'استوديو المحتوى',repurpose:'إعادة تدوير المحتوى',script:'كاتب السكريبت',titles:'العناوين والصورة',seo:'مساعد SEO',calendar:'تقويم النشر',analytics:'متابعة الأداء',challenge:'تحدي 30 يوم',brain:'عقل المحتوى الذكي',trends:'رادار الموضوعات',video:'مصنع الفيديوهات',brand:'هوية المحتوى',lab:'مختبر العناوين',academy:'أكاديمية انطلاقتك',settings:'الإعدادات والبيانات',production:'استوديو الإنتاج'};$('pageTitle').textContent=names[id]||'انطلاقتك';window.scrollTo({top:0,behavior:'smooth'});};
 all('[data-view]').forEach(b=>b.addEventListener('click',()=>go(b.dataset.view)));
 
@@ -1164,7 +1171,7 @@ all('[data-challenge-filter]').forEach(b=>b.addEventListener('click',()=>{challe
 $('challengeReset').addEventListener('click',()=>{if(!confirm('متأكد إنك عايز تصفّر تقدم تحدي الـ30 يوم؟'))return;state.challenge={};save();renderChallenge();renderHome();toast('بدأنا التحدي من جديد. كل التوفيق!');});
 $('exportBtn').addEventListener('click',exportAllData);
 $('importBtn').addEventListener('click',()=>$('importFile').click());
-$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{if(f.size>5*1024*1024)throw new Error('حجم الملف كبير.');const parsed=JSON.parse(await f.text()),d=parsed.data||parsed;if(!d||typeof d!=='object'||Array.isArray(d))throw new Error('صيغة غير صحيحة');for(const k of ['ideas','packs','productionProjects','posts','metrics','scriptTemplates','experiments'])if(d[k]!==undefined&&!Array.isArray(d[k]))throw new Error('بنية البيانات غير صحيحة');for(const k of ['challenge','prePublishChecks','academy','profile','brand','focus','settings'])if(d[k]!==undefined&&(!d[k]||typeof d[k]!=='object'||Array.isArray(d[k])))throw new Error('نوع حقل '+k+' غير صحيح');if(!confirm('سيتم استبدال البيانات الحالية. متابعة؟'))return;state=normalizeState(d);save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح: '+err.message);}finally{e.target.value='';}});
+$('importFile').addEventListener('change',async e=>{const f=e.target.files&&e.target.files[0];if(!f)return;try{if(f.size>5*1024*1024)throw new Error('حجم الملف كبير.');const parsed=JSON.parse(await f.text()),d=parsed.data||parsed;if(!d||typeof d!=='object'||Array.isArray(d))throw new Error('صيغة غير صحيحة');for(const k of ['ideas','packs','productionProjects','posts','metrics','scriptTemplates','experiments'])if(d[k]!==undefined&&!Array.isArray(d[k]))throw new Error('بنية البيانات غير صحيحة');for(const k of ['challenge','prePublishChecks','academy','profile','brand','focus','settings'])if(d[k]!==undefined&&(!d[k]||typeof d[k]!=='object'||Array.isArray(d[k])))throw new Error('نوع حقل '+k+' غير صحيح');if(!confirm('سيتم استبدال البيانات الحالية. متابعة؟'))return;replaceWorkspaceState(d);save();renderAll();toast('تم استيراد النسخة الاحتياطية.');}catch(err){toast('ملف النسخة غير صالح: '+err.message);}finally{e.target.value='';}});
 bindAIButton('generateIdeasAI','ideas',()=>({niche:$('ideaNiche').value,platform:$('ideaPlatform').value,type:$('ideaType').value,audience:$('ideaAudience').value,seed:$('ideaSeed').value}),text=>{$('ideasResult').className='result';$('ideasResult').textContent=text;state.ideas.push({id:Date.now(),title:'أفكار الذكاء الاصطناعي',detail:text,niche:$('ideaNiche').value,platform:$('ideaPlatform').value});save();renderHome();});
 bindAIButton('makeScriptAI','script',()=>({topic:$('scriptTopic').value,duration:$('scriptDuration').value,style:$('scriptStyle').value,audience:$('scriptAudience').value,points:$('scriptPoints').value}),text=>{$('scriptOutput').value=text;});
 bindAIButton('studioAI','content_pack',()=>({topic:$('studioTopic').value,niche:$('studioNiche').value,platform:$('studioPlatform').value,audience:$('studioAudience').value,tone:$('studioTone').value,duration:$('studioDuration').value,angle:$('studioAngle').value,notes:$('studioNotes').value,promise:$('studioPromise')?.value||'',goal:$('studioGoal')?.value||'',avoid:$('studioAvoid')?.value||''}),text=>{
@@ -1215,13 +1222,13 @@ $('settingsImportFile').addEventListener('change',async e=>{
   if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw new Error('صيغة الملف غير صحيحة.');
   for(const key of ['ideas','packs','productionProjects','posts','metrics','scriptTemplates','experiments'])if(incoming[key]!==undefined&&!Array.isArray(incoming[key]))throw new Error('بنية حقل '+key+' غير صحيحة.');for(const key of ['challenge','prePublishChecks','academy','profile','brand','focus','settings'])if(incoming[key]!==undefined&&(!incoming[key]||typeof incoming[key]!=='object'||Array.isArray(incoming[key])))throw new Error('نوع حقل '+key+' غير صحيح.');
   if(!confirm('سيتم استبدال بياناتك الحالية بالنسخة المستوردة. هل أنشأت نسخة من بياناتك الحالية؟ متابعة؟'))return;
-  state=normalizeState(incoming);save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
+  replaceWorkspaceState(incoming);save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
  }catch(err){toast('تعذر الاستيراد: '+err.message);}
  finally{e.target.value='';}
 });
 $('clearAllData').addEventListener('click',()=>{
  if(!confirm('تحذير: سيتم حذف جميع الأفكار والحزم والمنشورات والإحصاءات والتقدم والإعدادات المحلية نهائيًا. هل أنت متأكد؟'))return;
- state=normalizeState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
+ replaceWorkspaceState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
 });
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();}
 window.addEventListener('online',()=>{if(currentUser){$('accountSync').textContent='عاد الاتصال؛ جارٍ التحقق من المزامنة';loadCloudWorkspace();}});
