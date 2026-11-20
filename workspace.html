@@ -877,6 +877,19 @@ async function loadSupabaseSdk(){
  })();
  try{return await authSdkPromise;}finally{authSdkPromise=null;}
 }
+function isolateWorkspaceForAccount(ownerId){
+ let storedOwner=null;
+ try{storedOwner=localStorage.getItem('entelaqtak-workspace-owner');}catch(error){console.warn('Could not inspect local workspace owner.',error);return false;}
+ // Keep first-time anonymous work available for migration, but never show one account's cache to another.
+ if(!storedOwner||storedOwner===ownerId)return false;
+ state=normalizeState({});
+ try{
+  const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);
+  if(marker&&marker!==ownerId)localStorage.removeItem(CLOUD_DIRTY_OWNER_KEY);
+ }catch(error){console.warn('Could not clear another account sync marker.',error);}
+ renderAll();
+ return true;
+}
 async function connectAuth(){
  authInitError=null;
  const config=window.ENTELAQTAK_CONFIG||{};
@@ -887,6 +900,7 @@ async function connectAuth(){
   sbClient.auth.onAuthStateChange((event,session)=>{
    const previousUserId=currentUser?.id||null;
    currentUser=session?.user||null;
+   if(currentUser)isolateWorkspaceForAccount(currentUser.id);
    if(previousUserId&&currentUser?.id!==previousUserId){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;localChangesPending=false;stopWorkspaceRealtime();}
    updateAccountUI();
    if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.',false,'authSignInMessage');}
@@ -895,7 +909,9 @@ async function connectAuth(){
   });
   const {data,error}=await sbClient.auth.getSession();
   if(error)throw error;
-  currentUser=data.session?.user||null;updateAccountUI();
+  currentUser=data.session?.user||null;
+  if(currentUser)isolateWorkspaceForAccount(currentUser.id);
+  updateAccountUI();
   if(currentUser)await loadCloudWorkspace();
   else setAuthMessage('يمكنك استخدام الموقع دون حساب. سجّل الدخول فقط إذا أردت مزامنة أعمالك بين الأجهزة.');
  }catch(error){
