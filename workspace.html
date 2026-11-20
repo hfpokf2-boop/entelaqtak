@@ -641,6 +641,7 @@ function setAuthMessage(message,isError=false,targetId='authMessage'){const host
 function authErrorMessage(error){
  const code=error?.code||error?.error_code||'';
  const message=String(error?.message||'');
+ if(code==='unexpected_failure'||error?.status===500||/535|badcredentials|error sending (?:confirmation|recovery) email|smtp/i.test(message))return 'تعذر إرسال رسالة البريد لأن إعدادات SMTP على الخادم مرفوضة أو غير مكتملة. تسجيل الدخول قد يظل يعمل، لكن إنشاء الحساب وتأكيد البريد واستعادة كلمة المرور قد تتعطل. يلزم تصحيح إعدادات البريد في Supabase ثم إعادة المحاولة.';
  if(code==='invalid_credentials'||/invalid login credentials/i.test(message))return 'كلمة المرور لا تطابق هذا الحساب. لو أنشأت الحساب من قبل، لا تضغط «إنشاء حساب» مرة أخرى؛ اضغط «نسيت كلمة المرور؟» وعيّن كلمة مرور جديدة.';
  if(code==='email_not_confirmed'||/email not confirmed/i.test(message))return 'الحساب موجود، لكن تأكيد البريد لم يكتمل. افتح أحدث رسالة تأكيد فقط.';
  if(/rate.?limit/i.test(message))return 'تم طلب رسائل كثيرة خلال وقت قصير. انتظر قليلًا قبل طلب رسالة أخرى.';
@@ -936,7 +937,7 @@ async function connectAuth(){
   setAuthMessage('الأدوات الأساسية تعمل بدون تسجيل. تعذر تهيئة خدمة الحساب: '+authInitError+' يمكنك إعادة المحاولة من زر تسجيل الدخول.',true);
  }
 }
-function authRedirectUrl(){return 'https://sasa-antilaqatuk.github.io/entelaqtak/';}
+function authRedirectUrl(){return 'https://sasa-antilaqatuk.github.io/entelaqtak/workspace.html';}
 $('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
  const email=$('loginEmail').value.trim(),password=$('loginPassword').value;
