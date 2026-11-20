@@ -836,3 +836,116 @@ h1 span{background:linear-gradient(100deg,#6257e8,#0cae9a)!important;background-
  .quick button{padding:12px!important}
 }
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+
+/* ENTELAQTAK — TRUSTED BLUE / TEAL DESIGN SYSTEM */
+:root{
+ color-scheme:light;
+ --bg:#f3f7fb;--surface:#ffffff;--surface2:#eaf1f8;--panel:#ffffff;
+ --line:#dce6ef;--text:#14263b;--muted:#64778c;
+ --accent:#2563eb;--accent2:#14b8a6;--purple:#2563eb;--mint:#14b8a6;
+ --workspace-violet:#2563eb;--workspace-mint:#14b8a6;
+ --trust-navy:#10243a;--trust-blue:#2563eb;--trust-teal:#0d9488;
+ --shadow:0 16px 42px rgba(16,36,58,.08);
+}
+html{background:#f3f7fb!important}
+body{
+ color:#14263b!important;
+ background:
+  radial-gradient(850px 440px at 92% -8%,rgba(37,99,235,.09),transparent 66%),
+  radial-gradient(700px 420px at -8% 38%,rgba(20,184,166,.07),transparent 68%),
+  #f3f7fb!important;
+}
+::selection{background:#2563eb30;color:#10243a}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid #14b8a6!important;outline-offset:3px}
+.site-header,.top,.topbar{background:rgba(255,255,255,.94)!important;border-color:#dce6ef!important;box-shadow:0 8px 28px rgba(16,36,58,.06)!important}
+.brand-mark,.brandmark,.workspace-mark{
+ background:linear-gradient(135deg,#2563eb,#0d9488)!important;color:#fff!important;
+ box-shadow:0 8px 22px rgba(37,99,235,.20)!important;
+}
+h1 span,.hero-main h1 span{
+ background:linear-gradient(100deg,#2563eb,#0d9488)!important;
+ background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;
+}
+.eyebrow,.kicker,.crumb:before{color:#0d9488!important}
+.hero .eyebrow{background:#eaf4ff!important;border-color:#cfe2f7!important;color:#245b91!important}
+.pulse{background:#14b8a6!important;box-shadow:0 0 0 5px #14b8a622!important}
+.btn-primary,.btn:not(.alt):not(.ghost),.button:not(.ghost),.contact,
+.header-actions .btn-primary{
+ background:linear-gradient(115deg,#2563eb,#0d9488)!important;color:#fff!important;
+ border:1px solid #2563eb!important;box-shadow:0 8px 22px rgba(37,99,235,.18)!important;
+}
+.btn-secondary,.btn.alt,.btn.ghost,.button.ghost{background:#fff!important;border:1px solid #d7e2ed!important;color:#24415d!important;box-shadow:none!important}
+.nav a:hover,.footer-links a:hover{color:#0d9488!important}
+.preview-shell{background:linear-gradient(145deg,#e8f1fb,#dcebe9)!important;border-color:#cfdeea!important;box-shadow:0 24px 60px rgba(16,36,58,.12)!important}
+.preview-window{background:#fff!important;border-color:#dce6ef!important}
+.preview-top{background:#f8fbfe!important}
+.preview-welcome,.hero-main,.final-cta,.focuspanel,.hub-account-hero{
+ background:radial-gradient(360px 210px at 0 100%,rgba(20,184,166,.12),transparent 75%),linear-gradient(120deg,#eaf2ff,#f4f9fc 62%,#e9f8f5)!important;
+ border-color:#d5e4f1!important;color:#14263b!important;
+}
+.preview-welcome small,.feature-icon,.statico,.quick button em,.datebox small,.cp-kicker,.cp-score-row strong{color:#2563eb!important}
+.feature,.step,.info-panel,.faq details,.panel,.hero-side,.stat,.quick button,.card,.section,.preview-stat,.preview-card,
+.metric,.idea,.saveditem,.calendaritem,.platform-card,.hub-panel,.cp-panel{
+ background:#fff!important;border:1px solid #dce6ef!important;
+ box-shadow:0 8px 24px rgba(16,36,58,.045)!important;color:#243b53!important;
+}
+.feature:hover,.step:hover,.quick button:hover{border-color:#8eb6df!important;box-shadow:0 14px 30px rgba(37,99,235,.09)!important}
+.feature:before{background:linear-gradient(90deg,transparent,#2563eb,#14b8a6,transparent)!important}
+.feature:after,.stat:after,.quick button:after{background:rgba(20,184,166,.10)!important}
+.feature-icon,.statico,.quick button em,.step:before,.cp-mark{
+ background:#eaf3ff!important;color:#2563eb!important;border-color:#d6e7f8!important;
+}
+.feature h3,.step h3,.info-panel h3,.hero-side h3,.panel h3,.quick b,.stat strong,.platform-card h3,.hub-panel h3,
+.section-head h2,.sectionrow h2,.head h1,.toptitle,.hub-section-heading h2{color:#142b43!important}
+.feature p,.step p,.info-panel p,.faq p,.hero-side p,.panel .sub,.quick p,.stat small,.saveditem p,.calendaritem p,
+.section-head p,.hero-copy{color:#64778c!important}
+.sidebar{background:#fff!important;border-left:1px solid #dce6ef!important;box-shadow:8px 0 28px rgba(16,36,58,.045)!important}
+.nav button{color:#526a82!important}
+.nav button i{color:#2563eb!important;background:#edf5ff!important;border-color:#dceafa!important}
+.nav button:hover{background:#f1f7fc!important;border-color:#dce8f2!important;color:#173b5d!important}
+.nav button.active{background:linear-gradient(100deg,#eaf3ff,#f2faf9)!important;border-color:#d3e5f4!important;color:#174f83!important;box-shadow:inset -3px 0 0 #2563eb!important}
+.nav button.active i{background:#dcecff!important;color:#1d5da7!important;border-color:#c7def5!important}
+.navlabel,.nav .nav-group-label{color:#8293a5!important;border-color:#e4ebf2!important}
+.side-note{background:#f5f9fc!important;border-color:#e0e9f1!important;color:#64778c!important}
+.side-note b{color:#1b3855!important}
+.main{color:#14263b!important}
+.crumb{color:#8192a4!important}
+.pill,.enhance-pill{background:#f4f8fb!important;border-color:#dce6ef!important;color:#536b82!important}
+.tool-search,.field input,.field select,.field textarea,.control,.focusrow input,#view-settings input,#view-settings select,
+.cp-output textarea,input,select,textarea{
+ background:#fff!important;border-color:#d6e2ec!important;color:#19324b!important;
+}
+.field input::placeholder,.field textarea::placeholder{color:#9aabba!important}
+input:focus,select:focus,textarea:focus,.field input:focus,.field select:focus,.field textarea:focus{
+ border-color:#3b82c4!important;box-shadow:0 0 0 3px rgba(37,99,235,.12)!important;
+}
+.field select option{background:#fff!important;color:#19324b!important}
+.result,.cp-output{background:#f7fafc!important;color:#29445e!important;border-color:#d7e4ee!important}
+.note,.hub-note{background:#eef8f7!important;border-color:#cdebe6!important;color:#356b70!important}
+.datebox{background:#eaf3ff!important;border-color:#d2e5f7!important;color:#245b91!important}
+.tags span{background:#f4f8fb!important;border-color:#e0e9f1!important;color:#60758a!important}
+.status.ok,.status.done,.hub-account-status.is-saved{background:#e9f8f3!important;color:#13795b!important;border-color:#c9ebdd!important}
+.status.progress{background:#eaf3ff!important;color:#245b91!important;border-color:#d2e5f7!important}
+.status.plan,.hub-account-status{background:#fff7e8!important;color:#95691b!important;border-color:#f1e1bd!important}
+.bar{background:#e6edf4!important}.bar span,.barfill,.fake-line i{background:linear-gradient(90deg,#2563eb,#14b8a6)!important}
+.toast{background:#10243a!important;color:#fff!important;border:1px solid #28445e!important}
+.social-top-link{background:#edf5ff!important;border-color:#d4e5f6!important;color:#245b91!important}
+.hub-hero-status{background:#ffffffc9!important;border-color:#dce6ef!important}
+.hub-hero-status b{color:#1b3855!important}
+.hub-platform-mark{background:#f3f7fb!important;border-color:#dce6ef!important}
+.cp-mark{background:#eaf3ff!important;color:#2563eb!important;border-color:#d6e7f8!important}
+.cp-output>span,.cp-score-row span{color:#29445e!important}
+.cp-audit{background:#fff8e9!important;border-color:#f0dfb7!important}
+.cp-audit>b{color:#946817!important}
+.caution{background:#fff9ed!important;border-color:#f0dfb7!important}
+.caution .caution-label{background:#fff1d6!important;color:#946817!important;border-color:#f0d69b!important}
+.footer{border-color:#dce6ef!important;color:#74879a!important}
+.footer-links a{color:#5d748b!important}
+@media(max-width:760px){
+ .app,.sidebar{background:#fff!important}
+ .sidebar{border-top:1px solid #dce6ef!important;box-shadow:0 -8px 25px rgba(16,36,58,.06)!important}
+ #nav button.active{background:#eaf3ff!important;border-color:#d3e5f4!important;box-shadow:inset 0 2px 0 #2563eb!important}
+ .top{background:#fff!important}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
