@@ -617,7 +617,7 @@ function updateAccountUI(){
 }
 function workspaceHasPendingLocalChanges(ownerId){
  if(localChangesPending||cloudSavePending||!!cloudSaveTimer)return true;
- try{return localStorage.getItem(CLOUD_DIRTY_OWNER_KEY)===ownerId;}catch(e){return false;}
+ try{const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);return marker===ownerId||marker==='__local__';}catch(e){return false;}
 }
 function markWorkspaceDirty(ownerId){
  localChangesPending=true;
@@ -626,7 +626,7 @@ function markWorkspaceDirty(ownerId){
 function clearWorkspaceDirty(ownerId){
  if(currentUser?.id!==ownerId)return;
  localChangesPending=false;
- try{if(localStorage.getItem(CLOUD_DIRTY_OWNER_KEY)===ownerId)localStorage.removeItem(CLOUD_DIRTY_OWNER_KEY);}catch(e){console.warn('Could not clear workspace sync marker.',e);}
+ try{const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);if(marker===ownerId||marker==='__local__')localStorage.removeItem(CLOUD_DIRTY_OWNER_KEY);}catch(e){console.warn('Could not clear workspace sync marker.',e);}
 }
 function mergeWorkspace(localData,remoteData,localWins=false){
  const local=localData&&typeof localData==='object'&&!Array.isArray(localData)?localData:{};
@@ -682,7 +682,11 @@ async function writeCloudWorkspace(){
  }
 }
 function scheduleCloudSave(){
- if(!sbClient||!currentUser)return;
+ if(!currentUser){
+  try{const owner=localStorage.getItem('entelaqtak-workspace-owner');localStorage.setItem(CLOUD_DIRTY_OWNER_KEY,owner||'__local__');}catch(e){console.warn('Could not mark local workspace changes.',e);}
+  return;
+ }
+ if(!sbClient)return;
  markWorkspaceDirty(currentUser.id);
  if(cloudLoading||cloudSaving){cloudSavePending=true;return;}
  clearTimeout(cloudSaveTimer);cloudSaveTimer=null;
