@@ -88,7 +88,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v42"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v43"), 'Service worker cache version was not bumped.');
           assert(worker.includes("'./content-pack-pro.js'"), 'Content pack module missing from offline app shell.');
           assert(worker.includes("'./language.js'"), 'Language module missing from offline app shell.');
           console.log('Workspace state identity, platform event bindings, and offline cache checks passed.');
@@ -118,9 +118,10 @@ jobs:
               if source.count("{") != source.count("}"):
                   errors.append(name + ": unbalanced CSS blocks")
           required = [
-              "--bg:#0B1120", "--accent:#B79AF7", "--accent2:#E3A0D2",
-              "button:hover", "button:active", "button:focus-visible",
-              "background:linear-gradient(115deg,#B79AF7,#776DBA)",
+              "--bg:#0B1120", "--action:#2563EB", "--action-hover:#1D4ED8",
+              "button:hover", "button:active", "button:focus-visible", "button:disabled",
+              "linear-gradient(115deg,#2563EB,#3B82F6)",
+              ".nav button.active", ".theme-swatch.aurora", "prefers-reduced-motion:reduce",
               "button.active,#nav button.active", ".cp-output button,.cp-foot button", "button.primary,button.secondary,button.danger", "button.menu-toggle,button.theme-close", ".lang button,.theme-panel button", "#view-settings button",
           ]
           for token in required:
@@ -131,14 +132,19 @@ jobs:
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v42" not in worker:
+          if "entelaqtak-shell-v43" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
+          if "ignoreSearch:true" not in worker:
+              errors.append("service-worker.js: versioned assets are not matched to the current offline cache")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
-          if "وردي ولافندر" not in workspace or "ثيم وردي ولافندر مفعّل" not in workspace:
+          if "أزرق ملكي" not in workspace or "ثيم أزرق ملكي مفعّل" not in workspace:
               errors.append("workspace.html: theme preset labels are not aligned with the blue palette")
+          theme = Path("theme.js").read_text(encoding="utf-8")
+          if "entelaqtak-theme-v3" not in theme or "'important'" not in theme:
+              errors.append("theme.js: color preset persistence does not apply over the shared theme tokens")
           if errors:
               raise SystemExit("\\n".join(errors))
-          print("Dark lavender/rose palette, consistent stylesheet versions, and button states passed.")
+          print("Dark navy/blue palette, theme presets, stylesheet versions, and button states passed.")
           PY
       - name: Audit HTML, local assets, and PWA metadata
         run: |
