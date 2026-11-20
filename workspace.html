@@ -522,33 +522,46 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 
 <section class="view" id="view-settings">
  <div class="head"><div><span class="eyebrow">تحكم في طريقة عمل الأدوات</span><h1>الإعدادات والبيانات ⚙</h1><p>استخدم أدوات المحتوى المحلية واحتفظ بنسخة احتياطية من أعمالك.</p></div></div>
- <div class="card account-card" id="accountSyncCard">
-  <h2>الحساب والمزامنة السحابية</h2>
-  <p class="muted">تسجيل الدخول اختياري. بعد تسجيل الدخول تُحفظ التعديلات سحابيًا، وتصل تحديثات أجهزتك الأخرى مباشرة عند اتصال الإنترنت. يمكنك الاستمرار دون حساب مع الحفظ المحلي.</p>
-  <div class="grid2">
-   <div class="field"><label for="accountEmail">البريد الإلكتروني</label><input id="accountEmail" type="email" autocomplete="username" inputmode="email" placeholder="name@example.com"></div>
-   <div class="field"><label for="accountPassword">كلمة المرور</label><input id="accountPassword" type="password" minlength="8" autocomplete="current-password" placeholder="8 أحرف على الأقل"></div>
-  </div>
-  <div class="actions">
-   <button class="primary" id="authSignIn" type="button">تسجيل الدخول</button>
-   <button class="secondary" id="authSignUp" type="button">إنشاء حساب</button>
-   <button class="secondary" id="authReset" type="button">نسيت كلمة المرور؟</button>
-   <button class="secondary" id="authSyncNow" type="button" hidden>مزامنة الآن ↻</button>
-   <button class="danger" id="authSignOut" type="button" hidden>تسجيل الخروج</button>
-  </div>
-  <div class="divider"></div>
-  <div class="grid2">
-   <p>حالة الحساب: <b id="authState">غير مسجل</b></p>
-   <p>الحساب الحالي: <b id="accountUser">—</b></p>
-   <p>حالة المزامنة: <b id="accountSync">محلي فقط</b></p>
-   <p>آخر حالة حفظ: <b id="syncState">الحفظ على هذا الجهاز</b></p>
-   <p>خدمة الذكاء الاصطناعي: <b id="accountAI">تعمل عبر الخادم</b></p>
-  </div>
-  <div id="authRecoveryBox" hidden>
-   <div class="field"><label for="accountNewPassword">كلمة المرور الجديدة</label><input id="accountNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="اكتب كلمة مرور جديدة"></div>
-   <button class="primary" id="authUpdatePassword" type="button">حفظ كلمة المرور الجديدة</button>
-  </div>
-  <p id="authMessage" class="status-line" role="status" aria-live="polite">يمكنك استخدام الموقع دون تسجيل الدخول، أو تسجيل الدخول لتفعيل المزامنة السحابية.</p>
+ <div class="account-flow-grid" id="accountSyncCard">
+  <section class="card account-flow-card" id="accountLoginCard">
+   <div class="account-flow-heading"><span>01 · SIGN IN</span><h2>تسجيل الدخول</h2></div>
+   <p class="muted">ادخل إلى حسابك الحالي لاستعادة مساحة عملك ومزامنة بياناتك.</p>
+   <div class="field"><label for="loginEmail">البريد الإلكتروني</label><input id="loginEmail" type="email" autocomplete="username" inputmode="email" placeholder="name@example.com"></div>
+   <div class="field"><label for="loginPassword">كلمة المرور</label><input id="loginPassword" type="password" autocomplete="current-password" placeholder="كلمة مرور حسابك"></div>
+   <div class="actions"><button class="primary" id="authSignIn" type="button">تسجيل الدخول</button><button class="secondary" id="authReset" type="button">نسيت كلمة المرور؟</button></div>
+   <div id="authRecoveryBox" hidden>
+    <div class="field"><label for="accountNewPassword">كلمة المرور الجديدة</label><input id="accountNewPassword" type="password" minlength="8" autocomplete="new-password" placeholder="اكتب كلمة مرور جديدة"></div>
+    <button class="primary" id="authUpdatePassword" type="button">حفظ كلمة المرور الجديدة</button>
+   </div>
+   <p id="authSignInMessage" class="status-line" role="status" aria-live="polite">استخدم بيانات الحساب الذي أنشأته من قبل.</p>
+  </section>
+  <section class="card account-flow-card" id="accountCreateCard">
+   <div class="account-flow-heading"><span>02 · CREATE ACCOUNT</span><h2>إنشاء حساب جديد</h2></div>
+   <p class="muted">أنشئ حسابًا مستقلًا ببريدك الإلكتروني وكلمة مرور جديدة.</p>
+   <div class="field"><label for="accountCreateEmail">البريد الإلكتروني</label><input id="accountCreateEmail" type="email" autocomplete="email" inputmode="email" placeholder="name@example.com"></div>
+   <div class="field"><label for="accountCreatePassword">كلمة المرور</label><input id="accountCreatePassword" type="password" minlength="8" autocomplete="new-password" placeholder="8 أحرف على الأقل"></div>
+   <div class="field"><label for="accountCreatePasswordConfirm">تأكيد كلمة المرور</label><input id="accountCreatePasswordConfirm" type="password" minlength="8" autocomplete="new-password" placeholder="أعد كتابة كلمة المرور"></div>
+   <div class="actions"><button class="primary" id="authSignUp" type="button">إنشاء الحساب</button></div>
+   <p id="authSignUpMessage" class="status-line" role="status" aria-live="polite">بعد الإنشاء قد تحتاج إلى تأكيد بريدك الإلكتروني.</p>
+  </section>
+  <section class="card account-flow-card" id="accountSessionCard">
+   <div class="account-flow-heading"><span>03 · ACCOUNT SESSION</span><h2>تسجيل الخروج</h2></div>
+   <p class="muted">إدارة جلسة الحساب الحالية فقط. تسجيل الخروج لا يحذف أعمالك أو نسختك المحلية.</p>
+   <div class="account-flow-detail"><span>حالة الحساب</span><b id="authState">غير مسجل</b></div>
+   <div class="account-flow-detail"><span>الحساب الحالي</span><b id="accountUser">—</b></div>
+   <div class="actions"><button class="danger" id="authSignOut" type="button" disabled>تسجيل الخروج</button></div>
+   <p id="authSignOutMessage" class="status-line" role="status" aria-live="polite">سجّل الدخول أولًا لاستخدام تسجيل الخروج.</p>
+  </section>
+  <section class="card account-flow-card" id="accountCloudCard">
+   <div class="account-flow-heading"><span>04 · CLOUD SYNC</span><h2>المزامنة السحابية</h2></div>
+   <p class="muted">المزامنة خدمة منفصلة عن إنشاء الحساب وتسجيل الخروج. بعد تسجيل الدخول تُحفظ التعديلات تلقائيًا وتصل تحديثات أجهزتك الأخرى عند الاتصال.</p>
+   <div class="account-flow-detail"><span>حالة المزامنة</span><b id="accountSync">محلي فقط</b></div>
+   <div class="account-flow-detail"><span>آخر حالة حفظ</span><b id="syncState">الحفظ على هذا الجهاز</b></div>
+   <div class="account-flow-detail"><span>خدمة الذكاء الاصطناعي</span><b id="accountAI">تعمل عبر الخادم</b></div>
+   <div class="actions"><button class="secondary" id="authSyncNow" type="button" disabled>مزامنة الآن ↻</button></div>
+   <p id="authSyncMessage" class="status-line" role="status" aria-live="polite">المزامنة متاحة بعد تسجيل الدخول.</p>
+  </section>
+  <p id="authMessage" class="status-line account-flow-global-message" role="status" aria-live="polite">يمكنك استخدام الموقع دون تسجيل الدخول، أو تسجيل الدخول لتفعيل المزامنة السحابية.</p>
  </div>
  <div class="grid2">
   <div class="card">
@@ -613,7 +626,7 @@ const safe=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;
 const toast=m=>{const t=$('toast');t.textContent=m;t.classList.add('show');clearTimeout(window.__toastTimer);window.__toastTimer=setTimeout(()=>t.classList.remove('show'),2300)};
 const save=()=>{try{state.schemaVersion=DATA_VERSION;localStorage.setItem('entelaqtak-v1',JSON.stringify(state));}catch(e){toast('تعذر الحفظ المحلي؛ صدّر نسخة احتياطية أو أفرغ مساحة.');}scheduleCloudSave();};
 
-function setAuthMessage(message,isError=false){const host=$('authMessage');if(host){host.textContent=message;host.classList.toggle('error',!!isError);}if(isError)toast(message);}
+function setAuthMessage(message,isError=false,targetId='authMessage'){const host=$(targetId)||$('authMessage');if(host){host.textContent=message;host.classList.toggle('error',!!isError);}if(isError)toast(message);}
 function authErrorMessage(error){
  const code=error?.code||error?.error_code||'';
  const message=String(error?.message||'');
@@ -631,7 +644,7 @@ async function withAuthButton(id,task){
   if(!sbClient){await connectAuth();if(!sbClient)throw new Error(authInitError||'تعذر تهيئة خدمة الحساب. تحقق من اتصال الإنترنت ثم حاول مرة أخرى.');}
   await task();
  }
- catch(error){console.error('Authentication action failed',error);setAuthMessage(authErrorMessage(error),true);}
+ catch(error){console.error('Authentication action failed',error);const targetId=({authSignIn:'authSignInMessage',authSignUp:'authSignUpMessage',authReset:'authSignInMessage',authUpdatePassword:'authSignInMessage',authSignOut:'authSignOutMessage',authSyncNow:'authSyncMessage'})[id]||'authMessage';setAuthMessage(authErrorMessage(error),true,targetId);}
  finally{button.disabled=false;button.textContent=old;}
 }
 function updateAccountUI(){
@@ -641,10 +654,13 @@ function updateAccountUI(){
  $('accountAI').textContent='مساعد ذكي عبر الخادم';
  if($('syncState')&&!cloudLoading&&!cloudSaving&&!currentUser)$('syncState').textContent='الحفظ على هذا الجهاز';
  $('connectionBadge').innerHTML='<span class="dot"></span>'+(currentUser?'متصل بحسابك':'مساحة العمل');
- $('authSignOut').hidden=!currentUser;
- $('authSyncNow').hidden=!currentUser;
+ $('authSignOut').hidden=false;
+ $('authSignOut').disabled=!currentUser;
+ $('authSyncNow').hidden=false;
  $('authSyncNow').disabled=!currentUser||cloudLoading||cloudSaving;
  $('authSyncNow').textContent=cloudLoading?'جارٍ التحديث...':'مزامنة الآن ↻';
+ $('authSignIn').disabled=!!currentUser;
+ $('authSignUp').disabled=!!currentUser;
 }
 function workspaceHasPendingLocalChanges(ownerId){
  if(localChangesPending||cloudSavePending||!!cloudSaveTimer)return true;
@@ -872,7 +888,7 @@ async function connectAuth(){
    currentUser=session?.user||null;
    if(previousUserId&&currentUser?.id!==previousUserId){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;localChangesPending=false;stopWorkspaceRealtime();}
    updateAccountUI();
-   if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
+   if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.',false,'authSignInMessage');}
    if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
    if(event==='SIGNED_IN')setTimeout(()=>loadCloudWorkspace(),0);
   });
@@ -891,24 +907,25 @@ async function connectAuth(){
 function authRedirectUrl(){return 'https://sasa-antilaqatuk.github.io/entelaqtak/';}
 $('authSignIn').addEventListener('click',()=>withAuthButton('authSignIn',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
- const email=$('accountEmail').value.trim(),password=$('accountPassword').value;
+ const email=$('loginEmail').value.trim(),password=$('loginPassword').value;
  if(!email||!password)throw new Error('اكتب البريد الإلكتروني وكلمة المرور أولًا.');
  const {error}=await sbClient.auth.signInWithPassword({email,password});
  if(error)throw error;
- setAuthMessage('تم تسجيل الدخول. جارٍ تحميل مساحة عملك ومزامنتها.');
+ setAuthMessage('تم تسجيل الدخول. جارٍ تحميل مساحة عملك ومزامنتها.',false,'authSignInMessage');
 }));
 $('authSignUp').addEventListener('click',()=>withAuthButton('authSignUp',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
- const email=$('accountEmail').value.trim(),password=$('accountPassword').value;
+ const email=$('accountCreateEmail').value.trim(),password=$('accountCreatePassword').value,confirmPassword=$('accountCreatePasswordConfirm').value;
  if(!email||password.length<8)throw new Error('اكتب بريدًا صحيحًا وكلمة مرور لا تقل عن 8 أحرف.');
+ if(password!==confirmPassword)throw new Error('كلمتا المرور غير متطابقتين.');
  const {data,error}=await sbClient.auth.signUp({email,password,options:{emailRedirectTo:authRedirectUrl()}});
  if(error)throw error;
- if(data.session)setAuthMessage('تم إنشاء الحساب وتسجيل الدخول. جارٍ تجهيز المزامنة.');
- else setAuthMessage('تم إرسال رسالة تأكيد إلى بريدك. افتح الرسالة ثم ارجع إلى الموقع لتسجيل الدخول.');
+ if(data.session)setAuthMessage('تم إنشاء الحساب وتسجيل الدخول. جارٍ تجهيز المزامنة.',false,'authSignUpMessage');
+ else setAuthMessage('تم إرسال رسالة تأكيد إلى بريدك. افتح الرسالة ثم ارجع إلى الموقع لتسجيل الدخول.',false,'authSignUpMessage');
 }));
 $('authReset').addEventListener('click',()=>withAuthButton('authReset',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب لم تكتمل تهيئتها. حدّث الصفحة وحاول مرة أخرى.');
- const email=$('accountEmail').value.trim();
+ const email=$('loginEmail').value.trim();
  if(!email)throw new Error('اكتب بريدك الإلكتروني أولًا لإرسال رابط الاستعادة.');
  const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:authRedirectUrl()});
  if(error)throw error;
@@ -920,8 +937,8 @@ $('authUpdatePassword').addEventListener('click',()=>withAuthButton('authUpdateP
  if(password.length<8)throw new Error('كلمة المرور الجديدة يجب ألا تقل عن 8 أحرف.');
  const {error}=await sbClient.auth.updateUser({password});
  if(error)throw error;
- $('accountPassword').value='';$('accountNewPassword').value='';$('authRecoveryBox').hidden=true;
- setAuthMessage('تم تحديث كلمة المرور بنجاح.');
+ $('loginPassword').value='';$('accountNewPassword').value='';$('authRecoveryBox').hidden=true;
+ setAuthMessage('تم تحديث كلمة المرور بنجاح.',false,'authSignInMessage');
 }));
 $('authSyncNow').addEventListener('click',()=>withAuthButton('authSyncNow',async()=>{
  if(!sbClient||!currentUser)throw new Error('سجّل الدخول أولًا لتفعيل المزامنة.');
@@ -932,7 +949,7 @@ $('authSignOut').addEventListener('click',()=>withAuthButton('authSignOut',async
  const {error}=await sbClient.auth.signOut();
  if(error)throw error;
  currentUser=null;updateAccountUI();
- setAuthMessage('تم تسجيل الخروج. تظل النسخة المحلية على هذا الجهاز كما هي.');
+ setAuthMessage('تم تسجيل الخروج. تظل النسخة المحلية على هذا الجهاز كما هي.',false,'authSignOutMessage');
 }));
 async function callAI(tool,payload){
  const config=window.ENTELAQTAK_CONFIG||{};
