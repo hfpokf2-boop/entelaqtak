@@ -207,6 +207,7 @@ h2{font-size:clamp(24px,3.5vw,35px);line-height:1.4;margin:7px 0}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}}
 </style>
  <link rel="stylesheet" href="./design-system.css?v=20261120-dark-only-1">
+<script>try{if(localStorage.getItem("entelaqtak-language-v1")==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";}}catch(e){}</script>
 </head>
 <body>
 <a class="skip-link" href="#main-content">تخطي إلى المحتوى الرئيسي</a>
@@ -217,6 +218,7 @@ h2{font-size:clamp(24px,3.5vw,35px);line-height:1.4;margin:7px 0}
    <a href="#tools">الأدوات</a><a href="#how">طريقة العمل</a><a href="#about">عن المنصة</a><a href="#faq">الأسئلة الشائعة</a><a href="./advertise.html">الإعلان والرعاية</a>
   </nav>
   <div class="header-actions">
+   <button class="language-toggle" data-language-toggle type="button">English</button>
    <a class="facebook" href="https://www.facebook.com/profile.php?id=61596964071145" target="_blank" rel="noopener noreferrer" aria-label="تابع انطلاقتك على فيسبوك"><span class="facebook-mark" aria-hidden="true">f</span><span>فيسبوك</span></a>
    <a class="btn btn-primary" href="./workspace.html">ادخل مساحة العمل <span aria-hidden="true">←</span></a>
    <button class="menu-toggle" id="menuToggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="siteNav">☰</button>
@@ -396,5 +398,6 @@ siteNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
  }
  document.getElementById('year').textContent=String(new Date().getFullYear());
 </script>
+<script src="./language.js" defer></script>
 </body>
 </html>
