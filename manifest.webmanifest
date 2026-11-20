@@ -5,7 +5,7 @@
   "description": "مساحة عربية لتخطيط المحتوى وكتابته وتصميم الصور المصغّرة ومتابعة الأداء.",
   "lang": "ar",
   "dir": "rtl",
-  "start_url": "./",
+  "start_url": "./workspace.html",
   "scope": "./",
   "display": "standalone",
   "background_color": "#0b1020",
