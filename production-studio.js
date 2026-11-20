@@ -33,6 +33,8 @@
     nav.appendChild(b);
     b.addEventListener('click', () => app.go('production'));
   }
+  const productionNav = nav && nav.querySelector('[data-view="production"]');
+  if (productionNav) productionNav.addEventListener('click', () => render());
 
   const view = document.createElement('section');
   view.className = 'view';
@@ -128,9 +130,9 @@
       return '<div class="prod-panel-grid"><article class="prod-panel"><div class="prod-panel-heading"><div><span class="prod-kicker">RESEARCH ROOM</span><h2>غرفة البحث والتحقق</h2><p>اجمع المعلومات والمصادر قبل كتابة أي معلومة في السكريبت.</p></div><span class="prod-icon">02</span></div>' +
         '<div class="prod-callout">البحث يستخدم الويب عند تشغيله ويعرض المصادر التي رجع إليها. راجع المصدر الأصلي وتاريخ المعلومة قبل اعتمادها.</div>' +
         '<button class="prod-primary" type="button" data-ai="research">ابحث عن الموضوع بمصادر مباشرة ✦</button>' +
-        '<div class="prod-output-block"><div class="prod-output-title"><b>نتيجة البحث</b><button type="button" class="prod-mini" data-copy="researchText">نسخ البحث</button></div><textarea data-field="researchText" rows="12" placeholder="ملخص البحث والزوايا المقترحة هتظهر هنا...">' + safe(project.researchText) + '</textarea>' + sourceLinks(project.researchSources) + '</div>' +
+        '<div class="prod-output-block"><div class="prod-output-title"><b>نتيجة البحث</b><button type="button" class="prod-mini" data-action="copy" data-value="researchText">نسخ البحث</button></div><textarea data-field="researchText" rows="12" placeholder="ملخص البحث والزوايا المقترحة هتظهر هنا...">' + safe(project.researchText) + '</textarea>' + sourceLinks(project.researchSources) + '</div>' +
         '<div class="prod-divider"></div><h3>مدقق الحقائق داخل المشروع</h3><p class="prod-muted">اكتب ادعاء محددًا تريد التحقق منه قبل إدخاله في الفيديو.</p><textarea data-field="factClaim" rows="3" placeholder="مثال: المنتخب البرازيلي فاز بكأس العالم خمس مرات.">' + safe(project.factClaim) + '</textarea>' +
-        '<button class="prod-secondary" type="button" data-ai="fact">تحقق من الادعاء بالمصادر</button><div class="prod-output-block"><div class="prod-output-title"><b>نتيجة التحقق</b><button type="button" class="prod-mini" data-copy="factText">نسخ النتيجة</button></div><textarea data-field="factText" rows="7" placeholder="حكم التحقق والتوضيح هيظهروا هنا...">' + safe(project.factText) + '</textarea>' + sourceLinks(project.factSources) + '</div>' +
+        '<button class="prod-secondary" type="button" data-ai="fact">تحقق من الادعاء بالمصادر</button><div class="prod-output-block"><div class="prod-output-title"><b>نتيجة التحقق</b><button type="button" class="prod-mini" data-action="copy" data-value="factText">نسخ النتيجة</button></div><textarea data-field="factText" rows="7" placeholder="حكم التحقق والتوضيح هيظهروا هنا...">' + safe(project.factText) + '</textarea>' + sourceLinks(project.factSources) + '</div>' +
         '<div class="prod-actions"><button class="prod-secondary" type="button" data-action="back">السابق</button><button class="prod-primary" type="button" data-action="next">اعتماد البحث والانتقال للسكريبت ←</button></div></article>' +
         '<article class="prod-panel prod-side-panel"><span class="prod-kicker">SOURCE CONTROL</span><h3>قبل ما تعتمد معلومة</h3><div class="prod-checklist-static"><p>✓ افصل بين تاريخ الحدث وتاريخ نشر الخبر.</p><p>✓ راجع الأرقام والأسماء من المصدر الأصلي.</p><p>✓ لا تحوّل الرأي أو التوقع إلى حقيقة.</p><p>✓ احتفظ برابط المصدر مع المعلومة.</p></div><div class="prod-tip">البحث يساعدك، لكنه لا يلغي المراجعة البشرية. السكريبت النهائي مسؤوليتك قبل النشر.</div></article></div>';
     }
