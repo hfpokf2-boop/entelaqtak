@@ -312,7 +312,7 @@
       p.stage=stageButton.dataset.stage;persist(p,false);render();return;
     }
     const pickButton = event.target.closest('[data-pick]');
-    if (pickButton) { activeId=pickButton.dataset.pick; render(); return; }
+    if (pickButton) { activeId=pickButton.dataset.pick; try{localStorage.setItem('entelaqtak-active-production-v1',activeId);}catch(_){} render(); return; }
     const button = event.target.closest('[data-action]');
     if (!button) return;
     const action = button.dataset.action, p=activeProject();
