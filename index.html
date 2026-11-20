@@ -725,7 +725,7 @@ function applyRealtimeWorkspace(payload,ownerId){
  renderAll();
  $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
  $('accountSync').textContent=realtimeConnected?'متصل بالمزامنة المباشرة':'متصل';
- if(needsMergeSave)scheduleCloudSave();
+ if(needsMergeSave)scheduleCloudSave();else if(localWins)clearWorkspaceDirty(ownerId);
 }
 function subscribeWorkspaceRealtime(){
  if(!sbClient||!currentUser)return;
@@ -793,7 +793,7 @@ async function loadCloudWorkspace(){
    const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(remoteNormalized);
    state=merged;saveLocalWorkspace();renderAll();
    $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
-   if(needsMergeSave)cloudSavePending=true;
+   if(needsMergeSave)cloudSavePending=true;else if(localWins)clearWorkspaceDirty(currentUser.id);
   }
   updateAccountUI();
   if(loaded&&currentUser)subscribeWorkspaceRealtime();
