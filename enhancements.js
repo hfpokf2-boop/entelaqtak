@@ -128,7 +128,7 @@ function renderSnapshots(){
   const item=readSnapshots().find(x=>x.id===button.dataset.snapshotRestore);
   if(!item)return;
   if(!confirm('سيتم استبدال بيانات العمل الحالية بهذه النسخة. أنشئ نسخة JSON من بياناتك الحالية أولًا عند الحاجة. متابعة؟'))return;
-  try{localStorage.setItem('entelaqtak-v1',JSON.stringify(item.data));location.reload();}
+  try{localStorage.setItem('entelaqtak-v1',JSON.stringify(item.data));localStorage.setItem('entelaqtak-cloud-dirty-owner-v1','__local__');location.reload();}
   catch(error){notify('تعذرت استعادة النسخة بسبب مساحة التخزين.');}
  }));
  all('[data-snapshot-delete]',host).forEach(button=>button.addEventListener('click',()=>{
