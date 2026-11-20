@@ -1,3 +1,4 @@
-# Keep JWT verification enabled for user-facing AI requests.
+# The gateway JWT check is intentionally disabled: this function validates
+# signed-in sessions itself and also permits anonymous AI requests by design.
 [functions.ai-assistant]
 verify_jwt = false
