@@ -1,14 +1,11 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 
-const allowedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose", "assistant"]);
+const allowedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose", "assistant", "research", "fact_check"]);
 const allowedOrigins = new Set([
   "https://sasa-antilaqatuk.github.io",
   "https://hfpokf2-boop.github.io",
 ]);
-const WINDOW_MS = 15 * 60 * 1000;
-const REQUEST_LIMIT = 5;
-const requestHits = new Map<string, { count: number; resetAt: number }>();
-const trackedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose"]);
+const trackedTools = new Set(["ideas", "script", "content_pack", "titles", "seo", "repurpose", "assistant", "research", "fact_check"]);
 
 const instructions: Record<string, string> = {
   ideas: "اقترح أفكارًا مبتكرة ومتنوعة تناسب المجال والمنصة والجمهور. لكل فكرة اكتب عنوانًا وزاوية تناول وخطافًا. تجنب تكرار الفكرة نفسها.",
@@ -18,6 +15,8 @@ const instructions: Record<string, string> = {
   seo: "اكتب وصفًا طبيعيًا وكلمات مفتاحية مرتبطة فعلًا بالموضوع وهاشتاجات محدودة. لا تدّعِ أنها ترند أو ذات حجم بحث مثبت.",
   repurpose: "حوّل المادة إلى الصيغة والمنصة المطلوبة مع الحفاظ على الحقائق والمعنى. لا تضف ادعاءات غير موجودة في المصدر.",
   assistant: "حلّل ملف صانع المحتوى والأفكار والحزم ومؤشرات الأداء المقدمة. أعطِ توصيات عملية مرتبة حسب الأولوية، واشرح سبب كل توصية بالاستناد إلى البيانات المتاحة. لا تخترع أرقامًا أو نتائج أو ترندات.",
+  research: "أنت باحث محتوى. استخدم البحث على الويب إلزاميًا للعثور على معلومات حديثة حول الموضوع والمنطقة المحددة. لخّص 5 إلى 8 زوايا محتوى قابلة للتنفيذ، وميّز بين الخبر المؤكد والرأي والاتجاه المحتمل. اذكر تاريخ النشر وتاريخ الحدث عند توفرهما. لا تصف موضوعًا بأنه ترند أو عالي البحث دون بيانات حجم بحث فعلية. اختم بمصادر واضحة.",
+  fact_check: "تحقق من الادعاء المحدد باستخدام البحث على الويب إلزاميًا. أعطِ حكمًا: صحيح، صحيح جزئيًا، مضلل، غير مثبت، أو خطأ. اشرح ما تدعمه المصادر وما لا تدعمه، واذكر تاريخ المعلومات وحدود التحقق. لا تستنتج أكثر مما تسمح به المصادر، واستخدم عدة مصادر مستقلة عند الإمكان.",
 };
 
 function cors(origin: string) {
@@ -48,17 +47,18 @@ function reply(
   });
 }
 
-async function hashKey(value: string): Promise<string> {
-  const bytes = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
+async function hashKey(value: string, secret: string): Promise<string> {
+  const key = await crypto.subtle.importKey(
+    "raw",
+    new TextEncoder().encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false,
+    ["sign"],
+  );
+  const bytes = await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(value));
   return Array.from(new Uint8Array(bytes)).map(byte => byte.toString(16).padStart(2, "0")).join("");
 }
 
-function cleanExpiredBuckets(now: number) {
-  if (requestHits.size < 1000) return;
-  for (const [key, value] of requestHits.entries()) {
-    if (value.resetAt <= now) requestHits.delete(key);
-  }
-}
 
 async function resolveUser(
   authorization: string | null,
@@ -90,31 +90,6 @@ async function resolveUser(
   }
 }
 
-async function countRecentUsage(
-  projectUrl: string | undefined,
-  apiKey: string,
-  authorization: string | null,
-  userId: string | null,
-): Promise<number | null> {
-  if (!projectUrl || !authorization || !userId) return null;
-  const cutoff = new Date(Date.now() - WINDOW_MS).toISOString();
-  const url = projectUrl.replace(/\/$/, "") + "/rest/v1/ai_usage?select=id&user_id=eq." +
-    encodeURIComponent(userId) + "&created_at=gte." + encodeURIComponent(cutoff) + "&limit=6";
-  try {
-    const response = await fetch(url, {
-      headers: { apikey: apiKey, Authorization: authorization },
-    });
-    if (!response.ok) {
-      console.warn("AI usage quota lookup failed", response.status);
-      return null;
-    }
-    const rows = await response.json().catch(() => null);
-    return Array.isArray(rows) ? rows.length : null;
-  } catch {
-    console.warn("AI usage quota lookup unavailable");
-    return null;
-  }
-}
 
 async function recordUsage(
   projectUrl: string | undefined,
@@ -194,44 +169,39 @@ Deno.serve(async (req: Request) => {
   }
 
   const projectUrl = Deno.env.get("SUPABASE_URL");
-  const persistedUsage = auth.userId && trackedTools.has(tool)
-    ? await countRecentUsage(projectUrl, apiKey, authorization, auth.userId)
-    : null;
-  if (persistedUsage !== null && persistedUsage >= REQUEST_LIMIT) {
-    return reply(
-      { error: "وصلت للحد المؤقت من طلبات المساعد على حسابك. حاول بعد 15 دقيقة." },
-      429,
-      origin,
-      { "Retry-After": "900", "X-RateLimit-Limit": String(REQUEST_LIMIT), "X-RateLimit-Remaining": "0" },
-    );
-  }
-
   const forwarded = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "unknown";
   const ip = forwarded.split(",")[0].trim() || "unknown";
   const rateIdentity = auth.userId ? "user:" + auth.userId : "ip:" + ip;
-  const rateKey = await hashKey(rateIdentity);
-  const now = Date.now();
-  cleanExpiredBuckets(now);
-  const bucket = requestHits.get(rateKey);
-
-  if (!bucket || bucket.resetAt <= now) {
-    requestHits.set(rateKey, { count: 1, resetAt: now + WINDOW_MS });
-  } else if (bucket.count >= REQUEST_LIMIT) {
-    const retryAfter = Math.max(1, Math.ceil((bucket.resetAt - now) / 1000));
-    return reply(
-      { error: "وصلت للحد المؤقت من الطلبات. حاول بعد 15 دقيقة." },
-      429,
-      origin,
-      { "Retry-After": String(retryAfter), "X-RateLimit-Limit": String(REQUEST_LIMIT), "X-RateLimit-Remaining": "0" },
-    );
-  } else {
-    bucket.count++;
+  const secretKeysRaw = Deno.env.get("SUPABASE_SECRET_KEYS");
+  let serverKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+  if (secretKeysRaw) {
+    try { const keys = JSON.parse(secretKeysRaw); if (typeof keys?.default === "string") serverKey = keys.default; }
+    catch { return reply({ error: "تعذر تحميل إعداد الحماية من الخادم." }, 503, origin); }
   }
+  if (!projectUrl || !serverKey) return reply({ error: "إعداد حدود الاستخدام الآمنة غير مكتمل على الخادم." }, 503, origin);
+  const rateKey = await hashKey(rateIdentity, serverKey);
+  try {
+    const quotaResponse = await fetch(projectUrl.replace(/\/$/, "") + "/rest/v1/rpc/consume_ai_rate_limit", {
+      method: "POST", headers: { apikey: serverKey, "Content-Type": "application/json" },
+      body: JSON.stringify({ p_identity_hash: rateKey }),
+    });
+    const quota = await quotaResponse.json().catch(() => null);
+    if (!quotaResponse.ok || !quota || typeof quota.allowed !== "boolean") {
+      console.error("Persistent AI rate limit failed", quotaResponse.status);
+      return reply({ error: "تعذر التحقق من حد الاستخدام. حاول بعد قليل." }, 503, origin);
+    }
+    if (!quota.allowed) {
+      const retryAfter = Math.max(1, Number(quota.retry_after) || 900);
+      return reply({ error: "وصلت للحد المؤقت من طلبات المساعد. حاول بعد " + Math.ceil(retryAfter / 60) + " دقيقة." }, 429, origin,
+        { "Retry-After": String(retryAfter), "X-RateLimit-Limit": String(quota.limit ?? 5), "X-RateLimit-Remaining": "0" });
+    }
+  } catch { return reply({ error: "تعذر الاتصال بخدمة حماية الاستخدام. حاول مرة أخرى." }, 503, origin); }
 
   const openAiKey = Deno.env.get("OPENAI_API_KEY");
   if (!openAiKey) return reply({ error: "الخدمة تحتاج إعداد مفتاح الذكاء الاصطناعي على الخادم." }, 503, origin);
 
-  const model = Deno.env.get("OPENAI_MODEL")?.trim() || "gpt-6-luna";
+  const isResearch = tool === "research" || tool === "fact_check";
+  const model = isResearch ? (Deno.env.get("OPENAI_RESEARCH_MODEL")?.trim() || "gpt-6.2-astra") : (Deno.env.get("OPENAI_MODEL")?.trim() || "gpt-6-luna");
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), 55000);
 
@@ -253,7 +223,8 @@ Deno.serve(async (req: Request) => {
           "قدّم الإجابة في أقسام قصيرة وواضحة قابلة للتحرير.",
         ].join("\n"),
         input: serialized,
-        max_output_tokens: 1800,
+        max_output_tokens: isResearch ? 3200 : 1800,
+        ...(isResearch ? { tools: [{ type: "web_search", search_context_size: "medium" }], tool_choice: "required", include: ["web_search_call.action.sources"] } : {}),
       }),
     });
 
@@ -282,15 +253,33 @@ Deno.serve(async (req: Request) => {
     if (!text) return reply({ error: "لم يصل نص من خدمة الذكاء الاصطناعي." }, 502, origin);
 
     await recordUsage(projectUrl, apiKey, authorization, auth.userId, tool, inputChars);
-
-    const currentBucket = requestHits.get(rateKey);
-    const remaining = currentBucket ? Math.max(0, REQUEST_LIMIT - currentBucket.count) : 0;
-    return reply(
-      { text, model: result.model ?? model },
-      200,
-      origin,
-      { "X-RateLimit-Limit": String(REQUEST_LIMIT), "X-RateLimit-Remaining": String(remaining) },
-    );
+    const sourceMap = new Map<string, { title: string; url: string }>();
+    for (const item of (result.output ?? [])) {
+      if (item?.type === "web_search_call" && Array.isArray(item?.action?.sources)) {
+        for (const source of item.action.sources) {
+          const url = typeof source?.url === "string" ? source.url : "";
+          if (url.startsWith("https://")) {
+            let title = typeof source?.title === "string" ? source.title : "";
+            if (!title) { try { title = new URL(url).hostname; } catch { title = url; } }
+            sourceMap.set(url, { title, url });
+          }
+        }
+      }
+      for (const part of (Array.isArray(item?.content) ? item.content : [])) {
+        for (const annotation of (Array.isArray(part?.annotations) ? part.annotations : [])) {
+          const citation = annotation?.url_citation;
+          const url = typeof citation?.url === "string" ? citation.url : "";
+          if (url.startsWith("https://")) {
+            let title = typeof citation?.title === "string" ? citation.title : "";
+            if (!title) { try { title = new URL(url).hostname; } catch { title = url; } }
+            sourceMap.set(url, { title, url });
+          }
+        }
+      }
+    }
+    const sources = Array.from(sourceMap.values()).slice(0, 12);
+    return reply({ text, model: result.model ?? model, sources, searched: isResearch }, 200, origin,
+      { "X-RateLimit-Limit": "5" });
   } catch (error) {
     if (error instanceof Error && error.name === "AbortError") {
       return reply({ error: "استغرق التوليد وقتًا أطول من اللازم. حاول مرة أخرى." }, 504, origin);
