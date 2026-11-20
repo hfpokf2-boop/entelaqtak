@@ -63,7 +63,7 @@ jobs:
               raise SystemExit("No executable inline JavaScript found")
           print(f"Extracted {total} executable inline script(s) from index and workspace.")
           PY
-          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js service-worker.js; do
+          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js sidebar-organizer.js service-worker.js; do
             echo "Checking $file"
             node --check "$file"
           done
