@@ -3,8 +3,8 @@ const STORAGE_KEY='entelaqtak-theme-v1';
 const root=document.documentElement;
 const $=id=>document.getElementById(id);
 const palettes={
- aurora:{label:'الأزرق والثقة',primary:'#2563eb',secondary:'#14b8a6'},
- ocean:{label:'المحيطي',primary:'#5aa9ff',secondary:'#4de0d0'},
+ aurora:{label:'الأزرق والثقة',primary:'#2563eb',secondary:'#10b981'},
+ ocean:{label:'المحيطي',primary:'#3b82f6',secondary:'#10b981'},
  sunset:{label:'الغروب',primary:'#ff9b72',secondary:'#ffd166'},
  emerald:{label:'الزمردي',primary:'#56c998',secondary:'#c1df73'},
  rose:{label:'الوردي',primary:'#e78ab8',secondary:'#93a7ff'},
@@ -16,7 +16,7 @@ const status=$('themeStatus');
 if(!toggle||!panel||!primaryInput||!secondaryInput)return;
 const hexToRgb=value=>{
  const hex=String(value||'').replace('#','');
- if(!/^[0-9a-f]{6}$/i.test(hex))return '155,140,255';
+ if(!/^[0-9a-f]{6}$/i.test(hex))return '59,130,246';
  return [0,2,4].map(i=>parseInt(hex.slice(i,i+2),16)).join(',');
 };
 const safeColor=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(String(value||''))?value:fallback;
@@ -46,7 +46,7 @@ function readSaved(){
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
   if(saved&&typeof saved==='object'){
    const name=saved.name==='custom'?'custom':(palettes[saved.name]?saved.name:'aurora');
-   if(name==='custom')return {name,primary:safeColor(saved.primary,'#9b8cff'),secondary:safeColor(saved.secondary,'#62e0c5')};
+   if(name==='custom')return {name,primary:safeColor(saved.primary,'#3b82f6'),secondary:safeColor(saved.secondary,'#10b981')};
    const p=palettes[saved.name];
    if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:safeColor(saved.secondary,p.secondary)};
   }
