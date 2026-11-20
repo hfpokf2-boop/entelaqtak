@@ -605,7 +605,7 @@ async function withAuthButton(id,task){
 function updateAccountUI(){
  $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
  $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
- $('accountSync').textContent=!currentUser?'محلي فقط':cloudLoading?'جارٍ تحميل المساحة':cloudSaving?'جارٍ حفظ التعديلات':realtimeConnected?'متصل بالمزامنة المباشرة':'محفوظ سحابيًا';
+ $('accountSync').textContent=!currentUser?'محلي فقط':cloudLoading?'جارٍ تحميل المساحة':cloudSaving?'جارٍ حفظ التعديلات':(cloudSavePending||cloudSaveTimer)?'في انتظار الحفظ':realtimeConnected?'متصل بالمزامنة المباشرة':'محفوظ سحابيًا';
  $('accountAI').textContent='مساعد ذكي عبر الخادم';
  if($('syncState')&&!cloudLoading&&!cloudSaving&&!currentUser)$('syncState').textContent='الحفظ على هذا الجهاز';
  $('connectionBadge').innerHTML='<span class="dot"></span>'+(currentUser?'متصل بحسابك':'مساحة العمل');
@@ -666,14 +666,16 @@ async function writeCloudWorkspace(){
 function scheduleCloudSave(){
  if(!sbClient||!currentUser)return;
  if(cloudLoading||cloudSaving){cloudSavePending=true;return;}
- clearTimeout(cloudSaveTimer);
+ clearTimeout(cloudSaveTimer);cloudSaveTimer=null;
  $('accountSync').textContent='في انتظار الحفظ';
  $('syncState').textContent='تغييرات بانتظار المزامنة...';
  updateAccountUI();
  cloudSaveTimer=setTimeout(async()=>{
+  cloudSaveTimer=null;
   try{await writeCloudWorkspace();}
   catch(e){console.error('Cloud save failed',e);if(currentUser){$('syncState').textContent='تعذر الحفظ السحابي؛ احتفظ بنسخة احتياطية.';$('accountSync').textContent='غير متزامن';}}
  },700);
+ updateAccountUI();
 }
 function applyRealtimeWorkspace(payload,ownerId){
  if(!currentUser||currentUser.id!==ownerId||!payload?.new||payload.new.user_id!==ownerId)return;
@@ -717,7 +719,7 @@ function stopWorkspaceRealtime(){
 async function loadCloudWorkspace(){
  if(!sbClient||!currentUser)return;
  if(cloudLoading){cloudLoadPending=true;return;}
- clearTimeout(cloudSaveTimer);
+ clearTimeout(cloudSaveTimer);cloudSaveTimer=null;
  cloudLoading=true;
  updateAccountUI();
  let loaded=false;
@@ -791,10 +793,10 @@ async function connectAuth(){
   sbClient.auth.onAuthStateChange((event,session)=>{
    const previousUserId=currentUser?.id||null;
    currentUser=session?.user||null;
-   if(previousUserId&&currentUser?.id!==previousUserId)stopWorkspaceRealtime();
+   if(previousUserId&&currentUser?.id!==previousUserId){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
    updateAccountUI();
    if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
-   if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
+   if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
    if(event==='SIGNED_IN')setTimeout(()=>loadCloudWorkspace(),0);
   });
   const {data,error}=await sbClient.auth.getSession();
