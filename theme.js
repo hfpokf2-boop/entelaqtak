@@ -3,11 +3,11 @@ const STORAGE_KEY='entelaqtak-theme-v1';
 const root=document.documentElement;
 const $=id=>document.getElementById(id);
 const palettes={
- aurora:{label:'الأزرق الملكي',primary:'#2563eb',secondary:'#10b981'},
+ aurora:{label:'الأزرق الملكي',primary:'#2563eb',secondary:'#54a5ff'},
  ocean:{label:'الأزرق السماوي',primary:'#3b82f6',secondary:'#10b981'},
- sunset:{label:'الأزرق والذهبي',primary:'#1d4ed8',secondary:'#60a5fa'},
+ sunset:{label:'الأزرق والذهبي',primary:'#1d4ed8',secondary:'#93c5fd'},
  emerald:{label:'الأزرق والزمردي',primary:'#2563eb',secondary:'#10b981'},
- rose:{label:'الأزرق الفاتح',primary:'#1e40af',secondary:'#38bdf8'},
+ rose:{label:'الأزرق الفاتح',primary:'#1e40af',secondary:'#7dd3fc'},
  sapphire:{label:'الأزرق العميق',primary:'#3b82f6',secondary:'#10b981'}
 };
 const toggle=$('themeToggle'),panel=$('themePanel'),close=$('themeClose');
@@ -46,7 +46,7 @@ function readSaved(){
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
   if(saved&&typeof saved==='object'){
    const name=saved.name==='custom'?'custom':(palettes[saved.name]?saved.name:'aurora');
-   if(name==='custom')return {name,primary:safeColor(saved.primary,'#3b82f6'),secondary:safeColor(saved.secondary,'#10b981')};
+   if(name==='custom')return {name,primary:safeColor(saved.primary,'#3b82f6'),secondary:safeColor(saved.secondary,'#54a5ff')};
    const p=palettes[saved.name];
    if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:safeColor(saved.secondary,p.secondary)};
   }
