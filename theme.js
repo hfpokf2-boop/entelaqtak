@@ -5,10 +5,10 @@ const $=id=>document.getElementById(id);
 const palettes={
  aurora:{label:'الأزرق والثقة',primary:'#2563eb',secondary:'#10b981'},
  ocean:{label:'المحيطي',primary:'#3b82f6',secondary:'#10b981'},
- sunset:{label:'الغروب',primary:'#ff9b72',secondary:'#ffd166'},
- emerald:{label:'الزمردي',primary:'#56c998',secondary:'#c1df73'},
- rose:{label:'الوردي',primary:'#e78ab8',secondary:'#93a7ff'},
- sapphire:{label:'الياقوتي',primary:'#688cff',secondary:'#62d8ed'}
+ sunset:{label:'الغروب',primary:'#1d4ed8',secondary:'#60a5fa'},
+ emerald:{label:'الزمردي',primary:'#2563eb',secondary:'#10b981'},
+ rose:{label:'الوردي',primary:'#1e40af',secondary:'#38bdf8'},
+ sapphire:{label:'الياقوتي',primary:'#3b82f6',secondary:'#10b981'}
 };
 const toggle=$('themeToggle'),panel=$('themePanel'),close=$('themeClose');
 const primaryInput=$('themePrimary'),secondaryInput=$('themeSecondary');
