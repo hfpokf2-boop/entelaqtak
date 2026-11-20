@@ -52,7 +52,7 @@ jobs:
                       self.current = None
 
           total = 0
-          for doc in ("index.html", "workspace.html"):
+          for doc in ("index.html", "workspace.html", "admin.html"):
               parser = ScriptExtractor()
               parser.feed(Path(doc).read_text(encoding="utf-8"))
               for number, body in enumerate(parser.scripts, 1):
@@ -123,7 +123,7 @@ jobs:
                       if value:
                           self.refs.append((key, value))
 
-          for doc in ("index.html", "workspace.html", "legal.html"):
+          for doc in ("index.html", "workspace.html", "admin.html", "legal.html"):
               parser = AuditParser()
               parser.feed(Path(doc).read_text(encoding="utf-8"))
               ids_by_doc[doc] = parser.ids
