@@ -52,7 +52,7 @@ jobs:
                       self.current = None
 
           total = 0
-          for doc in ("index.html", "workspace.html", "admin.html"):
+          for doc in ("index.html", "workspace.html", "admin.html", "advertise.html"):
               parser = ScriptExtractor()
               parser.feed(Path(doc).read_text(encoding="utf-8"))
               for number, body in enumerate(parser.scripts, 1):
@@ -61,7 +61,7 @@ jobs:
                   total += 1
           if not total:
               raise SystemExit("No executable inline JavaScript found")
-          print(f"Extracted {total} executable inline script(s) from index and workspace.")
+          print(f"Extracted {total} executable inline script(s) from all interactive HTML pages.")
           PY
           for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js sidebar-organizer.js content-pack-pro.js visitor-tracker.js service-worker.js; do
             echo "Checking $file"
@@ -106,6 +106,10 @@ jobs:
           if f"ui-polish.css?v={version}" not in workspace:
               errors.append("workspace.html: ui-polish.css cache version is stale")
           css = Path("design-system.css").read_text(encoding="utf-8")
+          polish = Path("ui-polish.css").read_text(encoding="utf-8")
+          for name, source in (("design-system.css", css), ("ui-polish.css", polish)):
+              if source.count("{") != source.count("}"):
+                  errors.append(name + ": unbalanced CSS blocks")
           required = [
               "--bg:#0B1120", "--accent:#3B82F6", "--accent2:#10B981",
               "button:hover", "button:active", "button:focus-visible",
