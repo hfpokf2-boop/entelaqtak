@@ -325,6 +325,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 
 </style><link rel="stylesheet" href="./ui-polish.css">
  <link rel="stylesheet" href="./design-system.css?v=20261120-2">
+ <style id="account-auth-visibility">#accountLoginCard[hidden],#accountCreateCard[hidden]{display:none!important}</style>
 </head>
 <body>
 <div class="app">
@@ -601,7 +602,7 @@ const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(roo
 const DATA_VERSION=4;
 const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],productionProjects:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local"}};
 const CLOUD_DIRTY_OWNER_KEY='entelaqtak-cloud-dirty-owner-v1';
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,localChangesPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null,authInitError=null;
+let sbClient=null,currentUser=null,passwordRecoveryMode=false,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,localChangesPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null,authInitError=null;
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
@@ -658,6 +659,8 @@ async function withAuthButton(id,task){
  finally{button.textContent=old;if(id==='authSignOut')button.disabled=!currentUser;else if(id==='authSyncNow')button.disabled=!currentUser||cloudLoading||cloudSaving;else if(id==='authSignIn'||id==='authSignUp')button.disabled=!!currentUser;else button.disabled=false;}
 }
 function updateAccountUI(){
+ $('accountLoginCard').hidden=!!currentUser&&!passwordRecoveryMode;
+ $('accountCreateCard').hidden=!!currentUser;
  $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
  $('accountUser').textContent=currentUser?(currentUser.email||'حساب نشط'):'—';
  $('accountSync').textContent=!currentUser?'محلي فقط':cloudLoading?'جارٍ تحميل المساحة':cloudSaving?'جارٍ حفظ التعديلات':(cloudSavePending||cloudSaveTimer)?'في انتظار الحفظ':realtimeConnected?'متصل بالمزامنة المباشرة':'محفوظ سحابيًا';
@@ -909,6 +912,8 @@ async function connectAuth(){
   sbClient=sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   sbClient.auth.onAuthStateChange((event,session)=>{
    const previousUserId=currentUser?.id||null;
+   if(event==='PASSWORD_RECOVERY')passwordRecoveryMode=true;
+   else if(event==='SIGNED_IN'||event==='SIGNED_OUT')passwordRecoveryMode=false;
    currentUser=session?.user||null;
    if(currentUser)isolateWorkspaceForAccount(currentUser.id);
    if(previousUserId&&currentUser?.id!==previousUserId){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;localChangesPending=false;stopWorkspaceRealtime();}
@@ -965,6 +970,7 @@ $('authUpdatePassword').addEventListener('click',()=>withAuthButton('authUpdateP
  const {error}=await sbClient.auth.updateUser({password});
  if(error)throw error;
  $('loginPassword').value='';$('accountNewPassword').value='';$('authRecoveryBox').hidden=true;
+ passwordRecoveryMode=false;updateAccountUI();
  setAuthMessage('تم تحديث كلمة المرور بنجاح.',false,'authSignInMessage');
 }));
 $('authSyncNow').addEventListener('click',()=>withAuthButton('authSyncNow',async()=>{
@@ -975,7 +981,7 @@ $('authSignOut').addEventListener('click',()=>withAuthButton('authSignOut',async
  if(!sbClient)return;
  const {error}=await sbClient.auth.signOut();
  if(error)throw error;
- currentUser=null;updateAccountUI();
+ currentUser=null;passwordRecoveryMode=false;updateAccountUI();
  setAuthMessage('تم تسجيل الخروج. تظل النسخة المحلية على هذا الجهاز كما هي.',false,'authSignOutMessage');
 }));
 async function callAI(tool,payload,options={}){
