@@ -650,7 +650,7 @@ function mergeWorkspace(localData,remoteData,localWins=false){
   const combined=localWins?{...remoteObject,...localObject}:{...localObject,...remoteObject};
   if(localWins){
    for(const [field,value] of Object.entries(localObject)){
-    const fallback=value===undefined||value===null||value==='';
+    const fallback=value===undefined||value===null||value===''||(key==='focus'&&field==='done'&&value===false)||(key==='profile'&&field==='goal'&&value==='الاستمرارية والنشر المنتظم')||(key==='brand'&&field==='voice'&&value==='بسيطة وودودة')||(key==='settings'&&field==='aiMode'&&value==='local');
     if(fallback&&remoteObject[field]!==undefined)combined[field]=remoteObject[field];
    }
    if(key==='prePublishChecks'){
