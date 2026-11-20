@@ -97,13 +97,19 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
           errors = []
-          version = "20261120-dark-blue-5"
-          for page in ("index.html", "workspace.html", "admin.html", "advertise.html", "legal.html"):
+          versions = {
+              "index.html": "20261120-dark-only-1",
+              "workspace.html": "20261120-dark-only-1",
+              "admin.html": "20261120-admin-dark-v1",
+              "advertise.html": "20261120-dark-only-1",
+              "legal.html": "20261120-dark-only-1",
+          }
+          for page, version in versions.items():
               html = Path(page).read_text(encoding="utf-8")
               if f"design-system.css?v={version}" not in html:
                   errors.append(f"{page}: design-system.css cache version is stale")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
-          if f"ui-polish.css?v={version}" not in workspace:
+          if "ui-polish.css?v=20261120-dark-only-1" not in workspace:
               errors.append("workspace.html: ui-polish.css cache version is stale")
           css = Path("design-system.css").read_text(encoding="utf-8")
           polish = Path("ui-polish.css").read_text(encoding="utf-8")
@@ -111,9 +117,9 @@ jobs:
               if source.count("{") != source.count("}"):
                   errors.append(name + ": unbalanced CSS blocks")
           required = [
-              "--bg:#0B1120", "--accent:#3B82F6", "--accent2:#10B981",
+              "--bg:#0B1120", "--accent:#B79AF7", "--accent2:#E3A0D2",
               "button:hover", "button:active", "button:focus-visible",
-              "background:linear-gradient(115deg,#3B82F6,#1D4ED8)",
+              "background:linear-gradient(115deg,#B79AF7,#776DBA)",
               "button.active,#nav button.active", ".cp-output button,.cp-foot button", "button.primary,button.secondary,button.danger", "button.menu-toggle,button.theme-close", ".lang button,.theme-panel button", "#view-settings button",
           ]
           for token in required:
@@ -124,14 +130,14 @@ jobs:
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v38" not in worker:
+          if "entelaqtak-shell-v40" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
-          if "أزرق ملكي" not in workspace or "الثيم الأزرق الملكي مفعّل" not in workspace:
+          if "وردي ولافندر" not in workspace or "ثيم وردي ولافندر مفعّل" not in workspace:
               errors.append("workspace.html: theme preset labels are not aligned with the blue palette")
           if errors:
               raise SystemExit("\\n".join(errors))
-          print("Dark palette, consistent stylesheet versions, and blue button states passed.")
+          print("Dark lavender/rose palette, consistent stylesheet versions, and button states passed.")
           PY
       - name: Audit HTML, local assets, and PWA metadata
         run: |
