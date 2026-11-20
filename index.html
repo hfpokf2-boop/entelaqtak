@@ -562,7 +562,7 @@ window.ENTELAQTAK_CONFIG = {
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const DATA_VERSION=3;
 const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local"}};
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null;
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null;
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
@@ -711,11 +711,12 @@ function subscribeWorkspaceRealtime(){
   });
 }
 function stopWorkspaceRealtime(){
- realtimeConnected=false;
+ realtimeConnected=false;pendingRealtimeWorkspace=null;
  if(workspaceRealtimeChannel&&sbClient){sbClient.removeChannel(workspaceRealtimeChannel);workspaceRealtimeChannel=null;}
 }
 async function loadCloudWorkspace(){
- if(!sbClient||!currentUser||cloudLoading)return;
+ if(!sbClient||!currentUser)return;
+ if(cloudLoading){cloudLoadPending=true;return;}
  clearTimeout(cloudSaveTimer);
  cloudLoading=true;
  updateAccountUI();
@@ -755,6 +756,7 @@ async function loadCloudWorkspace(){
   updateAccountUI();
   if(loaded&&currentUser)subscribeWorkspaceRealtime();
   if(cloudSavePending){cloudSavePending=false;scheduleCloudSave();}
+  if(cloudLoadPending&&currentUser){cloudLoadPending=false;setTimeout(()=>loadCloudWorkspace(),0);}
  }
 }
 async function loadSupabaseSdk(){
@@ -792,7 +794,7 @@ async function connectAuth(){
    if(previousUserId&&currentUser?.id!==previousUserId)stopWorkspaceRealtime();
    updateAccountUI();
    if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
-   if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSavePending=false;stopWorkspaceRealtime();}
+   if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
    if(event==='SIGNED_IN')setTimeout(()=>loadCloudWorkspace(),0);
   });
   const {data,error}=await sbClient.auth.getSession();
