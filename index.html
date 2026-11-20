@@ -535,7 +535,7 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
   </div>
 <div class="card">
    <h2>النسخ الاحتياطي وإدارة البيانات</h2>
-   <p class="muted">بيانات الموقع محفوظة محليًا على هذا الجهاز والمتصفح. انقل نسخة JSON يدويًا عند تغيير الجهاز أو المتصفح.</p>
+   <p class="muted">يتم حفظ البيانات محليًا على جهازك، ويمكنك تسجيل الدخول لمزامنة مساحة العمل مع حسابك على أجهزتك الأخرى. احتفظ أيضًا بنسخة JSON احتياطية مستقلة.</p>
    <div class="actions"><button class="primary" id="settingsExport" type="button">تصدير جميع البيانات JSON</button><button class="secondary" id="settingsImport" type="button">استيراد نسخة JSON</button><input id="settingsImportFile" type="file" accept="application/json,.json" hidden></div>
    <div class="divider"></div>
    <p>إصدار بنية البيانات: <b id="schemaVersionLabel">2</b></p>
@@ -648,7 +648,7 @@ async function loadCloudWorkspace(){
   const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:currentUser.id,data:state,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   if(saveError)throw saveError;
   updateAccountUI();setAuthMessage('أهلاً بك! مشاريعك متزامنة مع حسابك.');
- }catch(e){console.error('Cloud workspace load failed',e);setAuthMessage('تعذر تحميل المشاريع. تأكد من تطبيق إعدادات قاعدة البيانات، ثم حاول مرة أخرى.',true);}
+ }catch(e){console.error('Cloud workspace load failed',e);$('accountSync').textContent='تعذر الاتصال';$('syncState').textContent='لم تكتمل المزامنة';setAuthMessage('تعذر تحميل المشاريع. تأكد من اتصال الإنترنت وإعدادات الحساب، ثم حاول مرة أخرى.',true);}
  finally{cloudLoading=false;}
 }
 async function loadSupabaseSdk(){
