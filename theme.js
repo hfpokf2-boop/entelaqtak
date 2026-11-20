@@ -3,7 +3,7 @@ const STORAGE_KEY='entelaqtak-theme-v1';
 const root=document.documentElement;
 const $=id=>document.getElementById(id);
 const palettes={
- aurora:{label:'البنفسجي',primary:'#9b8cff',secondary:'#62e0c5'},
+ aurora:{label:'الأزرق والثقة',primary:'#2563eb',secondary:'#14b8a6'},
  ocean:{label:'المحيطي',primary:'#5aa9ff',secondary:'#4de0d0'},
  sunset:{label:'الغروب',primary:'#ff9b72',secondary:'#ffd166'},
  emerald:{label:'الزمردي',primary:'#56c998',secondary:'#c1df73'},
