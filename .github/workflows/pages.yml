@@ -88,7 +88,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v41"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v42"), 'Service worker cache version was not bumped.');
           assert(worker.includes("'./content-pack-pro.js'"), 'Content pack module missing from offline app shell.');
           assert(worker.includes("'./language.js'"), 'Language module missing from offline app shell.');
           console.log('Workspace state identity, platform event bindings, and offline cache checks passed.');
@@ -99,18 +99,18 @@ jobs:
           from pathlib import Path
           errors = []
           versions = {
-              "index.html": "20261120-dark-only-1",
-              "workspace.html": "20261120-dark-only-1",
-              "admin.html": "20261120-admin-dark-v1",
-              "advertise.html": "20261120-dark-only-1",
-              "legal.html": "20261120-dark-only-1",
+              "index.html": "20261120-organized-dark-1",
+              "workspace.html": "20261120-organized-dark-1",
+              "admin.html": "20261120-organized-dark-1",
+              "advertise.html": "20261120-organized-dark-1",
+              "legal.html": "20261120-organized-dark-1",
           }
           for page, version in versions.items():
               html = Path(page).read_text(encoding="utf-8")
               if f"design-system.css?v={version}" not in html:
                   errors.append(f"{page}: design-system.css cache version is stale")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
-          if "ui-polish.css?v=20261120-dark-only-1" not in workspace:
+          if "ui-polish.css?v=20261120-organized-dark-1" not in workspace:
               errors.append("workspace.html: ui-polish.css cache version is stale")
           css = Path("design-system.css").read_text(encoding="utf-8")
           polish = Path("ui-polish.css").read_text(encoding="utf-8")
@@ -131,7 +131,7 @@ jobs:
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v41" not in worker:
+          if "entelaqtak-shell-v42" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
           if "وردي ولافندر" not in workspace or "ثيم وردي ولافندر مفعّل" not in workspace:
