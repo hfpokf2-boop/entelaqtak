@@ -84,8 +84,8 @@ jobs:
             assert(!pattern.test(workspace), 'A workspace state replacement bypasses the stable state helper: ' + pattern);
           }
           for (const id of ['hubCalendar', 'hubAnalytics', 'hubIcs']) {
-            const escaped = id.replace(/[.*+?^${}()|[\]\\]/g, '\\      - name: Audit HTML, local assets, and PWA metadata');
-            const count = (platformHub.match(new RegExp("\\\\$\\\\('" + escaped + "'\\\\)\\\\.addEventListener\\\\('click'", 'g')) || []).length;
+            const needle = "$('" + id + "').addEventListener('click'";
+            const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
           assert(worker.includes("entelaqtak-shell-v22"), 'Service worker cache version was not bumped.');
