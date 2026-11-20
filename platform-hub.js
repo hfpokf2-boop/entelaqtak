@@ -69,7 +69,7 @@ c.innerHTML='<div class="head"><div><span class="eyebrow">مركز القنوا�
  '<div class="hub-section-heading hub-section-lower"><div><span class="eyebrow">PUBLISH & MEASURE</span><h2>الجدولة وقياس الأداء</h2><p>كمّل شغلك من نفس المكان.</p></div></div>'+
  '<div class="hub-tools-grid"><article class="hub-panel hub-tool-card"><span class="hub-tool-icon">▦</span><div><h3>تقويم النشر</h3><p>نظّم مواعيد المحتوى وصدّرها إلى تقويمك الشخصي. النشر حاليًا يدوي من حسابك.</p><div class="platform-actions"><button type="button" id="hubCalendar">افتح تقويم النشر</button><button type="button" id="hubIcs">تصدير المواعيد (.ics)</button></div></div></article><article class="hub-panel hub-tool-card"><span class="hub-tool-icon">▥</span><div><h3>تحليلات القنوات</h3><p>سجّل المشاهدات والتفاعل يدويًا لحين تجهيز التكاملات الرسمية. مش هنعرض أرقام تجريبية كأنها حقيقية.</p><div class="platform-actions"><button type="button" id="hubAnalytics">افتح متابعة الأداء</button></div></div></article></div>'+
  '<div class="hub-security-foot"><b>خصوصيتك أولًا</b><span>نحفظ أسماء القنوات والروابط العامة فقط. لا نطلب كلمات مرور حسابات التواصل ولا نرسلها لأي جهة.</span></div>';
-const appFooter=main.querySelector('footer');if(appFooter)appFooter.before(c);else main.appendChild(c);
+if(appFooter)appFooter.before(c);else main.appendChild(c);
 renderPlatformAccounts();
 $('hubCalendar').addEventListener('click',()=>app.go('calendar'));
 $('hubAnalytics').addEventListener('click',()=>app.go('analytics'));
