@@ -174,15 +174,16 @@ Deno.serve(async (req: Request) => {
   const rateIdentity = auth.userId ? "user:" + auth.userId : "ip:" + ip;
   const secretKeysRaw = Deno.env.get("SUPABASE_SECRET_KEYS");
   let serverKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
+  let useLegacyServiceRole = true;
   if (secretKeysRaw) {
-    try { const keys = JSON.parse(secretKeysRaw); if (typeof keys?.default === "string") serverKey = keys.default; }
+    try { const keys = JSON.parse(secretKeysRaw); if (typeof keys?.default === "string") { serverKey = keys.default; useLegacyServiceRole = false; } }
     catch { return reply({ error: "تعذر تحميل إعداد الحماية من الخادم." }, 503, origin); }
   }
   if (!projectUrl || !serverKey) return reply({ error: "إعداد حدود الاستخدام الآمنة غير مكتمل على الخادم." }, 503, origin);
   const rateKey = await hashKey(rateIdentity, serverKey);
   try {
     const quotaResponse = await fetch(projectUrl.replace(/\/$/, "") + "/rest/v1/rpc/consume_ai_rate_limit", {
-      method: "POST", headers: { apikey: serverKey, "Content-Type": "application/json" },
+      method: "POST", headers: { apikey: serverKey, ...(useLegacyServiceRole ? { Authorization: "Bearer " + serverKey } : {}), "Content-Type": "application/json" },
       body: JSON.stringify({ p_identity_hash: rateKey }),
     });
     const quota = await quotaResponse.json().catch(() => null);
