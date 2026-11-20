@@ -114,7 +114,8 @@ jobs:
               errors.append("workspace.html: ui-polish.css cache version is stale")
           css = Path("design-system.css").read_text(encoding="utf-8")
           polish = Path("ui-polish.css").read_text(encoding="utf-8")
-          for name, source in (("design-system.css", css), ("ui-polish.css", polish)):
+          buttons = Path("button-system.css").read_text(encoding="utf-8")
+          for name, source in (("design-system.css", css), ("ui-polish.css", polish), ("button-system.css", buttons)):
               if source.count("{") != source.count("}"):
                   errors.append(name + ": unbalanced CSS blocks")
           required = [
@@ -132,8 +133,23 @@ jobs:
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v43" not in worker:
+          if "entelaqtak-shell-v44" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
+          if "'./button-system.css'" not in worker:
+              errors.append("service-worker.js: button stylesheet missing from offline cache")
+          for page in versions:
+              html = Path(page).read_text(encoding="utf-8")
+              if 'button-system.css?v=20261120-buttons-1' not in html:
+                  errors.append(f"{page}: button system stylesheet is missing")
+          button_rules = [
+              "linear-gradient(135deg,#2563EB", "button:hover", "button:active",
+              "button:focus-visible", "button:disabled", "button[aria-busy=\"true\"]",
+              "button.danger", ".theme-preset[aria-pressed=\"true\"]",
+              ".quick button", "#nav button.active", "prefers-reduced-motion:reduce"
+          ]
+          for token in button_rules:
+              if token not in buttons:
+                  errors.append("button-system.css: missing button rule " + token)
           if "ignoreSearch:true" not in worker:
               errors.append("service-worker.js: versioned assets are not matched to the current offline cache")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
@@ -144,7 +160,7 @@ jobs:
               errors.append("theme.js: color preset persistence does not apply over the shared theme tokens")
           if errors:
               raise SystemExit("\\n".join(errors))
-          print("Dark navy/blue palette, theme presets, stylesheet versions, and button states passed.")
+          print("Dark navy/blue palette, theme presets, button variants/states, stylesheet versions, and offline cache passed.")
           PY
       - name: Audit HTML, local assets, and PWA metadata
         run: |
