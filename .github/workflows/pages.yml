@@ -63,7 +63,7 @@ jobs:
             echo "Checking $file"
             node --check "$file"
           done
-          for file in /tmp/entelaqtak-inline-*.js; do
+          for file in /tmp/entelaqtak-*-inline-*.js; do
             echo "Checking $file"
             node --check "$file"
           done
