@@ -645,7 +645,7 @@ async function withAuthButton(id,task){
   await task();
  }
  catch(error){console.error('Authentication action failed',error);const targetId=({authSignIn:'authSignInMessage',authSignUp:'authSignUpMessage',authReset:'authSignInMessage',authUpdatePassword:'authSignInMessage',authSignOut:'authSignOutMessage',authSyncNow:'authSyncMessage'})[id]||'authMessage';setAuthMessage(authErrorMessage(error),true,targetId);}
- finally{button.disabled=false;button.textContent=old;}
+ finally{button.textContent=old;if(id==='authSignOut')button.disabled=!currentUser;else if(id==='authSyncNow')button.disabled=!currentUser||cloudLoading||cloudSaving;else if(id==='authSignIn'||id==='authSignUp')button.disabled=!!currentUser;else button.disabled=false;}
 }
 function updateAccountUI(){
  $('authState').textContent=currentUser?'مسجل الدخول':'غير مسجل';
@@ -659,6 +659,7 @@ function updateAccountUI(){
  $('authSyncNow').hidden=false;
  $('authSyncNow').disabled=!currentUser||cloudLoading||cloudSaving;
  $('authSyncNow').textContent=cloudLoading?'جارٍ التحديث...':'مزامنة الآن ↻';
+ $('authSyncMessage').textContent=!currentUser?'المزامنة متاحة بعد تسجيل الدخول.':cloudLoading?'جارٍ تحميل مساحة العمل...':cloudSaving?'جارٍ حفظ التعديلات...':realtimeConnected?'المزامنة المباشرة متصلة.':'الحساب متصل؛ الحفظ التلقائي متاح.';
  $('authSignIn').disabled=!!currentUser;
  $('authSignUp').disabled=!!currentUser;
 }
@@ -825,12 +826,12 @@ async function loadCloudWorkspace(){
    if(JSON.stringify(state)===syncSnapshotJson&&!cloudSavePending)clearWorkspaceDirty(ownerId);
    $('syncState').textContent='آخر مزامنة: '+formatSyncTime();
    $('accountSync').textContent='محفوظ سحابيًا';
-   setAuthMessage('تمت مزامنة مساحة العمل مع حسابك.');
+   setAuthMessage('تمت مزامنة مساحة العمل مع حسابك.',false,'authSyncMessage');
    loaded=true;
   }
  }catch(e){
   console.error('Cloud workspace load failed',e);
-  if(currentUser){$('accountSync').textContent='تعذر الاتصال';$('syncState').textContent='لم تكتمل المزامنة';setAuthMessage('تعذر تحميل المشاريع. تأكد من اتصال الإنترنت وإعدادات الحساب، ثم حاول مرة أخرى.',true);}
+  if(currentUser){$('accountSync').textContent='تعذر الاتصال';$('syncState').textContent='لم تكتمل المزامنة';setAuthMessage('تعذر تحميل المشاريع. تأكد من اتصال الإنترنت وإعدادات الحساب، ثم حاول مرة أخرى.',true,'authSyncMessage');}
  }finally{
   cloudLoading=false;
   if(pendingRealtimeWorkspace&&currentUser){
@@ -929,7 +930,7 @@ $('authReset').addEventListener('click',()=>withAuthButton('authReset',async()=>
  if(!email)throw new Error('اكتب بريدك الإلكتروني أولًا لإرسال رابط الاستعادة.');
  const {error}=await sbClient.auth.resetPasswordForEmail(email,{redirectTo:authRedirectUrl()});
  if(error)throw error;
- setAuthMessage('إذا كان البريد مسجلًا، فستصلك رسالة لاستعادة كلمة المرور. افحص صندوق الوارد والرسائل غير المرغوب فيها.');
+ setAuthMessage('إذا كان البريد مسجلًا، فستصلك رسالة لاستعادة كلمة المرور. افحص صندوق الوارد والرسائل غير المرغوب فيها.',false,'authSignInMessage');
 }));
 $('authUpdatePassword').addEventListener('click',()=>withAuthButton('authUpdatePassword',async()=>{
  if(!sbClient)throw new Error('خدمة الحساب غير متاحة حاليًا.');
