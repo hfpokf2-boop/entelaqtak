@@ -31,7 +31,7 @@ function translateAttributes(el){
   const v=el.getAttribute(attr),translated=map[normalize(v)];
   if(translated!==undefined)el.setAttribute(attr,translated);
  });
- if(el.tagName==='OPTION'&&el.hasAttribute('value')){
+ if(el.tagName==='OPTION'&&el.parentElement?.tagName==='DATALIST'&&el.hasAttribute('value')){
   const value=el.getAttribute('value'),translated=map[normalize(value)];
   if(translated!==undefined)el.setAttribute('value',translated);
  }
