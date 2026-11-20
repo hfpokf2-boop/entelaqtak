@@ -45,7 +45,7 @@ function readSaved(){
  try{
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
   if(saved&&typeof saved==='object'){
-   const name=palettes[saved.name]||saved.name==='custom'?'custom':'aurora';
+   const name=saved.name==='custom'?'custom':(palettes[saved.name]?saved.name:'aurora');
    if(name==='custom')return {name,primary:safeColor(saved.primary,'#9b8cff'),secondary:safeColor(saved.secondary,'#62e0c5')};
    const p=palettes[saved.name];
    if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:safeColor(saved.secondary,p.secondary)};
