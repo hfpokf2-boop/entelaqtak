@@ -562,7 +562,7 @@ window.ENTELAQTAK_CONFIG = {
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const DATA_VERSION=3;
 const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local"}};
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null;
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null;
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
@@ -677,7 +677,7 @@ function scheduleCloudSave(){
 }
 function applyRealtimeWorkspace(payload,ownerId){
  if(!currentUser||currentUser.id!==ownerId||!payload?.new||payload.new.user_id!==ownerId)return;
- if(cloudLoading){cloudSavePending=true;return;}
+ if(cloudLoading){pendingRealtimeWorkspace=payload.new.data;return;}
  const remote=payload.new.data;
  if(!remote||typeof remote!=='object'||Array.isArray(remote))return;
  const merged=mergeWorkspace(state,remote);
@@ -744,6 +744,14 @@ async function loadCloudWorkspace(){
   if(currentUser){$('accountSync').textContent='تعذر الاتصال';$('syncState').textContent='لم تكتمل المزامنة';setAuthMessage('تعذر تحميل المشاريع. تأكد من اتصال الإنترنت وإعدادات الحساب، ثم حاول مرة أخرى.',true);}
  }finally{
   cloudLoading=false;
+  if(pendingRealtimeWorkspace&&currentUser){
+   const queuedRemote=pendingRealtimeWorkspace;pendingRealtimeWorkspace=null;
+   const merged=mergeWorkspace(state,queuedRemote),remoteNormalized=normalizeState(queuedRemote);
+   const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(remoteNormalized);
+   state=merged;saveLocalWorkspace();renderAll();
+   $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
+   if(needsMergeSave)cloudSavePending=true;
+  }
   updateAccountUI();
   if(loaded&&currentUser)subscribeWorkspaceRealtime();
   if(cloudSavePending){cloudSavePending=false;scheduleCloudSave();}
@@ -779,7 +787,10 @@ async function connectAuth(){
   const sdk=await loadSupabaseSdk();
   sbClient=sdk.createClient(config.url,config.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
   sbClient.auth.onAuthStateChange((event,session)=>{
-   currentUser=session?.user||null;updateAccountUI();
+   const previousUserId=currentUser?.id||null;
+   currentUser=session?.user||null;
+   if(previousUserId&&currentUser?.id!==previousUserId)stopWorkspaceRealtime();
+   updateAccountUI();
    if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
    if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSavePending=false;stopWorkspaceRealtime();}
    if(event==='SIGNED_IN')setTimeout(()=>loadCloudWorkspace(),0);
