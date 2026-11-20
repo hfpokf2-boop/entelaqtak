@@ -326,6 +326,53 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
 </style><link rel="stylesheet" href="./ui-polish.css?v=20261120-dark-blue-5">
  <link rel="stylesheet" href="./design-system.css?v=20261120-dark-blue-5">
  <style id="account-auth-visibility">#accountLoginCard[hidden],#accountCreateCard[hidden]{display:none!important}</style>
+
+<style id="entelaqtak-blue-premium-theme">
+:root{
+ color-scheme:dark;
+ --bg:#090D18;--panel:#111827;--panel2:#172033;--line:#263449;
+ --text:#F5F7FF;--muted:#94A3B8;
+ --accent:#2878FF;--accent2:#54A5FF;--cyan:#60A5FA;
+ --green:#54A5FF;--theme-primary:#2878FF;--theme-secondary:#54A5FF;
+ --shadow:0 20px 55px #02061799;
+}
+body{
+ background:radial-gradient(900px 440px at 85% -12%,#2878FF20,transparent 65%),
+ radial-gradient(760px 440px at 0 35%,#54A5FF12,transparent 65%),var(--bg);
+ color:var(--text)
+}
+.sidebar{background:linear-gradient(180deg,#111827f7,#0d1423f7);border-left-color:#263449}
+.brandmark{background:linear-gradient(135deg,#2878FF,#54A5FF);color:#fff;box-shadow:0 8px 25px #2878FF45}
+.nav button.active{background:linear-gradient(100deg,#2878FF2b,#2878FF0d);border-color:#2878FF66;color:#fff;box-shadow:inset -3px 0 0 #2878FF}
+.nav button:hover,.quick button:hover{border-color:#54A5FF88}
+.hero-main{background:radial-gradient(420px 220px at 8% 100%,#2878FF20,transparent 70%),linear-gradient(120deg,#2878FF35,#18243b 62%,#111827);border-color:#2878FF66}
+.hero-main h1 span,.eyebrow{color:#93C5FD}
+.hero-side,.panel{background:linear-gradient(145deg,#172033,#111827);border-color:#263449}
+.btn{background:linear-gradient(135deg,#2878FF,#54A5FF);color:#fff;box-shadow:0 8px 22px #2878FF35}
+.btn.alt,.btn.ghost{background:#ffffff08;border-color:#334155;color:#E5EDFA}
+.btn:hover{filter:brightness(1.12)}
+.stat{background:linear-gradient(145deg,#172033,#111827)}
+.statico,.datebox{background:#2878FF20;border-color:#2878FF55}
+.bar span{background:linear-gradient(90deg,#2878FF,#54A5FF)}
+.quick button{background:#141E31;border-color:#263449}
+.field input:focus,.field select:focus,.field textarea:focus,.control:focus,
+.focusrow input:focus,.tool-search:focus-within{border-color:#54A5FF;box-shadow:0 0 0 3px #2878FF24}
+.field input,.field select,.field textarea,.control,.focusrow input,.tool-search{background:#0D1525;border-color:#334155}
+.result{background:linear-gradient(145deg,#0D1525,#101A2C);border-color:#3B5275}
+.focuspanel{background:radial-gradient(360px 150px at 0 100%,#2878FF22,transparent 75%),linear-gradient(120deg,#17233B,#111827);border-color:#2878FF66}
+.note{background:#2878FF12;border-color:#54A5FF44;color:#BFDBFE}
+.challenge-hero{background:radial-gradient(420px 220px at 0 0,#2878FF2b,transparent 70%),linear-gradient(125deg,#17284a,#17243e 70%,#111827);border-color:#2878FF66}
+.challenge-ring{background:radial-gradient(circle at center,#17243e 58%,transparent 60%),conic-gradient(#54A5FF var(--progress,0%),#263449 0)}
+.challenge input{accent-color:#2878FF}
+.status.progress,.status.done{background:#2878FF22;color:#93C5FD}
+.status.plan{background:#54A5FF1c;color:#BFDBFE}
+.social-top-link{border-color:#2878FF66;background:#2878FF16;color:#DBEAFE}
+.iconbtn,.pill,.mini{background:#111827;border-color:#334155}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline-color:#54A5FF}
+.sidebar .nav button.active{color:#fff}
+@media(max-width:760px){.sidebar{background:#0b1222f8;border-top-color:#334155}}
+</style>
+
 </head>
 <body>
 <div class="app">
