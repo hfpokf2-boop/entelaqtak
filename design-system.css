@@ -1064,3 +1064,26 @@ button:disabled,.btn:disabled,.button:disabled,input:disabled{
  #nav button.active{background:rgba(37,99,235,.2)!important;border-color:#3B82F6!important;box-shadow:inset 0 2px 0 #3B82F6!important}
 }
 @media(prefers-reduced-motion:reduce){button,.btn,.button,*{transition-duration:.01ms!important;animation-duration:.01ms!important}}
+
+
+/* Blue action contract for components with more specific legacy selectors. */
+:root{
+ --workspace-violet:#3B82F6!important;--workspace-mint:#10B981!important;
+ --workspace-glow:rgba(59,130,246,.2)!important;
+}
+#view-settings button,#view-settings button.primary,#view-settings button.danger,
+.lang button,.theme-panel button,.theme-panel-footer button,
+button.danger,.danger button,.btn-danger,.skip-link,a.skip-link{
+ color:#FFFFFF!important;background:linear-gradient(115deg,#3B82F6,#1D4ED8)!important;
+ border:1px solid #60A5FA!important;box-shadow:0 8px 22px rgba(37,99,235,.22)!important;
+}
+#view-settings button:hover,#view-settings button.primary:hover,#view-settings button.danger:hover,
+.lang button:hover,.theme-panel button:hover,.theme-panel-footer button:hover,
+button.danger:hover,.danger button:hover,.btn-danger:hover,.skip-link:hover,a.skip-link:hover{
+ color:#FFFFFF!important;background:linear-gradient(115deg,#2563EB,#1E40AF)!important;border-color:#93C5FD!important;
+}
+#view-settings button:active,#view-settings button.primary:active,#view-settings button.danger:active,
+.lang button:active,.theme-panel button:active,.theme-panel-footer button:active,
+button.danger:active,.danger button:active,.btn-danger:active{
+ background:#1E40AF!important;border-color:#60A5FA!important;
+}
