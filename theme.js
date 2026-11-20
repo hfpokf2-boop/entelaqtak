@@ -1,14 +1,14 @@
 (()=>{'use strict';
-const STORAGE_KEY='entelaqtak-theme-v2';
+const STORAGE_KEY='entelaqtak-theme-v3';
 const root=document.documentElement;
 const $=id=>document.getElementById(id);
 const palettes={
- aurora:{label:'وردي ولافندر',primary:'#8065C4',secondary:'#98527F'},
- ocean:{label:'لافندر هادئ',primary:'#7057B1',secondary:'#88486F'},
- sunset:{label:'وردي غامق',primary:'#98527F',secondary:'#7057B1'},
- emerald:{label:'موف ملكي',primary:'#735BAF',secondary:'#98527F'},
- rose:{label:'وردي معتّق',primary:'#98527F',secondary:'#8065C4'},
- sapphire:{label:'ليلي عميق',primary:'#66569A',secondary:'#98527F'}
+ aurora:{label:'أزرق ملكي',primary:'#2563EB',secondary:'#38BDF8'},
+ ocean:{label:'أزرق المحيط',primary:'#0EA5E9',secondary:'#2563EB'},
+ sunset:{label:'نيلي هادئ',primary:'#4F46E5',secondary:'#60A5FA'},
+ emerald:{label:'تركواز عميق',primary:'#0F766E',secondary:'#38BDF8'},
+ rose:{label:'سماوي بنفسجي',primary:'#3B82F6',secondary:'#818CF8'},
+ sapphire:{label:'ليلي سماوي',primary:'#1D4ED8',secondary:'#22D3EE'}
 };
 const toggle=$('themeToggle'),panel=$('themePanel'),close=$('themeClose');
 const primaryInput=$('themePrimary'),secondaryInput=$('themeSecondary');
@@ -16,7 +16,7 @@ const status=$('themeStatus');
 if(!toggle||!panel||!primaryInput||!secondaryInput)return;
 const hexToRgb=value=>{
  const hex=String(value||'').replace('#','');
- if(!/^[0-9a-f]{6}$/i.test(hex))return '183,154,247';
+ if(!/^[0-9a-f]{6}$/i.test(hex))return '37,99,235';
  return [0,2,4].map(i=>parseInt(hex.slice(i,i+2),16)).join(',');
 };
 const safeColor=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(String(value||''))?value:fallback;
@@ -25,14 +25,14 @@ function applyTheme(name,primary,secondary,save=true){
  primary=safeColor(primary,preset.primary);
  secondary=safeColor(secondary,preset.secondary);
  root.dataset.theme=name;
- root.style.setProperty('--theme-primary',primary);
- root.style.setProperty('--theme-secondary',secondary);
- root.style.setProperty('--theme-primary-rgb',hexToRgb(primary));
- root.style.setProperty('--theme-secondary-rgb',hexToRgb(secondary));
- root.style.setProperty('--accent',primary);
- root.style.setProperty('--accent2',secondary);
- root.style.setProperty('--workspace-violet',primary);
- root.style.setProperty('--workspace-mint',secondary);
+ root.style.setProperty('--theme-primary',primary,'important');
+ root.style.setProperty('--theme-secondary',secondary,'important');
+ root.style.setProperty('--theme-primary-rgb',hexToRgb(primary),'important');
+ root.style.setProperty('--theme-secondary-rgb',hexToRgb(secondary),'important');
+ root.style.setProperty('--accent',primary,'important');
+ root.style.setProperty('--accent2',secondary,'important');
+ root.style.setProperty('--workspace-violet',primary,'important');
+ root.style.setProperty('--workspace-mint',secondary,'important');
  primaryInput.value=primary;
  secondaryInput.value=secondary;
  document.querySelectorAll('[data-theme]').forEach(button=>{
@@ -46,7 +46,7 @@ function readSaved(){
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
   if(saved&&typeof saved==='object'){
    const name=saved.name==='custom'?'custom':(palettes[saved.name]?saved.name:'aurora');
-   if(name==='custom')return {name,primary:safeColor(saved.primary,'#98527F'),secondary:safeColor(saved.secondary,'#88486F')};
+   if(name==='custom')return {name,primary:safeColor(saved.primary,'#2563EB'),secondary:safeColor(saved.secondary,'#38BDF8')};
    const p=palettes[saved.name];
    if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:p.secondary};
   }
