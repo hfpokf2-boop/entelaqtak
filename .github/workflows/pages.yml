@@ -88,7 +88,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v24"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v25"), 'Service worker cache version was not bumped.');
           assert(worker.includes("'./content-pack-pro.js'"), 'Content pack module missing from offline app shell.');
           console.log('Workspace state identity, platform event bindings, and offline cache checks passed.');
           NODE
