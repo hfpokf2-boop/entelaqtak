@@ -180,7 +180,7 @@ jobs:
               'id="accountCreatePasswordConfirm"',
               "function isolateWorkspaceForAccount(ownerId)",
               "if(currentUser)isolateWorkspaceForAccount(currentUser.id)",
-              "if(currentUser)data.session?.user?.id",
+              "currentUser=data.session?.user||null;",
           ]
           missing = [item for item in required if item not in html]
           if missing:
