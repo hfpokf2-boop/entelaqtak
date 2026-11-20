@@ -296,7 +296,19 @@ siteNav.querySelectorAll('a').forEach(link=>link.addEventListener('click',()=>{
  menuButton.setAttribute('aria-expanded','false');
  menuButton.setAttribute('aria-label','فتح القائمة');
 }));
-document.getElementById('year').textContent=String(new Date().getFullYear());
+// Supabase confirmation and password-recovery links currently return to the public root URL.
+ // Hand auth tokens/errors to the workspace, where the Supabase client can process them.
+ const authQuery=new URLSearchParams(window.location.search);
+ const authHash=window.location.hash||'';
+ const hasAuthCallback=authQuery.has('code')||authQuery.has('token_hash')||authQuery.has('error')||
+  /(?:^|[&#])(access_token|refresh_token|token_hash|error|type)=/.test(authHash);
+ if(hasAuthCallback){
+  const destination=new URL('./workspace.html',window.location.href);
+  destination.search=window.location.search;
+  destination.hash=authHash;
+  window.location.replace(destination.href);
+ }
+ document.getElementById('year').textContent=String(new Date().getFullYear());
 </script>
 </body>
 </html>
