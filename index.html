@@ -678,6 +678,7 @@ async function writeCloudWorkspace(){
  }finally{
   cloudSaving=false;
   if(cloudSavePending){cloudSavePending=false;scheduleCloudSave();}
+  if(cloudLoadPending&&currentUser){cloudLoadPending=false;setTimeout(()=>loadCloudWorkspace(),0);}
   updateAccountUI();
  }
 }
@@ -777,7 +778,8 @@ async function loadCloudWorkspace(){
   cloudLoading=false;
   if(pendingRealtimeWorkspace&&currentUser){
    const queuedRemote=pendingRealtimeWorkspace;pendingRealtimeWorkspace=null;
-   const merged=mergeWorkspace(state,queuedRemote),remoteNormalized=normalizeState(queuedRemote);
+   const localWins=workspaceHasPendingLocalChanges(currentUser.id);
+   const merged=mergeWorkspace(state,queuedRemote,localWins),remoteNormalized=normalizeState(queuedRemote);
    const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(remoteNormalized);
    state=merged;saveLocalWorkspace();renderAll();
    $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
