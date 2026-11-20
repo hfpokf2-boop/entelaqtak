@@ -1,6 +1,6 @@
 'use strict';
-const CACHE_NAME='entelaqtak-shell-v5';
-const APP_FILES=['./','./index.html','./ui-polish.css','./theme.js','./creator-suite.js','./enhancements.js','./manifest.webmanifest','./app-icon.svg','./favicon.svg','./legal.html'];
+const CACHE_NAME='entelaqtak-shell-v6';
+const APP_FILES=['./','./index.html','./workspace.html','./ui-polish.css','./theme.js','./creator-suite.js','./enhancements.js','./manifest.webmanifest','./app-icon.svg','./favicon.svg','./legal.html'];
 self.addEventListener('install',event=>{
  event.waitUntil((async()=>{
   const cache=await caches.open(CACHE_NAME);
@@ -30,7 +30,7 @@ self.addEventListener('fetch',event=>{
     if(fresh&&fresh.ok){const cache=await caches.open(CACHE_NAME);await cache.put(request,fresh.clone());}
     return fresh;
    }catch(error){
-    return (await caches.match(request))||(await caches.match('./index.html'))||Response.error();
+    return (await caches.match(request))||(await caches.match('./workspace.html'))||(await caches.match('./index.html'))||Response.error();
    }
   })());
   return;
