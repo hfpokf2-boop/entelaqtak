@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><meta name="theme-color" content="#0b1020">
+<title>حساب المشرف | انطلاقتك</title>
+<style>
+:root{color-scheme:dark;--bg:#0b1020;--panel:#151d33;--line:#303d5b;--text:#f4f5ff;--muted:#a5aec8;--accent:#8b7cf6;--mint:#55d6c2}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(700px 400px at 80% 0,#8b7cf622,transparent 70%),var(--bg);color:var(--text);font:14px Tahoma,Arial,sans-serif;line-height:1.7}.wrap{max-width:1250px;margin:auto;padding:28px 18px 60px}.top{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:24px}.brand{font-size:23px;font-weight:bold}.muted,small{color:var(--muted)}.card{background:linear-gradient(145deg,#202944,#151d33);border:1px solid var(--line);border-radius:17px;padding:19px;margin-bottom:15px}.login{max-width:430px;margin:9vh auto}.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.stat b{display:block;font-size:27px;margin-top:5px}.stat span{font-size:12px;color:var(--muted)}input{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;background:#0e1629;color:white;margin:6px 0 13px}button,.btn{border:0;border-radius:10px;padding:10px 15px;background:linear-gradient(135deg,var(--accent),var(--mint));color:#111827;font-weight:bold;cursor:pointer}button.secondary{background:#ffffff0c;color:white;border:1px solid var(--line)}.actions{display:flex;gap:8px;flex-wrap:wrap}table{width:100%;border-collapse:collapse;min-width:760px}th,td{text-align:right;padding:11px 9px;border-bottom:1px solid var(--line);font-size:12px}th{color:#b9b2ff} .tablewrap{overflow:auto}.hidden{display:none!important}.status{padding:10px;border-radius:10px;background:#ffffff09;color:var(--muted);margin-top:12px}.live{color:#65d6a5}.badge{display:inline-block;padding:3px 8px;border-radius:20px;background:#55d6c21a;color:#75e3d2;font-size:11px}.note{font-size:12px;color:var(--muted)}@media(max-width:800px){.grid{grid-template-columns:repeat(2,1fr)}.top{align-items:flex-start;flex-direction:column}}@media(max-width:440px){.grid{grid-template-columns:1fr 1fr}.wrap{padding:18px 12px}}
+</style>
+<script>window.ENTELAQTAK_CONFIG={url:"https://dbetanrnhdabuachxdhc.supabase.co",publishableKey:"sb_publishable_C2IK6I_dArVgsJayOHajVw_bM2zLK2i"};</script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body><main class="wrap">
+<header class="top"><div><div class="brand">🔐 انطلاقتك / حساب المشرف</div><small>لوحة إدارة خاصة بصاحب الموقع</small></div><a href="./workspace.html" class="note">العودة لمساحة العمل ↗</a></header>
+<section id="login" class="card login"><h2>تسجيل دخول المشرف</h2><p class="note">الدخول متاح للبريد الإلكتروني المضاف مسبقًا إلى قائمة المشرفين فقط.</p>
+<form id="loginForm"><label>البريد الإلكتروني</label><input id="email" type="email" autocomplete="username" required><label>كلمة المرور</label><input id="password" type="password" autocomplete="current-password" required><button type="submit">دخول آمن</button></form><div id="loginStatus" class="status" role="status">سجّل الدخول بحسابك.</div></section>
+<section id="dashboard" class="hidden">
+<div class="top"><div><h1>نظرة عامة</h1><div id="identity" class="note"></div></div><div class="actions"><button class="secondary" id="refresh">تحديث البيانات</button><button class="secondary" id="logout">تسجيل الخروج</button></div></div>
+<div class="grid">
+<div class="card stat"><span>إجمالي الجلسات المسجلة</span><b id="total">—</b></div>
+<div class="card stat"><span>نشطون الآن (آخر 90 ثانية)</span><b id="online" class="live">—</b></div>
+<div class="card stat"><span>جلسات اليوم</span><b id="today">—</b></div>
+<div class="card stat"><span>جلسات انتهت/غادرت</span><b id="exited">—</b></div>
+</div>
+<div class="card"><div class="top"><div><h2>آخر الزيارات</h2><small>تتحدث تلقائيًا كل 30 ثانية</small></div><span class="badge">مقيدة للمشرف</span></div>
+<div class="tablewrap"><table><thead><tr><th>الزائر</th><th>الصفحة</th><th>وقت الدخول</th><th>آخر نشاط</th><th>وقت الخروج</th><th>الجهاز / المتصفح</th></tr></thead><tbody id="rows"><tr><td colspan="6">جارٍ التحميل…</td></tr></tbody></table></div></div>
+<div class="card"><h3>ملاحظات القياس والخصوصية</h3><p class="note">الزائر الذي سجل دخوله يظهر بريده الإلكتروني؛ الزائر غير المسجل يظهر كزائر مجهول مع معرّف جلسة عشوائي. النشاط الحالي تقريبي ويعتمد على نبضات كل 30 ثانية. قد لا يُسجّل حدث الخروج عند إغلاق المتصفح أو انقطاع الإنترنت؛ عندها تنتهي حالة «نشط الآن» تلقائيًا بعد 90 ثانية.</p></div>
+</section></main>
+<script>
+(() => {
+ const cfg=window.ENTELAQTAK_CONFIG, sb=window.supabase.createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+ const $=id=>document.getElementById(id), fmt=v=>v?new Date(v).toLocaleString('ar-EG'):'—';
+ const device=ua=>{ua=ua||'';let os=/Android/i.test(ua)?'Android':/iPhone|iPad/i.test(ua)?'iOS':/Windows/i.test(ua)?'Windows':/Mac OS/i.test(ua)?'Mac':/Linux/i.test(ua)?'Linux':'غير معروف';let br=/Edg\//i.test(ua)?'Edge':/Firefox\//i.test(ua)?'Firefox':/Chrome\//i.test(ua)?'Chrome':/Safari\//i.test(ua)?'Safari':'متصفح غير معروف';return os+' · '+br};
+ async function isAdmin(){const {data,error}=await sb.rpc('is_site_admin');if(error)throw error;return data===true}
+ function showStatus(id,msg){$(id).textContent=msg}
+ async function enter(){const {data:{user}}=await sb.auth.getUser();if(!user){$('login').classList.remove('hidden');$('dashboard').classList.add('hidden');return}
+  if(!(await isAdmin())){await sb.auth.signOut();throw new Error('هذا الحساب غير مصرح له بدخول لوحة المشرف.')}
+  $('identity').textContent='مسجل الدخول: '+user.email;$('login').classList.add('hidden');$('dashboard').classList.remove('hidden');await load();
+ }
+ async function load(){
+  const {data,error}=await sb.from('visitor_sessions').select('session_id,visitor_email,page_path,first_seen,last_seen,ended_at,user_agent').order('first_seen',{ascending:false}).limit(500);
+  if(error)throw error;const list=data||[],now=Date.now(),day=new Date();day.setHours(0,0,0,0);
+  $('total').textContent=list.length;$('online').textContent=list.filter(x=>!x.ended_at&&now-new Date(x.last_seen).getTime()<90000).length;
+  $('today').textContent=list.filter(x=>new Date(x.first_seen)>=day).length;$('exited').textContent=list.filter(x=>!!x.ended_at||now-new Date(x.last_seen).getTime()>=90000).length;
+  $('rows').innerHTML=list.map(x=>'<tr><td>'+(x.visitor_email?esc(x.visitor_email):'زائر مجهول<br><small>'+esc(x.session_id.slice(0,8))+'</small>')+'</td><td>'+esc(x.page_path)+'</td><td>'+fmt(x.first_seen)+'</td><td>'+fmt(x.last_seen)+'</td><td>'+(x.ended_at?fmt(x.ended_at):'<span class="badge">لم يُسجّل خروج صريح</span>')+'</td><td>'+esc(device(x.user_agent))+'</td></tr>').join('')||'<tr><td colspan="6">لا توجد زيارات مسجلة حتى الآن.</td></tr>';
+ }
+ function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+ $('loginForm').addEventListener('submit',async e=>{e.preventDefault();showStatus('loginStatus','جارٍ التحقق…');try{const {error}=await sb.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});if(error)throw error;await enter()}catch(err){showStatus('loginStatus',err.message||'تعذر تسجيل الدخول.')}});
+ $('refresh').addEventListener('click',()=>load().catch(e=>alert(e.message)));
+ $('logout').addEventListener('click',async()=>{await sb.auth.signOut();$('dashboard').classList.add('hidden');$('login').classList.remove('hidden')});
+ sb.auth.getSession().then(()=>enter().catch(e=>showStatus('loginStatus',e.message)));
+ setInterval(()=>{if(!$('dashboard').classList.contains('hidden'))load().catch(()=>{})},30000);
+})();
+</script></body></html>
