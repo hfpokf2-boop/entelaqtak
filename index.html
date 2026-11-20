@@ -361,7 +361,29 @@ button:disabled{opacity:.55;cursor:not-allowed;transform:none!important;filter:n
   <div class="side-note"><b>مساحتك، أفكارك، وانطلاقتك.</b>احفظ أعمالك على جهازك، أو سجّل الدخول لمزامنتها سحابيًا بين أجهزتك.</div>
 </aside>
 <main class="main">
-<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><label class="tool-search"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" list="toolSearchOptions" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة" autocomplete="off"><datalist id="toolSearchOptions"><option value="الرئيسية"><option value="أفكار المحتوى"><option value="استوديو المحتوى"><option value="إعادة تدوير المحتوى"><option value="كاتب السكريبت"><option value="العناوين والصورة"><option value="مساعد SEO"><option value="تقويم النشر"><option value="متابعة الأداء"><option value="تحدي 30 يوم"><option value="عقل المحتوى الذكي"><option value="رادار الموضوعات"><option value="مصنع الفيديوهات"><option value="هوية المحتوى"><option value="مختبر العناوين"><option value="أكاديمية انطلاقتك"><option value="مصمم الصور المصغرة"><option value="دليل الاستخدام"></datalist></label><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
+<header class="top"><div><div class="crumb">استوديو صُنّاع المحتوى / مساحة العمل</div><div class="toptitle" id="pageTitle">الرئيسية</div></div><div class="topactions"><label class="tool-search"><span aria-hidden="true">⌕</span><input id="toolSearch" type="search" list="toolSearchOptions" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة" autocomplete="off"><datalist id="toolSearchOptions"><option value="الرئيسية"><option value="أفكار المحتوى"><option value="استوديو المحتوى"><option value="إعادة تدوير المحتوى"><option value="كاتب السكريبت"><option value="العناوين والصورة"><option value="مساعد SEO"><option value="تقويم النشر"><option value="متابعة الأداء"><option value="تحدي 30 يوم"><option value="عقل المحتوى الذكي"><option value="رادار الموضوعات"><option value="مصنع الفيديوهات"><option value="هوية المحتوى"><option value="مختبر العناوين"><option value="أكاديمية انطلاقتك"><option value="مصمم الصور المصغرة"><option value="دليل الاستخدام"></datalist></label><div class="theme-control-wrap">
+<button class="theme-toggle" id="themeToggle" type="button" aria-label="تغيير ألوان الموقع" aria-haspopup="dialog" aria-controls="themePanel" aria-expanded="false" title="تغيير ألوان الموقع">
+<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18h1.1a2 2 0 0 0 1.4-3.4 1.8 1.8 0 0 1 1.3-3.1H18a3 3 0 0 0 3-3c0-4.7-4-8.5-9-8.5Z"/><path d="M7.5 10h.01M10.5 6.8h.01M15 7.7h.01M17 11h.01"/></svg>
+<span class="sr-only">تغيير الألوان</span>
+</button>
+<div class="theme-panel" id="themePanel" role="dialog" aria-label="ألوان الموقع" hidden>
+<div class="theme-panel-head"><div><strong>ألوان انطلاقتك</strong><small>اختار الجو اللي يناسبك</small></div><button class="theme-close" id="themeClose" type="button" aria-label="إغلاق">×</button></div>
+<div class="theme-presets" aria-label="الألوان الجاهزة">
+<button class="theme-preset" type="button" data-theme="aurora" aria-pressed="true"><span class="theme-swatch aurora"></span><strong>بنفسجي</strong></button>
+<button class="theme-preset" type="button" data-theme="ocean" aria-pressed="false"><span class="theme-swatch ocean"></span><strong>محيطي</strong></button>
+<button class="theme-preset" type="button" data-theme="sunset" aria-pressed="false"><span class="theme-swatch sunset"></span><strong>غروب</strong></button>
+<button class="theme-preset" type="button" data-theme="emerald" aria-pressed="false"><span class="theme-swatch emerald"></span><strong>زمردي</strong></button>
+<button class="theme-preset" type="button" data-theme="rose" aria-pressed="false"><span class="theme-swatch rose"></span><strong>وردي</strong></button>
+<button class="theme-preset" type="button" data-theme="sapphire" aria-pressed="false"><span class="theme-swatch sapphire"></span><strong>ياقوتي</strong></button>
+</div>
+<div class="theme-custom">
+<div class="theme-custom-title"><strong>لونك الخاص</strong><small>اختار لونين للهوية</small></div>
+<label for="themePrimary">اللون الرئيسي<input id="themePrimary" type="color" value="#9b8cff"></label>
+<label for="themeSecondary">اللون المساعد<input id="themeSecondary" type="color" value="#62e0c5"></label>
+</div>
+<div class="theme-panel-footer"><span id="themeStatus" role="status" aria-live="polite">الثيم البنفسجي مفعّل</span><button id="themeReset" type="button">استعادة الافتراضي</button></div>
+</div>
+</div><span class="pill" id="connectionBadge"><span class="dot"></span>مساحة العمل</span></div></header>
 
 <section class="view active" id="view-home">
   <div class="hero"><div class="hero-main"><span class="eyebrow">ابدأ فكرتك… وخليها محتوى يستاهل المشاهدة</span><h1>كل فكرة كبيرة<br>بتبدأ من <span>انطلاقتك.</span></h1><p>مساحة واحدة تساعدك تخطط، تكتب، تجهز وتنظم محتواك على يوتيوب وتيك توك وإنستجرام وباقي المنصات.</p><div class="actions"><button class="btn" data-go="studio">اصنع حزمة محتوى ✦</button><button class="btn alt" data-go="ideas">اكتشف أفكارًا جديدة</button></div></div>
@@ -1133,4 +1155,5 @@ $('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSe
 </script>
 <script src="./creator-suite.js" defer></script>
 <script src="./enhancements.js" defer></script>
+<script src="./theme.js" defer></script>
 </body></html>
