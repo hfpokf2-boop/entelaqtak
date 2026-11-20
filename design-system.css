@@ -1087,3 +1087,22 @@ button.danger:hover,.danger button:hover,.btn-danger:hover,.skip-link:hover,a.sk
 button.danger:active,.danger button:active,.btn-danger:active{
  background:#1E40AF!important;border-color:#60A5FA!important;
 }
+
+
+/* Final coverage for tool-specific and compact action controls. */
+.cp-output button,.cp-foot button,
+button.primary,button.secondary,button.danger,button.ghost,button.alt,
+button.text-btn,button.menu-toggle,button.theme-close,button.small{
+ color:#FFFFFF!important;background:linear-gradient(115deg,#3B82F6,#1D4ED8)!important;
+ border:1px solid #60A5FA!important;box-shadow:0 8px 22px rgba(37,99,235,.2)!important;
+}
+.cp-output button:hover,.cp-foot button:hover,
+button.primary:hover,button.secondary:hover,button.danger:hover,button.ghost:hover,
+button.alt:hover,button.text-btn:hover,button.menu-toggle:hover,button.theme-close:hover,button.small:hover{
+ color:#FFFFFF!important;background:linear-gradient(115deg,#2563EB,#1E40AF)!important;border-color:#93C5FD!important;
+}
+.cp-output button:active,.cp-foot button:active,
+button.primary:active,button.secondary:active,button.danger:active,button.ghost:active,
+button.alt:active,button.text-btn:active,button.menu-toggle:active,button.theme-close:active,button.small:active{
+ background:#1E40AF!important;border-color:#60A5FA!important;
+}
