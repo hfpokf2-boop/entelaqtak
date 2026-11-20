@@ -1188,7 +1188,7 @@ $('settingsImportFile').addEventListener('change',async e=>{
   if(file.size>5*1024*1024)throw new Error('حجم الملف أكبر من 5 ميجابايت.');
   const parsed=JSON.parse(await file.text()),incoming=parsed.data||parsed;
   if(!incoming||typeof incoming!=='object'||Array.isArray(incoming))throw new Error('صيغة الملف غير صحيحة.');
-  for(const key of ['ideas','packs','posts','metrics','scriptTemplates','experiments'])if(incoming[key]!==undefined&&!Array.isArray(incoming[key]))throw new Error('بنية حقل '+key+' غير صحيحة.');for(const key of ['challenge','prePublishChecks','academy','profile','brand','focus','settings'])if(incoming[key]!==undefined&&(!incoming[key]||typeof incoming[key]!=='object'||Array.isArray(incoming[key])))throw new Error('نوع حقل '+key+' غير صحيح.');
+  for(const key of ['ideas','packs','productionProjects','posts','metrics','scriptTemplates','experiments'])if(incoming[key]!==undefined&&!Array.isArray(incoming[key]))throw new Error('بنية حقل '+key+' غير صحيحة.');for(const key of ['challenge','prePublishChecks','academy','profile','brand','focus','settings'])if(incoming[key]!==undefined&&(!incoming[key]||typeof incoming[key]!=='object'||Array.isArray(incoming[key])))throw new Error('نوع حقل '+key+' غير صحيح.');
   if(!confirm('سيتم استبدال بياناتك الحالية بالنسخة المستوردة. هل أنشأت نسخة من بياناتك الحالية؟ متابعة؟'))return;
   state=normalizeState(incoming);save();renderAll();renderSettings();toast('تم التحقق من النسخة واستيرادها بنجاح.');
  }catch(err){toast('تعذر الاستيراد: '+err.message);}
