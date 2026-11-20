@@ -70,12 +70,13 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#171F2E}.visitor{c
 @media(max-width:680px){.wrap{padding:13px 10px 34px}.topbar{padding:14px;align-items:flex-start;flex-direction:column}.top-actions{width:100%;justify-content:space-between}.date-chip{font-size:10px}.admin-nav{overflow-x:auto;flex-wrap:nowrap}.admin-nav a{white-space:nowrap;padding:8px 10px}.metrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.metric{padding:12px;min-height:108px}.metric strong{font-size:24px}.heading{align-items:flex-start}.heading .actions{width:100%}.filters{grid-template-columns:1fr 1fr}.filters .search{grid-column:span 2}.filters button{width:100%;font-size:11px;padding:9px 8px}.card{padding:14px}.login{padding:20px}.audience-legend{gap:12px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important}}
 </style>
+<script>try{if(localStorage.getItem("entelaqtak-language-v1")==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";}}catch(e){}</script>
 </head>
 <body>
 <main class="wrap">
 <header class="topbar">
  <div class="brand"><div class="brandmark">E</div><div><h1>انطلاقتك <span style="color:#9c91ff">/ مركز التحكم</span></h1><p>إدارة الموقع وتحليلات الزوار في مكان واحد</p></div></div>
- <div class="top-actions"><span id="localDate" class="date-chip" aria-label="تاريخ اليوم"></span><a class="button ghost" href="./workspace.html">العودة لمساحة العمل ↗</a></div>
+ <div class="top-actions"><button class="language-toggle" data-language-toggle type="button">English</button><span id="localDate" class="date-chip" aria-label="تاريخ اليوم"></span><a class="button ghost" href="./workspace.html">العودة لمساحة العمل ↗</a></div>
 </header>
 
 
@@ -302,4 +303,5 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#171F2E}.visitor{c
  setInterval(()=>{if(!$('dashboard').classList.contains('hidden'))load().catch(e=>setStatus('تعذر التحديث التلقائي: '+e.message,'error'))},30000);
 })();
 </script>
+<script src="./language.js" defer></script>
 </body></html>
