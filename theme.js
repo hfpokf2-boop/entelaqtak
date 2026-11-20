@@ -3,12 +3,12 @@ const STORAGE_KEY='entelaqtak-theme-v2';
 const root=document.documentElement;
 const $=id=>document.getElementById(id);
 const palettes={
- aurora:{label:'وردي ولافندر',primary:'#D889C9',secondary:'#A69AF2'},
- ocean:{label:'لافندر هادئ',primary:'#9C9AF2',secondary:'#D889C9'},
- sunset:{label:'وردي غامق',primary:'#C978B7',secondary:'#A69AF2'},
- emerald:{label:'موف ملكي',primary:'#9278D8',secondary:'#D889C9'},
- rose:{label:'وردي فاتح',primary:'#E39ACD',secondary:'#B7A8F5'},
- sapphire:{label:'ليلي عميق',primary:'#776DBA',secondary:'#D889C9'}
+ aurora:{label:'وردي ولافندر',primary:'#B79AF7',secondary:'#E3A0D2'},
+ ocean:{label:'لافندر هادئ',primary:'#A88BEF',secondary:'#D58AC4'},
+ sunset:{label:'وردي غامق',primary:'#D58AC4',secondary:'#A88BEF'},
+ emerald:{label:'موف ملكي',primary:'#9278D8',secondary:'#D58AC4'},
+ rose:{label:'وردي فاتح',primary:'#E3A0D2',secondary:'#B7A8F5'},
+ sapphire:{label:'ليلي عميق',primary:'#776DBA',secondary:'#D58AC4'}
 };
 const toggle=$('themeToggle'),panel=$('themePanel'),close=$('themeClose');
 const primaryInput=$('themePrimary'),secondaryInput=$('themeSecondary');
