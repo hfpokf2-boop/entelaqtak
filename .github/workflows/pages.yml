@@ -110,7 +110,7 @@ jobs:
               "--bg:#0B1120", "--accent:#3B82F6", "--accent2:#10B981",
               "button:hover", "button:active", "button:focus-visible",
               "background:linear-gradient(115deg,#3B82F6,#1D4ED8)",
-              "button.active,#nav button.active", ".cp-output button,.cp-foot button", "button.primary,button.secondary,button.danger", ".menu-toggle,.theme-close", ".lang button,.theme-panel button", "#view-settings button",
+              "button.active,#nav button.active", ".cp-output button,.cp-foot button", "button.primary,button.secondary,button.danger", "button.menu-toggle,button.theme-close", ".lang button,.theme-panel button", "#view-settings button",
           ]
           for token in required:
               if token not in css:
