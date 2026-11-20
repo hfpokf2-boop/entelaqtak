@@ -868,7 +868,7 @@ h1 span,.hero-main h1 span{
  background-clip:text!important;-webkit-background-clip:text!important;color:transparent!important;
 }
 .eyebrow,.kicker,.crumb:before{color:#E3A0D2!important}
-.hero .eyebrow{background:#eaf4ff!important;border-color:#cfe2f7!important;color:#245b91!important}
+.hero .eyebrow{background:rgba(183,154,247,.12)!important;border-color:rgba(183,154,247,.42)!important;color:#EADFFF!important}
 .pulse{background:#14b8a6!important;box-shadow:0 0 0 5px #14b8a622!important}
 .btn-primary,.btn:not(.alt):not(.ghost),.button:not(.ghost),.contact,
 .header-actions .btn-primary{
