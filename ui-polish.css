@@ -12,14 +12,14 @@
 html{scroll-padding-top:92px}
 body{
   background:
-    radial-gradient(900px 540px at 100% -12%,rgba(139,124,246,.13),transparent 68%),
+    radial-gradient(900px 540px at 100% -12%,rgba(59,130,246,.13),transparent 68%),
     radial-gradient(760px 520px at -12% 58%,rgba(85,214,194,.075),transparent 70%),
     #0B1120;
   color:#f4f6ff;
   text-rendering:optimizeLegibility;
   -webkit-font-smoothing:antialiased;
 }
-::selection{background:rgba(139,124,246,.42);color:#fff}
+::selection{background:rgba(59,130,246,.42);color:#fff}
 .app{min-height:100svh}
 .main{max-width:1660px;padding-inline:clamp(16px,3.3vw,48px)}
 .sidebar{border-left-color:var(--ui-line)}
@@ -121,7 +121,7 @@ body{
   border-radius:var(--ui-radius-xl);
   border-color:var(--ui-line);
   background:
-    radial-gradient(420px 180px at 100% 0%,rgba(139,124,246,.1),transparent 75%),
+    radial-gradient(420px 180px at 100% 0%,rgba(59,130,246,.1),transparent 75%),
     linear-gradient(130deg,rgba(27,39,65,.96),rgba(19,29,49,.98));
 }
 .start-path-heading h2{font-size:19px}
@@ -185,7 +185,7 @@ body{
 .btn.alt,.btn.ghost{border-color:rgba(163,180,220,.2);background:rgba(255,255,255,.055)}
 .btn.small{min-height:33px;border-radius:9px}
 .mini,.iconbtn{border-color:rgba(163,180,220,.2);transition:background .16s ease,border-color .16s ease}
-.mini:hover,.iconbtn:hover{background:rgba(139,124,246,.14);border-color:rgba(155,140,255,.45)}
+.mini:hover,.iconbtn:hover{background:rgba(59,130,246,.14);border-color:rgba(96,165,250,.45)}
 .result{
   border:1px dashed rgba(151,170,211,.34);
   border-radius:13px;
@@ -238,9 +238,9 @@ body{
 #view-settings .card button.secondary{background:rgba(255,255,255,.055)}
 #view-settings .card button.danger{margin-top:0}
 #view-settings .account-card{
-  border-color:rgba(155,140,255,.34);
+  border-color:rgba(96,165,250,.34);
   background:
-    radial-gradient(500px 190px at 100% 0%,rgba(139,124,246,.14),transparent 76%),
+    radial-gradient(500px 190px at 100% 0%,rgba(59,130,246,.14),transparent 76%),
     radial-gradient(340px 160px at 0 100%,rgba(85,214,194,.07),transparent 75%),
     linear-gradient(145deg,#172554,#111827);
 }
