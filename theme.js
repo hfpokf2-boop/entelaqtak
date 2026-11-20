@@ -16,7 +16,7 @@ const status=$('themeStatus');
 if(!toggle||!panel||!primaryInput||!secondaryInput)return;
 const hexToRgb=value=>{
  const hex=String(value||'').replace('#','');
- if(!/^[0-9a-f]{6}$/i.test(hex))return '59,130,246';
+ if(!/^[0-9a-f]{6}$/i.test(hex))return '183,154,247';
  return [0,2,4].map(i=>parseInt(hex.slice(i,i+2),16)).join(',');
 };
 const safeColor=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(String(value||''))?value:fallback;
@@ -46,7 +46,7 @@ function readSaved(){
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
   if(saved&&typeof saved==='object'){
    const name=saved.name==='custom'?'custom':(palettes[saved.name]?saved.name:'aurora');
-   if(name==='custom')return {name,primary:safeColor(saved.primary,'#D889C9'),secondary:safeColor(saved.secondary,'#54a5ff')};
+   if(name==='custom')return {name,primary:safeColor(saved.primary,'#D889C9'),secondary:safeColor(saved.secondary,'#D58AC4')};
    const p=palettes[saved.name];
    if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:p.secondary};
   }
