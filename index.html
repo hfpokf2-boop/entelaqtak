@@ -647,7 +647,17 @@ function mergeWorkspace(localData,remoteData,localWins=false){
  for(const key of ['challenge','focus','profile','brand','academy','prePublishChecks','settings']){
   const localObject=local[key]&&typeof local[key]==='object'&&!Array.isArray(local[key])?local[key]:{};
   const remoteObject=remote[key]&&typeof remote[key]==='object'&&!Array.isArray(remote[key])?remote[key]:{};
-  merged[key]=localWins?{...remoteObject,...localObject}:{...localObject,...remoteObject};
+  const combined=localWins?{...remoteObject,...localObject}:{...localObject,...remoteObject};
+  if(localWins){
+   for(const [field,value] of Object.entries(localObject)){
+    const fallback=value===undefined||value===null||value==='';
+    if(fallback&&remoteObject[field]!==undefined)combined[field]=remoteObject[field];
+   }
+   if(key==='prePublishChecks'){
+    for(const field of ['hook','facts','audio','thumb','seo','cta'])combined[field]=localObject[field]===true||remoteObject[field]===true;
+   }
+  }
+  merged[key]=combined;
  }
  return normalizeState(merged);
 }
