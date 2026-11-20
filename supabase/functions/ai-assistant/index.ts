@@ -173,7 +173,7 @@ Deno.serve(async (req: Request) => {
   if (!openAiKey) return reply({ error: "الخدمة تحتاج إعداد مفتاح الذكاء الاصطناعي على الخادم." }, 503, origin);
   const forwarded = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "unknown";
   const ip = forwarded.split(",")[0].trim() || "unknown";
-  const rateIdentity = auth.userId ? "user:" + auth.userId : "ip:" + ip;
+  const rateIdentities = auth.userId ? ["user:" + auth.userId, "ip:" + ip] : ["ip:" + ip];
   const secretKeysRaw = Deno.env.get("SUPABASE_SECRET_KEYS");
   let serverKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   let useLegacyServiceRole = true;
@@ -182,23 +182,25 @@ Deno.serve(async (req: Request) => {
     catch { return reply({ error: "تعذر تحميل إعداد الحماية من الخادم." }, 503, origin); }
   }
   if (!projectUrl || !serverKey) return reply({ error: "إعداد حدود الاستخدام الآمنة غير مكتمل على الخادم." }, 503, origin);
-  const rateKey = await hashKey(rateIdentity, serverKey);
-  try {
-    const quotaResponse = await fetch(projectUrl.replace(/\/$/, "") + "/rest/v1/rpc/consume_ai_rate_limit", {
-      method: "POST", headers: { apikey: serverKey, ...(useLegacyServiceRole ? { Authorization: "Bearer " + serverKey } : {}), "Content-Type": "application/json" },
-      body: JSON.stringify({ p_identity_hash: rateKey }),
-    });
-    const quota = await quotaResponse.json().catch(() => null);
-    if (!quotaResponse.ok || !quota || typeof quota.allowed !== "boolean") {
-      console.error("Persistent AI rate limit failed", quotaResponse.status);
-      return reply({ error: "تعذر التحقق من حد الاستخدام. حاول بعد قليل." }, 503, origin);
-    }
-    if (!quota.allowed) {
-      const retryAfter = Math.max(1, Number(quota.retry_after) || 900);
-      return reply({ error: "وصلت للحد المؤقت من طلبات المساعد. حاول بعد " + Math.ceil(retryAfter / 60) + " دقيقة." }, 429, origin,
-        { "Retry-After": String(retryAfter), "X-RateLimit-Limit": String(quota.limit ?? 5), "X-RateLimit-Remaining": "0" });
-    }
-  } catch { return reply({ error: "تعذر الاتصال بخدمة حماية الاستخدام. حاول مرة أخرى." }, 503, origin); }
+  for (const rateIdentity of rateIdentities) {
+    const rateKey = await hashKey(rateIdentity, serverKey);
+    try {
+      const quotaResponse = await fetch(projectUrl.replace(/\/$/, "") + "/rest/v1/rpc/consume_ai_rate_limit", {
+        method: "POST", headers: { apikey: serverKey, ...(useLegacyServiceRole ? { Authorization: "Bearer " + serverKey } : {}), "Content-Type": "application/json" },
+        body: JSON.stringify({ p_identity_hash: rateKey }),
+      });
+      const quota = await quotaResponse.json().catch(() => null);
+      if (!quotaResponse.ok || !quota || typeof quota.allowed !== "boolean") {
+        console.error("Persistent AI rate limit failed", quotaResponse.status);
+        return reply({ error: "تعذر التحقق من حد الاستخدام. حاول بعد قليل." }, 503, origin);
+      }
+      if (!quota.allowed) {
+        const retryAfter = Math.max(1, Number(quota.retry_after) || 900);
+        return reply({ error: "وصلت للحد المؤقت من طلبات المساعد. حاول بعد " + Math.ceil(retryAfter / 60) + " دقيقة." }, 429, origin,
+          { "Retry-After": String(retryAfter), "X-RateLimit-Limit": String(quota.limit ?? 5), "X-RateLimit-Remaining": "0" });
+      }
+    } catch { return reply({ error: "تعذر الاتصال بخدمة حماية الاستخدام. حاول مرة أخرى." }, 503, origin); }
+  }
 
   const isResearch = tool === "research" || tool === "fact_check";
   const model = isResearch ? (Deno.env.get("OPENAI_RESEARCH_MODEL")?.trim() || "gpt-6.2-astra") : (Deno.env.get("OPENAI_MODEL")?.trim() || "gpt-6-luna");
