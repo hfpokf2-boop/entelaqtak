@@ -55,7 +55,7 @@ footer{border-top:1px solid #ffffff16;padding:22px 0;color:var(--muted);font-siz
 <footer><div class="wrap">© <span id="year"></span> Entelaqtak · <a href="./">Home</a><a href="./legal.html#privacy">Privacy</a><a href="./legal.html#terms">Terms</a></div></footer>
 <script>
 const ar=document.getElementById('ar'),en=document.getElementById('en'),arBtn=document.getElementById('arBtn'),enBtn=document.getElementById('enBtn');
-function setLang(lang){const isEn=lang==='en';ar.style.display=isEn?'none':'block';en.style.display=isEn?'block':'block';en.style.display=isEn?'block':'none';document.documentElement.lang=isEn?'en':'ar';document.documentElement.dir=isEn?'ltr':'rtl';arBtn.setAttribute('aria-pressed',String(!isEn));enBtn.setAttribute('aria-pressed',String(isEn));}
+function setLang(lang){const isEn=lang==='en';ar.style.display=isEn?'none':'block';en.style.display=isEn?'block':'none';document.documentElement.lang=isEn?'en':'ar';document.documentElement.dir=isEn?'ltr':'rtl';arBtn.setAttribute('aria-pressed',String(!isEn));enBtn.setAttribute('aria-pressed',String(isEn));}
 arBtn.addEventListener('click',()=>setLang('ar'));enBtn.addEventListener('click',()=>setLang('en'));document.getElementById('year').textContent=new Date().getFullYear();
 </script>
 </body></html>
