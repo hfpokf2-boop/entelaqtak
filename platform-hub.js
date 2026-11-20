@@ -33,8 +33,8 @@ function renderPlatformAccounts(){
   const account=workspaceState.platformAccounts[platform.id]||{};
   const hasData=!!(account.name||account.url);
   const safeName=escapeHTML(account.name||'');
-  const safeUrl=escapeHTML(account.url||'');
-  const savedAt=account.updatedAt?new Date(account.updatedAt).toLocaleDateString('ar-EG'):'';
+  let safeUrl='';try{if(account.url)safeUrl=escapeHTML(validPlatformUrl(account.url,platform));}catch(error){}
+  const savedAt=account.updatedAt&&!Number.isNaN(Date.parse(account.updatedAt))?new Date(account.updatedAt).toLocaleDateString('ar-EG'):'';
   return '<article class="platform-card hub-account-card" data-platform-card="'+platform.id+'">'+
    '<div class="hub-card-top"><div class="hub-platform-mark hub-'+platform.id+'">'+platform.icon+'</div><div class="hub-card-title"><h3>'+platform.name+'</h3><p>'+platform.description+'</p></div><span class="hub-account-status '+(hasData?'is-saved':'')+'">'+(hasData?'بيانات محفوظة':'لم تُضف بعد')+'</span></div>'+
    '<div class="hub-account-fields"><label>اسم القناة أو المعرّف<input data-platform-name maxlength="80" autocomplete="off" placeholder="مثال: قناتي أو @username" value="'+safeName+'"></label><label>رابط القناة العام <span>(اختياري)</span><input data-platform-url type="url" inputmode="url" maxlength="500" autocomplete="url" placeholder="https://..." value="'+safeUrl+'"></label></div>'+
