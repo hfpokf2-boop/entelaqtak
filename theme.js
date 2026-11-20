@@ -48,7 +48,7 @@ function readSaved(){
    const name=saved.name==='custom'?'custom':(palettes[saved.name]?saved.name:'aurora');
    if(name==='custom')return {name,primary:safeColor(saved.primary,'#3b82f6'),secondary:safeColor(saved.secondary,'#54a5ff')};
    const p=palettes[saved.name];
-   if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:safeColor(saved.secondary,p.secondary)};
+   if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:p.secondary};
   }
  }catch(error){}
  return {name:'aurora',primary:palettes.aurora.primary,secondary:palettes.aurora.secondary};
