@@ -51,15 +51,19 @@ jobs:
                               self.scripts.append(body)
                       self.current = None
 
-          parser = ScriptExtractor()
-          parser.feed(Path("index.html").read_text(encoding="utf-8"))
-          if not parser.scripts:
+          total = 0
+          for doc in ("index.html", "workspace.html"):
+              parser = ScriptExtractor()
+              parser.feed(Path(doc).read_text(encoding="utf-8"))
+              for number, body in enumerate(parser.scripts, 1):
+                  output = Path(f"/tmp/entelaqtak-{Path(doc).stem}-inline-{number}.js")
+                  output.write_text(body, encoding="utf-8")
+                  total += 1
+          if not total:
               raise SystemExit("No executable inline JavaScript found")
-          for number, body in enumerate(parser.scripts, 1):
-              Path(f"/tmp/entelaqtak-inline-{number}.js").write_text(body, encoding="utf-8")
-          print(f"Extracted {len(parser.scripts)} executable inline script(s).")
+          print(f"Extracted {total} executable inline script(s) from index and workspace.")
           PY
-          for file in creator-suite.js enhancements.js theme.js service-worker.js; do
+          for file in creator-suite.js enhancements.js theme.js platform-hub.js service-worker.js; do
             echo "Checking $file"
             node --check "$file"
           done
@@ -98,7 +102,7 @@ jobs:
                       if value:
                           self.refs.append((key, value))
 
-          for doc in ("index.html", "legal.html"):
+          for doc in ("index.html", "workspace.html", "legal.html"):
               parser = AuditParser()
               parser.feed(Path(doc).read_text(encoding="utf-8"))
               ids_by_doc[doc] = parser.ids
