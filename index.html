@@ -562,7 +562,8 @@ window.ENTELAQTAK_CONFIG = {
 const $=id=>document.getElementById(id), all=(sel,root=document)=>Array.from(root.querySelectorAll(sel));
 const DATA_VERSION=3;
 const defaults={schemaVersion:DATA_VERSION,ideas:[],packs:[],posts:[],metrics:[],challenge:{},focus:{text:"",done:false},scriptTemplates:[],prePublishChecks:{},settings:{aiMode:"local"}};
-let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null;
+const CLOUD_DIRTY_OWNER_KEY='entelaqtak-cloud-dirty-owner-v1';
+let sbClient=null,currentUser=null,cloudLoading=false,cloudSaving=false,cloudSavePending=false,cloudLoadPending=false,localChangesPending=false,pendingRealtimeWorkspace=null,cloudSaveTimer=null,workspaceRealtimeChannel=null,realtimeConnected=false,authSdkPromise=null;
 function normalizeState(input){
  const src=input&&typeof input==='object'?input:{};
  const out={...defaults,...src,schemaVersion:DATA_VERSION};
@@ -614,13 +615,28 @@ function updateAccountUI(){
  $('authSyncNow').disabled=!currentUser||cloudLoading||cloudSaving;
  $('authSyncNow').textContent=cloudLoading?'جارٍ التحديث...':'مزامنة الآن ↻';
 }
-function mergeWorkspace(localData,remoteData){
+function workspaceHasPendingLocalChanges(ownerId){
+ if(localChangesPending||cloudSavePending||!!cloudSaveTimer)return true;
+ try{const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);return marker===ownerId||marker==='__local__';}catch(e){return false;}
+}
+function markWorkspaceDirty(ownerId){
+ localChangesPending=true;
+ try{localStorage.setItem(CLOUD_DIRTY_OWNER_KEY,ownerId);}catch(e){console.warn('Could not store workspace sync marker.',e);}
+}
+function clearWorkspaceDirty(ownerId){
+ if(currentUser?.id!==ownerId)return;
+ localChangesPending=false;
+ try{const marker=localStorage.getItem(CLOUD_DIRTY_OWNER_KEY);if(marker===ownerId||marker==='__local__')localStorage.removeItem(CLOUD_DIRTY_OWNER_KEY);}catch(e){console.warn('Could not clear workspace sync marker.',e);}
+}
+function mergeWorkspace(localData,remoteData,localWins=false){
  const local=localData&&typeof localData==='object'&&!Array.isArray(localData)?localData:{};
  const remote=remoteData&&typeof remoteData==='object'&&!Array.isArray(remoteData)?remoteData:{};
- const merged={...defaults,...local,...remote};
+ const merged=localWins?{...defaults,...remote,...local}:{...defaults,...local,...remote};
  for(const key of ['ideas','packs','posts','metrics','scriptTemplates','experiments']){
   const map=new Map();
-  const items=[...(Array.isArray(local[key])?local[key]:[]),...(Array.isArray(remote[key])?remote[key]:[])];
+  const localItems=Array.isArray(local[key])?local[key]:[];
+  const remoteItems=Array.isArray(remote[key])?remote[key]:[];
+  const items=localWins?[...remoteItems,...localItems]:[...localItems,...remoteItems];
   for(const item of items){
    if(!item||typeof item!=='object'||Array.isArray(item))continue;
    const identity=String(item.id??JSON.stringify(item));
@@ -629,9 +645,9 @@ function mergeWorkspace(localData,remoteData){
   merged[key]=[...map.values()];
  }
  for(const key of ['challenge','focus','profile','brand','academy','prePublishChecks','settings']){
-  const left=local[key]&&typeof local[key]==='object'&&!Array.isArray(local[key])?local[key]:{};
-  const right=remote[key]&&typeof remote[key]==='object'&&!Array.isArray(remote[key])?remote[key]:{};
-  merged[key]={...left,...right};
+  const localObject=local[key]&&typeof local[key]==='object'&&!Array.isArray(local[key])?local[key]:{};
+  const remoteObject=remote[key]&&typeof remote[key]==='object'&&!Array.isArray(remote[key])?remote[key]:{};
+  merged[key]=localWins?{...remoteObject,...localObject}:{...localObject,...remoteObject};
  }
  return normalizeState(merged);
 }
@@ -646,7 +662,8 @@ async function writeCloudWorkspace(){
  if(cloudLoading||cloudSaving){cloudSavePending=true;return;}
  cloudSaving=true;
  const ownerId=currentUser.id;
- const snapshot=JSON.parse(JSON.stringify(state));
+ const snapshotJson=JSON.stringify(state);
+ const snapshot=JSON.parse(snapshotJson);
  $('accountSync').textContent='جارٍ حفظ التعديلات';
  $('syncState').textContent='يتم حفظ التعديلات في السحابة...';
  updateAccountUI();
@@ -654,17 +671,24 @@ async function writeCloudWorkspace(){
   const {error}=await sbClient.from('user_workspaces').upsert({user_id:ownerId,data:snapshot,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   if(error)throw error;
   if(currentUser?.id===ownerId){
+   if(JSON.stringify(state)===snapshotJson&&!cloudSavePending)clearWorkspaceDirty(ownerId);
    $('syncState').textContent='آخر حفظ سحابي: '+formatSyncTime();
    $('accountSync').textContent=realtimeConnected?'متصل بالمزامنة المباشرة':'محفوظ سحابيًا';
   }
  }finally{
   cloudSaving=false;
   if(cloudSavePending){cloudSavePending=false;scheduleCloudSave();}
+  if(cloudLoadPending&&currentUser){cloudLoadPending=false;setTimeout(()=>loadCloudWorkspace(),0);}
   updateAccountUI();
  }
 }
 function scheduleCloudSave(){
- if(!sbClient||!currentUser)return;
+ if(!currentUser){
+  try{const owner=localStorage.getItem('entelaqtak-workspace-owner');localStorage.setItem(CLOUD_DIRTY_OWNER_KEY,owner||'__local__');}catch(e){console.warn('Could not mark local workspace changes.',e);}
+  return;
+ }
+ if(!sbClient)return;
+ markWorkspaceDirty(currentUser.id);
  if(cloudLoading||cloudSaving){cloudSavePending=true;return;}
  clearTimeout(cloudSaveTimer);cloudSaveTimer=null;
  $('accountSync').textContent='في انتظار الحفظ';
@@ -682,7 +706,8 @@ function applyRealtimeWorkspace(payload,ownerId){
  if(cloudLoading){pendingRealtimeWorkspace=payload.new.data;return;}
  const remote=payload.new.data;
  if(!remote||typeof remote!=='object'||Array.isArray(remote))return;
- const merged=mergeWorkspace(state,remote);
+ const localWins=workspaceHasPendingLocalChanges(ownerId);
+ const merged=mergeWorkspace(state,remote,localWins);
  const normalizedRemote=normalizeState(remote);
  const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(normalizedRemote);
  state=merged;
@@ -718,25 +743,29 @@ function stopWorkspaceRealtime(){
 }
 async function loadCloudWorkspace(){
  if(!sbClient||!currentUser)return;
- if(cloudLoading){cloudLoadPending=true;return;}
+ if(cloudLoading||cloudSaving){cloudLoadPending=true;return;}
  clearTimeout(cloudSaveTimer);cloudSaveTimer=null;
  cloudLoading=true;
  updateAccountUI();
  let loaded=false;
  try{
   const ownerId=currentUser.id;
+  const preferLocal=workspaceHasPendingLocalChanges(ownerId);
   const storedOwner=localStorage.getItem('entelaqtak-workspace-owner');
   const localForThisUser=(!storedOwner||storedOwner===ownerId)?state:{...defaults};
   const {data,error}=await sbClient.from('user_workspaces').select('data').eq('user_id',ownerId).maybeSingle();
   if(error)throw error;
   if(currentUser?.id!==ownerId)return;
-  state=data?.data&&typeof data.data==='object'&&!Array.isArray(data.data)?mergeWorkspace(localForThisUser,data.data):normalizeState(localForThisUser);
+  state=data?.data&&typeof data.data==='object'&&!Array.isArray(data.data)?mergeWorkspace(localForThisUser,data.data,preferLocal):normalizeState(localForThisUser);
   localStorage.setItem('entelaqtak-workspace-owner',ownerId);
   saveLocalWorkspace();
   renderAll();
-  const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:ownerId,data:state,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+  const syncSnapshotJson=JSON.stringify(state);
+  const syncSnapshot=JSON.parse(syncSnapshotJson);
+  const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:ownerId,data:syncSnapshot,updated_at:new Date().toISOString()},{onConflict:'user_id'});
   if(saveError)throw saveError;
   if(currentUser?.id===ownerId){
+   if(JSON.stringify(state)===syncSnapshotJson&&!cloudSavePending)clearWorkspaceDirty(ownerId);
    $('syncState').textContent='آخر مزامنة: '+formatSyncTime();
    $('accountSync').textContent='محفوظ سحابيًا';
    setAuthMessage('تمت مزامنة مساحة العمل مع حسابك.');
@@ -749,7 +778,8 @@ async function loadCloudWorkspace(){
   cloudLoading=false;
   if(pendingRealtimeWorkspace&&currentUser){
    const queuedRemote=pendingRealtimeWorkspace;pendingRealtimeWorkspace=null;
-   const merged=mergeWorkspace(state,queuedRemote),remoteNormalized=normalizeState(queuedRemote);
+   const localWins=workspaceHasPendingLocalChanges(currentUser.id);
+   const merged=mergeWorkspace(state,queuedRemote,localWins),remoteNormalized=normalizeState(queuedRemote);
    const needsMergeSave=JSON.stringify(merged)!==JSON.stringify(remoteNormalized);
    state=merged;saveLocalWorkspace();renderAll();
    $('syncState').textContent='وصل تحديث من جهاز آخر: '+formatSyncTime();
@@ -793,7 +823,7 @@ async function connectAuth(){
   sbClient.auth.onAuthStateChange((event,session)=>{
    const previousUserId=currentUser?.id||null;
    currentUser=session?.user||null;
-   if(previousUserId&&currentUser?.id!==previousUserId){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
+   if(previousUserId&&currentUser?.id!==previousUserId){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;localChangesPending=false;stopWorkspaceRealtime();}
    updateAccountUI();
    if(event==='PASSWORD_RECOVERY'){$('authRecoveryBox').hidden=false;go('settings');setAuthMessage('تم فتح رابط الاستعادة. اكتب كلمة مرور جديدة بالأسفل.');}
    if(event==='SIGNED_OUT'){clearTimeout(cloudSaveTimer);cloudSaveTimer=null;cloudSavePending=false;cloudLoadPending=false;stopWorkspaceRealtime();}
@@ -1084,6 +1114,8 @@ $('clearAllData').addEventListener('click',()=>{
  state=normalizeState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
 });
 function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();}
+window.addEventListener('online',()=>{if(currentUser){$('accountSync').textContent='عاد الاتصال؛ جارٍ التحقق من المزامنة';loadCloudWorkspace();}});
+window.addEventListener('offline',()=>{if(currentUser){$('accountSync').textContent='غير متصل';$('syncState').textContent='تُحفظ التعديلات محليًا حتى عودة الاتصال.';}});
 window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews};
 $('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);connectAuth();
 })();
