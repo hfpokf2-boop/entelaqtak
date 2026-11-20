@@ -22,6 +22,7 @@
     {id:'publish',label:'النشر',hint:'جهّز الحزمة النهائية',icon:'05'}
   ];
   let activeId = '';
+  try { activeId = localStorage.getItem('entelaqtak-active-production-v1') || ''; } catch (_) {}
   const state = app.getState();
   if (!Array.isArray(state.productionProjects)) state.productionProjects = [];
 
@@ -54,6 +55,7 @@
     const data = app.getState();
     if (!Array.isArray(data.productionProjects)) data.productionProjects = [];
     project.updatedAt = new Date().toISOString();
+    try { localStorage.setItem('entelaqtak-active-production-v1', String(project.id)); } catch (_) {}
     const index = data.productionProjects.findIndex(p => String(p.id) === String(project.id));
     if (index >= 0) data.productionProjects[index] = project;
     else data.productionProjects.unshift(project);
@@ -65,7 +67,9 @@
     return '<div class="prod-sources">' + list.map(source => {
       const url = String(source.url || '');
       if (!/^https:\/\/[^ ]+/i.test(url)) return '';
-      return '<a href="' + safe(url) + '" target="_blank" rel="noopener noreferrer"><span>↗</span>' + safe(source.title || new URL(url).hostname) + '</a>';
+      let title = String(source.title || '');
+      if (!title) { try { title = new URL(url).hostname; } catch (_) { title = url; } }
+      return '<a href="' + safe(url) + '" target="_blank" rel="noopener noreferrer"><span>↗</span>' + safe(title) + '</a>';
     }).join('') + '</div>';
   }
   function checklist(project) {
@@ -313,7 +317,7 @@
     if (!button) return;
     const action = button.dataset.action, p=activeProject();
     if (action==='create') { createProject(); return; }
-    if (action==='all-projects') { activeId='';render();return; }
+    if (action==='all-projects') { activeId='';try{localStorage.removeItem('entelaqtak-active-production-v1');}catch(_){}render();return; }
     if (!p) return;
     if (action==='save') { persist(p,true);return; }
     if (action==='next' || action==='back') {
@@ -338,7 +342,7 @@
       if (!confirm('تحذف المشروع ده بكل البحث والسكريبت وخطة المونتاج؟')) return;
       const data=app.getState();
       data.productionProjects=data.productionProjects.filter(x=>String(x.id)!==String(p.id));
-      activeId='';app.save();render();app.toast('تم حذف المشروع.');return;
+      activeId='';try{localStorage.removeItem('entelaqtak-active-production-v1');}catch(_){}app.save();render();app.toast('تم حذف المشروع.');return;
     }
   });
 
