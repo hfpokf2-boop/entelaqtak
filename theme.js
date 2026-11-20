@@ -1,14 +1,14 @@
 (()=>{'use strict';
-const STORAGE_KEY='entelaqtak-theme-v2';
+const STORAGE_KEY='entelaqtak-theme-v1';
 const root=document.documentElement;
 const $=id=>document.getElementById(id);
 const palettes={
- aurora:{label:'كحلي وأزرق',primary:'#2878f0',secondary:'#20bfa1'},
- ocean:{label:'أزرق سماوي',primary:'#38bdf8',secondary:'#0ea5e9'},
- sunset:{label:'غروب ذهبي',primary:'#f59e0b',secondary:'#f97316'},
- emerald:{label:'زمردي',primary:'#10b981',secondary:'#84cc16'},
- rose:{label:'وردي',primary:'#e879a8',secondary:'#a78bfa'},
- sapphire:{label:'ياقوتي',primary:'#6366f1',secondary:'#22d3ee'}
+ aurora:{label:'الأزرق والثقة',primary:'#2563eb',secondary:'#14b8a6'},
+ ocean:{label:'المحيطي',primary:'#5aa9ff',secondary:'#4de0d0'},
+ sunset:{label:'الغروب',primary:'#ff9b72',secondary:'#ffd166'},
+ emerald:{label:'الزمردي',primary:'#56c998',secondary:'#c1df73'},
+ rose:{label:'الوردي',primary:'#e78ab8',secondary:'#93a7ff'},
+ sapphire:{label:'الياقوتي',primary:'#688cff',secondary:'#62d8ed'}
 };
 const toggle=$('themeToggle'),panel=$('themePanel'),close=$('themeClose');
 const primaryInput=$('themePrimary'),secondaryInput=$('themeSecondary');
