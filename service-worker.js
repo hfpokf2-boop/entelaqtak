@@ -1,5 +1,5 @@
 'use strict';
-const CACHE_NAME='entelaqtak-shell-v42';
+const CACHE_NAME='entelaqtak-shell-v43';
 const APP_FILES=['./','./index.html','./workspace.html','./ui-polish.css','./design-system.css','./theme.js','./language.js','./creator-suite.js','./enhancements.js','./platform-hub.js','./production-studio.js','./sidebar-organizer.js','./content-pack-pro.js','./visitor-tracker.js','./manifest.webmanifest','./app-icon.svg','./favicon.svg','./legal.html','./advertise.html'];
 self.addEventListener('install',event=>{
  event.waitUntil((async()=>{
@@ -37,7 +37,7 @@ self.addEventListener('fetch',event=>{
  }
  if(url.pathname.includes('/entelaqtak/')||url.pathname===self.location.pathname.replace(/service-worker\.js$/,'')){
   event.respondWith((async()=>{
-   const cached=await caches.match(request);
+   const cached=await caches.match(request,{ignoreSearch:true});
    const refresh=fetch(request).then(async response=>{
     if(response&&response.ok){const cache=await caches.open(CACHE_NAME);await cache.put(request,response.clone());}
     return response;
