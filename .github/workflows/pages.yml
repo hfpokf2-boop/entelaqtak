@@ -118,8 +118,6 @@ jobs:
           worker = Path("service-worker.js").read_text(encoding="utf-8")
           if "entelaqtak-shell-v37" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
-          if errors:
-              raise SystemExit("\n".join(errors))
           workspace = Path("workspace.html").read_text(encoding="utf-8")
           if "أزرق ملكي" not in workspace or "الثيم الأزرق الملكي مفعّل" not in workspace:
               errors.append("workspace.html: theme preset labels are not aligned with the blue palette")
