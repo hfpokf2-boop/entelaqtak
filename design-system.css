@@ -338,20 +338,22 @@ th{background:#1c1e25!important}
 tbody tr:hover{background:#e23b4f0c!important}
 
 /* Other information pages */
-main .section,main>header{border-radius:20px!important;padding:26px!important}
-main .section h2{font-size:21px!important}
-main .section p,main .section li{line-height:2}
+body:has(.top .brand) main .section,body:has(.top .brand) main>header{border-radius:20px!important;padding:26px!important}
+body:has(.top .brand) main .section h2{font-size:21px!important}
+body:has(.top .brand) main .section p,body:has(.top .brand) main .section li{line-height:2}
 @media(max-width:1050px){
  .app{grid-template-columns:238px minmax(0,1fr)!important}
  .hero-grid{gap:28px}
 }
 @media(max-width:900px){
- .hero{padding-top:64px;padding-bottom:52px}
+ body:has(.site-header) .hero{padding-top:64px;padding-bottom:52px}
  .hero-grid{gap:28px}
  .main{padding-inline:20px!important}
 }
 @media(max-width:760px){
- .hero{padding:49px 0 39px}
+ body:has(.site-header) .hero{padding:49px 0 39px}
+ .app .hero{padding:0!important}
+ .app .hero:before{display:none}
  .hero-grid{gap:24px}
  .hero h1{font-size:clamp(35px,9vw,48px)}
  .hero-points{gap:8px 14px}
