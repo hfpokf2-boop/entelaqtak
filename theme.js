@@ -3,12 +3,12 @@ const STORAGE_KEY='entelaqtak-theme-v2';
 const root=document.documentElement;
 const $=id=>document.getElementById(id);
 const palettes={
- aurora:{label:'وردي ولافندر',primary:'#B79AF7',secondary:'#E3A0D2'},
- ocean:{label:'لافندر هادئ',primary:'#A88BEF',secondary:'#D58AC4'},
- sunset:{label:'وردي غامق',primary:'#D58AC4',secondary:'#A88BEF'},
- emerald:{label:'موف ملكي',primary:'#9278D8',secondary:'#D58AC4'},
- rose:{label:'وردي فاتح',primary:'#E3A0D2',secondary:'#B7A8F5'},
- sapphire:{label:'ليلي عميق',primary:'#776DBA',secondary:'#D58AC4'}
+ aurora:{label:'وردي ولافندر',primary:'#8065C4',secondary:'#98527F'},
+ ocean:{label:'لافندر هادئ',primary:'#7057B1',secondary:'#88486F'},
+ sunset:{label:'وردي غامق',primary:'#98527F',secondary:'#7057B1'},
+ emerald:{label:'موف ملكي',primary:'#735BAF',secondary:'#98527F'},
+ rose:{label:'وردي فاتح',primary:'#98527F',secondary:'#8065C4'},
+ sapphire:{label:'ليلي عميق',primary:'#66569A',secondary:'#98527F'}
 };
 const toggle=$('themeToggle'),panel=$('themePanel'),close=$('themeClose');
 const primaryInput=$('themePrimary'),secondaryInput=$('themeSecondary');
@@ -46,7 +46,7 @@ function readSaved(){
   const saved=JSON.parse(localStorage.getItem(STORAGE_KEY)||'null');
   if(saved&&typeof saved==='object'){
    const name=saved.name==='custom'?'custom':(palettes[saved.name]?saved.name:'aurora');
-   if(name==='custom')return {name,primary:safeColor(saved.primary,'#D889C9'),secondary:safeColor(saved.secondary,'#D58AC4')};
+   if(name==='custom')return {name,primary:safeColor(saved.primary,'#98527F'),secondary:safeColor(saved.secondary,'#88486F')};
    const p=palettes[saved.name];
    if(p)return {name:saved.name,primary:safeColor(saved.primary,p.primary),secondary:p.secondary};
   }
