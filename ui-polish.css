@@ -14,7 +14,7 @@ body{
   background:
     radial-gradient(900px 540px at 100% -12%,rgba(139,124,246,.13),transparent 68%),
     radial-gradient(760px 520px at -12% 58%,rgba(85,214,194,.075),transparent 70%),
-    #0b1020;
+    #0B1120;
   color:#f4f6ff;
   text-rendering:optimizeLegibility;
   -webkit-font-smoothing:antialiased;
@@ -231,9 +231,9 @@ body{
   font-weight:750;
 }
 #view-settings .card button.primary{
-  background:linear-gradient(110deg,#a99cff,#69dfca);
+  background:linear-gradient(110deg,#60A5FA,#10B981);
   border-color:transparent;
-  color:#121a2c;
+  color:#111827;
 }
 #view-settings .card button.secondary{background:rgba(255,255,255,.055)}
 #view-settings .card button.danger{margin-top:0}
@@ -242,7 +242,7 @@ body{
   background:
     radial-gradient(500px 190px at 100% 0%,rgba(139,124,246,.14),transparent 76%),
     radial-gradient(340px 160px at 0 100%,rgba(85,214,194,.07),transparent 75%),
-    linear-gradient(145deg,#202a48,#141f35);
+    linear-gradient(145deg,#172554,#111827);
 }
 #view-settings .account-card .divider{background:rgba(163,180,220,.15);margin:17px 0}
 #view-settings .account-card .grid2 p{
@@ -356,8 +356,8 @@ body{
 
 /* Deeper visual identity and selectable color system */
 :root{
- --theme-primary:#9b8cff;
- --theme-secondary:#62e0c5;
+ --theme-primary:#3B82F6;
+ --theme-secondary:#10B981;
  --theme-primary-rgb:155,140,255;
  --theme-secondary-rgb:98,224,197;
  --ui-elevated:rgba(31,44,71,.96);
@@ -455,12 +455,12 @@ body{
 .theme-preset[aria-pressed="true"]{border-color:var(--theme-secondary);background:rgba(var(--theme-secondary-rgb),.09);box-shadow:inset 0 0 0 1px rgba(var(--theme-secondary-rgb),.16)}
 .theme-preset strong{font-size:9px;font-weight:700;white-space:nowrap}
 .theme-swatch{width:24px;height:24px;flex:0 0 24px;border-radius:8px;border:1px solid #ffffff2c}
-.theme-swatch.aurora{background:linear-gradient(135deg,#9b8cff,#62e0c5)}
-.theme-swatch.ocean{background:linear-gradient(135deg,#5aa9ff,#4de0d0)}
-.theme-swatch.sunset{background:linear-gradient(135deg,#ff9b72,#ffd166)}
-.theme-swatch.emerald{background:linear-gradient(135deg,#56c998,#c1df73)}
-.theme-swatch.rose{background:linear-gradient(135deg,#e78ab8,#93a7ff)}
-.theme-swatch.sapphire{background:linear-gradient(135deg,#688cff,#62d8ed)}
+.theme-swatch.aurora{background:linear-gradient(135deg,#3B82F6,#10B981)}
+.theme-swatch.ocean{background:linear-gradient(135deg,#3B82F6,#10B981)}
+.theme-swatch.sunset{background:linear-gradient(135deg,#60A5FA,#ffd166)}
+.theme-swatch.emerald{background:linear-gradient(135deg,#10B981,#c1df73)}
+.theme-swatch.rose{background:linear-gradient(135deg,#93C5FD,#BFDBFE)}
+.theme-swatch.sapphire{background:linear-gradient(135deg,#3B82F6,#10B981)}
 .theme-custom{margin-top:14px;padding-top:12px;border-top:1px solid rgba(163,180,220,.13)}
 .theme-custom-title{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:9px}
 .theme-custom-title strong{font-size:10px;color:#e9effa}
@@ -491,7 +491,7 @@ body{
 .account-flow-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:12px 0 22px}
 .account-flow-card{min-width:0;display:flex;flex-direction:column;align-items:stretch;gap:12px;padding:clamp(17px,2.2vw,24px);border:1px solid var(--ui-line);border-radius:var(--ui-radius-lg);background:linear-gradient(155deg,var(--ui-surface-raised),var(--ui-surface))}
 .account-flow-heading{display:flex;flex-direction:column;gap:5px}
-.account-flow-heading>span{color:#8be0d3;font-size:9px;font-weight:800;letter-spacing:1.1px}
+.account-flow-heading>span{color:#6EE7B7;font-size:9px;font-weight:800;letter-spacing:1.1px}
 .account-flow-heading h2{margin:0;font-size:18px}
 .account-flow-card>.muted{margin:0;line-height:1.85}
 .account-flow-card .field{margin:0}
