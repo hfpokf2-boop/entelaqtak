@@ -50,7 +50,7 @@ async function copyText(text){
 try{await navigator.clipboard.writeText(text);app.toast('تم النسخ.');}
 catch(e){const t=document.createElement('textarea');t.value=text;t.style.position='fixed';t.style.opacity='0';document.body.appendChild(t);t.select();try{document.execCommand('copy');app.toast('تم النسخ.');}catch(_){app.toast('تعذر النسخ تلقائيًا؛ حدّد النص وانسخه.');}t.remove();}
 }
-function downloadMarkdown(){const blob=new Blob([buildMarkdown()],{type:'text/markdown;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='entelaqtak-content-pack.md';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);}
+function downloadMarkdown(){const blob=new Blob([buildMarkdown()],{type:'text/markdown;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='entelaqtak-content-pack.md';a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);}
 function fillExtras(p){
 if(!p)return;
 [['studioShorts','shortsText'],['studioCommunityPost','communityPost'],['studioPinnedComment','pinnedComment'],['studioCTAOutput','ctaOutput'],['studioEditorNotes','editorNotes'],['studioFactWarnings','factWarnings']].forEach(([id,key])=>{if($(id))$(id).value=p[key]||'';});
