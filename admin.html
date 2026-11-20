@@ -150,7 +150,9 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#171F2E}.visitor{c
  if(!window.supabase?.createClient){document.getElementById('loginStatus').textContent='تعذر تحميل مكتبة الاتصال. حدّث الصفحة وحاول مرة أخرى.';return}
  const sb=window.supabase.createClient(cfg.url,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
  const $=id=>document.getElementById(id);
- const state={rows:[],page:1,pageSize:50,lastUpdated:null};
+ const state={rows:[],page:1,pageSize:50,lastUpdated:null,loading:false};
+ const dateLabel=$('localDate');
+ if(dateLabel)dateLabel.textContent=new Intl.DateTimeFormat('ar-EG',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(new Date());
  const now=()=>Date.now();
  const iso=d=>d.toISOString();
  const startOfToday=()=>{const d=new Date();d.setHours(0,0,0,0);return d};
@@ -174,28 +176,36 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#171F2E}.visitor{c
  }
 
  async function load(){
-  setStatus('جارٍ تحديث الإحصائيات…');
-  const cutoff=new Date(now()-90000),today=iso(startOfToday()),week=iso(new Date(now()-7*86400000));
-  const base=()=>sb.from('visitor_sessions').select('session_id',{count:'exact',head:true});
-  const results=await Promise.all([
-   count(base()),
-   count(base().is('ended_at',null).gte('last_seen',iso(cutoff))),
-   count(base().gte('first_seen',today)),
-   count(base().gte('first_seen',week)),
-   count(base().or('ended_at.not.is.null,last_seen.lt.'+iso(cutoff))),
-   count(base().not('user_id','is',null)),
-   sb.from('visitor_sessions').select('session_id,user_id,visitor_email,page_path,first_seen,last_seen,ended_at,user_agent,referrer').order('first_seen',{ascending:false}).limit(500)
-  ]);
-  const rowsResult=results[6];if(rowsResult.error)throw rowsResult.error;
-  $('total').textContent=results[0].toLocaleString('ar-EG');
-  $('online').textContent=results[1].toLocaleString('ar-EG');
-  $('today').textContent=results[2].toLocaleString('ar-EG');
-  $('week').textContent=results[3].toLocaleString('ar-EG');
-  $('exited').textContent=results[4].toLocaleString('ar-EG');
-  $('members').textContent=results[5].toLocaleString('ar-EG');
-  state.rows=rowsResult.data||[];state.lastUpdated=new Date();state.page=1;
-  $('sampleInfo').textContent='أحدث '+state.rows.length.toLocaleString('ar-EG')+' جلسة · آخر تحديث '+state.lastUpdated.toLocaleTimeString('ar-EG');
-  renderAnalytics();renderTable();setStatus('تم تحديث البيانات بنجاح.','ok');
+  if(state.loading)return;
+  state.loading=true;
+  $('refresh').disabled=true;
+  try{
+   setStatus('جارٍ تحديث الإحصائيات…');
+   const cutoff=new Date(now()-90000),today=iso(startOfToday()),week=iso(new Date(now()-7*86400000));
+   const base=()=>sb.from('visitor_sessions').select('session_id',{count:'exact',head:true});
+   const results=await Promise.all([
+    count(base()),
+    count(base().is('ended_at',null).gte('last_seen',iso(cutoff))),
+    count(base().gte('first_seen',today)),
+    count(base().gte('first_seen',week)),
+    count(base().or('ended_at.not.is.null,last_seen.lt.'+iso(cutoff))),
+    count(base().not('user_id','is',null)),
+    sb.from('visitor_sessions').select('session_id,user_id,visitor_email,page_path,first_seen,last_seen,ended_at,user_agent,referrer').order('first_seen',{ascending:false}).limit(500)
+   ]);
+   const rowsResult=results[6];if(rowsResult.error)throw rowsResult.error;
+   $('total').textContent=results[0].toLocaleString('ar-EG');
+   $('online').textContent=results[1].toLocaleString('ar-EG');
+   $('today').textContent=results[2].toLocaleString('ar-EG');
+   $('week').textContent=results[3].toLocaleString('ar-EG');
+   $('exited').textContent=results[4].toLocaleString('ar-EG');
+   $('members').textContent=results[5].toLocaleString('ar-EG');
+   state.rows=rowsResult.data||[];state.lastUpdated=new Date();state.page=1;
+   $('sampleInfo').textContent='أحدث '+state.rows.length.toLocaleString('ar-EG')+' جلسة · آخر تحديث '+state.lastUpdated.toLocaleTimeString('ar-EG');
+   renderAnalytics();renderTable();setStatus('تم تحديث البيانات بنجاح.','ok');
+  }finally{
+   state.loading=false;
+   $('refresh').disabled=false;
+  }
  }
 
  function renderBars(id,items){
@@ -207,6 +217,36 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#171F2E}.visitor{c
   state.rows.forEach(x=>{const p=x.page_path||'/';pages.set(p,(pages.get(p)||0)+1);const d=device(x.user_agent);devices.set(d,(devices.get(d)||0)+1)});
   renderBars('topPages',[...pages].map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value).slice(0,6));
   renderBars('devices',[...devices].map(([label,value])=>({label,value})).sort((a,b)=>b.value-a.value).slice(0,6));
+  renderAudience();
+  renderTrend();
+ }
+ function renderAudience(){
+  const total=state.rows.length;
+  const members=state.rows.filter(x=>Boolean(x.user_id)).length;
+  const guests=total-members;
+  const pct=total?Math.round(members/total*100):0;
+  $('audienceTotal').textContent=total.toLocaleString('ar-EG');
+  $('audienceMembers').textContent=members.toLocaleString('ar-EG');
+  $('audienceGuests').textContent=guests.toLocaleString('ar-EG');
+  $('audienceBarMembers').style.width=pct+'%';
+  $('audienceBarGuests').style.width=(100-pct)+'%';
+  $('audienceNote').textContent=total?'الحسابات المسجلة تمثل '+pct.toLocaleString('ar-EG')+'٪ من العينة الحالية.':'لا توجد جلسات متاحة للتحليل حتى الآن.';
+ }
+ function renderTrend(){
+  const today=startOfToday();
+  const days=Array.from({length:7},(_,i)=>{
+   const d=new Date(today);d.setDate(today.getDate()-6+i);
+   const key=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+   return {key,label:d.toLocaleDateString('ar-EG',{weekday:'short',day:'numeric'})};
+  });
+  const counts=new Map(days.map(d=>[d.key,0]));
+  state.rows.forEach(x=>{
+   const d=new Date(x.first_seen);
+   if(Number.isNaN(d.getTime()))return;
+   const key=[d.getFullYear(),String(d.getMonth()+1).padStart(2,'0'),String(d.getDate()).padStart(2,'0')].join('-');
+   if(counts.has(key))counts.set(key,counts.get(key)+1);
+  });
+  renderBars('weeklyTrend',days.map(d=>({label:d.label,value:counts.get(d.key)||0})));
  }
 
  function filtered(){
@@ -228,7 +268,7 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#171F2E}.visitor{c
   const start=(state.page-1)*state.pageSize,visible=list.slice(start,start+state.pageSize);
   $('rows').innerHTML=visible.length?visible.map(x=>{
    const isLive=active(x),who=x.visitor_email?esc(x.visitor_email):'زائر مجهول';
-   const sub=x.visitor_email?'حساب مسجل':'جلسة '+esc(x.session_id.slice(0,8));
+   const sub=x.visitor_email?'حساب مسجل':'جلسة '+esc(String(x.session_id||'غير معروف').slice(0,8));
    const stateTag=isLive?'<span class="state online">● نشط الآن</span>':x.ended_at?'<span class="state offline">انتهت الجلسة</span>':'<span class="state unknown">غير نشط</span>';
    return '<tr><td><span class="visitor">'+who+'</span><span class="sub">'+sub+'</span></td><td>'+esc(x.page_path||'/')+'</td><td>'+fmt(x.first_seen)+'</td><td>'+fmt(x.last_seen)+'</td><td>'+stateTag+'</td><td>'+esc(device(x.user_agent))+'</td><td>'+esc(sourceHost(x.referrer))+'</td></tr>';
   }).join(''):'<tr><td colspan="7" class="empty">لا توجد نتائج مطابقة للفلاتر.</td></tr>';
@@ -240,7 +280,11 @@ tbody tr{transition:background .15s}tbody tr:hover{background:#171F2E}.visitor{c
  function exportCsv(){
   const list=filtered(),headers=['الزائر','البريد','معرّف الجلسة','الصفحة','وقت الدخول','آخر نشاط','وقت الخروج','الحالة','الجهاز والمتصفح','المصدر'];
   const rows=list.map(x=>[x.visitor_email?'مسجل':'زائر مجهول',x.visitor_email||'',x.session_id,x.page_path,fmt(x.first_seen),fmt(x.last_seen),fmt(x.ended_at),active(x)?'نشط الآن':x.ended_at?'انتهت الجلسة':'غير نشط',device(x.user_agent),x.referrer||'']);
-  const csv=[headers,...rows].map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');
+  const csv=[headers,...rows].map(r=>r.map(v=>{
+   const raw=String(v??'');
+   const safe=/^\s*[=+@-]/.test(raw)?"'"+raw:raw;
+   return '"'+safe.replace(/"/g,'""')+'"';
+  }).join(',')).join('\r\n');
   const blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'});
   const url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='entelaqtak-visitors-'+new Date().toISOString().slice(0,10)+'.csv';a.style.display='none';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1500);
  }
