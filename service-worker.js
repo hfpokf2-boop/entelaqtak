@@ -1,5 +1,5 @@
 'use strict';
-const CACHE_NAME='entelaqtak-shell-v1';
+const CACHE_NAME='entelaqtak-shell-v2';
 const APP_FILES=['./','./index.html','./creator-suite.js','./enhancements.js','./manifest.webmanifest','./app-icon.svg','./favicon.svg','./legal.html'];
 self.addEventListener('install',event=>{
  event.waitUntil((async()=>{
