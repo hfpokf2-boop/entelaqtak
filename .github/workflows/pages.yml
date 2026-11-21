@@ -5,12 +5,7 @@ on:
     branches: [main]
   workflow_dispatch:
 
-permissio
-          const diagnostics = fs.readFileSync('enhancements.js', 'utf8');
-          assert(diagnostics.includes('diagnosticAssetCheck') && diagnostics.includes('diagnosticRouteCheck'), 'Live asset and route diagnostics are missing.');
-          assert(diagnostics.includes('diagnosticRuntimeErrors') && diagnostics.includes('unhandledrejection'), 'Runtime error capture is missing from diagnostics.');
-          assert(diagnostics.includes('diagnosticIndexedDBCheck') && diagnostics.includes('diagnosticServiceWorkerCheck'), 'Storage and offline diagnostics are incomplete.');
-          const assert = (condition, message) => { if (!condition) throw new Error(message); };ns:
+permissions:
   contents: read
   pages: write
   id-token: write
@@ -87,6 +82,11 @@ jobs:
           const sidebar = fs.readFileSync('sidebar-system.css', 'utf8');
           const production = fs.readFileSync('production-studio.js', 'utf8');
           const worker = fs.readFileSync('service-worker.js', 'utf8');
+          const diagnostics = fs.readFileSync('enhancements.js', 'utf8');
+          const assert = (condition, message) => { if (!condition) throw new Error(message); };
+          assert(diagnostics.includes('diagnosticAssetCheck') && diagnostics.includes('diagnosticRouteCheck'), 'Live asset and route diagnostics are missing.');
+          assert(diagnostics.includes('diagnosticRuntimeErrors') && diagnostics.includes('unhandledrejection'), 'Runtime error capture is missing from diagnostics.');
+          assert(diagnostics.includes('diagnosticIndexedDBCheck') && diagnostics.includes('diagnosticServiceWorkerCheck'), 'Storage and offline diagnostics are incomplete.');
 
           assert(workspace.includes('function replaceWorkspaceState(next)'), 'Stable workspace state helper is missing.');
           for (const pattern of [/state=merged;/, /state=normalizeState\(incoming\);/, /state=normalizeState\(d\);/, /state=data\?\.data/]) {
