@@ -104,11 +104,11 @@
       const group=document.createElement('details');
       group.className='nav-section';
       group.dataset.navSection=section.id;
-      group.open = false;
+      group.open = true;
       group.addEventListener('toggle',()=>{
         if (!isMobile() && group.open) {
           nav.querySelectorAll('details.nav-section').forEach(other=>{
-            if(other!==group) other.open=false;
+            if(other!==group) other.open=true;
           });
         }
       });
@@ -129,7 +129,7 @@
     if (buttons.has('home')) {
       const homeGroup=document.createElement('details');
       homeGroup.className='nav-section nav-home-section';
-      homeGroup.open = false;
+      homeGroup.open = true;
       homeGroup.dataset.navSection='home';
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
