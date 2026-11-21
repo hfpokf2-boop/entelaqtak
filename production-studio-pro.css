@@ -17,3 +17,28 @@
 #view-production .prod-project-item[hidden]{display:none!important}
 @media(max-width:900px){.prod-pro-overview{grid-template-columns:repeat(2,minmax(0,1fr))}.prod-library{position:static}}
 @media(max-width:560px){.prod-pro-overview{gap:7px}.prod-pro-stat{padding:11px}.prod-pro-stat strong{font-size:18px}.prod-pro-save-status{width:100%;text-align:center}.prod-head{align-items:flex-start;flex-direction:column}}
+
+
+/* Script Quality Lab */
+.prod-script-coach{
+ margin:18px 0 5px;padding:18px;border:1px solid #514477;border-radius:17px;
+ background:radial-gradient(360px 180px at 0 0,#9278D821,transparent 72%),linear-gradient(145deg,#1b1b31,#111827);
+ box-shadow:0 14px 34px #03071255,inset 0 1px 0 #ffffff08
+}
+.prod-script-coach-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:13px}
+.prod-script-coach-head h3{font-size:16px;margin:5px 0 3px;color:#f5f3ff}
+.prod-script-coach-head p{margin:0;color:#aab5ca;font-size:10px}
+.prod-script-coach-mark{
+ display:grid;place-items:center;flex:0 0 42px;width:42px;height:42px;border-radius:13px;
+ color:#e5d9ff;background:linear-gradient(145deg,#9278D833,#D9C8FF18);border:1px solid #9278D866;font-size:21px
+}
+.prod-script-coach .prod-actions{margin:12px 0}
+.prod-script-coach .prod-review-editor{min-height:190px;border-color:#4a4269;background:#0d1220}
+.prod-script-coach-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:10px}
+.prod-script-coach-foot>span{max-width:380px;color:#8998b1;font-size:9px;line-height:1.7}
+.prod-restore-script{margin-top:10px}
+@media(max-width:560px){
+ .prod-script-coach{padding:13px}
+ .prod-script-coach-head{align-items:flex-start}
+ .prod-script-coach-foot>.prod-secondary{width:100%}
+}
