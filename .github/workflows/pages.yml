@@ -63,7 +63,7 @@ jobs:
               raise SystemExit("No executable inline JavaScript found")
           print(f"Extracted {total} executable inline script(s) from all interactive HTML pages.")
           PY
-          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js production-studio-pro.js sidebar-organizer.js content-pack-pro.js library-center.js visitor-tracker.js control-center.js service-worker.js language.js; do
+          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js production-studio-pro.js sidebar-organizer.js content-pack-pro.js library-center.js visitor-tracker.js control-center.js workspace-pro.js service-worker.js language.js; do
             echo "Checking $file"
             node --check "$file"
           done
@@ -87,6 +87,13 @@ jobs:
           assert(diagnostics.includes('diagnosticAssetCheck') && diagnostics.includes('diagnosticRouteCheck'), 'Live asset and route diagnostics are missing.');
           assert(diagnostics.includes('diagnosticRuntimeErrors') && diagnostics.includes('unhandledrejection'), 'Runtime error capture is missing from diagnostics.');
           assert(diagnostics.includes('diagnosticIndexedDBCheck') && diagnostics.includes('diagnosticServiceWorkerCheck'), 'Storage and offline diagnostics are incomplete.');
+          const workspacePro = fs.readFileSync('workspace-pro.js', 'utf8');
+          const workspaceProCss = fs.readFileSync('workspace-pro.css', 'utf8');
+          assert(workspace.includes('workspace-pro.css?v=20261121-workspace-pro-1') && workspace.includes('workspace-pro.js?v=20261121-workspace-pro-1'), 'Workspace PRO assets are not linked.');
+          assert(workspacePro.includes('workspacePlan') && workspacePro.includes('Ctrl K') && workspacePro.includes('wpCommandOverlay'), 'Weekly planner or command palette is missing.');
+          assert(workspacePro.includes('app.openProductionProject') && workspacePro.includes('data-task-toggle'), 'Workspace PRO project resume or task controls are missing.');
+          assert(workspaceProCss.includes('.wp-execution-grid') && workspaceProCss.includes('.wp-command-dialog'), 'Workspace PRO responsive dashboard styles are missing.');
+          assert(worker.includes("'./workspace-pro.js'") && worker.includes("'./workspace-pro.css'"), 'Workspace PRO assets are missing from the offline cache.');
 
           assert(workspace.includes('function replaceWorkspaceState(next)'), 'Stable workspace state helper is missing.');
           for (const pattern of [/state=merged;/, /state=normalizeState\(incoming\);/, /state=normalizeState\(d\);/, /state=data\?\.data/]) {
@@ -97,7 +104,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v76"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v77"), 'Service worker cache version was not bumped.');
           assert(organizer.includes('nav-organized-desktop') && organizer.includes('setDrawerState') && organizer.includes('getDrawerFocusables'), 'Accessible grouped sidebar and drawer focus handling are missing.');
           assert(organizer.includes("max-width: 1100px") && organizer.includes("aria-hidden"), 'Responsive sidebar drawer breakpoint or accessibility state is missing.');
           const responsive = fs.readFileSync('responsive-system.css', 'utf8');
@@ -157,7 +164,7 @@ jobs:
           buttons = Path("button-system.css").read_text(encoding="utf-8")
           production = Path("production-studio-pro.css").read_text(encoding="utf-8")
           responsive = Path("responsive-system.css").read_text(encoding="utf-8")
-          for name, source in (("design-system.css", css), ("ui-polish.css", polish), ("button-system.css", buttons), ("production-studio-pro.css", production), ("responsive-system.css", responsive), ("sidebar-system.css", Path("sidebar-system.css").read_text(encoding="utf-8")), ("control-center.css", Path("control-center.css").read_text(encoding="utf-8"))):
+          for name, source in (("design-system.css", css), ("ui-polish.css", polish), ("button-system.css", buttons), ("production-studio-pro.css", production), ("responsive-system.css", responsive), ("sidebar-system.css", Path("sidebar-system.css").read_text(encoding="utf-8")), ("control-center.css", Path("control-center.css").read_text(encoding="utf-8")), ("workspace-pro.css", Path("workspace-pro.css").read_text(encoding="utf-8")) ):
               if source.count("{") != source.count("}"):
                   errors.append(name + ": unbalanced CSS blocks")
           required = [
@@ -185,12 +192,14 @@ jobs:
           if "unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js" not in admin:
               errors.append("admin.html: Supabase CDN fallback is missing")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v76" not in worker:
+          if "entelaqtak-shell-v77" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           if "'./sidebar-system.css'" not in worker:
               errors.append("service-worker.js: new sidebar stylesheet missing from offline cache")
           if "'./control-center.css'" not in worker or "'./control-center.js'" not in worker:
               errors.append("service-worker.js: control center assets missing from offline cache")
+          if "'./workspace-pro.css'" not in worker or "'./workspace-pro.js'" not in worker:
+              errors.append("service-worker.js: workspace-pro assets missing from offline cache")
           if "'./button-system.css'" not in worker:
               errors.append("service-worker.js: button stylesheet missing from offline cache")
           if "'./production-studio-pro.js'" not in worker or "'./production-studio-pro.css'" not in worker:
