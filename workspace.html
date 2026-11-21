@@ -513,7 +513,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
 </style>
 <script>try{if(localStorage.getItem("entelaqtak-language-v1")==="en"){document.documentElement.lang="en";document.documentElement.dir="ltr";}}catch(e){}</script>
  <link rel="stylesheet" href="./button-system.css?v=20261120-buttons-1">
-<link rel="stylesheet" href="./responsive-system.css?v=20261121-responsive-4">
+<link rel="stylesheet" href="./responsive-system.css?v=20261121-responsive-5">
 </head>
 <body>
 <div class="app">
@@ -625,20 +625,39 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
     <button data-go="analytics"><em>▥</em><b>راجع الأداء</b><p>سجّل النتائج واعرف إيه اللي محتاج تطوير.</p></button>
   </div>
   <section class="home-tools-directory" aria-label="دليل جميع أدوات انطلاقتك">
-    <div class="sectionrow home-directory-heading"><div><h2>كل أدوات انطلاقتك</h2><p>كل الأدوات ظاهرة هنا ومقسّمة حسب مرحلة شغلك — اختار أي أداة مباشرة.</p></div><span class="home-directory-count">ALL TOOLS · 23</span></div>
+    <div class="sectionrow home-directory-heading">
+      <div><span class="eyebrow">مركز الأدوات</span><h2>كل أدوات انطلاقتك</h2><p>اختار الأداة المناسبة لخطوتك الجاية، أو ابحث عنها بالاسم.</p></div>
+      <span class="home-directory-count" id="homeToolsCount" aria-live="polite">22 أداة</span>
+    </div>
+    <div class="home-tools-toolbar">
+      <label class="home-tools-search" for="homeToolsSearch"><span aria-hidden="true">⌕</span><input id="homeToolsSearch" type="search" placeholder="ابحث عن أداة... مثال: السكريبت أو SEO" autocomplete="off"><span class="home-tools-search-hint">بحث سريع</span></label>
+      <button class="home-tools-clear" type="button" data-tools-clear hidden>مسح البحث</button>
+    </div>
+    <div class="home-tools-filters" role="group" aria-label="تصفية الأدوات">
+      <button type="button" class="home-tools-filter is-active" data-tools-filter="all" aria-pressed="true">الكل <span>22</span></button>
+      <button type="button" class="home-tools-filter" data-tools-filter="discover" aria-pressed="false">الأفكار والبحث</button>
+      <button type="button" class="home-tools-filter" data-tools-filter="create" aria-pressed="false">صناعة المحتوى</button>
+      <button type="button" class="home-tools-filter" data-tools-filter="design" aria-pressed="false">التصميم والتحسين</button>
+      <button type="button" class="home-tools-filter" data-tools-filter="publish" aria-pressed="false">النشر والأداء</button>
+      <button type="button" class="home-tools-filter" data-tools-filter="learn" aria-pressed="false">التعلّم</button>
+      <button type="button" class="home-tools-filter" data-tools-filter="account" aria-pressed="false">الحساب والمساعدة</button>
+      <button type="button" class="home-tools-filter" data-tools-filter="library" aria-pressed="false">المكتبة</button>
+    </div>
+    <p class="home-tools-status" id="homeToolsStatus" aria-live="polite">بتعرض كل الأدوات.</p>
+    <div class="home-tools-empty" id="homeToolsEmpty" hidden>مفيش أداة مطابقة للبحث ده. جرّب كلمة تانية أو اختار «الكل».</div>
     <div class="home-tool-groups">
-      <section class="home-tool-group"><h3><span>✧</span> الأفكار والبحث</h3><div class="home-tool-links">
+      <section class="home-tool-group" data-category="discover"><h3><span>✧</span> الأفكار والبحث <small>3 أدوات</small></h3><div class="home-tool-links">
         <button class="home-tool-link" data-go="ideas"><i>✧</i><span><b>أفكار المحتوى</b><small>ولّد أفكارًا جديدة</small></span></button>
         <button class="home-tool-link" data-go="trends"><i>↗</i><span><b>رادار الموضوعات</b><small>ابحث عن زوايا حديثة</small></span></button>
         <button class="home-tool-link" data-go="brain"><i>✦</i><span><b>عقل المحتوى الذكي</b><small>خطط وحلّل أعمالك</small></span></button>
       </div></section>
-      <section class="home-tool-group"><h3><span>▶</span> صناعة المحتوى</h3><div class="home-tool-links">
+      <section class="home-tool-group" data-category="create"><h3><span>▶</span> صناعة المحتوى <small>4 أدوات</small></h3><div class="home-tool-links">
         <button class="home-tool-link" data-go="production"><i>🎬</i><span><b>استوديو الإنتاج</b><small>مشروع من الفكرة للنشر</small></span></button>
         <button class="home-tool-link" data-go="studio"><i>✍</i><span><b>استوديو المحتوى</b><small>جهّز حزمة كاملة</small></span></button>
         <button class="home-tool-link" data-go="script"><i>▤</i><span><b>كاتب السكريبت</b><small>اكتب مسودة الفيديو</small></span></button>
         <button class="home-tool-link" data-go="repurpose"><i>♻</i><span><b>إعادة تدوير المحتوى</b><small>حوّل محتوى لصيغ أخرى</small></span></button>
       </div></section>
-      <section class="home-tool-group"><h3><span>▣</span> التصميم والتحسين</h3><div class="home-tool-links">
+      <section class="home-tool-group" data-category="design"><h3><span>▣</span> التصميم والتحسين <small>6 أدوات</small></h3><div class="home-tool-links">
         <button class="home-tool-link" data-go="titles"><i>▣</i><span><b>العناوين والصورة</b><small>طوّر العنوان والفكرة</small></span></button>
         <button class="home-tool-link" data-go="thumbnail"><i>▧</i><span><b>مصمم الصور المصغّرة</b><small>صمّم وحمّل Thumbnail</small></span></button>
         <button class="home-tool-link" data-go="seo"><i>⌕</i><span><b>مساعد SEO</b><small>الوصف والكلمات المفتاحية</small></span></button>
@@ -646,27 +665,71 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
         <button class="home-tool-link" data-go="brand"><i>◈</i><span><b>هوية المحتوى</b><small>ثبّت أسلوب قناتك</small></span></button>
         <button class="home-tool-link" data-go="lab"><i>⚗</i><span><b>مختبر العناوين</b><small>اختبر وقارن العناوين</small></span></button>
       </div></section>
-      <section class="home-tool-group"><h3><span>▦</span> النشر وقياس الأداء</h3><div class="home-tool-links">
+      <section class="home-tool-group" data-category="publish"><h3><span>▦</span> النشر وقياس الأداء <small>2 أداة</small></h3><div class="home-tool-links">
         <button class="home-tool-link" data-go="calendar"><i>▦</i><span><b>تقويم النشر</b><small>نظّم مواعيد المحتوى</small></span></button>
         <button class="home-tool-link" data-go="analytics"><i>▥</i><span><b>متابعة الأداء</b><small>قارن نتائج منشوراتك</small></span></button>
       </div></section>
-      <section class="home-tool-group"><h3><span>★</span> التعلّم والتطوير</h3><div class="home-tool-links">
+      <section class="home-tool-group" data-category="learn"><h3><span>★</span> التعلّم والتطوير <small>3 أدوات</small></h3><div class="home-tool-links">
         <button class="home-tool-link" data-go="guide"><i>؟</i><span><b>دليل الاستخدام</b><small>اعرف طريقة كل أداة</small></span></button>
         <button class="home-tool-link" data-go="challenge"><i>♜</i><span><b>تحدي 30 يوم</b><small>خطوات يومية بسيطة</small></span></button>
         <button class="home-tool-link" data-go="academy"><i>★</i><span><b>أكاديمية انطلاقتك</b><small>تعلّم وطور مهاراتك</small></span></button>
       </div></section>
-      <section class="home-tool-group"><h3><span>◉</span> الحساب والمساعدة</h3><div class="home-tool-links">
+      <section class="home-tool-group" data-category="account"><h3><span>◉</span> الحساب والمساعدة <small>3 أدوات</small></h3><div class="home-tool-links">
         <button class="home-tool-link" data-go="connections"><i>◉</i><span><b>ربط المنصات</b><small>إدارة بيانات قنواتك</small></span></button>
         <button class="home-tool-link" data-go="support"><i>?</i><span><b>الدعم والمساعدة</b><small>أبلغ عن مشكلة</small></span></button>
         <button class="home-tool-link" data-go="settings"><i>⚙</i><span><b>الإعدادات والبيانات</b><small>الحساب والنسخ الاحتياطية</small></span></button>
       </div></section>
-      <section class="home-tool-group home-tool-library"><h3><span>▤</span> المكتبة والملفات</h3><div class="home-tool-links">
+      <section class="home-tool-group home-tool-library" data-category="library"><h3><span>▤</span> المكتبة والملفات <small>أداة واحدة</small></h3><div class="home-tool-links">
         <button class="home-tool-link" data-go="library"><i>▤</i><span><b>مكتبتي والملفات</b><small>كل أفكارك ومشاريعك وملفاتك</small></span></button>
       </div></section>
     </div>
   </section>
   <div class="home-bottom-grid"><div class="panel"><h3>آخر حزم المحتوى</h3><p class="sub">كمل حزمة كنت بدأت فيها.</p><div class="savedlist" id="homeRecentPacks"><div class="empty">لسه مفيش حزم محفوظة.</div></div></div><div class="panel"><h3>آخر مشاريع الإنتاج</h3><p class="sub">ارجع مباشرة لآخر مشروع اشتغلت عليه.</p><div class="savedlist" id="homeRecentProjects"><div class="empty">لسه مفيش مشاريع إنتاج محفوظة.</div></div><button class="btn small alt" data-go="production">افتح استوديو الإنتاج</button></div><div class="panel"><h3>أقرب مواعيد النشر</h3><p class="sub">نظرة سريعة على خطتك.</p><div id="homeUpcoming"><div class="empty">أضف أول موعد للنشر.</div></div><button class="btn small alt" data-go="calendar">افتح التقويم</button></div></div>
 </section>
+<script>
+(() => {
+  const directory = document.querySelector('#view-home .home-tools-directory');
+  if (!directory || directory.dataset.filterReady === 'true') return;
+  directory.dataset.filterReady = 'true';
+  const input = directory.querySelector('#homeToolsSearch');
+  const clear = directory.querySelector('[data-tools-clear]');
+  const count = directory.querySelector('#homeToolsCount');
+  const status = directory.querySelector('#homeToolsStatus');
+  const empty = directory.querySelector('#homeToolsEmpty');
+  const cards = Array.from(directory.querySelectorAll('.home-tool-link'));
+  const groups = Array.from(directory.querySelectorAll('.home-tool-group'));
+  const filters = Array.from(directory.querySelectorAll('[data-tools-filter]'));
+  let activeCategory = 'all';
+  const normalize = value => String(value || '').toLocaleLowerCase('ar').replace(/[أإآ]/g, 'ا').trim();
+  function applyFilters() {
+    const query = normalize(input.value);
+    let visible = 0;
+    cards.forEach(card => {
+      const group = card.closest('.home-tool-group');
+      const searchable = normalize(card.textContent + ' ' + card.dataset.go);
+      const categoryMatch = activeCategory === 'all' || group?.dataset.category === activeCategory;
+      const textMatch = !query || searchable.includes(query);
+      card.hidden = !(categoryMatch && textMatch);
+      if (!card.hidden) visible++;
+    });
+    groups.forEach(group => {
+      group.hidden = !Array.from(group.querySelectorAll('.home-tool-link')).some(card => !card.hidden);
+    });
+    count.textContent = visible + (visible === 1 ? ' أداة' : ' أدوات');
+    empty.hidden = visible > 0;
+    clear.hidden = !input.value;
+    status.textContent = query ? ('نتائج البحث: ' + visible) : (activeCategory === 'all' ? 'بتعرض كل الأدوات.' : 'الأدوات داخل التصنيف المحدد: ' + visible);
+  }
+  input.addEventListener('input', applyFilters);
+  clear.addEventListener('click', () => { input.value = ''; activeCategory = 'all'; filters.forEach(button => { const active = button.dataset.toolsFilter === 'all'; button.classList.toggle('is-active', active); button.setAttribute('aria-pressed', String(active)); }); applyFilters(); input.focus(); });
+  filters.forEach(button => button.addEventListener('click', () => {
+    activeCategory = button.dataset.toolsFilter;
+    filters.forEach(item => { const active = item === button; item.classList.toggle('is-active', active); item.setAttribute('aria-pressed', String(active)); });
+    applyFilters();
+  }));
+  applyFilters();
+})();
+</script>
 
 <section class="view" id="view-ideas">
  <div class="head"><div><span class="eyebrow">اكتشف اتجاهات جديدة</span><h1>مولّد أفكار المحتوى 🎲</h1><p>اختار المجال والمنصة ونوع الفيديو، وابدأ بعصف ذهني سريع.</p></div></div>
