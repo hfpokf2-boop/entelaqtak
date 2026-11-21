@@ -1481,7 +1481,7 @@ $('clearAllData').addEventListener('click',()=>{
  if(!confirm('تحذير: سيتم حذف جميع الأفكار والحزم والمنشورات والإحصاءات والتقدم والإعدادات المحلية نهائيًا. هل أنت متأكد؟'))return;
  replaceWorkspaceState({});save();renderAll();renderSettings();toast('تم مسح البيانات المحلية.');
 });
-function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();}
+function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics();renderChallenge();if($('aiSettingsStatus'))renderSettings();if(window.EntelaqtakApp?.refreshLibrary&&$('view-library')?.classList.contains('active'))window.EntelaqtakApp.refreshLibrary();}
 window.addEventListener('online',()=>{if(currentUser){$('accountSync').textContent='عاد الاتصال؛ جارٍ التحقق من المزامنة';loadCloudWorkspace();}});
 window.addEventListener('offline',()=>{if(currentUser){$('accountSync').textContent='غير متصل';$('syncState').textContent='تُحفظ التعديلات محليًا حتى عودة الاتصال.';}});
 window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews};
