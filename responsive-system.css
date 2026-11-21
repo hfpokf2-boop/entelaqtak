@@ -1219,9 +1219,8 @@ html[dir="ltr"] #nav.nav-organized-desktop button[data-view].active{
     padding:16px 12px 13px!important;
     overflow:hidden!important;
   }
-  #workspaceSidebar>.brand,#workspaceSidebar>.workspace-card,#workspaceSidebar>.side-note{
-    display:flex!important;
-  }
+  #workspaceSidebar>.brand{display:flex!important}
+  #workspaceSidebar>.workspace-card{display:block!important}
   #workspaceSidebar>.side-note{display:block!important}
   #nav.nav-organized-desktop{max-height:none!important}
   .sidebar-open-btn,.sidebar-close-btn{display:none!important}
