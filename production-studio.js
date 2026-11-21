@@ -34,8 +34,7 @@
     nav.appendChild(b);
     b.addEventListener('click', () => app.go('production'));
   }
-  const productionNav = nav && nav.querySelector('[data-view="production"]');
-  if (productionNav) productionNav.addEventListener('click', () => render());
+  // Navigation is delegated through the current application router in workspace.html.
 
   const view = document.createElement('section');
   view.className = 'view';
