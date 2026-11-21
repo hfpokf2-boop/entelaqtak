@@ -90,16 +90,16 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v66"), 'Service worker cache version was not bumped.');
-          assert(organizer.includes('nav-organized-desktop') && organizer.includes('nav-mobile-panel'), 'Organized desktop/mobile navigation is missing.');
-          assert(organizer.includes("max-width: 1100px"), 'Responsive sidebar drawer breakpoint is missing.');
+          assert(worker.includes("entelaqtak-shell-v67"), 'Service worker cache version was not bumped.');
+          assert(organizer.includes('nav-organized-desktop') && organizer.includes('setDrawerState') && organizer.includes('getDrawerFocusables'), 'Accessible grouped sidebar and drawer focus handling are missing.');
+          assert(organizer.includes("max-width: 1100px") && organizer.includes("aria-hidden"), 'Responsive sidebar drawer breakpoint or accessibility state is missing.');
           const responsive = fs.readFileSync('responsive-system.css', 'utf8');
           assert(responsive.includes('@media(max-width:900px)') && responsive.includes('safe-area-inset-bottom') && responsive.includes('minmax(0,1fr)'), 'Responsive system is missing tablet, safe-area, or overflow protections.');
-          assert(workspace.includes('responsive-system.css?v=20261121-responsive-6'), 'Workspace responsive stylesheet is not linked.');
+          assert(workspace.includes('responsive-system.css?v=20261121-responsive-7'), 'Workspace responsive stylesheet is not linked.');
           assert(worker.includes("'./responsive-system.css'"), 'Responsive stylesheet missing from offline app shell.');
           assert(workspace.includes("DOMContentLoaded") && workspace.includes("window.EntelaqtakApp?.go(initialView)"), "Saved dynamic views must be restored after deferred feature modules load.");
           assert(workspace.includes('home-tools-directory') && workspace.includes('home-primary-tools'), 'Visible home tool directory and primary shortcuts are missing.');
-          assert(polish.includes('#nav.nav-organized-desktop') && polish.includes('#nav.nav-organized-mobile'), 'Responsive navigation styles are missing.');
+          assert(polish.includes('#nav.nav-organized-desktop') && responsive.includes('#nav.nav-organized-desktop .nav-section-title::after') && responsive.includes('content:none!important'), 'Always-open, arrow-free sidebar styles are missing.');
           assert(worker.includes("'./button-system.css'"), 'Button stylesheet missing from offline app shell.');
           assert(worker.includes("'./production-studio-pro.js'"), 'Production PRO module missing from offline app shell.');
           assert(worker.includes("'./production-studio-pro.css'"), 'Production PRO styles missing from offline app shell.');
