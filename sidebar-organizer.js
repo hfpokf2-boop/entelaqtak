@@ -24,6 +24,9 @@
     ]},
     { id:'account', title:'الحساب والمساعدة', items:[
       ['connections','ربط المنصات','◉'],['support','الدعم والمساعدة','?'],['settings','الإعدادات والبيانات','⚙']
+    ]},
+    { id:'library', title:'المكتبة والملفات', items:[
+      ['library','مكتبتي والملفات','▤']
     ]}
   ];
   const primaryIds = ['home','ideas','production','calendar','analytics'];
@@ -101,7 +104,7 @@
       const group=document.createElement('details');
       group.className='nav-section';
       group.dataset.navSection=section.id;
-      group.open=available.some(([id])=>id===active) || (active==='home' && section.id==='create');
+      group.open=true;
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
       const title=document.createElement('span');
@@ -119,7 +122,7 @@
     if (buttons.has('home')) {
       const homeGroup=document.createElement('details');
       homeGroup.className='nav-section nav-home-section';
-      homeGroup.open=active==='home';
+      homeGroup.open=true;
       homeGroup.dataset.navSection='home';
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
@@ -172,7 +175,7 @@
       drawer.appendChild(group);
     }
     panel.replaceChildren(drawer);
-    if (panel.firstElementChild) panel.firstElementChild.open=true;
+    panel.querySelectorAll('details.nav-mobile-section').forEach(group=>{group.open=true;});
     setPanel(false);
   }
   function rebuild() {
@@ -192,7 +195,6 @@
       const group=button.closest('details.nav-section');
       if (group) {
         group.open=true;
-        nav.querySelectorAll('details.nav-section').forEach(item=>{if(item!==group)item.open=false;});
       }
     }
   });
