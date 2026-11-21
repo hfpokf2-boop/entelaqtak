@@ -432,10 +432,23 @@
   app.go = function(id) {
     oldGo(id);
     if (id === 'production') {
+      // The core router runs before deferred feature modules. Re-activate the
+      // production view explicitly so a saved initial route cannot leave Home visible.
+      document.querySelectorAll('.view').forEach(item => {
+        item.classList.toggle('active', item === view);
+      });
+      view.classList.add('active');
       const title = document.getElementById('pageTitle');
       if (title) title.textContent = 'استوديو الإنتاج';
       render();
     }
   };
   render();
+  // Restore a previously selected Production Studio after this deferred module
+  // creates its view; the initial router may have run before the view existed.
+  try {
+    if (localStorage.getItem('entelaqtak-last-view-v1') === 'production') {
+      app.go('production');
+    }
+  } catch (_) {}
 })();
