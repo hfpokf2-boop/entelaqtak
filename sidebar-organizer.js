@@ -105,6 +105,7 @@
       group.className='nav-section';
       group.dataset.navSection=section.id;
       group.open=true;
+      group.addEventListener('toggle',()=>{if(!isMobile()&&!group.open) group.open=true;});
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
       const title=document.createElement('span');
@@ -186,6 +187,14 @@
     else buildDesktop();
   }
   nav.addEventListener('click',event=>{
+    // Desktop groups are intentionally pinned open: accidental summary clicks must not hide the navigation.
+    const desktopSummary=event.target.closest('summary.nav-section-title');
+    if (desktopSummary && !isMobile()) {
+      event.preventDefault();
+      const desktopGroup=desktopSummary.closest('details.nav-section');
+      if (desktopGroup) desktopGroup.open=true;
+      return;
+    }
     const more=event.target.closest('[data-nav-more]');
     if (more) { event.preventDefault(); setPanel(!mobileOpen); return; }
     const button=event.target.closest('button[data-view]');
