@@ -95,7 +95,7 @@ jobs:
           assert(organizer.includes("max-width: 900px"), 'Tablet navigation breakpoint is missing.');
           const responsive = fs.readFileSync('responsive-system.css', 'utf8');
           assert(responsive.includes('@media(max-width:900px)') && responsive.includes('safe-area-inset-bottom') && responsive.includes('minmax(0,1fr)'), 'Responsive system is missing tablet, safe-area, or overflow protections.');
-          assert(workspace.includes('responsive-system.css?v=20261121-responsive-2'), 'Workspace responsive stylesheet is not linked.');
+          assert(workspace.includes('responsive-system.css?v=20261121-responsive-3'), 'Workspace responsive stylesheet is not linked.');
           assert(worker.includes("'./responsive-system.css'"), 'Responsive stylesheet missing from offline app shell.');
           assert(workspace.includes("DOMContentLoaded") && workspace.includes("window.EntelaqtakApp?.go(initialView)"), "Saved dynamic views must be restored after deferred feature modules load.");
           assert(workspace.includes('home-tools-directory') && workspace.includes('home-primary-tools'), 'Visible home tool directory and primary shortcuts are missing.');
