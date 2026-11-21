@@ -132,7 +132,7 @@ assert(sidebar.includes('@media(min-width:1101px)') && sidebar.includes('@media(
                   errors.append(f"{page}: design-system.css cache version is stale")
           workspace = Path("workspace.html").read_text(encoding="utf-8")
           if "sidebar-system.css?v=20261121-sidebar-v6-1" not in workspace:
-    errors.append("workspace.html: unified sidebar stylesheet is not linked")
+              errors.append("workspace.html: unified sidebar stylesheet is not linked")
           if "ui-polish.css?v=20261121-nav-compact-1" not in workspace:
               errors.append("workspace.html: ui-polish.css cache version is stale")
           css = Path("design-system.css").read_text(encoding="utf-8")
@@ -171,7 +171,7 @@ assert(sidebar.includes('@media(min-width:1101px)') && sidebar.includes('@media(
           if "entelaqtak-shell-v70" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           if "'./sidebar-system.css'" not in worker:
-    errors.append("service-worker.js: new sidebar stylesheet missing from offline cache")
+              errors.append("service-worker.js: new sidebar stylesheet missing from offline cache")
           if "'./button-system.css'" not in worker:
               errors.append("service-worker.js: button stylesheet missing from offline cache")
           if "'./production-studio-pro.js'" not in worker or "'./production-studio-pro.css'" not in worker:
