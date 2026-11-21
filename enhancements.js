@@ -157,49 +157,179 @@ function addSettingsCard(){
   const card=document.createElement('div');
   card.className='card';
   card.id='enhancedHealthCard';
-  card.innerHTML='<h2>حالة النظام والتشخيص</h2><p class="muted">الفحص محلي ولا يرسل محتوى مشاريعك أو بياناتك الشخصية.</p><div id="enhancedHealthList" class="health-list"></div><div class="enhance-actions"><button type="button" id="refreshHealth">تحديث الفحص</button><button type="button" id="copyHealth" class="primary">نسخ تقرير فني</button><a href="https://github.com/sasa-antilaqatuk/entelaqtak/issues" target="_blank" rel="noopener noreferrer">الإبلاغ عن مشكلة</a></div>';
+  card.innerHTML='<h2>فحص صحة المنصة والتشخيص الذكي</h2><p class="muted">اختبارات فعلية لملفات الموقع ومسارات الأدوات والتخزين والمزامنة والتشغيل. لا يتم إرسال بيانات مشاريعك أو استهلاك رصيد الذكاء الاصطناعي.</p><div id="enhancedHealthList" class="health-list"></div><div class="enhance-actions"><button type="button" id="refreshHealth">تشغيل الفحص الشامل</button><button type="button" id="copyHealth" class="primary">نسخ تقرير فني</button><a href="https://github.com/sasa-antilaqatuk/entelaqtak/issues" target="_blank" rel="noopener noreferrer">الإبلاغ عن مشكلة</a></div>';
   grid.appendChild(card);
-  $('refreshHealth').addEventListener('click',renderDiagnostics);
+  $('refreshHealth').addEventListener('click',()=>{const button=$('refreshHealth');button.disabled=true;button.textContent='جارٍ الفحص...';renderDiagnostics().catch(error=>{addDiagnosticError('فشل الفحص',error&&error.message,'');const host=$('enhancedHealthList');if(host)host.textContent='تعذر إكمال الفحص. أعد المحاولة أو انسخ تقرير الأخطاء.';button.disabled=false;button.textContent='إعادة المحاولة';});});
   $('copyHealth').addEventListener('click',copyDiagnostics);
   renderDiagnostics();
  }
 }
-function renderDiagnostics(){
- const host=$('enhancedHealthList');
- if(!host)return;
- let storageOK=false;
- try{
-  const key='entelaqtak-health-check';
-  localStorage.setItem(key,'ok');
-  storageOK=localStorage.getItem(key)==='ok';
-  localStorage.removeItem(key);
- }catch(error){storageOK=false;}
- const config=window.ENTELAQTAK_CONFIG||{};
- const checks=[
-  ['الاتصال بالإنترنت',navigator.onLine===false?'غير متصل':'متصل'],
-  ['الحفظ المحلي',storageOK?'يعمل':'تعذر الكتابة في المتصفح'],
-  ['اتصال الذكاء الاصطناعي',config.url&&config.publishableKey?'إعداد الاتصال موجود — لم يُختبر طلب مدفوع':'إعداد الاتصال غير مكتمل'],
-  ['التشغيل الآمن',window.isSecureContext?'HTTPS / سياق آمن':'غير آمن'],
-  ['التشغيل دون إنترنت','serviceWorker' in navigator?'دعم المتصفح متاح':'غير مدعوم في هذا المتصفح'],
-  ['المزامنة السحابية',$('accountSync')?$('accountSync').textContent:'غير متاحة']
- ];
- host.innerHTML=checks.map(row=>'<div class="health-row"><span>'+escapeHTML(row[0])+'</span><span>'+escapeHTML(row[1])+'</span></div>').join('');
+const diagnosticRuntimeErrors=[];
+let lastDiagnosticReport=null;
+function addDiagnosticError(kind,message,file){
+ const clean=value=>String(value||"").replace(/https?:\/\/\S+/g,"[رابط]").replace(/\s+/g," ").slice(0,180);
+ diagnosticRuntimeErrors.unshift({kind:clean(kind),message:clean(message),file:clean(file).split("/").pop(),time:new Date().toISOString()});
+ if(diagnosticRuntimeErrors.length>15)diagnosticRuntimeErrors.length=15;
 }
-function copyDiagnostics(){
+window.addEventListener("error",event=>{
+ if(event&&event.target&&event.target!==window){
+  const target=event.target;
+  if(target.tagName==="SCRIPT"||target.tagName==="LINK"){
+   addDiagnosticError("فشل تحميل ملف",target.src||target.href||target.tagName,"");
+  }
+  return;
+ }
+ addDiagnosticError("خطأ JavaScript",event&&event.message,event&&event.filename);
+});
+window.addEventListener("unhandledrejection",event=>{
+ const reason=event&&event.reason;
+ addDiagnosticError("رفض Promise",reason&&reason.message?reason.message:String(reason||"رفض غير معروف"),"");
+});
+function diagnosticStorageCheck(){
+ try{
+  const key="entelaqtak-health-check-"+Date.now();
+  localStorage.setItem(key,"ok");
+  const ok=localStorage.getItem(key)==="ok";
+  localStorage.removeItem(key);
+  const raw=localStorage.getItem("entelaqtak-v1")||"";
+  let dataValid=true,recordCount=0;
+  if(raw){
+   try{
+    const data=JSON.parse(raw);
+    dataValid=!!data&&typeof data==="object"&&!Array.isArray(data);
+    if(dataValid)recordCount=["ideas","packs","productionProjects","posts","metrics"].reduce((n,name)=>n+(Array.isArray(data[name])?data[name].length:0),0);
+   }catch(_){dataValid=false;}
+  }
+  return {ok:ok&&dataValid,bytes:new Blob([raw]).size,recordCount,dataValid};
+ }catch(error){return {ok:false,error:error&&error.name||"StorageError",bytes:0,recordCount:0,dataValid:false};}
+}
+function diagnosticRouteCheck(){
+ const nav=$("nav"),buttons=nav?Array.from(nav.querySelectorAll("[data-view]")):[];
+ const missing=buttons.map(button=>button.dataset.view).filter((id,index,list)=>id&&list.indexOf(id)===index&&!$("view-"+id));
+ return {total:buttons.length,missing};
+}
+function diagnosticIndexedDBCheck(){
+ return new Promise(resolve=>{
+  if(!window.indexedDB){resolve({ok:false,detail:"غير مدعوم"});return;}
+  let settled=false;
+  const finish=value=>{if(settled)return;settled=true;resolve(value);};
+  const timer=setTimeout(()=>finish({ok:false,detail:"انتهت مهلة الفحص"}),7000);
+  try{
+   const request=indexedDB.open("entelaqtak-files-v1",1);
+   request.onupgradeneeded=()=>{
+    const db=request.result;
+    if(!db.objectStoreNames.contains("assets"))db.createObjectStore("assets");
+   };
+   request.onsuccess=()=>{const db=request.result;db.close();clearTimeout(timer);finish({ok:true,detail:"متاح"});};
+   request.onerror=()=>{clearTimeout(timer);finish({ok:false,detail:request.error&&request.error.name||"تعذر الفتح"});};
+   request.onblocked=()=>{clearTimeout(timer);finish({ok:false,detail:"قاعدة البيانات مشغولة"});};
+  }catch(error){clearTimeout(timer);finish({ok:false,detail:error&&error.name||"تعذر الفتح"});}
+ });
+}
+async function diagnosticAssetCheck(){
+ const assets=["creator-suite.js","enhancements.js","platform-hub.js","production-studio.js","production-studio-pro.js","library-center.js","sidebar-organizer.js","language.js","control-center.js","service-worker.js","design-system.css","responsive-system.css","sidebar-system.css"];
+ const results=await Promise.all(assets.map(async path=>{
+  let timer=null;
+  try{
+   const controller=new AbortController();
+   timer=setTimeout(()=>controller.abort(),8000);
+   let response=await fetch(new URL("./"+path,document.baseURI).href,{method:"HEAD",cache:"no-store",credentials:"same-origin",signal:controller.signal});
+   if(response.status===405||response.status===501){
+    response=await fetch(new URL("./"+path,document.baseURI).href,{method:"GET",headers:{Range:"bytes=0-0"},cache:"no-store",credentials:"same-origin",signal:controller.signal});
+    if(response.body&&response.body.cancel)response.body.cancel();
+   }
+   return {path,ok:response.ok,status:response.status};
+  }catch(error){return {path,ok:false,status:error&&error.name==="AbortError"?"timeout":"network"};}
+  finally{if(timer)clearTimeout(timer);}
+ }));
+ return results;
+}
+async function diagnosticServiceWorkerCheck(){
+ if(!("serviceWorker" in navigator))return {ok:false,detail:"المتصفح لا يدعم Service Worker"};
+ try{
+  const registration=await navigator.serviceWorker.getRegistration("./");
+  if(!registration)return {ok:false,detail:"لم يتم تسجيل عامل الخدمة بعد"};
+  const active=!!registration.active;
+  return {ok:active,detail:active?(navigator.serviceWorker.controller?"نشط ويتحكم في الصفحة":"نشط؛ قد يحتاج أول تحميل لإعادة الفتح"):"التسجيل موجود لكن العامل غير نشط"};
+ }catch(error){return {ok:false,detail:error&&error.name||"تعذر الفحص"};}
+}
+function diagnosticLevel(ok,warning){return ok?"ok":warning?"warn":"bad";}
+async function renderDiagnostics(){
+ const host=$("enhancedHealthList");
+ if(!host)return null;
+ host.innerHTML='<div class="health-row"><span>الفحص الشامل</span><span>جارٍ فحص ملفات الموقع والخدمات...</span></div>';
+ const storage=diagnosticStorageCheck();
+ const routes=diagnosticRouteCheck();
+ const [assets,indexed,worker,storageEstimate,cacheNames]=await Promise.all([
+  diagnosticAssetCheck(),
+  diagnosticIndexedDBCheck(),
+  diagnosticServiceWorkerCheck(),
+  navigator.storage&&navigator.storage.estimate?navigator.storage.estimate().catch(()=>null):Promise.resolve(null),
+  window.caches&&caches.keys?caches.keys().catch(()=>[]):Promise.resolve([])
+ ]);
+ const failedAssets=assets.filter(item=>!item.ok);
  const config=window.ENTELAQTAK_CONFIG||{};
- const lines=[
-  'انطلاقتك — تقرير فني مختصر',
-  'التاريخ: '+new Date().toISOString(),
-  'المتصفح: '+navigator.userAgent,
-  'الاتصال: '+(navigator.onLine===false?'غير متصل':'متصل'),
-  'سياق آمن: '+String(!!window.isSecureContext),
-  'الحفظ المحلي: '+(function(){try{localStorage.setItem('__entelaqtak_test','1');const ok=localStorage.getItem('__entelaqtak_test')==='1';localStorage.removeItem('__entelaqtak_test');return ok?'يعمل':'تعذر';}catch(error){return'تعذر';}})(),
-  'إعداد AI: '+(config.url&&config.publishableKey?'موجود':'غير مكتمل'),
-  'نسخة الواجهة: 1.1.0'
+ const runtimeCount=diagnosticRuntimeErrors.length;
+ const syncText=$("accountSync")?$("accountSync").textContent.trim():"غير متاحة";
+ const checks=[
+  {name:"الاتصال بالإنترنت",detail:navigator.onLine===false?"الجهاز غير متصل":"متصل",level:navigator.onLine===false?"warn":"ok"},
+  {name:"الحفظ المحلي",detail:storage.ok?"يعمل — "+(storage.bytes/1024).toFixed(1)+" KB من بيانات مساحة العمل":("تعذر الفحص أو البيانات غير سليمة: "+(storage.error||"راجع مساحة التخزين")),level:storage.ok?"ok":"bad"},
+  {name:"سلامة بيانات المشاريع",detail:storage.dataValid?"بنية البيانات قابلة للقراءة — "+storage.recordCount+" عنصر محفوظ":"تعذر قراءة بيانات مساحة العمل أو صيغة JSON غير سليمة",level:storage.dataValid?"ok":"bad"},
+  {name:"قاعدة ملفات الصور",detail:indexed.detail,level:indexed.ok?"ok":"warn"},
+  {name:"ملفات الموقع الأساسية",detail:failedAssets.length?"تعذر الوصول إلى "+failedAssets.length+" من "+assets.length+" ملفًا: "+failedAssets.map(item=>item.path).join("، "):"كل الملفات الأساسية متاحة ("+assets.length+"/"+assets.length+")",level:failedAssets.length?"bad":"ok"},
+  {name:"سلامة مسارات الأدوات",detail:routes.missing.length?"مسارات بلا صفحة: "+routes.missing.join("، "):"كل أزرار التنقل لها صفحة — "+routes.total+" مسارًا",level:routes.missing.length?"bad":"ok"},
+  {name:"التشغيل دون إنترنت",detail:worker.detail,level:worker.ok?"ok":"warn"},
+  {name:"التخزين المؤقت",detail:cacheNames.length?cacheNames.length+" مساحة تخزين مؤقتة":"لا توجد مساحة تخزين مؤقت ظاهرة",level:cacheNames.length?"ok":"warn"},
+  {name:"مساحة المتصفح",detail:storageEstimate&&Number.isFinite(storageEstimate.quota)?"استخدام تقريبي "+(storageEstimate.usage/1024/1024).toFixed(1)+" / "+(storageEstimate.quota/1024/1024).toFixed(0)+" MB":"المتصفح لا يعرض تقدير المساحة",level:storageEstimate?"ok":"warn"},
+  {name:"إعداد الذكاء الاصطناعي",detail:config.url&&config.publishableKey?"الإعداد موجود؛ لم يُرسل طلب مدفوع أثناء الفحص":"إعداد الاتصال غير مكتمل",level:config.url&&config.publishableKey?"ok":"bad"},
+  {name:"اتصال المزامنة",detail:syncText||"لا توجد حالة معروضة",level:/خطأ|فشل|تعذر|غير متصل/i.test(syncText)?"warn":"ok"},
+  {name:"أخطاء وقت التشغيل",detail:runtimeCount?runtimeCount+" خطأ/أخطاء مسجلة في الجلسة":"لم يتم رصد أخطاء منذ بدء المراقبة",level:runtimeCount?"warn":"ok"},
+  {name:"السياق الآمن",detail:window.isSecureContext?"HTTPS / سياق آمن":"الموقع ليس في سياق آمن",level:window.isSecureContext?"ok":"warn"}
  ];
- const text=lines.join('\n');
- if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>notify('تم نسخ التقرير الفني.')).catch(()=>notify('تعذر النسخ؛ استخدم زر التصدير من المتصفح.'));
- else notify('النسخ غير مدعوم في هذا المتصفح.');
+ const bad=checks.filter(item=>item.level==="bad").length;
+ const warn=checks.filter(item=>item.level==="warn").length;
+ const passed=checks.length-bad-warn;
+ const overall=bad?"يحتاج إصلاحًا":warn?"يحتاج مراجعة":"سليم حسب الاختبارات المتاحة";
+ const stamp=new Date().toLocaleString("ar-EG");
+ lastDiagnosticReport={generatedAt:new Date().toISOString(),overall,passed,warn,bad,checks,failedAssets,runtimeErrors:diagnosticRuntimeErrors.slice(0,10)};
+ const styleId="entelaqtak-diagnostic-style";
+ if(!$(styleId)){
+  const style=document.createElement("style");style.id=styleId;
+  style.textContent=".health-summary{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:12px 13px;margin:0 0 10px;border:1px solid var(--line);border-radius:12px;background:#ffffff07}.health-summary strong{font-size:12px}.health-summary span{font-size:10px;color:var(--muted)}.health-row{gap:10px}.health-row>span:first-child{font-weight:700}.health-row>span:last-child{max-width:68%;text-align:left;overflow-wrap:anywhere}.health-status{display:inline-flex;align-items:center;gap:5px}.health-status.health-ok{color:#65d6a5!important}.health-status.health-warn{color:#f4c66b!important}.health-status.health-bad{color:#ff8997!important}.health-summary.health-bad{border-color:#ff899755}.health-summary.health-warn{border-color:#f4c66b55}.health-summary.health-ok{border-color:#65d6a555}@media(max-width:520px){.health-row{align-items:flex-start;flex-direction:column}.health-row>span:last-child{max-width:100%;text-align:right}}";
+  document.head.appendChild(style);
+ }
+ host.innerHTML='<div class="health-summary health-'+(bad?"bad":warn?"warn":"ok")+'"><strong>حالة المنصة: '+escapeHTML(overall)+'</strong><span>'+passed+' ناجح · '+warn+' تنبيه · '+bad+' مشكلة</span></div>'+
+  checks.map(item=>'<div class="health-row" data-level="'+item.level+'"><span>'+escapeHTML(item.name)+'</span><span class="health-status health-'+item.level+'">'+(item.level==="ok"?"✓":item.level==="warn"?"!":"×")+' '+escapeHTML(item.detail)+'</span></div>').join("")+
+  '<p class="muted" style="font-size:9px;margin:9px 2px 0">آخر فحص: '+escapeHTML(stamp)+' · الفحص لا يرسل محتوى مشاريعك ولا ينفذ طلب ذكاء اصطناعي مدفوع.</p>';
+ const refresh=$("refreshHealth");
+ if(refresh){refresh.disabled=false;refresh.textContent="إعادة تشغيل الفحص الشامل";}
+ return lastDiagnosticReport;
+}
+async function copyDiagnostics(){
+ const report=lastDiagnosticReport||await renderDiagnostics();
+ if(!report){notify("تعذر تجهيز التقرير الفني.");return;}
+ const lines=[
+  "انطلاقتك — تقرير فحص المنصة",
+  "وقت الفحص: "+report.generatedAt,
+  "النتيجة: "+report.overall,
+  "النتائج: "+report.passed+" ناجح، "+report.warn+" تنبيه، "+report.bad+" مشكلة",
+  "المتصفح: "+navigator.userAgent,
+  "العنوان: "+location.origin+location.pathname,
+  "",
+  ...report.checks.map(item=>"["+item.level.toUpperCase()+"] "+item.name+": "+item.detail),
+  "",
+  "آخر أخطاء الجلسة:",
+  ...(report.runtimeErrors.length?report.runtimeErrors.map(item=>item.kind+": "+item.message+" ("+item.file+")"):["لا توجد أخطاء مرصودة"])
+ ];
+ const content=lines.join("\n");
+ try{
+  if(navigator.clipboard&&navigator.clipboard.writeText)await navigator.clipboard.writeText(content);
+  else{
+   const area=document.createElement("textarea");area.value=content;area.style.position="fixed";area.style.opacity="0";document.body.appendChild(area);area.select();
+   const copied=document.execCommand("copy");area.remove();if(!copied)throw new Error("copy unavailable");
+  }
+  notify("تم نسخ تقرير الفحص الفني.");
+ }catch(error){notify("تعذر النسخ تلقائيًا؛ أعد المحاولة من متصفح يدعم النسخ.");}
 }
 addSettingsCard();
 // Observe the same-page local workspace writes so core tools receive recovery snapshots too.
