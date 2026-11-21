@@ -1,13 +1,15 @@
-/* Entelaqtak Navigation Organizer v3 — grouped desktop menu + compact mobile tools drawer. */
+/* Entelaqtak Navigation Organizer v4 — one always-visible menu with an accessible compact-screen drawer. */
 (() => {
   'use strict';
+
   const nav = document.getElementById('nav');
-  if (!nav || nav.dataset.organizedV3 === 'true') return;
-  nav.dataset.organizedV3 = 'true';
+  const sidebar = document.getElementById('workspaceSidebar') || nav?.closest('.sidebar');
+  if (!nav || !sidebar || nav.dataset.organizedV4 === 'true') return;
+  nav.dataset.organizedV4 = 'true';
 
   const sections = [
     { id:'discover', title:'الأفكار والبحث', items:[
-      ['ideas','أفكار المحتوى','✧'],['trends','رادار الموضوعات','↗'],['brain','عقل المحتوى الذكي','✦']
+      ['ideas','أفكار المحتوى','✧'],['trends','رادار الموضوعات','◎'],['brain','عقل المحتوى الذكي','✦']
     ]},
     { id:'create', title:'صناعة المحتوى', items:[
       ['production','استوديو الإنتاج','▶'],['studio','استوديو المحتوى','✍'],['script','كاتب السكريبت','▤'],['repurpose','إعادة تدوير المحتوى','♻']
@@ -29,204 +31,212 @@
       ['library','مكتبتي والملفات','▤']
     ]}
   ];
-  const primaryIds = ['home','ideas','production','calendar','analytics'];
-  const primaryLabels = {
-    home:['الرئيسية','⌂'], ideas:['أفكار المحتوى','✧'], production:['استوديو الإنتاج','▶'],
-    calendar:['تقويم النشر','▦'], analytics:['متابعة الأداء','▥']
-  };
+
   const buttons = new Map(
-    Array.from(nav.querySelectorAll('button[data-view]')).map(button => [button.dataset.view,button])
+    Array.from(nav.querySelectorAll('button[data-view]')).map(button => [button.dataset.view, button])
   );
   if (!buttons.size) return;
 
-  const known = new Set(sections.flatMap(section => section.items.map(item => item[0])).concat(['home']));
+  const known = new Set(['home', ...sections.flatMap(section => section.items.map(item => item[0]))]);
   const extras = Array.from(buttons.values()).filter(button => !known.has(button.dataset.view));
-  if (extras.length) sections.push({id:'extra',title:'أدوات إضافية',items:extras.map(button=>[
-    button.dataset.view,
-    button.dataset.navLabel || button.textContent.trim(),
-    (button.querySelector('i') || {}).textContent || '✦'
-  ])});
+  if (extras.length) {
+    sections.push({
+      id:'extra',
+      title:'أدوات إضافية',
+      items:extras.map(button => [
+        button.dataset.view,
+        button.dataset.navLabel || button.textContent.trim(),
+        button.querySelector('i')?.textContent || '✦'
+      ])
+    });
+  }
 
-  function decorate(button,label,glyph) {
+  function decorate(button, label, glyph) {
     let icon = button.querySelector('i');
-    if (!icon) { icon=document.createElement('i'); button.prepend(icon); }
+    if (!icon) {
+      icon = document.createElement('i');
+      button.prepend(icon);
+    }
     icon.textContent = glyph;
-    icon.setAttribute('aria-hidden','true');
+    icon.setAttribute('aria-hidden', 'true');
+    icon.classList.add('nav-icon');
+    button.type = 'button';
     button.dataset.navLabel = label;
-    button.setAttribute('aria-label',label);
+    button.setAttribute('aria-label', label);
     button.title = label;
-    button.replaceChildren(icon,document.createTextNode(label));
+    button.replaceChildren(icon, document.createTextNode(label));
     button.classList.add('nav-item-organized');
   }
+
   for (const section of sections) {
     section.items = section.items.filter(([id]) => buttons.has(id));
-    section.items.forEach(([id,label,glyph])=>decorate(buttons.get(id),label,glyph));
+    section.items.forEach(([id, label, glyph]) => decorate(buttons.get(id), label, glyph));
   }
-  if (buttons.has('home')) decorate(buttons.get('home'),'الرئيسية','⌂');
+  if (buttons.has('home')) decorate(buttons.get('home'), 'الرئيسية', '⌂');
 
-  const sidebar = nav.closest('.sidebar') || nav.parentElement;
-  let panel = sidebar.querySelector('.nav-mobile-panel');
-  let backdrop = sidebar.querySelector('.nav-mobile-backdrop');
-  if (!panel) {
-    panel=document.createElement('div');
-    panel.className='nav-mobile-panel';
-    panel.hidden=true;
-    panel.setAttribute('aria-label','كل أدوات انطلاقتك');
-    sidebar.appendChild(panel);
-  }
-  if (!backdrop) {
-    backdrop=document.createElement('button');
-    backdrop.type='button';
-    backdrop.className='nav-mobile-backdrop';
-    backdrop.hidden=true;
-    backdrop.setAttribute('aria-label','إغلاق قائمة الأدوات');
-    sidebar.appendChild(backdrop);
+  function makeSection(section, fragment) {
+    const available = section.items.filter(([id]) => buttons.has(id));
+    if (!available.length) return;
+
+    const group = document.createElement('section');
+    group.className = 'nav-section';
+    group.dataset.navSection = section.id;
+
+    const heading = document.createElement('div');
+    heading.className = 'nav-section-title';
+    heading.setAttribute('role', 'heading');
+    heading.setAttribute('aria-level', '3');
+
+    const title = document.createElement('span');
+    title.textContent = section.title;
+    const count = document.createElement('small');
+    count.textContent = String(available.length);
+    count.setAttribute('aria-label', available.length + ' أدوات');
+    heading.append(title, count);
+
+    const items = document.createElement('div');
+    items.className = 'nav-section-items';
+    available.forEach(([id]) => items.appendChild(buttons.get(id)));
+    group.append(heading, items);
+    fragment.appendChild(group);
   }
 
-  const isMobile = () => false;
-  const isCompactLayout = () => window.matchMedia && window.matchMedia('(max-width: 1100px)').matches;
+  function syncActiveState() {
+    buttons.forEach(button => {
+      if (button.classList.contains('active')) button.setAttribute('aria-current', 'page');
+      else button.removeAttribute('aria-current');
+    });
+  }
+
+  function buildNavigation() {
+    nav.className = 'nav nav-organized-desktop';
+    nav.setAttribute('aria-label', 'أقسام وأدوات مساحة العمل');
+    const fragment = document.createDocumentFragment();
+
+    makeSection({
+      id:'home',
+      title:'الرئيسية',
+      items:buttons.has('home') ? [['home','الرئيسية','⌂']] : []
+    }, fragment);
+
+    sections.forEach(section => makeSection(section, fragment));
+    nav.replaceChildren(fragment);
+    syncActiveState();
+  }
+
   const sidebarToggle = document.getElementById('sidebarOpenBtn');
   const sidebarClose = document.getElementById('sidebarCloseBtn');
+  if (!sidebarToggle) {
+    buildNavigation();
+    return;
+  }
+
+  const compactMedia = window.matchMedia('(max-width: 1100px)');
+  const isCompactLayout = () => compactMedia.matches;
   let sidebarBackdrop = document.querySelector('.sidebar-drawer-backdrop');
+
   if (!sidebarBackdrop) {
     sidebarBackdrop = document.createElement('button');
     sidebarBackdrop.type = 'button';
     sidebarBackdrop.className = 'sidebar-drawer-backdrop';
-    sidebarBackdrop.hidden = true;
-    sidebarBackdrop.setAttribute('aria-label','إغلاق القائمة الجانبية');
+    sidebarBackdrop.setAttribute('aria-label', 'إغلاق القائمة الجانبية');
     document.body.appendChild(sidebarBackdrop);
   }
-  let sidebarDrawerOpen = false;
-  function setSidebarDrawer(open) {
-    if (!isCompactLayout()) open = false;
-    sidebarDrawerOpen = !!open;
-    sidebar.classList.toggle('is-drawer-open',sidebarDrawerOpen);
-    sidebarBackdrop.hidden = !sidebarDrawerOpen;
-    document.body.classList.toggle('sidebar-drawer-open',sidebarDrawerOpen);
-    if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded',String(sidebarDrawerOpen));
-  }
-  if (sidebarToggle) sidebarToggle.addEventListener('click',()=>setSidebarDrawer(!sidebarDrawerOpen));
-  if (sidebarClose) sidebarClose.addEventListener('click',()=>setSidebarDrawer(false));
-  sidebarBackdrop.addEventListener('click',()=>setSidebarDrawer(false));
-  let mobileOpen = false;
-  let currentMode = '';
-  function setPanel(open) {
-    mobileOpen=!!open;
-    panel.hidden=!mobileOpen;
-    backdrop.hidden=!mobileOpen;
-    const toggle=nav.querySelector('[data-nav-more]');
-    if(toggle) toggle.setAttribute('aria-expanded',String(mobileOpen));
-    document.body.classList.toggle('nav-tools-open',mobileOpen);
-  }
-  function buildDesktop() {
-    nav.className='nav nav-organized-desktop';
-    const fragment=document.createDocumentFragment();
-    const active = nav.querySelector('button[data-view].active')?.dataset.view || panel.querySelector('button[data-view].active')?.dataset.view || 'home';
-    for (const section of sections) {
-      const available=section.items.filter(([id])=>buttons.has(id));
-      if (!available.length) continue;
-      const group=document.createElement('div');
-      group.className='nav-section';
-      group.dataset.navSection=section.id;
-      
-      const summary=document.createElement('div');
-      summary.className='nav-section-title';
-      summary.setAttribute('role','heading');
-      summary.setAttribute('aria-level','3');
-      const title=document.createElement('span');
-      title.textContent=section.title;
-      const count=document.createElement('small');
-      count.textContent=String(available.length);
-      summary.append(title,count);
-      group.appendChild(summary);
-      const items=document.createElement('div');
-      items.className='nav-section-items';
-      available.forEach(([id])=>items.appendChild(buttons.get(id)));
-      group.appendChild(items);
-      fragment.appendChild(group);
-    }
-    if (buttons.has('home')) {
-      const homeGroup=document.createElement('div');
-      homeGroup.className='nav-section nav-home-section';
-      
-      homeGroup.dataset.navSection='home';
-      const summary=document.createElement('div');
-      summary.className='nav-section-title';
-      summary.innerHTML='<span>الرئيسية</span><small>1</small>';
-      summary.setAttribute('role','heading');
-      summary.setAttribute('aria-level','3');
-      const items=document.createElement('div');
-      items.className='nav-section-items';
-      items.appendChild(buttons.get('home'));
-      homeGroup.append(summary,items);
-      fragment.insertBefore(homeGroup,fragment.firstChild);
-    }
-    nav.replaceChildren(fragment);
-    panel.replaceChildren();
-    setPanel(false);
-  }
-  function buildMobile() {
-    nav.className='nav nav-organized-mobile';
-    const fragment=document.createDocumentFragment();
-    const shortcuts=document.createElement('div');
-    shortcuts.className='nav-mobile-shortcuts';
-    primaryIds.filter(id=>buttons.has(id)).forEach(id=>{
-      const button=buttons.get(id);
-      const [label,glyph]=primaryLabels[id] || [button.dataset.navLabel || id,'✦'];
-      decorate(button,label,glyph);
-      shortcuts.appendChild(button);
-    });
-    const more=document.createElement('button');
-    more.type='button';
-    more.className='nav-more-toggle';
-    more.dataset.navMore='true';
-    more.setAttribute('aria-expanded','false');
-    more.innerHTML='<i aria-hidden="true">•••</i><span>الأدوات</span>';
-    shortcuts.appendChild(more);
-    fragment.appendChild(shortcuts);
-    nav.replaceChildren(fragment);
 
-    const drawer=document.createDocumentFragment();
-    for (const section of sections) {
-      const available=section.items.filter(([id])=>buttons.has(id) && !primaryIds.includes(id));
-      if (!available.length) continue;
-      const group=document.createElement('div');
-      group.className='nav-mobile-section';
-      group.dataset.navSection=section.id;
-      const summary=document.createElement('div');
-      summary.className='nav-mobile-section-title';
-      summary.setAttribute('role','heading');
-      summary.setAttribute('aria-level','3');
-      summary.textContent=section.title;
-      const items=document.createElement('div');
-      items.className='nav-mobile-section-items';
-      available.forEach(([id])=>items.appendChild(buttons.get(id)));
-      group.append(summary,items);
-      drawer.appendChild(group);
+  let drawerOpen = false;
+
+  function getDrawerFocusables() {
+    return Array.from(sidebar.querySelectorAll(
+      'a[href],button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])'
+    )).filter(element => element.getClientRects().length > 0 && !element.closest('[hidden]'));
+  }
+
+  function setDrawerState(open, focusTarget = 'none') {
+    const compact = isCompactLayout();
+    const wasOpen = drawerOpen;
+    drawerOpen = compact && Boolean(open);
+
+    document.documentElement.classList.add('sidebar-js-ready');
+    sidebar.classList.toggle('is-drawer-open', drawerOpen);
+    sidebarBackdrop.hidden = !drawerOpen;
+    sidebar.setAttribute('aria-hidden', String(compact && !drawerOpen));
+    if ('inert' in sidebar) sidebar.inert = compact && !drawerOpen;
+
+    document.body.classList.toggle('sidebar-drawer-open', drawerOpen);
+    sidebarToggle.setAttribute('aria-expanded', String(drawerOpen));
+
+    if (drawerOpen && focusTarget === 'drawer') {
+      const active = sidebar.querySelector('button[data-view].active');
+      try { active?.scrollIntoView({ block:'nearest', inline:'nearest' }); } catch (_) {}
+      (sidebarClose || getDrawerFocusables()[0])?.focus({ preventScroll:true });
+    } else if (!drawerOpen && wasOpen && focusTarget === 'toggle') {
+      sidebarToggle.focus({ preventScroll:true });
     }
-    panel.replaceChildren(drawer);
-setPanel(false);
   }
-  function rebuild() {
-    const nextMode=isMobile()?'mobile':'desktop';
-    if (nextMode===currentMode) return;
-    currentMode=nextMode;
-    if (currentMode==='mobile') buildMobile();
-    else buildDesktop();
+
+  sidebarToggle.addEventListener('click', () => {
+    if (!isCompactLayout()) return;
+    setDrawerState(!drawerOpen, drawerOpen ? 'toggle' : 'drawer');
+  });
+
+  sidebarClose?.addEventListener('click', () => setDrawerState(false, 'toggle'));
+  sidebarBackdrop.addEventListener('click', () => setDrawerState(false, 'toggle'));
+
+  nav.addEventListener('click', event => {
+    const button = event.target.closest('button[data-view]');
+    if (button && nav.contains(button) && isCompactLayout()) {
+      setDrawerState(false, 'toggle');
+    }
+  });
+
+  sidebar.addEventListener('click', event => {
+    const shortcut = event.target.closest('[data-go]');
+    if (shortcut && sidebar.contains(shortcut) && isCompactLayout()) {
+      setDrawerState(false, 'toggle');
+    }
+  });
+
+  document.addEventListener('keydown', event => {
+    if (!drawerOpen) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      setDrawerState(false, 'toggle');
+      return;
+    }
+
+    if (event.key !== 'Tab') return;
+    const focusables = getDrawerFocusables();
+    if (!focusables.length) {
+      event.preventDefault();
+      sidebarClose?.focus();
+      return;
+    }
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    if (event.shiftKey && (document.activeElement === first || !sidebar.contains(document.activeElement))) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && (document.activeElement === last || !sidebar.contains(document.activeElement))) {
+      event.preventDefault();
+      first.focus();
+    }
+  });
+
+  const handleBreakpointChange = () => setDrawerState(false);
+  if (typeof compactMedia.addEventListener === 'function') {
+    compactMedia.addEventListener('change', handleBreakpointChange);
+  } else if (typeof compactMedia.addListener === 'function') {
+    compactMedia.addListener(handleBreakpointChange);
   }
-  nav.addEventListener('click',event=>{
-    const more=event.target.closest('[data-nav-more]');
-    if (more) { event.preventDefault(); setPanel(!mobileOpen); return; }
-    const button=event.target.closest('button[data-view]');
-    if (!button) return;
-    if (isCompactLayout()) setSidebarDrawer(false);
-  });
-  panel.addEventListener('click',event=>{
-    const button=event.target.closest('button[data-view]');
-    if(button) setPanel(false);
-  });
-  backdrop.addEventListener('click',()=>setPanel(false));
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobileOpen)setPanel(false);if(event.key==='Escape'&&sidebarDrawerOpen)setSidebarDrawer(false);});
-  window.addEventListener('resize',()=>{rebuild();if(!isCompactLayout())setSidebarDrawer(false);}, {passive:true});
-rebuild();
+
+  const activeObserver = new MutationObserver(syncActiveState);
+  buttons.forEach(button => activeObserver.observe(button, {
+    attributes:true,
+    attributeFilter:['class']
+  }));
+
+  buildNavigation();
+  setDrawerState(false);
 })();
