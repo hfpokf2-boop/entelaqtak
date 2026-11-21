@@ -101,12 +101,14 @@
     for (const section of sections) {
       const available=section.items.filter(([id])=>buttons.has(id));
       if (!available.length) continue;
-      const group=document.createElement('details');
+      const group=document.createElement('div');
       group.className='nav-section';
       group.dataset.navSection=section.id;
-      group.open = true;
-      const summary=document.createElement('summary');
+      
+      const summary=document.createElement('div');
       summary.className='nav-section-title';
+      summary.setAttribute('role','heading');
+      summary.setAttribute('aria-level','3');
       const title=document.createElement('span');
       title.textContent=section.title;
       const count=document.createElement('small');
@@ -120,13 +122,15 @@
       fragment.appendChild(group);
     }
     if (buttons.has('home')) {
-      const homeGroup=document.createElement('details');
+      const homeGroup=document.createElement('div');
       homeGroup.className='nav-section nav-home-section';
-      homeGroup.open = true;
+      
       homeGroup.dataset.navSection='home';
-      const summary=document.createElement('summary');
+      const summary=document.createElement('div');
       summary.className='nav-section-title';
       summary.innerHTML='<span>الرئيسية</span><small>1</small>';
+      summary.setAttribute('role','heading');
+      summary.setAttribute('aria-level','3');
       const items=document.createElement('div');
       items.className='nav-section-items';
       items.appendChild(buttons.get('home'));
@@ -162,11 +166,13 @@
     for (const section of sections) {
       const available=section.items.filter(([id])=>buttons.has(id) && !primaryIds.includes(id));
       if (!available.length) continue;
-      const group=document.createElement('details');
+      const group=document.createElement('div');
       group.className='nav-mobile-section';
       group.dataset.navSection=section.id;
-      const summary=document.createElement('summary');
+      const summary=document.createElement('div');
       summary.className='nav-mobile-section-title';
+      summary.setAttribute('role','heading');
+      summary.setAttribute('aria-level','3');
       summary.textContent=section.title;
       const items=document.createElement('div');
       items.className='nav-mobile-section-items';
@@ -175,10 +181,7 @@
       drawer.appendChild(group);
     }
     panel.replaceChildren(drawer);
-    panel.querySelectorAll('details.nav-mobile-section').forEach(group=>{
-      group.open = true;
-    });
-    setPanel(false);
+setPanel(false);
   }
   function rebuild() {
     const nextMode=isMobile()?'mobile':'desktop';
@@ -193,12 +196,6 @@
     const button=event.target.closest('button[data-view]');
     if (!button) return;
     if (isMobile()) setPanel(false);
-    else {
-      const group=button.closest('details.nav-section');
-      if (group) {
-        group.open=true;
-      }
-    }
   });
   panel.addEventListener('click',event=>{
     const button=event.target.closest('button[data-view]');
@@ -207,11 +204,5 @@
   backdrop.addEventListener('click',()=>setPanel(false));
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobileOpen)setPanel(false);});
   window.addEventListener('resize',()=>{rebuild();}, {passive:true});
-  document.addEventListener('click',event=>{
-    const route=event.target.closest('[data-view].active');
-    if(!route || isMobile()) return;
-    const group=route.closest('details.nav-section');
-    if(group) group.open=true;
-  });
-  rebuild();
+rebuild();
 })();
