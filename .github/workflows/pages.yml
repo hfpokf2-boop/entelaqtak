@@ -90,7 +90,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v56"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v57"), 'Service worker cache version was not bumped.');
           assert(organizer.includes('nav-organized-desktop') && organizer.includes('nav-mobile-panel'), 'Organized desktop/mobile navigation is missing.');
           assert(organizer.includes("max-width: 900px"), 'Tablet navigation breakpoint is missing.');
           const responsive = fs.readFileSync('responsive-system.css', 'utf8');
