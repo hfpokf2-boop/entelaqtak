@@ -332,6 +332,7 @@ async function copyDiagnostics(){
  }catch(error){notify("تعذر النسخ تلقائيًا؛ أعد المحاولة من متصفح يدعم النسخ.");}
 }
 addSettingsCard();
+window.addEventListener("load",()=>{setTimeout(()=>renderDiagnostics().catch(error=>addDiagnosticError("فشل الفحص التلقائي",error&&error.message,"")),700);},{once:true});
 // Observe the same-page local workspace writes so core tools receive recovery snapshots too.
 const nativeStorageSetItem=Storage.prototype.setItem;
 Storage.prototype.setItem=function(key,value){
