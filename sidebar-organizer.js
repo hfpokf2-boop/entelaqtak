@@ -104,8 +104,14 @@
       const group=document.createElement('details');
       group.className='nav-section';
       group.dataset.navSection=section.id;
-      group.open=true;
-      group.addEventListener('toggle',()=>{if(!isMobile()&&!group.open) group.open=true;});
+      group.open = available.some(([id]) => id === active);
+      group.addEventListener('toggle',()=>{
+        if (!isMobile() && group.open) {
+          nav.querySelectorAll('details.nav-section').forEach(other=>{
+            if(other!==group) other.open=false;
+          });
+        }
+      });
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
       const title=document.createElement('span');
@@ -123,7 +129,7 @@
     if (buttons.has('home')) {
       const homeGroup=document.createElement('details');
       homeGroup.className='nav-section nav-home-section';
-      homeGroup.open=true;
+      homeGroup.open = active === 'home';
       homeGroup.dataset.navSection='home';
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
@@ -176,7 +182,9 @@
       drawer.appendChild(group);
     }
     panel.replaceChildren(drawer);
-    panel.querySelectorAll('details.nav-mobile-section').forEach(group=>{group.open=true;});
+    panel.querySelectorAll('details.nav-mobile-section').forEach(group=>{
+      group.open = group.querySelector('button[data-view].active') !== null;
+    });
     setPanel(false);
   }
   function rebuild() {
