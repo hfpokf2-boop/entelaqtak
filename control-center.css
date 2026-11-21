@@ -107,3 +107,22 @@
  #view-home .control-action,#view-home .stat{transition:none}
  #view-home .control-action:hover,#view-home .stat:hover{transform:none}
 }
+
+/* Keep dashboard shortcuts visually distinct from primary form buttons. */
+#view-home button.control-action{
+ color:#eaf2ff!important;
+ background:linear-gradient(145deg,#172943,#111d31)!important;
+ border-color:#2d4568!important;
+ box-shadow:0 7px 18px rgba(2,8,23,.2),inset 0 1px 0 rgba(255,255,255,.035)!important;
+ text-shadow:none!important;
+}
+#view-home button.control-action:hover{
+ color:#fff!important;
+ background:linear-gradient(145deg,#1d385b,#142742)!important;
+ border-color:#4f8ee8!important;
+ box-shadow:0 10px 24px rgba(2,8,23,.25),0 0 0 1px rgba(59,130,246,.08)!important;
+}
+#view-home button.control-action:active{
+ background:#14243a!important;
+ transform:scale(.99)!important;
+}
