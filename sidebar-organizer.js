@@ -83,7 +83,7 @@
     sidebar.appendChild(backdrop);
   }
 
-  const isMobile = () => window.matchMedia && window.matchMedia('(max-width: 760px)').matches;
+  const isMobile = () => window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
   let mobileOpen = false;
   let currentMode = '';
   function setPanel(open) {
