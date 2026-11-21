@@ -413,3 +413,24 @@ button{overflow-wrap:anywhere}
 @media (min-width:901px) and (max-width:1100px){
   .main>.top{position:relative!important;top:auto!important}
 }
+
+
+/* Sidebar removed workspace layout: full-width content on desktop and mobile. */
+.app{
+  grid-template-columns:minmax(0,1fr)!important;
+}
+.sidebar{
+  display:none!important;
+}
+.main{
+  grid-column:1/-1!important;
+  width:100%!important;
+  max-width:none!important;
+  min-width:0!important;
+  margin:0!important;
+}
+@media(max-width:900px){
+  .main{
+    padding-bottom:max(20px,env(safe-area-inset-bottom))!important;
+  }
+}
