@@ -1,9 +1,17 @@
 /* Entelaqtak Production Studio — project-based creator workflow */
 (() => {
   'use strict';
+  window.__entelaqtakProductionStudioStatus = 'initializing';
+  try {
   const app = window.EntelaqtakApp;
   const main = document.querySelector('.main');
-  if (!app || !main || document.getElementById('view-production')) return;
+  if (!app || !main) {
+    window.__entelaqtakProductionStudioStatus = 'dependencies-missing';
+    console.error('Production Studio could not start: workspace app or main container is missing.');
+    return;
+  }
+  if (window.__entelaqtakProductionStudioBooted) return;
+  window.__entelaqtakProductionStudioBooted = true;
 
   const $ = (id, scope = document) => scope.querySelector('#' + id);
   const safe = value => String(value == null ? '' : value).replace(/[&<>"']/g, ch => ({
@@ -36,12 +44,15 @@
   }
   // Navigation is delegated through the current application router in workspace.html.
 
-  const view = document.createElement('section');
-  view.className = 'view';
+  const existingView = document.getElementById('view-production');
+  const view = existingView || document.createElement('section');
+  view.classList.add('view');
   view.id = 'view-production';
   view.setAttribute('aria-label','استوديو إنتاج المحتوى');
-  const footer = main.querySelector('footer');
-  if (footer) main.insertBefore(view, footer); else main.appendChild(view);
+  if (!view.isConnected) {
+    const footer = main.querySelector('footer');
+    if (footer) main.insertBefore(view, footer); else main.appendChild(view);
+  }
 
   function projects() {
     const list = app.getState().productionProjects;
@@ -450,4 +461,26 @@
       app.go('production');
     }
   } catch (_) {}
+  window.__entelaqtakProductionStudioStatus = 'ready';
+  window.dispatchEvent(new CustomEvent('entelaqtak:production-ready'));
+  } catch (error) {
+    window.__entelaqtakProductionStudioStatus = 'error';
+    console.error('Production Studio initialization failed:', error);
+    const main = document.querySelector('.main');
+    if (!main) return;
+    let view = document.getElementById('view-production');
+    if (!view) {
+      view = document.createElement('section');
+      view.id = 'view-production';
+      const footer = main.querySelector('footer');
+      if (footer) main.insertBefore(view, footer); else main.appendChild(view);
+    }
+    view.className = 'view active prod-init-error';
+    view.setAttribute('role','alert');
+    view.innerHTML = '<div style="max-width:760px;margin:34px auto;padding:26px;border:1px solid #365477;border-radius:18px;background:linear-gradient(145deg,#14243a,#0d1727);color:#edf4ff;text-align:center"><div style="font-size:32px;margin-bottom:12px">⚠</div><h2 style="margin:0 0 10px">تعذر تشغيل استوديو الإنتاج</h2><p style="color:#a9bdd6;line-height:1.9;margin:0 0 18px">حصل خطأ أثناء تجهيز الاستوديو، لكن باقي مساحة العمل لم تتأثر. أعد تحميل الصفحة للمحاولة مرة أخرى.</p><button type="button" id="prodInitRetry" style="padding:10px 18px;border:1px solid #3b82f6;border-radius:10px;background:#2563eb;color:#fff;font-weight:800">إعادة المحاولة</button><small style="display:block;margin-top:12px;color:#7188a5">رمز المشكلة: PROD-INIT</small></div>';
+    document.querySelectorAll('.view').forEach(item => item.classList.toggle('active', item === view));
+    const title = document.getElementById('pageTitle');
+    if (title) title.textContent = 'استوديو الإنتاج';
+    document.getElementById('prodInitRetry')?.addEventListener('click', () => window.location.reload());
+  }
 })();
