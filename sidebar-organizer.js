@@ -1,11 +1,11 @@
-/* Entelaqtak Navigation Organizer v4 — one always-visible menu with an accessible compact-screen drawer. */
+/* Entelaqtak Navigation Organizer v5 — one always-visible menu with an accessible compact-screen drawer. */
 (() => {
   'use strict';
 
   const nav = document.getElementById('nav');
   const sidebar = document.getElementById('workspaceSidebar') || nav?.closest('.sidebar');
-  if (!nav || !sidebar || nav.dataset.organizedV4 === 'true') return;
-  nav.dataset.organizedV4 = 'true';
+  if (!nav || !sidebar || nav.dataset.organizedV5 === 'true') return;
+  nav.dataset.organizedV5 = 'true';
 
   const sections = [
     { id:'discover', title:'الأفكار والبحث', items:[
@@ -52,19 +52,21 @@
   }
 
   function decorate(button, label, glyph) {
-    let icon = button.querySelector('i');
-    if (!icon) {
-      icon = document.createElement('i');
-      button.prepend(icon);
-    }
+    let icon = button.querySelector('i.nav-icon') || button.querySelector('i');
+    if (!icon) icon = document.createElement('i');
     icon.textContent = glyph;
     icon.setAttribute('aria-hidden', 'true');
     icon.classList.add('nav-icon');
+
+    const labelElement = document.createElement('span');
+    labelElement.className = 'nav-label';
+    labelElement.textContent = label;
+
     button.type = 'button';
     button.dataset.navLabel = label;
     button.setAttribute('aria-label', label);
     button.title = label;
-    button.replaceChildren(icon, document.createTextNode(label));
+    button.replaceChildren(icon, labelElement);
     button.classList.add('nav-item-organized');
   }
 
@@ -113,11 +115,17 @@
     nav.setAttribute('aria-label', 'أقسام وأدوات مساحة العمل');
     const fragment = document.createDocumentFragment();
 
-    makeSection({
-      id:'home',
-      title:'الرئيسية',
-      items:buttons.has('home') ? [['home','الرئيسية','⌂']] : []
-    }, fragment);
+    if (buttons.has('home')) {
+      decorate(buttons.get('home'), 'الرئيسية', '⌂');
+      const homeSection = document.createElement('section');
+      homeSection.className = 'nav-section nav-home-shortcut';
+      homeSection.dataset.navSection = 'home';
+      const homeItems = document.createElement('div');
+      homeItems.className = 'nav-section-items';
+      homeItems.appendChild(buttons.get('home'));
+      homeSection.appendChild(homeItems);
+      fragment.appendChild(homeSection);
+    }
 
     sections.forEach(section => makeSection(section, fragment));
     nav.replaceChildren(fragment);
