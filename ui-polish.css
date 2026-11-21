@@ -763,3 +763,10 @@ body{
 .nav-mobile-panel button[data-view]{min-height:37px!important;padding:5px 7px!important;border-color:rgba(96,165,250,.18)!important;border-radius:8px!important;font-size:8.5px!important}
 .nav-mobile-panel button[data-view] i{width:22px!important;height:22px!important;flex-basis:22px!important;border-radius:7px!important;background:rgba(37,99,235,.16)!important;color:#93c5fd!important}
 .nav-mobile-panel button[data-view].active{border-color:rgba(96,165,250,.5)!important;background:rgba(37,99,235,.2)!important}
+
+
+/* Navigation: keep every section visible and remove disclosure arrows. */
+#nav.nav-organized-desktop .nav-section-title:after{content:none!important;display:none!important}
+#nav.nav-organized-desktop .nav-section-title{cursor:default!important}
+.nav-mobile-section-title:after{content:none!important;display:none!important}
+.nav-mobile-section-title{cursor:default!important}
