@@ -1,6 +1,6 @@
 'use strict';
-const CACHE_NAME='entelaqtak-shell-v76';
-const APP_FILES=['./','./index.html','./workspace.html','./ui-polish.css','./design-system.css','./button-system.css','./responsive-system.css','./sidebar-system.css','./theme.js','./language.js','./creator-suite.js','./enhancements.js','./platform-hub.js','./production-studio.js','./production-studio-pro.js','./production-studio-pro.css','./sidebar-organizer.js','./content-pack-pro.js','./library-center.js','./visitor-tracker.js','./control-center.css','./control-center.js','./manifest.webmanifest','./app-icon.svg','./favicon.svg','./legal.html','./advertise.html'];
+const CACHE_NAME='entelaqtak-shell-v77';
+const APP_FILES=['./','./index.html','./workspace.html','./ui-polish.css','./design-system.css','./button-system.css','./responsive-system.css','./sidebar-system.css','./theme.js','./language.js','./creator-suite.js','./enhancements.js','./platform-hub.js','./production-studio.js','./production-studio-pro.js','./production-studio-pro.css','./sidebar-organizer.js','./content-pack-pro.js','./library-center.js','./visitor-tracker.js','./control-center.css','./control-center.js','./workspace-pro.css','./workspace-pro.js','./manifest.webmanifest','./app-icon.svg','./favicon.svg','./legal.html','./advertise.html'];
 self.addEventListener('install',event=>{
  event.waitUntil((async()=>{
   const cache=await caches.open(CACHE_NAME);
