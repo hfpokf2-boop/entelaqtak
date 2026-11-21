@@ -144,6 +144,11 @@
       return '<div class="prod-panel"><div class="prod-panel-heading"><div><span class="prod-kicker">SCRIPT ROOM</span><h2>غرفة كتابة السكريبت</h2><p>اكتب بالذكاء الاصطناعي ثم عدّل النص بصوتك قبل التسجيل.</p></div><span class="prod-icon">03</span></div>' +
         '<div class="prod-callout">المصادر ونتائج التحقق من المرحلة السابقة تدخل ضمن سياق إعداد السكريبت.</div><div class="prod-actions"><button class="prod-primary" type="button" data-ai="script">اكتب السكريبت بالذكاء الاصطناعي ✦</button><button class="prod-secondary" type="button" data-action="copy" data-value="script">نسخ السكريبت</button></div>' +
         '<textarea class="prod-editor prod-script-editor" data-field="script" rows="22" placeholder="اكتب أو الصق السكريبت هنا...">' + safe(project.script) + '</textarea><div class="prod-editor-foot"><span>' + (project.script || '').length + ' حرف</span><button class="prod-mini" data-action="save" type="button">حفظ التعديلات</button></div>' +
+        '<section class="prod-script-coach"><div class="prod-script-coach-head"><div><span class="prod-kicker">SCRIPT QUALITY LAB</span><h3>مراجع السكريبت الذكي</h3><p>راجع قوة الخطاف والإيقاع والبناء قبل ما تروح للمونتاج.</p></div><span class="prod-script-coach-mark">✦</span></div>' +
+        '<div class="prod-actions"><button class="prod-primary" type="button" data-ai="script_review">قيّم السكريبت بعمق ✦</button><button class="prod-secondary" type="button" data-action="copy" data-value="scriptReview">نسخ تقرير المراجعة</button></div>' +
+        '<textarea class="prod-editor prod-review-editor" data-field="scriptReview" rows="10" placeholder="تقرير المراجعة سيظهر هنا: التقييم، نقاط القوة، نقاط الضعف، وأهم التعديلات المقترحة...">' + safe(project.scriptReview || '') + '</textarea>' +
+        '<div class="prod-script-coach-foot"><span>التقييم تحريرّي إرشادي، وليس توقعًا للمشاهدات أو ضمانًا للانتشار.</span><button class="prod-secondary" type="button" data-ai="script_rewrite">حسّن السكريبت بناءً على التقرير ↻</button></div>' +
+        (project.scriptPrevious ? '<button class="prod-mini prod-restore-script" type="button" data-action="restore-script">استعادة النسخة السابقة من السكريبت</button>' : '') + '</section>' +
         '<div class="prod-actions prod-bottom-actions"><button class="prod-secondary" type="button" data-action="back">السابق</button><button class="prod-primary" type="button" data-action="next">انتقل لخطة المونتاج ←</button></div></div>';
     }
     if (project.stage === 'edit') {
@@ -187,7 +192,7 @@
       audience:$('prodAudience',view).value.trim(),duration:$('prodDuration',view).value,
       tone:$('prodTone',view).value,stage:'brief',
       researchText:'',researchSources:[],factClaim:'',factText:'',factSources:[],
-      script:'',editPlan:'',publishPack:'',publishTitle:'',publishDescription:'',
+      script:'',scriptReview:'',scriptPrevious:'',editPlan:'',publishPack:'',publishTitle:'',publishDescription:'',
       publishKeywords:'',thumbnailPrompt:'',publishDate:'',checklist:{},
       createdAt:new Date().toISOString(),updatedAt:new Date().toISOString()
     };
@@ -241,6 +246,10 @@
       '',
       '=== السكريبت ===',p.script,
       '',
+      '=== مراجعة جودة السكريبت ===',p.scriptReview || '',
+      '',
+      '=== النسخة السابقة من السكريبت ===',p.scriptPrevious || '',
+      '',
       '=== خطة المونتاج ===',p.editPlan,
       '',
       '=== حزمة النشر ===',p.publishPack,
@@ -279,6 +288,45 @@
       } else if (task === 'script') {
         payload = {topic:p.topic,duration:p.duration,style:p.tone,audience:p.audience,points:('ملاحظات البحث:\n'+p.researchText+'\nنتيجة التحقق:\n'+p.factText).slice(0,8500),request:'اكتب سكريبتًا عربيًا كاملًا مناسبًا للمدة، بمقدمة خطافة، وتسلسل منطقي، وانتقالات بين المحاور، وخاتمة ودعوة للتفاعل. لا تضف معلومة غير مدعومة بالمراجع.'};
         result = await app.callAI('script',payload);
+        p.script = result;
+        p.stage = 'script';
+      } else if (task === 'script_review') {
+        if (!String(p.script || '').trim()) throw new Error('اكتب السكريبت أو ولّده أولًا قبل التقييم.');
+        payload = {
+          topic:p.topic, platform:p.platform, duration:p.duration, tone:p.tone, audience:p.audience,
+          script:String(p.script).slice(0,8200),
+          research:String(p.researchText || '').slice(0,900),
+          factCheck:String(p.factText || '').slice(0,700),
+          request:[
+            'أنت محرر سكريبتات فيديو عربي محترف. نفّذ مراجعة تحريرية دقيقة للنص، لا تعِد كتابة السكريبت.',
+            'ابدأ بتقييم إجمالي من 100، ثم قيّم من 10: قوة أول 15 ثانية، وضوح الوعد للمشاهد، البناء والتسلسل، الاحتفاظ والإيقاع، طبيعية اللغة، وقوة الخاتمة.',
+            'بعد الدرجات اذكر: أقوى 3 نقاط، أضعف 3 نقاط مع أمثلة مقتبسة قصيرة من النص، مواضع الحشو أو التكرار، أماكن الانتقال الضعيف، وأهم 5 تعديلات مرتبة حسب الأولوية.',
+            'افحص الادعاءات الواقعية مقارنة بسياق البحث والتحقق المرفق فقط. لا تؤكد معلومة بلا دليل؛ صنّف ما يحتاج مصدرًا إضافيًا بوضوح.',
+            'اقترح مثالًا بديلًا أقوى للخطاف، ومثالًا واحدًا لتحسين انتقال ضعيف، من غير اختلاق حقائق.',
+            'اكتب بلغة عربية مصرية واضحة. لا تدّعِ توقع عدد المشاهدات أو ضمان الانتشار؛ التقييم تحريري إرشادي وليس تنبؤًا بالأداء.'
+          ].join('\\n')
+        };
+        result = await app.callAI('assistant',payload);
+        p.scriptReview = result;
+        p.stage = 'script';
+      } else if (task === 'script_rewrite') {
+        if (!String(p.script || '').trim()) throw new Error('اكتب السكريبت أولًا.');
+        if (!String(p.scriptReview || '').trim()) throw new Error('نفّذ مراجعة السكريبت أولًا عشان التحسين يبني على ملاحظات واضحة.');
+        payload = {
+          topic:p.topic, platform:p.platform, duration:p.duration, tone:p.tone, audience:p.audience,
+          script:String(p.script).slice(0,7600),
+          review:String(p.scriptReview).slice(0,2500),
+          research:String(p.researchText || '').slice(0,700),
+          factCheck:String(p.factText || '').slice(0,500),
+          request:[
+            'أعد كتابة السكريبت كاملًا في نسخة محسّنة، وطبّق الملاحظات التحريرية ذات الأولوية الواردة في تقرير المراجعة.',
+            'حافظ على الموضوع والجمهور والمنصة والمدة والأسلوب المحدد، وقوّ الخطاف والتسلسل والانتقالات والإيقاع والخاتمة.',
+            'لا تضف أسماء أو تواريخ أو أرقامًا أو اقتباسات أو وقائع جديدة. التزم بسياق البحث والتحقق؛ وعند وجود معلومة غير مدعومة استخدم صياغة حذرة أو ضع [يحتاج مصدر] بدل اختلاقها.',
+            'أخرج السكريبت النهائي فقط، جاهزًا للقراءة والتسجيل، من دون درجات أو مقدمة عن عملك.'
+          ].join('\\n')
+        };
+        p.scriptPrevious = p.script;
+        result = await app.callAI('assistant',payload);
         p.script = result;
         p.stage = 'script';
       } else if (task === 'edit') {
@@ -326,6 +374,16 @@
       persist(p,false);render();return;
     }
     if (action==='copy') { copyText(getFieldText(p,button.dataset.value));return; }
+    if (action==='restore-script') {
+      if (!p.scriptPrevious) return app.toast('مفيش نسخة سابقة محفوظة.');
+      const current = p.script;
+      p.script = p.scriptPrevious;
+      p.scriptPrevious = current;
+      persist(p,false);
+      render();
+      app.toast('تم استعادة النسخة السابقة. تقدر تبدّل بين النسختين من نفس الزر.');
+      return;
+    }
     if (action==='export') { downloadProject(p);return; }
     if (action==='calendar') {
       const date=p.publishDate;
