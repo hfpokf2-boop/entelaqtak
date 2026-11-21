@@ -182,7 +182,8 @@ Deno.serve(async (req: Request) => {
   if (!openAiKey) return reply({ error: "الخدمة تحتاج إعداد مفتاح الذكاء الاصطناعي على الخادم." }, 503, origin);
   const forwarded = req.headers.get("x-forwarded-for") ?? req.headers.get("x-real-ip") ?? "unknown";
   const ip = forwarded.split(",")[0].trim() || "unknown";
-  const rateIdentities = auth.userId ? ["user:" + auth.userId, "ip:" + ip] : ["ip:" + ip];
+  // Registered accounts are limited independently; anonymous visitors share a network-level limit.
+  const rateIdentities = auth.userId ? ["user:" + auth.userId] : ["ip:" + ip];
   const secretKeysRaw = Deno.env.get("SUPABASE_SECRET_KEYS");
   let serverKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "";
   let useLegacyServiceRole = true;
@@ -243,7 +244,15 @@ Deno.serve(async (req: Request) => {
     if (!response.ok) {
       console.error("OpenAI API error", response.status, result?.error?.type ?? "unknown");
       if (response.status === 429) {
-        return reply({ error: "الخدمة مشغولة أو رصيد API غير كافٍ. حاول لاحقًا." }, 429, origin);
+        const quotaCode = result?.error?.code ?? result?.error?.type ?? "";
+        if (quotaCode === "insufficient_quota") {
+          return reply(
+            { error: "توليد المحتوى متوقف مؤقتًا لأن رصيد أو حد الإنفاق المخصص لخدمة الذكاء الاصطناعي غير كافٍ. بياناتك المحفوظة آمنة؛ أبلغ إدارة الموقع لتحديث رصيد API." },
+            503,
+            origin,
+          );
+        }
+        return reply({ error: "خدمة الذكاء الاصطناعي مشغولة مؤقتًا. انتظر قليلًا ثم حاول مرة أخرى." }, 429, origin);
       }
       return reply(
         { error: response.status === 401 ? "تعذر التحقق من مفتاح الخدمة المحفوظ على الخادم." : "تعذر توليد المحتوى حاليًا. حاول مرة أخرى." },
