@@ -98,7 +98,10 @@
     const rows = [
       'مشروع انطلاقتك: ' + p.topic, 'المنصة: ' + p.platform, 'المدة: ' + p.duration, 'المجال: ' + p.niche, '',
       '=== البحث ===', p.researchText || '', '=== تدقيق الحقائق ===', p.factClaim || '', p.factText || '',
-      '=== السكريبت ===', p.script || '', '=== خطة المونتاج ===', p.editPlan || '',
+      '=== السكريبت ===', p.script || '',
+      '=== مراجعة جودة السكريبت ===', p.scriptReview || '',
+      '=== النسخة السابقة من السكريبت ===', p.scriptPrevious || '',
+      '=== خطة المونتاج ===', p.editPlan || '',
       '=== حزمة النشر ===', p.publishPack || '', 'العنوان: ' + (p.publishTitle || ''),
       'الوصف: ' + (p.publishDescription || ''), 'الكلمات المفتاحية: ' + (p.publishKeywords || ''),
       'برومبت الصورة المصغرة: ' + (p.thumbnailPrompt || '')
