@@ -90,7 +90,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v48"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v49"), 'Service worker cache version was not bumped.');
           assert(organizer.includes('nav-organized-desktop') && organizer.includes('nav-mobile-panel'), 'Organized desktop/mobile navigation is missing.');
           assert(workspace.includes('class="home-tools-more"') && workspace.includes('home-primary-tools'), 'Focused home dashboard shortcuts are missing.');
           assert(polish.includes('#nav.nav-organized-desktop') && polish.includes('#nav.nav-organized-mobile'), 'Responsive navigation styles are missing.');
@@ -142,7 +142,7 @@ jobs:
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v48" not in worker:
+          if "entelaqtak-shell-v49" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           if "'./button-system.css'" not in worker:
               errors.append("service-worker.js: button stylesheet missing from offline cache")
