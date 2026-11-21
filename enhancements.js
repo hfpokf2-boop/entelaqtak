@@ -252,6 +252,54 @@ if(footer)footer.insertAdjacentElement('beforebegin',thumbnailSection);
 const thumbCanvas=$('thumbnailCanvas');
 const thumbCtx=thumbCanvas&&thumbCanvas.getContext('2d');
 const thumbProjectKey='entelaqtak-thumbnail-project-v2';
+const THUMB_FILE_DB='entelaqtak-files-v1',THUMB_FILE_STORE='assets',THUMB_FILE_KEY='thumbnail-source',THUMB_FILE_META='entelaqtak-thumbnail-source-meta-v1';
+function openThumbFileDb(){
+ if(!window.indexedDB)return Promise.reject(new Error('تخزين الملفات غير مدعوم في هذا المتصفح.'));
+ return new Promise((resolve,reject)=>{
+  const request=window.indexedDB.open(THUMB_FILE_DB,1);
+  request.onupgradeneeded=()=>{const db=request.result;if(!db.objectStoreNames.contains(THUMB_FILE_STORE))db.createObjectStore(THUMB_FILE_STORE);};
+  request.onsuccess=()=>resolve(request.result);
+  request.onerror=()=>reject(request.error||new Error('تعذر فتح مكتبة الملفات.'));
+ });
+}
+function saveThumbSource(file){
+ return openThumbFileDb().then(db=>new Promise((resolve,reject)=>{
+  const record={blob:file,name:String(file.name||'thumbnail-source'),type:String(file.type||'image/jpeg'),size:Number(file.size)||0,savedAt:new Date().toISOString()};
+  const tx=db.transaction(THUMB_FILE_STORE,'readwrite');
+  tx.objectStore(THUMB_FILE_STORE).put(record,THUMB_FILE_KEY);
+  tx.oncomplete=()=>{db.close();const meta={name:record.name,type:record.type,size:record.size,savedAt:record.savedAt};try{localStorage.setItem(THUMB_FILE_META,JSON.stringify(meta));}catch(_){}resolve(meta);};
+  tx.onerror=()=>{db.close();reject(tx.error||new Error('تعذر حفظ ملف الصورة.'));};
+  tx.onabort=()=>{db.close();reject(tx.error||new Error('تم إيقاف حفظ ملف الصورة.'));};
+ }));
+}
+function getThumbSource(){
+ return openThumbFileDb().then(db=>new Promise((resolve,reject)=>{
+  const tx=db.transaction(THUMB_FILE_STORE,'readonly');
+  const request=tx.objectStore(THUMB_FILE_STORE).get(THUMB_FILE_KEY);
+  request.onsuccess=()=>{const result=request.result;db.close();resolve(result||null);};
+  request.onerror=()=>{db.close();reject(request.error||new Error('تعذر قراءة ملف الصورة.'));};
+ })).catch(()=>null);
+}
+function getThumbSourceMeta(){
+ try{return JSON.parse(localStorage.getItem(THUMB_FILE_META)||'null');}catch(_){return null;}
+}
+function deleteThumbSource(){
+ return openThumbFileDb().then(db=>new Promise((resolve,reject)=>{
+  const tx=db.transaction(THUMB_FILE_STORE,'readwrite');
+  tx.objectStore(THUMB_FILE_STORE).delete(THUMB_FILE_KEY);
+  tx.oncomplete=()=>{db.close();try{localStorage.removeItem(THUMB_FILE_META);}catch(_){}resolve(true);};
+  tx.onerror=()=>{db.close();reject(tx.error||new Error('تعذر حذف ملف الصورة.'));};
+ })).catch(()=>{try{localStorage.removeItem(THUMB_FILE_META);}catch(_){}return false;});
+}
+function downloadThumbSource(){
+ getThumbSource().then(record=>{
+  if(!record?.blob){notify('ملف الصورة الأصلية غير محفوظ على هذا الجهاز.');return;}
+  const url=URL.createObjectURL(record.blob),a=document.createElement('a');
+  a.href=url;a.download=record.name||'entelaqtak-thumbnail-source';a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1500);
+ }).catch(()=>notify('تعذر الوصول إلى ملف الصورة.'));
+}
+window.EntelaqtakThumbnailFiles={getMeta:getThumbSourceMeta,downloadSource:downloadThumbSource,hasSavedSource:()=>!!getThumbSourceMeta()};
 let thumbImage=null,thumbObjectUrl=null,thumbHistory=[],thumbHistoryIndex=-1,thumbHistoryTimer=null,thumbDrag=null;
 const thumbControlIds=['thumbTitle','thumbSubtitle','thumbBadge','thumbBrand','thumbFont','thumbAlign','thumbFontSize','thumbTextColor','thumbOutlineColor','thumbOutline','thumbTitleY','thumbBadgeColor','thumbSticker','thumbFit','thumbZoom','thumbImageX','thumbImageY','thumbBrightness','thumbBgStyle','thumbDecor','thumbAccent','thumbOverlay'];
 function thumbState(){
@@ -449,7 +497,7 @@ function drawThumbnail(){
  const status=$('thumbStatus');
  if(status)status.textContent='المعاينة محدثة';
 }
-function readThumbImage(file){
+function readThumbImage(file,persistSource=true){
  if(!file)return;
  if(!/^image\/(png|jpeg|webp|gif)$/.test(file.type)){notify('اختر صورة PNG أو JPG أو WEBP صالحة.');return;}
  if(file.size>12*1024*1024){notify('حجم الصورة يجب ألا يتجاوز 12 ميجابايت.');return;}
@@ -458,15 +506,19 @@ function readThumbImage(file){
   if(thumbObjectUrl)URL.revokeObjectURL(thumbObjectUrl);
   thumbObjectUrl=url;thumbImage=image;
   $('thumbImageX').value='0';$('thumbImageY').value='0';$('thumbZoom').value='100';
-  drawThumbnail();pushThumbHistory();notify('تمت إضافة الصورة. اسحبها داخل المعاينة لضبط موضعها.');
+  drawThumbnail();pushThumbHistory();saveThumbProject(false);
+  if(persistSource){
+   saveThumbSource(file).then(()=>notify('تمت إضافة الصورة وحفظ الملف الأصلي في مكتبة الملفات. اسحبها لضبط موضعها.'))
+    .catch(()=>notify('تمت إضافة الصورة للمعاينة، لكن تعذر حفظ الملف الأصلي على هذا الجهاز.'));
+  }
  };
  image.onerror=()=>{URL.revokeObjectURL(url);notify('تعذر فتح الصورة المحددة.');};
  image.src=url;
 }
-function saveThumbProject(){
+function saveThumbProject(notifyUser=true){
  try{
   localStorage.setItem(thumbProjectKey,JSON.stringify({version:2,savedAt:new Date().toISOString(),state:thumbState()}));
-  notify('تم حفظ إعدادات التصميم على هذا الجهاز.');
+  if(notifyUser)notify('تم حفظ إعدادات التصميم على هذا الجهاز.');
  }catch(error){notify('تعذر الحفظ المحلي. صدّر إعدادات التصميم كملف JSON.');}
 }
 function exportThumbProject(){
@@ -515,7 +567,7 @@ if(thumbCanvas){
  });
  $('clearThumbnailImage').addEventListener('click',()=>{
   thumbImage=null;if(thumbObjectUrl)URL.revokeObjectURL(thumbObjectUrl);
-  thumbObjectUrl=null;$('thumbImage').value='';drawThumbnail();pushThumbHistory();
+  thumbObjectUrl=null;$('thumbImage').value='';deleteThumbSource();drawThumbnail();pushThumbHistory();saveThumbProject(false);
  });
  $('thumbImageReset').addEventListener('click',()=>{
   $('thumbZoom').value='100';$('thumbImageX').value='0';$('thumbImageY').value='0';$('thumbFit').value='cover';
@@ -544,6 +596,11 @@ if(thumbCanvas){
  const savedProject=(()=>{try{return JSON.parse(localStorage.getItem(thumbProjectKey)||'null');}catch(error){return null;}})();
  if(savedProject&&savedProject.version===2&&savedProject.state)applyThumbState(savedProject.state);
  drawThumbnail();pushThumbHistory();
+ getThumbSource().then(record=>{
+  if(!record?.blob)return;
+  const file=typeof File==='function'?new File([record.blob],record.name||'thumbnail-source',{type:record.type||record.blob.type||'image/jpeg'}):record.blob;
+  readThumbImage(file,false);
+ }).catch(()=>{});
  const wrap=$('thumbCanvasWrap');
  if(wrap){
   wrap.addEventListener('pointerdown',event=>{
