@@ -63,7 +63,7 @@ jobs:
               raise SystemExit("No executable inline JavaScript found")
           print(f"Extracted {total} executable inline script(s) from all interactive HTML pages.")
           PY
-          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js production-studio-pro.js sidebar-organizer.js content-pack-pro.js visitor-tracker.js service-worker.js language.js; do
+          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js production-studio-pro.js sidebar-organizer.js content-pack-pro.js library-center.js visitor-tracker.js service-worker.js language.js; do
             echo "Checking $file"
             node --check "$file"
           done
@@ -90,7 +90,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v50"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v51"), 'Service worker cache version was not bumped.');
           assert(organizer.includes('nav-organized-desktop') && organizer.includes('nav-mobile-panel'), 'Organized desktop/mobile navigation is missing.');
           assert(workspace.includes('class="home-tools-more"') && workspace.includes('home-primary-tools'), 'Focused home dashboard shortcuts are missing.');
           assert(polish.includes('#nav.nav-organized-desktop') && polish.includes('#nav.nav-organized-mobile'), 'Responsive navigation styles are missing.');
@@ -98,6 +98,8 @@ jobs:
           assert(worker.includes("'./production-studio-pro.js'"), 'Production PRO module missing from offline app shell.');
           assert(worker.includes("'./production-studio-pro.css'"), 'Production PRO styles missing from offline app shell.');
           assert(worker.includes("'./content-pack-pro.js'"), 'Content pack module missing from offline app shell.');
+          assert(worker.includes("'./library-center.js'"), 'Library center module missing from offline app shell.');
+          assert(workspace.includes('home-tools-directory') && workspace.includes('homeRecentProjects'), 'Visible tool directory or recent production projects is missing.');
           assert(worker.includes("'./language.js'"), 'Language module missing from offline app shell.');
           console.log('Workspace state identity, platform event bindings, and offline cache checks passed.');
           NODE
@@ -142,7 +144,7 @@ jobs:
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v50" not in worker:
+          if "entelaqtak-shell-v51" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           if "'./button-system.css'" not in worker:
               errors.append("service-worker.js: button stylesheet missing from offline cache")
