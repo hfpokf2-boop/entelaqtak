@@ -1,0 +1,97 @@
+/* Entelaqtak Workspace PRO — weekly execution cockpit and command palette */
+.workspace-pro-home{margin:0 0 18px;min-width:0}
+.wp-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:14px;margin:0 0 11px}
+.wp-eyebrow{display:block;color:#60a5fa;font-size:9px;font-weight:900;letter-spacing:1.2px}
+.wp-section-head h2{margin:4px 0 2px;font-size:clamp(17px,2vw,22px);letter-spacing:-.4px;color:#edf4ff}
+.wp-section-head p{margin:0;color:#93a8c4;font-size:10px;line-height:1.7}
+.wp-command-shortcut{display:inline-flex;align-items:center;gap:7px;padding:8px 11px;border:1px solid #31577f;border-radius:10px;background:linear-gradient(120deg,#142a45,#101d31);color:#dbeafe;font-size:10px;font-weight:800;white-space:nowrap;cursor:pointer}
+.wp-command-shortcut>span{display:grid;place-items:center;width:21px;height:21px;border-radius:7px;background:#2563eb30;color:#93c5fd;font-size:14px}
+.wp-command-shortcut kbd{padding:3px 5px;border:1px solid #3a5474;border-radius:5px;color:#9bb5d2;font:9px Tahoma,Arial,sans-serif}
+.wp-command-shortcut:hover{border-color:#60a5fa;background:#183455}
+.wp-execution-grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);gap:12px;align-items:stretch}
+.wp-plan-card,.wp-pulse-card{min-width:0;padding:16px;border:1px solid #263e5d;border-radius:17px;background:radial-gradient(380px 190px at 0 0,#2563eb17,transparent 72%),linear-gradient(145deg,#121f32,#0d1728);box-shadow:0 12px 34px #02081455}
+.wp-pulse-card{background:radial-gradient(330px 180px at 100% 0,#38bdf813,transparent 70%),linear-gradient(145deg,#14243a,#101a2d)}
+.wp-card-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:13px}
+.wp-card-kicker{display:block;color:#7697bd;font-size:8px;font-weight:900;letter-spacing:1px}
+.wp-card-head h3{margin:3px 0 0;color:#eff6ff;font-size:14px}
+.wp-week-badge{max-width:48%;padding:5px 8px;border:1px solid #345274;border-radius:99px;background:#0c192b;color:#a9c3e1;font-size:8px;white-space:nowrap}
+.wp-progress-meta{display:flex;align-items:center;justify-content:space-between;gap:9px;margin-bottom:6px;color:#9db2cc;font-size:9px}
+.wp-progress-meta strong{color:#93c5fd;font-size:11px;font-variant-numeric:tabular-nums}
+.wp-progress-track{height:7px;overflow:hidden;border-radius:99px;background:#26364b}
+.wp-progress-track span{display:block;height:100%;border-radius:99px;background:linear-gradient(90deg,#2563eb,#38bdf8);transition:width .2s}
+.wp-task-list{display:grid;gap:6px;max-height:208px;overflow:auto;margin:12px 0;padding:0;list-style:none;scrollbar-width:thin}
+.wp-task{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 9px;border:1px solid #263d58;border-radius:10px;background:#ffffff05}
+.wp-task label{display:flex;align-items:center;gap:9px;min-width:0;flex:1;color:#dbe7f6;font-size:10px;cursor:pointer}
+.wp-task label input{width:15px;height:15px;flex:0 0 15px;accent-color:#3b82f6}
+.wp-task label span{overflow-wrap:anywhere}
+.wp-task.is-done label span{color:#71839b;text-decoration:line-through}
+.wp-task-delete{display:grid;place-items:center;width:25px;height:25px;flex:0 0 25px;border:1px solid transparent;border-radius:7px;background:transparent;color:#8298b5;font-size:17px;cursor:pointer}
+.wp-task-delete:hover{border-color:#854b5b;background:#4b1e2b;color:#ffb2bf}
+.wp-empty-plan{display:grid;justify-items:center;gap:3px;padding:16px 8px;margin:12px 0;border:1px dashed #365371;border-radius:12px;background:#0b1728;text-align:center}
+.wp-empty-plan>span{color:#60a5fa;font-size:21px}
+.wp-empty-plan strong{color:#dcecff;font-size:10px}
+.wp-empty-plan small{color:#8299b5;font-size:9px}
+.wp-add-task{display:flex;gap:7px;margin-top:10px}
+.wp-add-task input{width:100%;min-width:0;height:37px;padding:0 10px;border:1px solid #304762;border-radius:9px;outline:0;background:#091525;color:#edf4ff;font:10px Tahoma,Arial,sans-serif}
+.wp-add-task input:focus{border-color:#3b82f6;box-shadow:0 0 0 3px #2563eb22}
+.wp-add-task button{flex:0 0 auto;padding:0 12px;border:1px solid #3977bf;border-radius:9px;background:linear-gradient(115deg,#2563eb,#1d4ed8);color:#fff;font-size:10px;font-weight:800;cursor:pointer}
+.wp-plan-foot{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-top:9px;color:#7187a4;font-size:8px;line-height:1.6}
+.wp-plan-foot button{border:0;background:transparent;color:#8db8e6;font:inherit;white-space:nowrap;cursor:pointer}
+.wp-live-mark{display:inline-flex;align-items:center;gap:5px;color:#8eb6d8;font-size:8px;white-space:nowrap}
+.wp-live-mark i{width:6px;height:6px;border-radius:50%;background:#38bdf8;box-shadow:0 0 8px #38bdf8}
+.wp-metrics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.wp-metric{display:grid;justify-items:start;gap:3px;padding:10px 9px;border:1px solid #2a4561;border-radius:11px;background:#09192a99}
+.wp-metric-icon{font-size:14px}
+.wp-metric strong{color:#f0f7ff;font-size:20px;line-height:1.2;font-variant-numeric:tabular-nums}
+.wp-metric small{color:#8fa7c2;font-size:8px;line-height:1.5}
+.wp-next-action{display:grid;gap:4px;margin-top:11px;padding:12px;border:1px solid #315b82;border-radius:12px;background:linear-gradient(120deg,#173151,#112238)}
+.wp-next-action>strong{color:#eef6ff;font-size:11px;overflow-wrap:anywhere}
+.wp-next-action p{margin:0;color:#9fb5cf;font-size:9px;line-height:1.65}
+.wp-next-action button{justify-self:start;margin-top:4px;padding:7px 10px;border:1px solid #3a80c8;border-radius:8px;background:#2563eb;color:#fff;font-size:9px;font-weight:800;cursor:pointer}
+.wp-next-action button span{margin-right:5px}
+.wp-recent-tools{display:grid;gap:7px;margin-top:12px;padding-top:10px;border-top:1px solid #29415e}
+.wp-recent-tools>div:first-child b,.wp-recent-tools>div:first-child small{display:block}
+.wp-recent-tools>div:first-child b{color:#dcecff;font-size:9px}
+.wp-recent-tools>div:first-child small{margin-top:2px;color:#7890ad;font-size:8px}
+.wp-recent-list{display:flex;flex-wrap:wrap;gap:5px}
+.wp-recent-list button{padding:5px 8px;border:1px solid #2d4a68;border-radius:99px;background:#09192a;color:#a9c8e7;font-size:8px;cursor:pointer}
+.wp-recent-list button:hover{border-color:#4b8fd0;background:#15304c;color:#fff}
+.wp-no-recent{color:#6f829a;font-size:8px}
+.wp-command-overlay[hidden]{display:none!important}
+.wp-command-overlay{position:fixed;inset:0;z-index:10050;display:grid;place-items:start center;overflow:auto;padding:clamp(18px,8vh,75px) 14px 24px;background:#020817c9;backdrop-filter:blur(10px)}
+.wp-command-dialog{width:min(650px,100%);max-height:min(760px,86vh);display:flex;flex-direction:column;overflow:hidden;border:1px solid #34577c;border-radius:19px;background:linear-gradient(155deg,#15243a,#0b1424);box-shadow:0 28px 90px #000b}
+.wp-command-top{display:flex;justify-content:space-between;gap:14px;padding:18px 19px 13px}
+.wp-command-top h2{margin:4px 0;color:#f2f7ff;font-size:18px}
+.wp-command-top p{margin:0;color:#91a8c4;font-size:9px;line-height:1.6}
+.wp-command-close{width:31px;height:31px;flex:0 0 31px;border:1px solid #34506d;border-radius:9px;background:#ffffff08;color:#bcd0e5;font-size:19px;cursor:pointer}
+.wp-command-search{display:flex;align-items:center;gap:9px;margin:0 17px;padding:0 11px;height:47px;border:1px solid #3d6793;border-radius:11px;background:#081627}
+.wp-command-search>span{color:#7eb5ec;font-size:20px}
+.wp-command-search input{width:100%;min-width:0;height:100%;border:0;outline:0;background:transparent;color:#eff6ff;font:11px Tahoma,Arial,sans-serif}
+.wp-command-search kbd,.wp-command-footer kbd{padding:3px 6px;border:1px solid #3a506b;border-radius:5px;background:#12233a;color:#a9bfd9;font:8px Tahoma,Arial,sans-serif}
+.wp-command-meta{display:flex;justify-content:space-between;gap:10px;padding:10px 19px 6px;color:#728aa7;font-size:8px}
+.wp-command-results{min-height:90px;overflow:auto;padding:4px 10px 12px}
+.wp-command-item{display:flex;align-items:center;gap:10px;width:100%;min-height:54px;padding:8px 9px;border:1px solid transparent;border-radius:10px;background:transparent;color:#e5effb;text-align:right;cursor:pointer}
+.wp-command-item:hover,.wp-command-item.is-selected{border-color:#345e87;background:#17304a}
+.wp-command-icon{display:grid;place-items:center;width:33px;height:33px;flex:0 0 33px;border:1px solid #34516f;border-radius:10px;background:#10253d;color:#8dc4fa;font-size:15px}
+.wp-command-copy{display:grid;gap:3px;min-width:0;flex:1}
+.wp-command-copy strong{font-size:10px;overflow-wrap:anywhere}
+.wp-command-copy small{color:#8da4bf;font-size:8px}
+.wp-command-enter{color:#7b93af;font-size:12px}
+.wp-command-empty{display:grid;justify-items:center;gap:5px;padding:24px 8px;color:#d9e7f7}
+.wp-command-empty strong{font-size:11px}
+.wp-command-empty span{color:#8299b5;font-size:9px}
+.wp-command-footer{display:flex;justify-content:space-between;gap:10px;padding:10px 18px;border-top:1px solid #243b57;color:#7188a4;font-size:8px}
+body.wp-command-open{overflow:hidden}
+@media(max-width:900px){.wp-execution-grid{grid-template-columns:minmax(0,1fr)}}
+@media(max-width:600px){
+ .wp-section-head{align-items:flex-start;flex-direction:column}
+ .wp-command-shortcut{align-self:stretch;justify-content:center}
+ .wp-plan-card,.wp-pulse-card{padding:12px}
+ .wp-card-head{align-items:flex-start;flex-direction:column}
+ .wp-week-badge{max-width:100%}
+ .wp-plan-foot{align-items:flex-start;flex-direction:column}
+ .wp-command-overlay{padding:12px 8px}
+ .wp-command-dialog{max-height:calc(100vh - 24px);border-radius:14px}
+ .wp-command-top{padding:14px}
+ .wp-command-meta,.wp-command-footer{font-size:7px;padding-inline:12px}
+}
