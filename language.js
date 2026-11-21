@@ -105,5 +105,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   });
  });
  observer.observe(document.body,{subtree:true,childList:true,characterData:true});
+ try{
+  const lastView=localStorage.getItem('entelaqtak-last-view-v1');
+  if(lastView&&document.getElementById('view-'+lastView)&&window.EntelaqtakApp?.go)window.EntelaqtakApp.go(lastView);
+ }catch(error){console.warn('Could not restore the last workspace view.',error);}
 });
 })();
