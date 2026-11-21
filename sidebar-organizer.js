@@ -104,7 +104,7 @@
       const group=document.createElement('details');
       group.className='nav-section';
       group.dataset.navSection=section.id;
-      group.open = available.some(([id]) => id === active);
+      group.open = false;
       group.addEventListener('toggle',()=>{
         if (!isMobile() && group.open) {
           nav.querySelectorAll('details.nav-section').forEach(other=>{
@@ -129,7 +129,7 @@
     if (buttons.has('home')) {
       const homeGroup=document.createElement('details');
       homeGroup.className='nav-section nav-home-section';
-      homeGroup.open = active === 'home';
+      homeGroup.open = false;
       homeGroup.dataset.navSection='home';
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
@@ -195,14 +195,6 @@
     else buildDesktop();
   }
   nav.addEventListener('click',event=>{
-    // Desktop groups are intentionally pinned open: accidental summary clicks must not hide the navigation.
-    const desktopSummary=event.target.closest('summary.nav-section-title');
-    if (desktopSummary && !isMobile()) {
-      event.preventDefault();
-      const desktopGroup=desktopSummary.closest('details.nav-section');
-      if (desktopGroup) desktopGroup.open=true;
-      return;
-    }
     const more=event.target.closest('[data-nav-more]');
     if (more) { event.preventDefault(); setPanel(!mobileOpen); return; }
     const button=event.target.closest('button[data-view]');
