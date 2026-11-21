@@ -1024,14 +1024,19 @@ async function loadCloudWorkspace(){
   const {data,error}=await sbClient.from('user_workspaces').select('data').eq('user_id',ownerId).maybeSingle();
   if(error)throw error;
   if(currentUser?.id!==ownerId)return;
-  replaceWorkspaceState(data?.data&&typeof data.data==='object'&&!Array.isArray(data.data)?mergeWorkspace(localForThisUser,data.data,preferLocal):localForThisUser);
+  const remoteData=data?.data&&typeof data.data==='object'&&!Array.isArray(data.data)?data.data:null;
+  const remoteNormalized=remoteData?normalizeState(remoteData):null;
+  replaceWorkspaceState(remoteData?mergeWorkspace(localForThisUser,remoteData,preferLocal):localForThisUser);
   localStorage.setItem('entelaqtak-workspace-owner',ownerId);
   saveLocalWorkspace();
   renderAll();
   const syncSnapshotJson=JSON.stringify(state);
   const syncSnapshot=JSON.parse(syncSnapshotJson);
-  const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:ownerId,data:syncSnapshot,updated_at:new Date().toISOString()},{onConflict:'user_id'});
-  if(saveError)throw saveError;
+  const shouldPersist=!remoteNormalized||syncSnapshotJson!==JSON.stringify(remoteNormalized);
+  if(shouldPersist){
+   const {error:saveError}=await sbClient.from('user_workspaces').upsert({user_id:ownerId,data:syncSnapshot,updated_at:new Date().toISOString()},{onConflict:'user_id'});
+   if(saveError)throw saveError;
+  }
   if(currentUser?.id===ownerId){
    if(JSON.stringify(state)===syncSnapshotJson&&!cloudSavePending)clearWorkspaceDirty(ownerId);
    $('syncState').textContent='آخر مزامنة: '+formatSyncTime();
