@@ -92,7 +92,7 @@ jobs:
           }
           assert(worker.includes("entelaqtak-shell-v66"), 'Service worker cache version was not bumped.');
           assert(organizer.includes('nav-organized-desktop') && organizer.includes('nav-mobile-panel'), 'Organized desktop/mobile navigation is missing.');
-          assert(organizer.includes("max-width: 900px"), 'Tablet navigation breakpoint is missing.');
+          assert(organizer.includes("max-width: 1100px"), 'Responsive sidebar drawer breakpoint is missing.');
           const responsive = fs.readFileSync('responsive-system.css', 'utf8');
           assert(responsive.includes('@media(max-width:900px)') && responsive.includes('safe-area-inset-bottom') && responsive.includes('minmax(0,1fr)'), 'Responsive system is missing tablet, safe-area, or overflow protections.');
           assert(workspace.includes('responsive-system.css?v=20261121-responsive-6'), 'Workspace responsive stylesheet is not linked.');
