@@ -418,6 +418,15 @@
     if(field) readProjectField(field);
   });
 
+  app.openProductionProject = function(id) {
+    const project = projects().find(item => String(item.id) === String(id));
+    if (!project) return false;
+    activeId = String(project.id);
+    try { localStorage.setItem('entelaqtak-active-production-v1', activeId); } catch (_) {}
+    render();
+    return true;
+  };
+
   const oldGo=app.go;
   app.addViews.add('production');
   app.go = function(id) {
