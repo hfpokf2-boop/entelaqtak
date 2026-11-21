@@ -83,7 +83,31 @@
     sidebar.appendChild(backdrop);
   }
 
-  const isMobile = () => window.matchMedia && window.matchMedia('(max-width: 900px)').matches;
+  const isMobile = () => false;
+  const isCompactLayout = () => window.matchMedia && window.matchMedia('(max-width: 1100px)').matches;
+  const sidebarToggle = document.getElementById('sidebarOpenBtn');
+  const sidebarClose = document.getElementById('sidebarCloseBtn');
+  let sidebarBackdrop = document.querySelector('.sidebar-drawer-backdrop');
+  if (!sidebarBackdrop) {
+    sidebarBackdrop = document.createElement('button');
+    sidebarBackdrop.type = 'button';
+    sidebarBackdrop.className = 'sidebar-drawer-backdrop';
+    sidebarBackdrop.hidden = true;
+    sidebarBackdrop.setAttribute('aria-label','إغلاق القائمة الجانبية');
+    document.body.appendChild(sidebarBackdrop);
+  }
+  let sidebarDrawerOpen = false;
+  function setSidebarDrawer(open) {
+    if (!isCompactLayout()) open = false;
+    sidebarDrawerOpen = !!open;
+    sidebar.classList.toggle('is-drawer-open',sidebarDrawerOpen);
+    sidebarBackdrop.hidden = !sidebarDrawerOpen;
+    document.body.classList.toggle('sidebar-drawer-open',sidebarDrawerOpen);
+    if (sidebarToggle) sidebarToggle.setAttribute('aria-expanded',String(sidebarDrawerOpen));
+  }
+  if (sidebarToggle) sidebarToggle.addEventListener('click',()=>setSidebarDrawer(!sidebarDrawerOpen));
+  if (sidebarClose) sidebarClose.addEventListener('click',()=>setSidebarDrawer(false));
+  sidebarBackdrop.addEventListener('click',()=>setSidebarDrawer(false));
   let mobileOpen = false;
   let currentMode = '';
   function setPanel(open) {
@@ -195,14 +219,14 @@ setPanel(false);
     if (more) { event.preventDefault(); setPanel(!mobileOpen); return; }
     const button=event.target.closest('button[data-view]');
     if (!button) return;
-    if (isMobile()) setPanel(false);
+    if (isCompactLayout()) setSidebarDrawer(false);
   });
   panel.addEventListener('click',event=>{
     const button=event.target.closest('button[data-view]');
     if(button) setPanel(false);
   });
   backdrop.addEventListener('click',()=>setPanel(false));
-  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobileOpen)setPanel(false);});
-  window.addEventListener('resize',()=>{rebuild();}, {passive:true});
+  document.addEventListener('keydown',event=>{if(event.key==='Escape'&&mobileOpen)setPanel(false);if(event.key==='Escape'&&sidebarDrawerOpen)setSidebarDrawer(false);});
+  window.addEventListener('resize',()=>{rebuild();if(!isCompactLayout())setSidebarDrawer(false);}, {passive:true});
 rebuild();
 })();
