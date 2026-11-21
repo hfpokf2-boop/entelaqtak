@@ -19,7 +19,7 @@
     try { return JSON.parse(localStorage.getItem(key) || 'null'); } catch (_) { return null; }
   };
   const readSnapshots = () => {
-    const value = readJson('entelaqtak-auto-snapshots-v1');
+    const value = readJson('entelaqtak-snapshots-v1');
     return Array.isArray(value) ? value.filter(item => item && item.data && typeof item.data === 'object') : [];
   };
   const download = (filename, content, type='application/json;charset=utf-8') => {
