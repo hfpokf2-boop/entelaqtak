@@ -191,7 +191,7 @@
       add({id:'route-'+id,type:'tool',title,subtitle:'فتح الأداة',icon:button.querySelector('i')?.textContent||'✦',keywords:id+' '+title,run:()=>go(id)});
     });
     [
-      {id:'action-new-project',title:'ابدأ مشروع إنتاج جديد',subtitle:'افتح استوديو الإنتاج',icon:'＋',keywords:'مشروع فيديو انتاج جديد',run:()=>{go('production');setTimeout(()=>$('prodTopic')?.focus(),80);}},
+      {id:'action-new-project',title:'ابدأ مشروع إنتاج جديد',subtitle:'افتح نموذج مشروع جديد',icon:'＋',keywords:'مشروع فيديو انتاج جديد',run:()=>{go('production');setTimeout(()=>{document.querySelector('#view-production [data-action="all-projects"]')?.click();setTimeout(()=>$('prodTopic')?.focus(),40);},80);}},
       {id:'action-new-post',title:'أضف موعد نشر',subtitle:'افتح نموذج تقويم النشر',icon:'▦',keywords:'موعد جدول منشور تقويم',run:()=>{go('calendar');setTimeout(()=>$('postTitle')?.focus(),80);}},
       {id:'action-new-idea',title:'اكتشف فكرة محتوى',subtitle:'افتح مولّد الأفكار',icon:'✧',keywords:'فكرة افكار محتوى',run:()=>go('ideas')},
       {id:'action-library',title:'افتح مكتبتي والملفات',subtitle:'استعرض كل أعمالك المحفوظة',icon:'▤',keywords:'مكتبة ملفات حفظ',run:()=>go('library')},
@@ -334,13 +334,10 @@
     if(routeButton)trackRoute(routeButton.dataset.view);
     else if(goButton)trackRoute(goButton.dataset.go);
   });
-  document.addEventListener('click',event=>{
-    if(event.target.closest('[data-wp-command-open]'))openPalette();
-  });
 
   // Inject the weekly plan after the existing quick actions without replacing existing UI.
   if (!$('workspaceProHome')) {
-    const anchor=home.querySelector('.control-center-actions');
+    const anchor=home.querySelector('.stats') || home.querySelector('.control-center-actions');
     if(anchor){
       const section=document.createElement('section');
       section.id='workspaceProHome';
