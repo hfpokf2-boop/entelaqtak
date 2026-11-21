@@ -325,8 +325,9 @@
             'أخرج السكريبت النهائي فقط، جاهزًا للقراءة والتسجيل، من دون درجات أو مقدمة عن عملك.'
           ].join('\\n')
         };
-        p.scriptPrevious = p.script;
+        const previousScript = p.script;
         result = await app.callAI('assistant',payload);
+        p.scriptPrevious = previousScript;
         p.script = result;
         p.stage = 'script';
       } else if (task === 'edit') {
