@@ -7,7 +7,7 @@ const palettes={
  ocean:{label:'أزرق المحيط',primary:'#0EA5E9',secondary:'#2563EB'},
  sunset:{label:'نيلي هادئ',primary:'#4F46E5',secondary:'#60A5FA'},
  emerald:{label:'تركواز عميق',primary:'#0F766E',secondary:'#38BDF8'},
- rose:{label:'سماوي بنفسجي',primary:'#3B82F6',secondary:'#818CF8'},
+ rose:{label:'أزرق سماوي',primary:'#3B82F6',secondary:'#818CF8'},
  sapphire:{label:'ليلي سماوي',primary:'#1D4ED8',secondary:'#22D3EE'}
 };
 const toggle=$('themeToggle'),panel=$('themePanel'),close=$('themeClose');
