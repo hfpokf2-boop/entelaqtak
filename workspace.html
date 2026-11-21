@@ -1486,7 +1486,7 @@ function renderAll(){renderHome();renderHistory();renderCalendar();renderMetrics
 window.addEventListener('online',()=>{if(currentUser){$('accountSync').textContent='عاد الاتصال؛ جارٍ التحقق من المزامنة';loadCloudWorkspace();}});
 window.addEventListener('offline',()=>{if(currentUser){$('accountSync').textContent='غير متصل';$('syncState').textContent='تُحفظ التعديلات محليًا حتى عودة الاتصال.';}});
 window.EntelaqtakApp={getState:()=>state,save,toast,callAI,go,addViews:validViews};
-$('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);connectAuth();
+$('year').textContent=new Date().getFullYear();if($('aiSettingsStatus'))renderSettings();const localDate=new Date(Date.now()-new Date().getTimezoneOffset()*60000).toISOString().slice(0,10);$('postDate').value=localDate;$('metricDate').value=localDate;renderAll();let initialView='home';try{const savedView=localStorage.getItem(LAST_VIEW_KEY);if(validViews.has(savedView))initialView=savedView;}catch(e){}go(initialView);window.addEventListener('DOMContentLoaded',()=>{window.EntelaqtakApp?.go(initialView);},{once:true});connectAuth();
 })();
 </script>
 <script src="./creator-suite.js" defer></script>
