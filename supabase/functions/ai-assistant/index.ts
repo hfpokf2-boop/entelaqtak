@@ -244,8 +244,16 @@ Deno.serve(async (req: Request) => {
     if (!response.ok) {
       console.error("OpenAI API error", response.status, result?.error?.type ?? "unknown");
       if (response.status === 429) {
-        const quotaCode = result?.error?.code ?? result?.error?.type ?? "";
-        if (quotaCode === "insufficient_quota") {
+        const quotaCode = String(result?.error?.code ?? "");
+        const quotaType = String(result?.error?.type ?? "");
+        const billingQuotaCodes = new Set([
+          "insufficient_quota",
+          "credit_balance_exhausted",
+          "organization_usage_limit_exceeded",
+          "organization_spend_limit_exceeded",
+          "project_spend_limit_exceeded",
+        ]);
+        if (quotaType === "insufficient_quota" || billingQuotaCodes.has(quotaCode)) {
           return reply(
             { error: "توليد المحتوى متوقف مؤقتًا لأن رصيد أو حد الإنفاق المخصص لخدمة الذكاء الاصطناعي غير كافٍ. بياناتك المحفوظة آمنة؛ أبلغ إدارة الموقع لتحديث رصيد API." },
             503,
