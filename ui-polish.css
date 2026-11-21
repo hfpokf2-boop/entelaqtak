@@ -770,3 +770,9 @@ body{
 #nav.nav-organized-desktop .nav-section-title{cursor:default!important}
 .nav-mobile-section-title:after{content:none!important;display:none!important}
 .nav-mobile-section-title{cursor:default!important}
+
+/* Sidebar categories are labels, not disclosure controls: keep every tool visible. */
+#nav.nav-organized-desktop .nav-section-title,
+.nav-mobile-panel .nav-mobile-section-title{pointer-events:none!important;cursor:default!important;}
+#nav.nav-organized-desktop .nav-section-title:after,
+.nav-mobile-panel .nav-mobile-section-title:after{content:none!important;display:none!important;}
