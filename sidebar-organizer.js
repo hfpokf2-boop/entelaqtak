@@ -105,13 +105,6 @@
       group.className='nav-section';
       group.dataset.navSection=section.id;
       group.open = true;
-      group.addEventListener('toggle',()=>{
-        if (!isMobile() && group.open) {
-          nav.querySelectorAll('details.nav-section').forEach(other=>{
-            if(other!==group) other.open=true;
-          });
-        }
-      });
       const summary=document.createElement('summary');
       summary.className='nav-section-title';
       const title=document.createElement('span');
