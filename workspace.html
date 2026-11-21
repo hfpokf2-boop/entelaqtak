@@ -588,41 +588,51 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,te
       <button class="start-step" type="button" data-go="brain" aria-label="ابدئي بتحديد جمهورك في عقل المحتوى الذكي">
         <span class="start-step-number">01</span>
         <strong>اعرفي جمهورك</strong>
-        <span class="start-step-description">حددي المجال والجمهور والهدف من المحتوى.</span>
+        <span class="start-step-description">حدد المجال والجمهور والهدف من المحتوى.</span>
         <span class="start-step-cta">ابدئي من هنا ←</span>
       </button>
       <button class="start-step" type="button" data-go="ideas" aria-label="انتقلي إلى مولد أفكار المحتوى">
         <span class="start-step-number">02</span>
         <strong>اختاري فكرة</strong>
-        <span class="start-step-description">ولّدي أفكارًا تناسب مجالك والمنصة اللي بتستخدميها.</span>
+        <span class="start-step-description">اكتشف أفكارًا تناسب مجالك والمنصة والجمهور.</span>
         <span class="start-step-cta">اكتشفي أفكارًا ←</span>
       </button>
       <button class="start-step" type="button" data-go="production" aria-label="جهزي حزمة المحتوى في استوديو المحتوى">
         <span class="start-step-number">03</span>
         <strong>جهّزي المحتوى</strong>
-        <span class="start-step-description">حوّلي الفكرة إلى سكريبت وعنوان وخطة تصوير.</span>
+        <span class="start-step-description">حوّل الفكرة إلى سكريبت وعنوان وخطة تصوير.</span>
         <span class="start-step-cta">جهّزي الحزمة ←</span>
       </button>
       <button class="start-step" type="button" data-go="calendar" aria-label="أضيفي المحتوى إلى تقويم النشر">
         <span class="start-step-number">04</span>
         <strong>حددي موعد النشر</strong>
-        <span class="start-step-description">نظمي مواعيدك وارجعي تابعي أداء المحتوى.</span>
+        <span class="start-step-description">نظّم مواعيدك وتابع أداء المحتوى.</span>
         <span class="start-step-cta">افتحي التقويم ←</span>
       </button>
     </div>
   </section>
   <div class="stats"><div class="stat"><div class="stattop">أفكار محفوظة <span class="statico">✧</span></div><strong id="statIdeas">0</strong><small>أفكار في مكتبتك</small></div><div class="stat"><div class="stattop">حزم محتوى <span class="statico">✍</span></div><strong id="statPacks">0</strong><small>مشاريع جهزتها</small></div><div class="stat"><div class="stattop">منشورات مخططة <span class="statico">▦</span></div><strong id="statPosts">0</strong><small>في تقويم النشر</small></div><div class="stat"><div class="stattop">مشاهدات مسجلة <span class="statico">◉</span></div><strong id="statViews">0</strong><small>من بياناتك المدخلة</small></div></div>
-  <div class="focuspanel"><div class="sectionrow" style="margin:0 0 9px"><h2>🎯 تركيزك اليوم</h2><span>خطوة واحدة تكفي للبداية</span></div><div class="focusrow"><input id="homeFocusInput" maxlength="140" placeholder="اكتب أهم مهمة محتوى عايز تنجزها النهارده"><button class="btn small" id="homeFocusSave">حفظ المهمة</button><button class="btn small alt" id="homeFocusDone">تمت ✓</button></div><div class="focusstate" id="homeFocusState">لسه مفيش مهمة محددة لليوم.</div></div>
-  <div class="sectionrow"><h2>ابدأ بسرعة</h2><span>اختار الأداة المناسبة لخطوتك الجاية</span></div><div class="quick">
-    <button data-go="ideas"><em>🎲</em><b>مولّد الأفكار</b><p>أفكار متنوعة حسب مجالك ومنصتك.</p></button>
-    <button data-go="production"><em>🚀</em><b>حزمة محتوى كاملة</b><p>من الفكرة إلى خطة تصوير ونشر.</p></button>
-    <button data-go="repurpose"><em>♻</em><b>إعادة تدوير المحتوى</b><p>حوّل فكرة واحدة لصيغ ومنصات مختلفة.</p></button>
-    <button data-go="script"><em>✍️</em><b>كاتب السكريبت</b><p>رتّب كلامك ومشاهد الفيديو.</p></button>
-    <button data-go="titles"><em>🧲</em><b>العناوين والصورة</b><p>عناوين واضحة وفكرة Thumbnail.</p></button>
-    <button data-go="seo"><em>🔎</em><b>مساعد SEO</b><p>وصف وكلمات مفتاحية وهاشتاجات.</p></button>
-    <button data-go="calendar"><em>🗓️</em><b>تقويم النشر</b><p>نظم مواعيدك وخطة محتواك.</p></button>
+  <details class="home-focus-disclosure">
+    <summary><span>🎯</span><span><strong>تركيزك اليوم</strong><small>حدد مهمة واحدة وخلّصها</small></span><b>＋</b></summary>
+    <div class="focuspanel"><div class="focusrow"><input id="homeFocusInput" maxlength="140" placeholder="اكتب أهم مهمة محتوى عايز تنجزها النهارده"><button class="btn small" id="homeFocusSave">حفظ المهمة</button><button class="btn small alt" id="homeFocusDone">تمت ✓</button></div><div class="focusstate" id="homeFocusState">لسه مفيش مهمة محددة لليوم.</div></div>
+  </details>
+  <div class="sectionrow home-quick-heading"><h2>اختصاراتك الأساسية</h2><span>أهم 4 خطوات في شغلك اليومي</span></div>
+  <div class="quick home-primary-tools">
+    <button data-go="ideas"><em>✧</em><b>اكتشف فكرة</b><p>ابدأ بموضوع وزاوية تناسب جمهورك.</p></button>
+    <button data-go="production"><em>🎬</em><b>استوديو الإنتاج</b><p>بحث وسكريبت ومونتاج وتجهيز للنشر.</p></button>
+    <button data-go="calendar"><em>▦</em><b>نظّم النشر</b><p>حدد المواعيد وتابع خطة المحتوى.</p></button>
+    <button data-go="analytics"><em>▥</em><b>راجع الأداء</b><p>سجّل النتائج واعرف إيه اللي محتاج تطوير.</p></button>
   </div>
-  <div class="two" style="margin-top:15px"><div class="panel"><h3>آخر حزم المحتوى</h3><p class="sub">كمل مشروع كنت بدأت فيه.</p><div class="savedlist" id="homeRecentPacks"><div class="empty">لسه مفيش حزم محفوظة.</div></div></div><div class="panel"><h3>أقرب مواعيد النشر</h3><p class="sub">نظرة سريعة على خطتك.</p><div id="homeUpcoming"><div class="empty">أضف أول موعد للنشر.</div></div><button class="btn small alt" data-go="calendar">افتح التقويم</button></div></div>
+  <details class="home-tools-more">
+    <summary><span>كل الأدوات الأخرى</span><small>السكريبت · العناوين · SEO · إعادة التدوير</small><b>＋</b></summary>
+    <div class="quick">
+      <button data-go="repurpose"><em>♻</em><b>إعادة تدوير المحتوى</b><p>حوّل محتوى واحد لصيغ متعددة.</p></button>
+      <button data-go="script"><em>✍</em><b>كاتب السكريبت</b><p>اكتب مسودة أولية وعدّلها.</p></button>
+      <button data-go="titles"><em>▣</em><b>العناوين والصورة</b><p>جهّز عنوانًا وفكرة Thumbnail.</p></button>
+      <button data-go="seo"><em>⌕</em><b>مساعد SEO</b><p>رتّب الوصف والكلمات المفتاحية.</p></button>
+    </div>
+  </details>
+  <div class="two home-bottom-grid"><div class="panel"><h3>آخر حزم المحتوى</h3><p class="sub">كمل مشروع كنت بدأت فيه.</p><div class="savedlist" id="homeRecentPacks"><div class="empty">لسه مفيش حزم محفوظة.</div></div></div><div class="panel"><h3>أقرب مواعيد النشر</h3><p class="sub">نظرة سريعة على خطتك.</p><div id="homeUpcoming"><div class="empty">أضف أول موعد للنشر.</div></div><button class="btn small alt" data-go="calendar">افتح التقويم</button></div></div>
 </section>
 
 <section class="view" id="view-ideas">
