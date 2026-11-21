@@ -82,6 +82,10 @@ jobs:
           const sidebar = fs.readFileSync('sidebar-system.css', 'utf8');
           const production = fs.readFileSync('production-studio.js', 'utf8');
           const worker = fs.readFileSync('service-worker.js', 'utf8');
+          const diagnostics = fs.readFileSync('enhancements.js', 'utf8');
+          assert(diagnostics.includes('diagnosticAssetCheck') && diagnostics.includes('diagnosticRouteCheck'), 'Live asset and route diagnostics are missing.');
+          assert(diagnostics.includes('diagnosticRuntimeErrors') && diagnostics.includes('unhandledrejection'), 'Runtime error capture is missing from diagnostics.');
+          assert(diagnostics.includes('diagnosticIndexedDBCheck') && diagnostics.includes('diagnosticServiceWorkerCheck'), 'Storage and offline diagnostics are incomplete.');
           const assert = (condition, message) => { if (!condition) throw new Error(message); };
           assert(workspace.includes('function replaceWorkspaceState(next)'), 'Stable workspace state helper is missing.');
           for (const pattern of [/state=merged;/, /state=normalizeState\(incoming\);/, /state=normalizeState\(d\);/, /state=data\?\.data/]) {
@@ -92,7 +96,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v75"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v76"), 'Service worker cache version was not bumped.');
           assert(organizer.includes('nav-organized-desktop') && organizer.includes('setDrawerState') && organizer.includes('getDrawerFocusables'), 'Accessible grouped sidebar and drawer focus handling are missing.');
           assert(organizer.includes("max-width: 1100px") && organizer.includes("aria-hidden"), 'Responsive sidebar drawer breakpoint or accessibility state is missing.');
           const responsive = fs.readFileSync('responsive-system.css', 'utf8');
@@ -180,7 +184,7 @@ jobs:
           if "unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js" not in admin:
               errors.append("admin.html: Supabase CDN fallback is missing")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v75" not in worker:
+          if "entelaqtak-shell-v76" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           if "'./sidebar-system.css'" not in worker:
               errors.append("service-worker.js: new sidebar stylesheet missing from offline cache")
