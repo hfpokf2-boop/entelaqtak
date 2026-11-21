@@ -90,7 +90,7 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v54"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v55"), 'Service worker cache version was not bumped.');
           assert(organizer.includes('nav-organized-desktop') && organizer.includes('nav-mobile-panel'), 'Organized desktop/mobile navigation is missing.');
           assert(organizer.includes("max-width: 900px"), 'Tablet navigation breakpoint is missing.');
           const responsive = fs.readFileSync('responsive-system.css', 'utf8');
@@ -149,8 +149,18 @@ jobs:
               source = Path(path).read_text(encoding="utf-8")
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
+          workspace_theme = Path("workspace.html").read_text(encoding="utf-8").lower()
+          legacy_palette = ["#9278d8", "#b79af7", "#d9c8ff", "#e3a0d2", "#d58ac4", "#39314f", "#211d35", "#151323", "#29223f", "#171426", "#100e1c"]
+          for token in legacy_palette:
+              if token in workspace_theme:
+                  errors.append("workspace.html: legacy purple palette token remains " + token)
+          if "#2563eb" not in workspace_theme or "#38bdf8" not in workspace_theme:
+              errors.append("workspace.html: unified blue accent palette is missing")
+          admin = Path("admin.html").read_text(encoding="utf-8")
+          if "unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.js" not in admin:
+              errors.append("admin.html: Supabase CDN fallback is missing")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v54" not in worker:
+          if "entelaqtak-shell-v55" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           if "'./button-system.css'" not in worker:
               errors.append("service-worker.js: button stylesheet missing from offline cache")
