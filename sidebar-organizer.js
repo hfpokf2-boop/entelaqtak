@@ -183,7 +183,7 @@
     }
     panel.replaceChildren(drawer);
     panel.querySelectorAll('details.nav-mobile-section').forEach(group=>{
-      group.open = group.querySelector('button[data-view].active') !== null;
+      group.open = true;
     });
     setPanel(false);
   }
