@@ -63,7 +63,7 @@ jobs:
               raise SystemExit("No executable inline JavaScript found")
           print(f"Extracted {total} executable inline script(s) from all interactive HTML pages.")
           PY
-          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js sidebar-organizer.js content-pack-pro.js visitor-tracker.js service-worker.js language.js; do
+          for file in creator-suite.js enhancements.js theme.js platform-hub.js production-studio.js production-studio-pro.js sidebar-organizer.js content-pack-pro.js visitor-tracker.js service-worker.js language.js; do
             echo "Checking $file"
             node --check "$file"
           done
@@ -88,8 +88,10 @@ jobs:
             const count = platformHub.split(needle).length - 1;
             assert(count === 1, 'Expected exactly one click handler for ' + id + ', found ' + count);
           }
-          assert(worker.includes("entelaqtak-shell-v44"), 'Service worker cache version was not bumped.');
+          assert(worker.includes("entelaqtak-shell-v45"), 'Service worker cache version was not bumped.');
           assert(worker.includes("'./button-system.css'"), 'Button stylesheet missing from offline app shell.');
+          assert(worker.includes("'./production-studio-pro.js'"), 'Production PRO module missing from offline app shell.');
+          assert(worker.includes("'./production-studio-pro.css'"), 'Production PRO styles missing from offline app shell.');
           assert(worker.includes("'./content-pack-pro.js'"), 'Content pack module missing from offline app shell.');
           assert(worker.includes("'./language.js'"), 'Language module missing from offline app shell.');
           console.log('Workspace state identity, platform event bindings, and offline cache checks passed.');
@@ -116,7 +118,8 @@ jobs:
           css = Path("design-system.css").read_text(encoding="utf-8")
           polish = Path("ui-polish.css").read_text(encoding="utf-8")
           buttons = Path("button-system.css").read_text(encoding="utf-8")
-          for name, source in (("design-system.css", css), ("ui-polish.css", polish), ("button-system.css", buttons)):
+          production = Path("production-studio-pro.css").read_text(encoding="utf-8")
+          for name, source in (("design-system.css", css), ("ui-polish.css", polish), ("button-system.css", buttons), ("production-studio-pro.css", production)):
               if source.count("{") != source.count("}"):
                   errors.append(name + ": unbalanced CSS blocks")
           required = [
@@ -134,10 +137,12 @@ jobs:
               if "rgba(139,124,246" in source or "#8b7cff" in source.lower():
                   errors.append(path + ": legacy purple accent remains")
           worker = Path("service-worker.js").read_text(encoding="utf-8")
-          if "entelaqtak-shell-v44" not in worker:
+          if "entelaqtak-shell-v45" not in worker:
               errors.append("service-worker.js: shell cache version was not bumped")
           if "'./button-system.css'" not in worker:
               errors.append("service-worker.js: button stylesheet missing from offline cache")
+          if "'./production-studio-pro.js'" not in worker or "'./production-studio-pro.css'" not in worker:
+              errors.append("service-worker.js: Production Studio PRO assets missing from offline cache")
           for page in versions:
               html = Path(page).read_text(encoding="utf-8")
               if 'button-system.css?v=20261120-buttons-1' not in html:
@@ -271,6 +276,8 @@ jobs:
           studio = Path("production-studio.js").read_text(encoding="utf-8")
           studio_required = [
               'src="./production-studio.js"',
+              'src="./production-studio-pro.js"',
+              'production-studio-pro.css?v=20261121-pro-1',
               "productionProjects:[]",
               "records('productionProjects')",
               "'productionProjects','posts'",
