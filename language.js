@@ -28,9 +28,9 @@ let current='ar', translating=false;
 const style=document.createElement('style');
 style.id='entelaqtak-language-style';
 style.textContent=`
-.language-toggle{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;min-height:37px;padding:7px 12px!important;border:1px solid #3B354B!important;border-radius:10px!important;background:#151D2B!important;color:#D9CDEC!important;font:700 11px Tahoma,Arial,sans-serif!important;white-space:nowrap;cursor:pointer;transition:background .18s,border-color .18s,transform .18s}
-.language-toggle:hover{background:#211B30!important;border-color:#8067A9!important;color:#F4ECFF!important;transform:translateY(-1px)}
-.language-toggle:focus-visible{outline:2px solid #A68BCF!important;outline-offset:3px}
+.language-toggle{display:inline-flex!important;align-items:center;justify-content:center;gap:7px;min-height:37px;padding:7px 12px!important;border:1px solid #3B82F6!important;border-radius:10px!important;background:linear-gradient(135deg,#2563EB,#3B82F6)!important;color:#FFFFFF!important;font:700 11px Tahoma,Arial,sans-serif!important;white-space:nowrap;cursor:pointer;transition:background .18s,border-color .18s,transform .18s;box-shadow:0 5px 16px rgba(37,99,235,.18)}
+.language-toggle:hover{background:linear-gradient(135deg,#1D4ED8,#2563EB)!important;border-color:#60A5FA!important;color:#FFFFFF!important;transform:translateY(-1px)}
+.language-toggle:focus-visible{outline:2px solid #60A5FA!important;outline-offset:3px}
 .language-toggle .lang-icon{font-size:14px;line-height:1}
 html[dir="ltr"] body{direction:ltr}
 html[dir="ltr"] input,html[dir="ltr"] textarea{direction:ltr}
