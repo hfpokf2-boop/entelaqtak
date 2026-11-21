@@ -28,8 +28,8 @@
   ];
   const primaryIds = ['home','ideas','production','calendar','analytics'];
   const primaryLabels = {
-    home:['الرئيسية','⌂'], ideas:['الأفكار','✧'], production:['الإنتاج','▶'],
-    calendar:['التقويم','▦'], analytics:['الأداء','▥']
+    home:['الرئيسية','⌂'], ideas:['أفكار المحتوى','✧'], production:['استوديو الإنتاج','▶'],
+    calendar:['تقويم النشر','▦'], analytics:['متابعة الأداء','▥']
   };
   const buttons = new Map(
     Array.from(nav.querySelectorAll('button[data-view]')).map(button => [button.dataset.view,button])
@@ -94,7 +94,7 @@
   function buildDesktop() {
     nav.className='nav nav-organized-desktop';
     const fragment=document.createDocumentFragment();
-    const active = nav.querySelector('button[data-view].active')?.dataset.view || 'home';
+    const active = nav.querySelector('button[data-view].active')?.dataset.view || panel.querySelector('button[data-view].active')?.dataset.view || 'home';
     for (const section of sections) {
       const available=section.items.filter(([id])=>buttons.has(id));
       if (!available.length) continue;
@@ -150,7 +150,7 @@
     more.className='nav-more-toggle';
     more.dataset.navMore='true';
     more.setAttribute('aria-expanded','false');
-    more.innerHTML='<i aria-hidden="true">•••</i><span>كل الأدوات</span>';
+    more.innerHTML='<i aria-hidden="true">•••</i><span>الأدوات</span>';
     shortcuts.appendChild(more);
     fragment.appendChild(shortcuts);
     nav.replaceChildren(fragment);
